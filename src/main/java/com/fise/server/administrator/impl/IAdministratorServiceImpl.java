@@ -108,6 +108,7 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 			String key = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN + accessToken;
 			
 			String gymIdInRedis = jedis.get(key);
+			logger.debug("logout will delete token=" + key + "redis id=" + gymIdInRedis + " memberId=" + memberId);
 			if (!memberId.toString().equals(gymIdInRedis)) return false;
 			jedis.del(key);
 			ret = true;
@@ -125,7 +126,7 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 	public Response logout(LogoutParam param, HttpServletRequest request) {
 		Response resp = new Response();;
 		Integer memberId = param.getAdminId();
-		String accessToken = request.getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
+		String accessToken = request.getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
 		try {
 			
 			delAccessToken(memberId, accessToken);

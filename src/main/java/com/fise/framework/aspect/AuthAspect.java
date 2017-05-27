@@ -1,6 +1,7 @@
 package com.fise.framework.aspect;
 
 import java.lang.reflect.Method;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -56,9 +57,7 @@ public class AuthAspect {
         String id = uaField[3];
         String versionName = uaField[4];
         
-        for(int i = 0 ; i< uaField.length; i++) {
-        	logger.debug("uaField[" + i + "]=" + uaField[i]);
-        }
+        logger.debug("UA=" + uaField.toString() + " URI=" + uri);
 
         if (StringUtil.isEmpty(id)) {
         	throw new RequestHeaderException("user id is empty!");
@@ -69,7 +68,7 @@ public class AuthAspect {
         
     	HttpContext.setVersionName(versionName);
     	HttpContext.setPlatform(platform);
-        if (uri.startsWith("/member")) {
+        if (uri.startsWith("/admin")) {
         	HttpContext.setMemberId(Integer.parseInt(id));
         	accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
         	redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
