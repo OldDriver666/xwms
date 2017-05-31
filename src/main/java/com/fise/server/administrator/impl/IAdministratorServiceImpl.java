@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
-import com.fise.dao.TBAdminstratorMapper;
+import com.fise.dao.WiAdminMapper;
 import com.fise.framework.redis.RedisManager;
-import com.fise.model.entity.TBAdminstrator;
-import com.fise.model.entity.TBAdminstratorExample;
-import com.fise.model.entity.TBAdminstratorExample.Criteria;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
+import com.fise.model.entity.WiAdminExample.Criteria;
 import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
 import com.fise.server.administrator.IAdministratorService;
@@ -30,7 +30,7 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 	Logger logger = Logger.getLogger(getClass());
 	
 	@Autowired
-	private TBAdminstratorMapper adminDao;
+	private WiAdminMapper adminDao;
 	
 	
 	@Override
@@ -38,16 +38,16 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 		
 		Response resp = new Response();
 
-		TBAdminstratorExample example = new TBAdminstratorExample();
+		WiAdminExample example = new WiAdminExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andAccountEqualTo(param.getAccount());
-		List<TBAdminstrator> adminList = adminDao.selectByExample(example);
+		List<WiAdmin> adminList = adminDao.selectByExample(example);
 		if (adminList.size() == 0) {
 			resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
 			return resp;
 		}
 		
-		TBAdminstrator admin = adminList.get(0);
+		WiAdmin admin = adminList.get(0);
 		if (!param.getPassword().equals(admin.getPassword())) {
 			resp.failure(ErrorCode.ERROR_PASSWORD_INCORRECT);
 			return resp;
@@ -58,14 +58,14 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 
 	}
 
-	private Response login(TBAdminstrator admin)
+	private Response login(WiAdmin admin)
 	{
 		Response resp = new Response();
 		
 		Integer adminId = admin.getId();
 		String accessToken = genAccessToken(adminId);
-		TBAdminstrator updateAdmin = new TBAdminstrator();
-		long nowTime = System.currentTimeMillis();
+		WiAdmin updateAdmin = new WiAdmin();
+		long nowTime = System.currentTimeMillis() / 1000;
 		updateAdmin.setAccessToken(accessToken);
 		updateAdmin.setId(adminId);
 		updateAdmin.setLastLogin((int) nowTime);
@@ -131,7 +131,15 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 			
 			delAccessToken(memberId, accessToken);
 			resp.success();
+
+			//exit clear accessToken 
+			WiAdmin updateAdmin = new WiAdmin();
+			long nowTime = System.currentTimeMillis() / 1000;
+			updateAdmin.setAccessToken("");
+			updateAdmin.setId(memberId);
+			updateAdmin.setUpdated((int) nowTime);
 			
+			adminDao.updateByPrimaryKeySelective(updateAdmin);
 		} catch (Exception e) {
 			System.out.println("logout, updateMemberError: " + e.getMessage());
 			resp.failure(ErrorCode.ERROR_DATABASE);
@@ -140,7 +148,7 @@ public class IAdministratorServiceImpl implements IAdministratorService {
 	}
 
 	@Override
-	public List<TBAdminstrator> queryAdminByCompanyId(Integer adminId, Integer companyId) {
+	public List<WiAdmin> queryAdminByCompanyId(Integer adminId, Integer companyId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fise.base.Response;
-import com.fise.model.entity.TBAdminstrator;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
 
@@ -17,6 +17,6 @@ public interface IAdministratorService {
 	public Response logout(LogoutParam param, HttpServletRequest request);
 	
 	/* 查询公司所有管理员 */
-	public List<TBAdminstrator> queryAdminByCompanyId(Integer adminId, Integer companyId);
+	public List<WiAdmin> queryAdminByCompanyId(Integer adminId, Integer companyId);
 	
 }

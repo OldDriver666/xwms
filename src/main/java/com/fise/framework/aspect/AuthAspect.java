@@ -95,16 +95,9 @@ public class AuthAspect {
         logger.debug("id=" + id + "|redis_pool_name="+ redisPoolName + "|key_prefix=" + keyPrefix + "|token=" + accessToken + "|fit-ua=" + fitUA);
         Jedis jedis = null;
         try {
-        	logger.debug("11111111111");
         	jedis = RedisManager.getInstance().getResource(redisPoolName);
-        	logger.debug("222222222222");
     		String key = keyPrefix + accessToken;
     		String idInRedis = jedis.get(key);
-    		logger.debug("33333333333");
-    		if (idInRedis != null) {
-    			logger.debug("4444444444 idInredis=" + idInRedis);
-    		}
-    		
     		if (StringUtil.isEmpty(idInRedis) || !idInRedis.equals(id)) {
     			throw new AuthException("Auth failed!");
     		}
