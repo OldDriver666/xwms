@@ -68,13 +68,12 @@ public class AuthAspect {
         
     	HttpContext.setVersionName(versionName);
     	HttpContext.setPlatform(platform);
-        if (uri.startsWith("/admin")) {
+        if (uri.startsWith("/boss")) {
         	HttpContext.setMemberId(Integer.parseInt(id));
         	accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
         	redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
         	keyPrefix = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN;
         } else if (uri.startsWith("/manage")) {
-        	
         	HttpContext.setManagerId(Integer.parseInt(id));
         	accessToken = HttpContext.getRequest().getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
         	redisPoolName = Constants.REDIS_POOL_NAME_SYSTEM;

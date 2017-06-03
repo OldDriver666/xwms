@@ -126,4 +126,6 @@ public interface Constants {
 	// elastic search中的index 和 type
 	public static final String ES_INDEX = "fitness";
 	public static final String ES_GYM_TYPE = "gym";
+	
+	public static final String FISE_SUPPER_ACCOUNT_NAME = "Administrator";
 }

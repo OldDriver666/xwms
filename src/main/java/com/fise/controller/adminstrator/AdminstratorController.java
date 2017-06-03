@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.param.AdminInsert;
+import com.fise.model.param.AdminUpdate;
 import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
 import com.fise.server.administrator.IAdministratorService;
 
-
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/admin")
 public class AdminstratorController {
 
-	private Logger logger = Logger.getLogger(getClass());
+	private Logger logger = Logger.getLogger(this.getClass());
 	
 	@Resource
 	private IAdministratorService adminSvr;
@@ -51,4 +52,19 @@ public class AdminstratorController {
 		return resp;
 	}
 
+	@RequestMapping(value = "/insert", method = RequestMethod.POST)
+	public Response adminInsert(@RequestBody @Valid AdminInsert param) {
+		Response resp = new Response();
+		logger.debug(param.toString());
+		resp = adminSvr.insertAdmin(param);
+		return resp;
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
+		Response resp = new Response();
+		logger.debug(param.toString());
+		resp = adminSvr.updateAdmin(param);
+		return resp;
+	}
 }

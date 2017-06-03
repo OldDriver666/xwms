@@ -14,6 +14,11 @@ public class WiModule implements Serializable {
 
     private Integer priority;
 
+    /**
+     * 0-弃用 1-启用
+     */
+    private Integer status;
+
     private String sn;
 
     private String url;
@@ -52,6 +57,14 @@ public class WiModule implements Serializable {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getSn() {

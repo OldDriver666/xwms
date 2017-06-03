@@ -330,4 +330,8 @@ public class DateUtil {
 		System.out.println("本周零点: " + getWeekBeginDate());
 		System.out.println("本月零点: " + getMonthBeginDate());
 	}
+	
+	public static Integer getLinuxTimeStamp() {
+		return (int)(System.currentTimeMillis() / 1000);
+	}
 }
