@@ -66,8 +66,7 @@ public class AuthAspect {
         if (StringUtil.isEmpty(versionName)) {
         	throw new RequestHeaderException("version name is empty!");
         }
-        System.out.println("-------------"+uri+"----------------");
-        
+
     	HttpContext.setVersionName(versionName);
     	HttpContext.setPlatform(platform);
         if (uri.startsWith("/boss")) {
