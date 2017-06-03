@@ -51,6 +51,7 @@ public class AuthAspect {
         if (uaField.length < 5) {
         	throw new RequestHeaderException("FIT-UA format error!");
         }
+        
         String platform = uaField[0];
         String system = uaField[1];
         String udid = uaField[2];
@@ -65,29 +66,32 @@ public class AuthAspect {
         if (StringUtil.isEmpty(versionName)) {
         	throw new RequestHeaderException("version name is empty!");
         }
+        System.out.println("-------------"+uri+"----------------");
         
     	HttpContext.setVersionName(versionName);
     	HttpContext.setPlatform(platform);
-        if (uri.startsWith("/admin")) {
-        	HttpContext.setMemberId(Integer.parseInt(id));
-        	accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
-        	redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
-        	keyPrefix = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN;
-        } else if (uri.startsWith("/manage")) {
+    	
+    	if (uri.startsWith("/managesvr/admin")) {
+    		HttpContext.setMemberId(Integer.parseInt(id));
+    		accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
+    		redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
+    		keyPrefix = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN;
+    	} else if (uri.startsWith("/managesvr/manage")) {
         	
-        	HttpContext.setManagerId(Integer.parseInt(id));
-        	accessToken = HttpContext.getRequest().getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
-        	redisPoolName = Constants.REDIS_POOL_NAME_SYSTEM;
-        	keyPrefix = Constants.REDIS_KEY_PREFIX_MANAGER_ACCESS_TOKEN;
-        } else if (uri.startsWith("/gym")) {
-        	HttpContext.setGymId(Integer.parseInt(id));
-        	accessToken = HttpContext.getRequest().getHeader(Constants.GYM_HEADER_FIELD_NAME_ACCESS_TOKEN);
-        	redisPoolName = Constants.REDIS_POOL_NAME_GYM;
-        	keyPrefix = Constants.REDIS_KEY_PREFIX_GYM_ACCESS_TOKEN;
-        } else {
+    		HttpContext.setManagerId(Integer.parseInt(id));
+    		accessToken = HttpContext.getRequest().getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
+    		redisPoolName = Constants.REDIS_POOL_NAME_SYSTEM;
+    		keyPrefix = Constants.REDIS_KEY_PREFIX_MANAGER_ACCESS_TOKEN;
+    	} else if (uri.startsWith("/managesvr/gym")) {
+    		HttpContext.setGymId(Integer.parseInt(id));
+    		accessToken = HttpContext.getRequest().getHeader(Constants.GYM_HEADER_FIELD_NAME_ACCESS_TOKEN);
+    		redisPoolName = Constants.REDIS_POOL_NAME_GYM;
+    		keyPrefix = Constants.REDIS_KEY_PREFIX_GYM_ACCESS_TOKEN;
+    	} else {
         	String message = "uri=" + uri + " not allowed";
         	throw new Exception(message);
         }
+    	
         if (StringUtil.isEmpty(accessToken)) {
         	throw new AuthException("access token is empty!");
         }

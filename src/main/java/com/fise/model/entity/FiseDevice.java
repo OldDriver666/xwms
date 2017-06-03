@@ -1,79 +1,163 @@
 package com.fise.model.entity;
 
-public class FiseDevice {
-	private int DeviceId;
-	private String DeviceIME;
-	private String DeviceXW;
-	private int DepartId;
-	private int ProductType;
-	private int ProductName;
-	private String PhoneNo;
-	private int status;
-	
-	
-	
-	public int getDeviceId() {
-		return DeviceId;
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * @author 
+ */
+public class FiseDevice implements Serializable {
+	@JsonProperty("fise_id")
+    private Integer fiseId;
+
+    /**
+     * 设备IME号
+     */
+    private String ime;
+
+    /**
+     * 设备蓝牙地址
+     */
+    private String mac;
+
+    /**
+     * 设备暗码
+     */
+    private String code;
+
+    /**
+     * 状态 0-出厂 1-激活 2-删除
+     */
+    private Boolean status;
+
+    /**
+     * 小位号-账号
+     */
+    private String account;
+
+    /**
+     * 公司/团体ID
+     */
+    @JsonProperty("depart_id")
+    private Integer departid;
+
+    /**
+     * 设备类型
+     */
+    private Integer type;
+
+    /**
+     * 手机号
+     */
+    private String mobile;
+
+    /**
+     * 备注信息
+     */
+    private String mark;
+
+    private Integer updated;
+
+    private Integer created;
+
+    private static final long serialVersionUID = 1L;
+
+    
+
+    public Integer getFiseId() {
+		return fiseId;
 	}
-	public void setDeviceId(int deviceId) {
-		DeviceId = deviceId;
+
+	public void setFiseId(Integer fiseId) {
+		this.fiseId = fiseId;
 	}
-	public int getProductName() {
-		return ProductName;
-	}
-	public void setProductName(int productName) {
-		ProductName = productName;
-	}
-	public String getPhoneNo() {
-		return PhoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		PhoneNo = phoneNo;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	public String getDeviceIME() {
-		return DeviceIME;
-	}
-	public void setDeviceIME(String deviceIME) {
-		DeviceIME = deviceIME;
-	}
-	public String getDeviceXW() {
-		return DeviceXW;
-	}
-	public void setDeviceXW(String deviceXW) {
-		DeviceXW = deviceXW;
-	}
-	public int getDepartId() {
-		return DepartId;
-	}
-	public void setDepartId(int departId) {
-		DepartId = departId;
-	}
-	public int getProductType() {
-		return ProductType;
-	}
-	public void setProductType(int productType) {
-		ProductType = productType;
-	}
-	
-	public FiseDevice(String deviceIME, String deviceXW, int departId,
-			int productType) {
-		super();
-		
-		DeviceIME = deviceIME;
-		DeviceXW = deviceXW;
-		DepartId = departId;
-		ProductType = productType;
-	}
-	public FiseDevice() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+
+	public String getIme() {
+        return ime;
+    }
+
+    public void setIme(String ime) {
+        this.ime = ime;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public Integer getDepartid() {
+        return departid;
+    }
+
+    public void setDepartid(Integer departid) {
+        this.departid = departid;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getMark() {
+        return mark;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
+    public Integer getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
+    }
+
+    public Integer getCreated() {
+        return created;
+    }
+
+    public void setCreated(Integer created) {
+        this.created = created;
+    }
 }
