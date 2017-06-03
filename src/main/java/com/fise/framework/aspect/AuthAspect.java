@@ -51,6 +51,7 @@ public class AuthAspect {
         if (uaField.length < 5) {
         	throw new RequestHeaderException("FIT-UA format error!");
         }
+        
         String platform = uaField[0];
         String system = uaField[1];
         String udid = uaField[2];
@@ -65,6 +66,7 @@ public class AuthAspect {
         if (StringUtil.isEmpty(versionName)) {
         	throw new RequestHeaderException("version name is empty!");
         }
+        System.out.println("-------------"+uri+"----------------");
         
     	HttpContext.setVersionName(versionName);
     	HttpContext.setPlatform(platform);
@@ -87,6 +89,7 @@ public class AuthAspect {
         	String message = "uri=" + uri + " not allowed";
         	throw new Exception(message);
         }
+    	
         if (StringUtil.isEmpty(accessToken)) {
         	throw new AuthException("access token is empty!");
         }
