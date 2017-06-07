@@ -1,5 +1,6 @@
 package com.fise.server.administrator.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,15 @@ import org.springframework.stereotype.Service;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
+import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiAdminExample.Criteria;
+import com.fise.model.entity.WiOrganizationRole;
+import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.param.AdminInsert;
+import com.fise.model.param.AdminQuery;
 import com.fise.model.param.AdminUpdate;
 import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
@@ -36,6 +41,8 @@ public class AdministratorServiceImpl implements IAdministratorService {
 	@Autowired
 	private WiAdminMapper adminDao;
 	
+	@Autowired
+	private WiOrganizationRoleMapper roleDao;
 	
 	@Override
 	public Response login(LoginParam param) {
@@ -124,7 +131,6 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		
 		return ret;
 	}
-
 	
 	@Override
 	public Response logout(LogoutParam param, HttpServletRequest request) {
@@ -151,12 +157,38 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		return resp;
 	}
 
-	@Override
-	public List<WiAdmin> queryAdminByCompanyId(Integer adminId, Integer companyId) {
-		// TODO Auto-generated method stub
-		return null;
+	/*角色权限查询*/
+	private boolean hasModifyAuth(Integer requestRule, Integer targetRule){
+        
+        if( requestRule.equals(targetRule) ){
+            return true;
+        }
+        
+        //为了避免多次查询和计算，查询条件按照auth_level排序
+        Integer requestAuth, targetAuth;
+        WiOrganizationRoleExample ruleExample = new WiOrganizationRoleExample();
+        WiOrganizationRoleExample.Criteria ruleCriteria = ruleExample.createCriteria();
+        List<Integer> roleIdList = new ArrayList<Integer>();
+        roleIdList.add(requestRule);
+        roleIdList.add(targetRule);
+        ruleCriteria.andIdIn(roleIdList);
+        ruleExample.setOrderByClause("auth_level desc");
+        List<WiOrganizationRole> roleList = roleDao.selectByExample(ruleExample);
+        if( roleList.size() != 2){
+            //角色参数错误 -非法的角色值
+            logger.error("角色参数不合法! reqRule=" + requestRule + " targetRule=" + targetRule);
+            return false;
+        }
+        if( roleList.get(0).getId().equals(requestRule) ){
+            requestAuth = roleList.get(0).getAuthLevel();
+            targetAuth = roleList.get(1).getAuthLevel();
+        } else {
+            requestAuth = roleList.get(1).getAuthLevel();
+            targetAuth = roleList.get(0).getAuthLevel();
+        }
+	    return requestAuth >= targetAuth ? true : false;
 	}
-
+	
 	@Override
 	public Response insertAdmin(AdminInsert param) {
 		Response resp = new Response();
@@ -172,16 +204,18 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		}
 
 		WiAdmin admin = adminList.get(0);
+		logger.debug("insertAdmin query login:" + admin.toString());
 		//除了Administrator用户检测 新增用户公司是否合法 
 		if ( !admin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME) && !param.getOrganizationId().equals(admin.getCompanyId())){
 			resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+			resp.setMsg("禁止新建非本公司人员");
 			return resp;
 		}
-
-		//新增人员权限必须小于等于自己最大权限
-		if( param.getRuleId() != null && param.getRuleId().compareTo(admin.getAuthLevel()) < 0 ){
-			resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-			return resp;
+		logger.debug("will check the rule");
+		if( !hasModifyAuth(admin.getRoleId(), param.getRoleId()) ){
+		    resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+		    resp.setMsg("无权创建更高级的用户");
+            return resp;
 		}
 		//查看新增用户是否合法
 		example.clear();
@@ -196,12 +230,12 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		record.setAccount(param.getAccount());
 		record.setPassword(param.getPassword());
 		record.setCompanyId(param.getOrganizationId());
+		record.setRoleId(param.getRoleId());
 		Integer nNow = DateUtil.getLinuxTimeStamp();
 
 		record.setCreated(nNow);
 		record.setUpdated(nNow);
 		record.setNickName(StringUtil.isEmpty(param.getNickName()) ? "" : param.getNickName());
-		record.setAuthLevel((param.getRuleId() == null ? 0 : param.getRuleId()));
 		record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
 		record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
 		record.setSalt(nNow.toString().substring(5, 9));
@@ -265,13 +299,15 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		}
 
 		if (param.getRuleId() != null){
-			if(param.getAdminId().equals(param.getLoginId()) || loginAdmin.getAuthLevel().compareTo(param.getRuleId()) > 0){
-				//不允许自己更改自己的角色 + 不允许更新比自己更高等级权限
-				resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-				return resp;
+			if( hasModifyAuth(loginAdmin.getRoleId(), param.getRuleId()) ){
+			    sqlAdmin.setRoleId(param.getRuleId());
+			} else {
+			    resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+			    resp.setMsg("权限错误！无权操作更高级用户");
+			    return resp;
 			}
-			sqlAdmin.setAuthLevel(param.getRuleId());
 		}
+
 		if (!StringUtil.isEmpty(param.getPhone())){
 			sqlAdmin.setPhone(param.getNickName());
 		}
@@ -283,5 +319,45 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		resp.success();
 		return resp;
 	}
+
+    @Override
+    public Response queryAdmin(AdminQuery param) {
+        Response resp = new Response();
+        //检测发起请求的用户
+        WiAdmin loginAdmin = new WiAdmin();
+        WiAdminExample example = new WiAdminExample();
+        Criteria loginWhere = example.createCriteria();
+        loginWhere.andIdEqualTo(param.getAdminId());
+        List<WiAdmin> adminList = adminDao.selectByExample(example);
+        if (adminList.size() == 0) {
+            resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
+            return resp;
+        }
+        loginAdmin = adminList.get(0);
+        //非超级管理员 仅允许查询本公司信息
+        if(!loginAdmin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME)){
+            if( param.getCompanyId() != null && param.getCompanyId() != loginAdmin.getCompanyId()){
+                resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+                resp.setMsg("权限错误,仅允许查询本公司数据");
+                return resp;
+            }
+        }
+
+        example.clear();
+        Criteria queryWhere = example.createCriteria();
+        if(StringUtil.isNotEmpty(param.getAccount())){
+            queryWhere.andAccountEqualTo(param.getAccount());
+        }
+        if(param.getCompanyId() != null){
+            queryWhere.andCompanyIdEqualTo(param.getCompanyId());
+        }
+        if(param.getRuleId() != null){
+            queryWhere.andRoleIdEqualTo(param.getRuleId());
+        }
+        adminList.clear();
+        adminList = adminDao.selectByExample(example);
+        resp.success(adminList);
+        return resp;
+    }
 
 }

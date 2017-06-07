@@ -24,8 +24,9 @@ public class AdminInsert {
 	@JsonProperty("nick_name")
 	private String nickName;
 	
-	@JsonProperty("rule_id")
-	private Integer ruleId;
+	@NotNull
+	@JsonProperty("role_id")
+	private Integer roleId;
 	
 	@NotNull
 	@JsonProperty("organization_id")
@@ -59,12 +60,12 @@ public class AdminInsert {
 		this.nickName = nickName;
 	}
 
-	public Integer getRuleId() {
-		return ruleId;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRuleId(Integer ruleId) {
-		this.ruleId = ruleId;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public Integer getOrganizationId() {

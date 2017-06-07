@@ -8,13 +8,19 @@ import java.io.Serializable;
 public class WiPermission implements Serializable {
     private Integer id;
 
-    private String description;
-
-    private String name;
-
-    private String sn;
+    private Integer roleId;
 
     private Integer moduleId;
+
+    private Integer insertAuth;
+
+    private Integer updateAuth;
+
+    private Integer queryAuth;
+
+    private Integer updated;
+
+    private Integer created;
 
     private static final long serialVersionUID = 1L;
 
@@ -26,28 +32,12 @@ public class WiPermission implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSn() {
-        return sn;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public Integer getModuleId() {
@@ -56,5 +46,45 @@ public class WiPermission implements Serializable {
 
     public void setModuleId(Integer moduleId) {
         this.moduleId = moduleId;
+    }
+
+    public Integer getInsertAuth() {
+        return insertAuth;
+    }
+
+    public void setInsertAuth(Integer insertAuth) {
+        this.insertAuth = insertAuth;
+    }
+
+    public Integer getUpdateAuth() {
+        return updateAuth;
+    }
+
+    public void setUpdateAuth(Integer updateAuth) {
+        this.updateAuth = updateAuth;
+    }
+
+    public Integer getQueryAuth() {
+        return queryAuth;
+    }
+
+    public void setQueryAuth(Integer queryAuth) {
+        this.queryAuth = queryAuth;
+    }
+
+    public Integer getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Integer updated) {
+        this.updated = updated;
+    }
+
+    public Integer getCreated() {
+        return created;
+    }
+
+    public void setCreated(Integer created) {
+        this.created = created;
     }
 }

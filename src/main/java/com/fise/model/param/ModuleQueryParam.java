@@ -22,14 +22,9 @@ public class ModuleQueryParam implements Serializable {
 	private Integer adminId;
 
 	@NotNull
-    @JsonProperty("auth_level")
-    private Integer authLevel;
-	
-	@NotNull
-	@JsonProperty("company_id")
-	private Integer companyId;
-	
-	
+    @JsonProperty("role_id")
+    private Integer roleId;
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -38,21 +33,12 @@ public class ModuleQueryParam implements Serializable {
         this.adminId = adminId;
     }
 
-    public Integer getAuthLevel() {
-        return authLevel;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-
-    public void setAuthLevel(Integer authLevel) {
-        this.authLevel = authLevel;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     @Override

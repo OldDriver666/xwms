@@ -3,6 +3,7 @@
 <mapper namespace="com.fise.dao.WiOrganizationRoleMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.WiOrganizationRole">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="auth_level" jdbcType="INTEGER" property="authLevel" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, description, organization_id
+    id, auth_level, name, description, organization_id
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiOrganizationRoleExample" resultMap="BaseResultMap">
     select
@@ -107,16 +108,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiOrganizationRole">
-    insert into wi_organization_role (id, name, description, 
-      organization_id)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{organizationId,jdbcType=INTEGER})
+    insert into wi_organization_role (id, auth_level, name, 
+      description, organization_id)
+    values (#{id,jdbcType=INTEGER}, #{authLevel,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{organizationId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiOrganizationRole">
     insert into wi_organization_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="authLevel != null">
+        auth_level,
       </if>
       <if test="name != null">
         name,
@@ -131,6 +135,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authLevel != null">
+        #{authLevel,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -155,6 +162,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.authLevel != null">
+        auth_level = #{record.authLevel,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
@@ -172,6 +182,7 @@
   <update id="updateByExample" parameterType="map">
     update wi_organization_role
     set id = #{record.id,jdbcType=INTEGER},
+      auth_level = #{record.authLevel,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       organization_id = #{record.organizationId,jdbcType=INTEGER}
@@ -182,6 +193,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.WiOrganizationRole">
     update wi_organization_role
     <set>
+      <if test="authLevel != null">
+        auth_level = #{authLevel,jdbcType=INTEGER},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -196,7 +210,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.WiOrganizationRole">
     update wi_organization_role
-    set name = #{name,jdbcType=VARCHAR},
+    set auth_level = #{authLevel,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       organization_id = #{organizationId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

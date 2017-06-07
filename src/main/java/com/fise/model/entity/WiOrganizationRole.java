@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class WiOrganizationRole implements Serializable {
     private Integer id;
 
+    private Integer authLevel;
+
     private String name;
 
     private String description;
@@ -22,6 +24,14 @@ public class WiOrganizationRole implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getAuthLevel() {
+        return authLevel;
+    }
+
+    public void setAuthLevel(Integer authLevel) {
+        this.authLevel = authLevel;
     }
 
     public String getName() {

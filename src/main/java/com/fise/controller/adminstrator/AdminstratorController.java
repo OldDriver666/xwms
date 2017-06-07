@@ -14,6 +14,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.param.AdminInsert;
+import com.fise.model.param.AdminQuery;
 import com.fise.model.param.AdminUpdate;
 import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
@@ -66,5 +67,12 @@ public class AdminstratorController {
 		logger.debug(param.toString());
 		resp = adminSvr.updateAdmin(param);
 		return resp;
+	}
+
+	@RequestMapping(value = "/query", method = RequestMethod.POST)
+	public Response adminQuery(@RequestBody @Valid AdminQuery param){
+	    Response resp = new Response();
+	    resp = adminSvr.queryAdmin(param);
+	    return resp;
 	}
 }

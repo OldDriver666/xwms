@@ -2,6 +2,8 @@ package com.fise.model.param;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.framework.annotation.NotEmpty;
 import com.fise.utils.JsonUtil;
@@ -16,28 +18,27 @@ import com.fise.utils.JsonUtil;
 public class ModuleInsertParam implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
+	@NotNull
 	@JsonProperty("admin_id")
 	private Integer adminId;
-
-	@NotEmpty
-    @JsonProperty("auth_level")
-    private Integer authLevel;
 
     @NotEmpty
     private String name;
     
     private String description;
     
-    @NotEmpty
+    @NotNull
     private Integer priority;
     
     @NotEmpty
     private String sn;
     
+    @NotNull
+    private Integer status;
+    
     private String url;
     
-    @NotEmpty
+    @NotNull
     @JsonProperty("parent_id")
     private Integer parentId;
 
@@ -49,12 +50,12 @@ public class ModuleInsertParam implements Serializable {
         this.adminId = adminId;
     }
 
-    public Integer getAuthLevel() {
-        return authLevel;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setAuthLevel(Integer authLevel) {
-        this.authLevel = authLevel;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getName() {

@@ -7,7 +7,7 @@
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="password" jdbcType="CHAR" property="password" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
-    <result column="auth_level" jdbcType="INTEGER" property="authLevel" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="company_id" jdbcType="INTEGER" property="companyId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
@@ -76,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, salt, password, nick_name, auth_level, company_id, phone, email, access_token, 
+    id, account, salt, password, nick_name, role_id, company_id, phone, email, access_token, 
     status, last_login, created, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiAdminExample" resultMap="BaseResultMap">
@@ -119,12 +119,12 @@
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiAdmin">
     insert into wi_admin (id, account, salt, 
-      password, nick_name, auth_level, 
+      password, nick_name, role_id, 
       company_id, phone, email, 
       access_token, status, last_login, 
       created, updated)
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
-      #{password,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{authLevel,jdbcType=INTEGER}, 
+      #{password,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
       #{companyId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{accessToken,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{lastLogin,jdbcType=INTEGER}, 
       #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER})
@@ -147,8 +147,8 @@
       <if test="nickName != null">
         nick_name,
       </if>
-      <if test="authLevel != null">
-        auth_level,
+      <if test="roleId != null">
+        role_id,
       </if>
       <if test="companyId != null">
         company_id,
@@ -191,8 +191,8 @@
       <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="authLevel != null">
-        #{authLevel,jdbcType=INTEGER},
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
       </if>
       <if test="companyId != null">
         #{companyId,jdbcType=INTEGER},
@@ -244,8 +244,8 @@
       <if test="record.nickName != null">
         nick_name = #{record.nickName,jdbcType=VARCHAR},
       </if>
-      <if test="record.authLevel != null">
-        auth_level = #{record.authLevel,jdbcType=INTEGER},
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
       <if test="record.companyId != null">
         company_id = #{record.companyId,jdbcType=INTEGER},
@@ -283,7 +283,7 @@
       salt = #{record.salt,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=CHAR},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
-      auth_level = #{record.authLevel,jdbcType=INTEGER},
+      role_id = #{record.roleId,jdbcType=INTEGER},
       company_id = #{record.companyId,jdbcType=INTEGER},
       phone = #{record.phone,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
@@ -311,8 +311,8 @@
       <if test="nickName != null">
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="authLevel != null">
-        auth_level = #{authLevel,jdbcType=INTEGER},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
       </if>
       <if test="companyId != null">
         company_id = #{companyId,jdbcType=INTEGER},
@@ -347,7 +347,7 @@
       salt = #{salt,jdbcType=VARCHAR},
       password = #{password,jdbcType=CHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
-      auth_level = #{authLevel,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
       company_id = #{companyId,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},

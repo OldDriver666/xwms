@@ -2,8 +2,6 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
-import com.fise.utils.JsonUtil;
-
 /**
  * @author 
  */
@@ -31,9 +29,9 @@ public class WiAdmin implements Serializable {
     private String nickName;
 
     /**
-     * 用户等级（1-3），3级最高
+     * 用户角色
      */
-    private Integer authLevel;
+    private Integer roleId;
 
     /**
      * 用户所属公司
@@ -117,12 +115,12 @@ public class WiAdmin implements Serializable {
         this.nickName = nickName;
     }
 
-    public Integer getAuthLevel() {
-        return authLevel;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setAuthLevel(Integer authLevel) {
-        this.authLevel = authLevel;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public Integer getCompanyId() {
@@ -188,8 +186,4 @@ public class WiAdmin implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
-    
-	public String toString() {
-		return JsonUtil.toJson(this);
-	}
 }

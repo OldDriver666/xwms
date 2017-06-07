@@ -184,6 +184,66 @@ public class WiOrganizationRoleExample {
             return (Criteria) this;
         }
 
+        public Criteria andAuthLevelIsNull() {
+            addCriterion("auth_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelIsNotNull() {
+            addCriterion("auth_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelEqualTo(Integer value) {
+            addCriterion("auth_level =", value, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelNotEqualTo(Integer value) {
+            addCriterion("auth_level <>", value, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelGreaterThan(Integer value) {
+            addCriterion("auth_level >", value, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("auth_level >=", value, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelLessThan(Integer value) {
+            addCriterion("auth_level <", value, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("auth_level <=", value, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelIn(List<Integer> values) {
+            addCriterion("auth_level in", values, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelNotIn(List<Integer> values) {
+            addCriterion("auth_level not in", values, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelBetween(Integer value1, Integer value2) {
+            addCriterion("auth_level between", value1, value2, "authLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuthLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("auth_level not between", value1, value2, "authLevel");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
