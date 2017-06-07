@@ -71,18 +71,18 @@ public class AuthAspect {
     	HttpContext.setVersionName(versionName);
     	HttpContext.setPlatform(platform);
     	
-    	if (uri.startsWith("/managesvr/admin")) {
+    	if (uri.startsWith("/boss/admin")) {
     		HttpContext.setMemberId(Integer.parseInt(id));
     		accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
     		redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
     		keyPrefix = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN;
-    	} else if (uri.startsWith("/managesvr/manage")) {
+    	} else if (uri.startsWith("/boss/manage")) {
         	
     		HttpContext.setManagerId(Integer.parseInt(id));
     		accessToken = HttpContext.getRequest().getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
     		redisPoolName = Constants.REDIS_POOL_NAME_SYSTEM;
     		keyPrefix = Constants.REDIS_KEY_PREFIX_MANAGER_ACCESS_TOKEN;
-    	} else if (uri.startsWith("/managesvr/gym")) {
+    	} else if (uri.startsWith("/boss/gym")) {
     		HttpContext.setGymId(Integer.parseInt(id));
     		accessToken = HttpContext.getRequest().getHeader(Constants.GYM_HEADER_FIELD_NAME_ACCESS_TOKEN);
     		redisPoolName = Constants.REDIS_POOL_NAME_GYM;
