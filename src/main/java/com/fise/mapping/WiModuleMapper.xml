@@ -6,6 +6,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="sn" jdbcType="VARCHAR" property="sn" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, description, priority, sn, url, parent_id
+    id, name, description, priority, status, sn, url, parent_id
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiModuleExample" resultMap="BaseResultMap">
     select
@@ -111,11 +112,11 @@
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiModule">
     insert into wi_module (id, name, description, 
-      priority, sn, url, 
-      parent_id)
+      priority, status, sn, 
+      url, parent_id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{priority,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{parentId,jdbcType=INTEGER})
+      #{priority,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiModule">
     insert into wi_module
@@ -131,6 +132,9 @@
       </if>
       <if test="priority != null">
         priority,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="sn != null">
         sn,
@@ -154,6 +158,9 @@
       </if>
       <if test="priority != null">
         #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="sn != null">
         #{sn,jdbcType=VARCHAR},
@@ -187,6 +194,9 @@
       <if test="record.priority != null">
         priority = #{record.priority,jdbcType=INTEGER},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
       <if test="record.sn != null">
         sn = #{record.sn,jdbcType=VARCHAR},
       </if>
@@ -207,6 +217,7 @@
       name = #{record.name,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       priority = #{record.priority,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
       sn = #{record.sn,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=INTEGER}
@@ -226,6 +237,9 @@
       <if test="priority != null">
         priority = #{priority,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="sn != null">
         sn = #{sn,jdbcType=VARCHAR},
       </if>
@@ -243,6 +257,7 @@
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       priority = #{priority,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       sn = #{sn,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER}

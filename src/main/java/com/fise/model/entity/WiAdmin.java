@@ -2,6 +2,8 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fise.utils.JsonUtil;
+
 /**
  * @author 
  */
@@ -56,7 +58,7 @@ public class WiAdmin implements Serializable {
     /**
      * 0-不可用，1-可用
      */
-    private Byte status;
+    private Integer status;
 
     /**
      * 最后一次登录时间´
@@ -155,11 +157,11 @@ public class WiAdmin implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -186,4 +188,8 @@ public class WiAdmin implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
+    
+	public String toString() {
+		return JsonUtil.toJson(this);
+	}
 }
