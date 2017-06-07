@@ -4,7 +4,7 @@ import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
 
-public interface FiseDeviceService {
+public interface IFiseDeviceService {
 	/*添加新的fisedevice*/
 	public Response insertFiseDevice(FiseDevice record);
 	

@@ -1,5 +1,7 @@
 package com.fise.base;
 
+
+
 import com.fise.base.BaseResponse;
 
 public class Response extends BaseResponse {
@@ -7,7 +9,7 @@ public class Response extends BaseResponse {
 	private static final long serialVersionUID = -5951407266077063966L;
 
 	private Object data;
-	
+
 	public Response success() {
 		super.setErrorCode(ErrorCode.ERROR_OK);
 		return this;

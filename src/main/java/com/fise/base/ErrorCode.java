@@ -8,7 +8,7 @@ package com.fise.base;
  */
 public enum ErrorCode {
 	ERROR_OK("ok", 0),
-	
+
 	
 	ERROR_PARAM_MEMBER_MOBILE_IS_EMPTY("参数手机号不能为空！", 10001),
 	ERROR_PARAM_MEMBER_PASSWD_IS_EMPTY("参数密码不能为空！", 10002),
@@ -51,6 +51,10 @@ public enum ErrorCode {
 	ERROR_FISE_DEVICE_ACCOUNT_EXISTED("设备账号已经存在",10039),
 	ERROR_FISE_DEVICE_PARAM_NULL("参数不能为空",10040),
 	ERROR_DB_RECORD_ALREADY_UNEXIST("记录不存在",10041),
+	ERROR_CLIENT_TYPE_TYPE_EXISTED("设备类型type已经存在",10042),
+	ERROR_CLIENT_TYPE_NAME_EXISTED("设备名字已经存在",10043),
+	ERROR_SERVICE_CONF_NAME_EXISTED("名字已经存在",10044),
+	ERROR_SUGGEST_USER_ID_EXISTED("user_id已经存在",10045),
 	
 	ERROR_CACHE("缓存错误！", 997),
 	ERROR_DATABASE("数据库错误！", 998),

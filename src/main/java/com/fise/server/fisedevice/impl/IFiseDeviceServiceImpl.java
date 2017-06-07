@@ -15,11 +15,11 @@ import com.fise.model.entity.FiseDevice;
 import com.fise.model.entity.FiseDeviceExample;
 import com.fise.model.entity.FiseDeviceExample.Criteria;
 import com.fise.model.param.QueryFiseDeviceParam;
-import com.fise.server.fisedevice.FiseDeviceService;
+import com.fise.server.fisedevice.IFiseDeviceService;
 import com.fise.utils.StringUtil;
 
 @Service
-public class FiseDeviceServiceImpl implements FiseDeviceService{
+public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	
@@ -59,7 +59,7 @@ public class FiseDeviceServiceImpl implements FiseDeviceService{
 		long nowtime=System.currentTimeMillis() / 1000;
 		record.setUpdated((int)nowtime);
 		record.setCreated((int)nowtime);
-		fiseDevicedao.insert(record);
+		fiseDevicedao.insertSelective(record);
 		response.success();
 		return response;
 	}
@@ -119,14 +119,12 @@ public class FiseDeviceServiceImpl implements FiseDeviceService{
 		}
 		
 		if(!StringUtil.isEmpty(param.getIme())){
-			//判断添加的设备的IME是否已经存在
+			//判断修改的设备的IME是否已经存在
 			FiseDeviceExample exampleIME=new FiseDeviceExample();
 			Criteria criteriaIME=exampleIME.createCriteria();
 			criteriaIME.andImeEqualTo(param.getIme());
 			List<FiseDevice> fisedevicelist=fiseDevicedao.selectByExample(exampleIME);
-			System.out.println(param.getFiseId());
-			System.out.println(fisedevicelist.get(0).getFiseId());
-			System.out.println("-------------"+param.getFiseId()==fisedevicelist.get(0).getFiseId()+"-------------");
+			
 			if(fisedevicelist.size()!=0){
 				if(param.getFiseId().equals(fisedevicelist.get(0).getFiseId())){
 					
@@ -138,7 +136,7 @@ public class FiseDeviceServiceImpl implements FiseDeviceService{
 		}
 		
 		if(!StringUtil.isEmpty(param.getAccount())){
-			//判断添加的设备的账号是否已经注册
+			//判断修改的设备的账号是否已经注册
 			FiseDeviceExample exampleAccount=new FiseDeviceExample();
 			Criteria criteriaAccount=exampleAccount.createCriteria();
 			criteriaAccount.andAccountEqualTo(param.getAccount());

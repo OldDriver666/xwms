@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
-import com.fise.server.fisedevice.FiseDeviceService;
+import com.fise.server.fisedevice.IFiseDeviceService;
 
 @RestController
 @RequestMapping("/boss")
@@ -21,7 +21,7 @@ public class fiseDeviceController {
 	private Logger logger=Logger.getLogger(getClass());
 	
 	@Resource
-	FiseDeviceService fiseDeviceService;
+	IFiseDeviceService fiseDeviceService;
 	
 	/*添加fise设备*/
 	@RequestMapping(value="/addfisedevice",method=RequestMethod.POST)
@@ -36,7 +36,7 @@ public class fiseDeviceController {
 		return response;
 	}
 	
-	/*查询fise设备     可以通过id  设备IME号    账号account*/
+	/*查询fise设备  设备IME号    账号account*/
 	@RequestMapping(value="/queryfisedevice",method=RequestMethod.POST)
 	public Response queryFiseDevice(@RequestBody @Valid QueryFiseDeviceParam param){
 		
