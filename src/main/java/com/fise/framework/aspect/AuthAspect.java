@@ -42,12 +42,12 @@ public class AuthAspect {
         String keyPrefix = null;
         String fitUA = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_FIT_USER_AGENT);
         if (StringUtil.isEmpty(fitUA)) {
-            throw new RequestHeaderException("FIT-UA is empty!");
+            throw new RequestHeaderException("FISE-UA is empty!");
         }
         
         String[] uaField = fitUA.split("\\|");
         if (uaField.length < 5) {
-            throw new RequestHeaderException("FIT-UA format error!");
+            throw new RequestHeaderException("FISE-UA format error!");
         }
         
         String platform = uaField[0];

@@ -12,6 +12,11 @@ public class WiPermission implements Serializable {
 
     private Integer moduleId;
 
+    /**
+     * 1-开启 0-关闭
+     */
+    private Integer status;
+
     private Integer insertAuth;
 
     private Integer updateAuth;
@@ -46,6 +51,14 @@ public class WiPermission implements Serializable {
 
     public void setModuleId(Integer moduleId) {
         this.moduleId = moduleId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getInsertAuth() {

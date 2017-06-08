@@ -17,7 +17,7 @@ public class LoginParam implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
-	@MaxLength(value = 11)
+	@MaxLength(value = 40)
 	private String account;
 	
 	@NotEmpty

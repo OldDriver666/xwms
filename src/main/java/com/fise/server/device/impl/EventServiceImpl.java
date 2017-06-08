@@ -1,4 +1,4 @@
-package com.fise.server.module.impl;
+package com.fise.server.device.impl;
 
 import java.util.List;
 

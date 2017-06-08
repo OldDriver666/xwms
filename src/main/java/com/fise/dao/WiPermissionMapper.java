@@ -1,9 +1,12 @@
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.fise.model.entity.WiPermission;
 import com.fise.model.entity.WiPermissionExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import com.fise.model.param.ModuleQueryResult;
 
 public interface WiPermissionMapper {
     long countByExample(WiPermissionExample example);
@@ -27,4 +30,6 @@ public interface WiPermissionMapper {
     int updateByPrimaryKeySelective(WiPermission record);
 
     int updateByPrimaryKey(WiPermission record);
+    
+    List<ModuleQueryResult> selectPermissionByRole(Integer roleId);
 }

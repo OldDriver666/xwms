@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.Response;
 import com.fise.dao.WiModuleMapper;
+import com.fise.dao.WiPermissionMapper;
 import com.fise.model.entity.WiModule;
-import com.fise.model.entity.WiModuleExample;
 import com.fise.model.param.ModuleInsertParam;
 import com.fise.model.param.ModuleQueryParam;
+import com.fise.model.param.ModuleQueryResult;
 import com.fise.model.param.ModuleUpdateParam;
 import com.fise.server.module.IModuleService;
 import com.fise.utils.StringUtil;
@@ -21,13 +22,15 @@ public class ModuleServiceImpl implements IModuleService {
     @Autowired
     private WiModuleMapper moduleDao;
     
+    @Autowired
+    private WiPermissionMapper permissionDao;
+    
     @Override
     public Response QueryModeule(ModuleQueryParam param) {
         Response resp = new Response();
-        WiModuleExample example = new WiModuleExample();
-        //Criteria criteria = example.createCriteria();
-        List<WiModule> moduleList = moduleDao.selectByExample(example);
-        resp.success(moduleList);
+        /*TODO 默认认为请求者传的roleId有效可用，不做检测 根据情况定是否检测值有效性*/
+        List<ModuleQueryResult> data = permissionDao.selectPermissionByRole(param.getRoleId());
+        resp.success(data);
         return resp;
     }
 
