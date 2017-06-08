@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../../css/global.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="mod-body">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-form navbar-right">
+						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加角色信息</span>
+						</button>
+					</div>
+					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑角色信息</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form-addTempl" data-action="" class="form-horizontal">
+										<input type="hidden" id="input-id">
+										<div class="form-group">
+											<label for="input-roleName" class="col-sm-2 control-label"><span class="necessary">*</span>角色名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-roleName" name="roleName" placeholder="输入角色名称">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-roleLevel" class="col-sm-2 control-label"><span class="necessary">*</span>角色等级</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-roleLevel" name="roleLevel" placeholder="输入角色等级">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-roleNotes" class="col-sm-2 control-label">描述</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-roleNotes" name="roleNotes" placeholder="输入描述">
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+				</div>
+			</nav>
+			<table id="table" class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>角色等级</th>
+						<th>角色名称</th>
+						<th>描述</th>
+						<th>管理</th>
+					</tr>
+				</thead>
+				<tbody id="pageContent"></tbody>
+				<tfoot>
+				<tr>
+					<td colspan="4">
+						<div id="pagination" class="pagination"></div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.tmpl.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="js/role-manage.js"></script>
+<!-- jQuery Validate -->
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<tr>
+	<td style="display:none;" class="td-id">${RoleId}</td>
+	<td class="td-roleLevel">${RoleLevel}</td>
+	<td class="td-roleName">${RoleName}</td>
+	<td class="td-roleNotes">${RoleDescribe}</td>
+	<td>
+	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
+	    <a href="javascript:void(0);" onclick="action.deleteItem(${RoleId},'${RoleName}')">删除</a>
+	</td>
+</tr>
+</script>
+<script type="text/javascript">
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
+</script>
+</body>
+</html>
