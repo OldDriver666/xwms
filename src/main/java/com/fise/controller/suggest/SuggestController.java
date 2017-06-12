@@ -15,7 +15,7 @@ import com.fise.model.param.SuggestParam;
 import com.fise.server.suggest.ISuggestService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/suggest")
 public class SuggestController {
 	
 	private Logger logger=Logger.getLogger(getClass());

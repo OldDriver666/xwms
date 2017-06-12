@@ -15,7 +15,7 @@ import com.fise.model.param.SplashParam;
 import com.fise.server.splash.ISplashService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/splash")
 public class SplashController {
 	
 	private Logger logger=Logger.getLogger(getClass());

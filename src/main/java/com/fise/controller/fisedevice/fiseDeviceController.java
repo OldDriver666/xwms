@@ -15,7 +15,7 @@ import com.fise.model.param.QueryFiseDeviceParam;
 import com.fise.server.fisedevice.IFiseDeviceService;
 
 @RestController
-@RequestMapping("/boss")
+@RequestMapping("/boss/fisedevice")
 public class fiseDeviceController {
 	
 	private Logger logger=Logger.getLogger(getClass());

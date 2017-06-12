@@ -15,7 +15,7 @@ import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/deviceversion")
 public class DeviceVersionController {
 	
 	private Logger logger=Logger.getLogger(getClass());

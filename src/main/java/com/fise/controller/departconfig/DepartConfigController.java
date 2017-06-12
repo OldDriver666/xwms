@@ -15,7 +15,7 @@ import com.fise.model.param.DepartConfigParam;
 import com.fise.server.departconfig.IDepartConfigService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/departconf")
 public class DepartConfigController {
 	
 	private Logger logger=Logger.getLogger(getClass());
