@@ -15,7 +15,7 @@ import com.fise.model.param.ClientTypeParam;
 import com.fise.server.clienttype.IClientTypeService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/clienttype")
 public class ClientTypeController {
 	
 	private Logger logger=Logger.getLogger(getClass());

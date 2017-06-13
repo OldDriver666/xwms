@@ -15,7 +15,7 @@ import com.fise.model.param.ServiceConfParam;
 import com.fise.server.serviceconf.IServiceConfService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/serviceconf")
 public class ServiceConfController {
 	
 	private Logger logger=Logger.getLogger(getClass());
