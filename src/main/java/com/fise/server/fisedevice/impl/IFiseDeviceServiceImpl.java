@@ -31,7 +31,7 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getIme())||StringUtil.isEmpty(record.getAccount())||record.getType()==null){
+		if(StringUtil.isEmpty(record.getIme())||StringUtil.isEmpty(record.getAccount())||record.getType()==null||record.getDepartid()==null){
 			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		

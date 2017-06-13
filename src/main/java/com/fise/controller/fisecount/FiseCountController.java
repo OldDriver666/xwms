@@ -1,13 +1,16 @@
 package com.fise.controller.fisecount;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.Response;
+import com.fise.model.param.DeviceCountParam;
 import com.fise.server.activedevicecount.IActiveDeviceCountService;
 
 @RestController
@@ -21,11 +24,11 @@ public class FiseCountController {
     
     //查询小位与设备的激活与在线统计
     @RequestMapping(value="/devicecount",method=RequestMethod.POST)
-    public Response getDeviceCount(){
+    public Response getDeviceCount(@RequestBody @Valid DeviceCountParam param){
         
         Response response=new Response();
         
-        response=iActiveDeviceCountService.getActiveDeviceCount();
+        response=iActiveDeviceCountService.getActiveDeviceCount(param);
         
         return response;
     }

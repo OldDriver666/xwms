@@ -17,16 +17,6 @@ public class FiseDevice implements Serializable {
     private String ime;
 
     /**
-     * 设备蓝牙地址
-     */
-    private String mac;
-
-    /**
-     * 设备暗码
-     */
-    private String code;
-
-    /**
      * 状态 0-出厂 1-激活 2-删除
      */
     private Boolean status;
@@ -79,22 +69,6 @@ public class FiseDevice implements Serializable {
 
     public void setIme(String ime) {
         this.ime = ime;
-    }
-
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Boolean getStatus() {

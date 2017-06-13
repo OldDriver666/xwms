@@ -7,6 +7,7 @@ import com.fise.base.Response;
 import com.fise.dao.IMUserMapper;
 import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.IMUserExample.Criteria;
+import com.fise.model.param.DeviceCountParam;
 import com.fise.model.result.DeviceCountResult;
 import com.fise.server.activedevicecount.IActiveDeviceCountService;
 
@@ -17,7 +18,7 @@ public class IActiveDeviceCountServiceImpl implements IActiveDeviceCountService{
     IMUserMapper IMUserDao;
     
     @Override
-    public Response getActiveDeviceCount() {
+    public Response getActiveDeviceCount(DeviceCountParam param) {
         
         Response response=new Response();
         DeviceCountResult result=new DeviceCountResult();
@@ -25,6 +26,7 @@ public class IActiveDeviceCountServiceImpl implements IActiveDeviceCountService{
         IMUserExample example=new IMUserExample();
         Criteria criteria=example.createCriteria();
         
+        criteria.andDepartidEqualTo(param.getDepartid());
         criteria.andTypeLessThan(19);
         result.setActiveXM(IMUserDao.selectByExample(example).size());
         criteria.andOnlineStatusEqualTo(1);
@@ -33,6 +35,7 @@ public class IActiveDeviceCountServiceImpl implements IActiveDeviceCountService{
         IMUserExample example2=new IMUserExample();
         Criteria criteria2=example2.createCriteria();
         
+        criteria2.andDepartidEqualTo(param.getDepartid());
         criteria2.andTypeGreaterThanOrEqualTo(19);
         result.setActiveDevice(IMUserDao.selectByExample(example2).size());
         criteria2.andOnlineStatusEqualTo(1);

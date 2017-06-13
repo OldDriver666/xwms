@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.Response;
-import com.fise.model.param.QueryDeviceByAccountParam;
-import com.fise.model.param.QueryDeviceByMobileParam;
-import com.fise.model.param.QueryDeviceByTypeParam;
+import com.fise.model.param.QueryDeviceParam;
 import com.fise.server.querydevice.IQueryDeviceService;
 
 @RestController
@@ -25,8 +23,8 @@ public class QueryDeviceController {
     IQueryDeviceService iQueryDeviceService;
     
     //通过设备账号查询
-    @RequestMapping(value="/querydevicebyaccount",method=RequestMethod.POST)
-    public Response queryDeviceByAccount(@RequestBody @Valid QueryDeviceByAccountParam param){
+    @RequestMapping(value="/querydevice",method=RequestMethod.POST)
+    public Response queryDeviceByAccount(@RequestBody @Valid QueryDeviceParam param){
         
         Response response=new Response();
         
@@ -35,25 +33,4 @@ public class QueryDeviceController {
         return response;
     }
     
-    //通过号码查询
-    @RequestMapping(value="/querydevicebymobile",method=RequestMethod.POST)
-    public Response queryDeviceByMobile(@RequestBody @Valid QueryDeviceByMobileParam param){
-        
-        Response response=new Response();
-        
-        response=iQueryDeviceService.queryDeviceByMobile(param);
-        
-        return response;
-    }
-    
-    //通过设备类型查询
-    @RequestMapping(value="/querydevicebytype",method=RequestMethod.POST)
-    public Response queryDeviceByType(@RequestBody @Valid QueryDeviceByTypeParam param){
-        
-        Response response=new Response();
-        
-        response=iQueryDeviceService.queryDeviceByType(param);
-        
-        return response;
-    }
 }

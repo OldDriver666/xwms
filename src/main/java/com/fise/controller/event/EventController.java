@@ -13,6 +13,7 @@ import com.fise.base.Response;
 import com.fise.model.param.EventQueryParam;
 import com.fise.server.device.IEventService;
 
+
 @RestController
 @RequestMapping("/boss")
 public class EventController {

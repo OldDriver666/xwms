@@ -2,6 +2,7 @@ package com.fise.server.systemconf.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getType())){
+		if(StringUtil.isEmpty(record.getType())||StringUtil.isEmpty(record.getName())){
 			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
@@ -47,17 +48,24 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(param.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		IMSystemConfExample example=new IMSystemConfExample();
+		Criteria criteria=example.createCriteria();
+		
+		if(!StringUtil.isEmpty(param.getType())){
+		    criteria.andTypeEqualTo(param.getType());
 		}
 		
-		IMSystemConf imSystemConf=iMSystemConfDao.selectByPrimaryKey(param.getConfigid());
+		if(!StringUtil.isEmpty(param.getName())){
+		    criteria.andNameEqualTo(param.getName());
+		}
 		
-		if(imSystemConf==null){
+		List<IMSystemConf> list=iMSystemConfDao.selectByExample(example);
+		
+		if(list.size()==0){
 			return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);	
 		}
 		
-		response.success(imSystemConf);
+		response.success(list);
 		return response;
 	}
 
