@@ -2,6 +2,8 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author 
  */
@@ -9,16 +11,19 @@ public class WatchConf implements Serializable {
     /**
      * 设备号
      */
+    @JsonProperty("device_id")
     private Integer deviceId;
 
     /**
      * 管理员ID
      */
+    @JsonProperty("master_id")
     private Integer masterId;
 
     /**
      * 管理群组ID
      */
+    @JsonProperty("group_id")
     private Integer groupId;
 
     /**
@@ -26,23 +31,28 @@ public class WatchConf implements Serializable {
      */
     private String mobile;
 
+    @JsonProperty("alarm_takeoff")
     private Boolean alarmTakeoff;
 
     /**
      * 电量报警开光
      */
+    @JsonProperty("alarm_battery")
     private Boolean alarmBattery;
 
     /**
      * 关机报警开关
      */
+    @JsonProperty("alarm_poweroff")
     private Boolean alarmPoweroff;
-
+    
+    @JsonProperty("step_mode")
     private Boolean stepMode;
 
     /**
      * 通话报警开关
      */
+    @JsonProperty("alarm_call")
     private Boolean alarmCall;
 
     /**
@@ -58,11 +68,13 @@ public class WatchConf implements Serializable {
     /**
      * 响铃模式 1-响铃 2震动 3响铃和震动
      */
+    @JsonProperty("bell_mode")
     private Boolean bellMode;
 
     /**
      * 亮屏时间
      */
+    @JsonProperty("light_time")
     private Integer lightTime;
 
     private Integer updated;

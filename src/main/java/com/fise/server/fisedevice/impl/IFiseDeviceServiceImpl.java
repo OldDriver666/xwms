@@ -31,7 +31,7 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getIme())||record.getStatus()==null||StringUtil.isEmpty(record.getAccount())||record.getType()==null||record.getDepartid()==null){
+		if(StringUtil.isEmpty(record.getIme())||StringUtil.isEmpty(record.getAccount())||record.getType()==null){
 			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
@@ -69,8 +69,8 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(param.getAccount()) && StringUtil.isEmpty(param.getIme()) && param.getDepartid()!=null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		if(param.getDepartid()==null){
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
 		FiseDeviceExample example=new FiseDeviceExample();
@@ -88,7 +88,7 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		List<FiseDevice> fisedevicelist=fiseDevicedao.selectByExample(example);
 		
 		if(fisedevicelist.size()!=0){
-			response.success(fisedevicelist.get(0));
+			response.success(fisedevicelist);
 			return response;
 		}
 		

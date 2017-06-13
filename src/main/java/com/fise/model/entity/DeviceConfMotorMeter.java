@@ -2,6 +2,8 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author 
  */
@@ -9,11 +11,13 @@ public class DeviceConfMotorMeter implements Serializable {
     /**
      * 设备号
      */
+    @JsonProperty("device_id")
     private Integer deviceId;
 
     /**
      * 管理员ID
      */
+    @JsonProperty("master_id")
     private Integer masterId;
 
     /**
@@ -24,26 +28,31 @@ public class DeviceConfMotorMeter implements Serializable {
     /**
      * 电量报警开光
      */
+    @JsonProperty("alarm_battery")
     private Boolean alarmBattery;
 
     /**
      * 关机报警开关
      */
+    @JsonProperty("allarm_poweroff")
     private Boolean alarmPoweroff;
 
     /**
      * 电子围栏报警开关
      */
+    @JsonProperty("alarm_pen")
     private Boolean alarmPen;
 
     /**
      * 通话报警开关
      */
+    @JsonProperty("alarm_call")
     private Boolean alarmCall;
 
     /**
      * 静默监听开关
      */
+    @JsonProperty("listen_silent")
     private Boolean listenSilent;
 
     /**
@@ -54,6 +63,7 @@ public class DeviceConfMotorMeter implements Serializable {
     /**
      * 响铃模式 1-响铃 2震动 3响铃和震动
      */
+    @JsonProperty("bell_mode")
     private Boolean bellMode;
 
     /**
@@ -64,6 +74,7 @@ public class DeviceConfMotorMeter implements Serializable {
     /**
      * 限速
      */
+    @JsonProperty("speed_limit")
     private Integer speedLimit;
 
     private Integer updated;

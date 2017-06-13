@@ -52,8 +52,7 @@ public class IQueryDeviceServiceImpl implements IQueryDeviceService{
     public Response queryDeviceByAccount(QueryDeviceByAccountParam param) {
         
         Response response=new Response();
-        
-        
+           
         IMUserExample example=new IMUserExample();
         Criteria criteria=example.createCriteria();
         criteria.andNameEqualTo(param.getAccount());

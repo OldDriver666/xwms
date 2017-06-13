@@ -29,7 +29,7 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getName()) || StringUtil.isEmpty(record.getValue())){
+		if(StringUtil.isEmpty(record.getType())){
 			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
@@ -47,20 +47,17 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(param.getName())){
+		if(param.getConfigid()==null){
 			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
-		IMSystemConfExample example=new IMSystemConfExample();
-		Criteria criteria=example.createCriteria();
-		criteria.andNameEqualTo(param.getName());
-		List<IMSystemConf> list=iMSystemConfDao.selectByExample(example);
+		IMSystemConf imSystemConf=iMSystemConfDao.selectByPrimaryKey(param.getConfigid());
 		
-		if(list.size()==0){
+		if(imSystemConf==null){
 			return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);	
 		}
 		
-		response.success(list);
+		response.success(imSystemConf);
 		return response;
 	}
 
