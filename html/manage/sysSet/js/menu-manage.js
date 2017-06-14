@@ -19,7 +19,7 @@ $(function() {
 			data.description = $("#input-description").val();
 			data.priority = parseInt($("#input-priority").val());
 			data.sn = $("#input-sn").val();
-			data.status = parseInt($("#input-status").val());
+			data.status = parseInt($("input[name=status]:checked").val());
 			data.url = $("#input-url").val();
 			data.parent_id = parseInt($("#input-parent_id").val());
 
@@ -65,7 +65,7 @@ $(function() {
             data.description = $("#input-description").val();
 			data.priority = parseInt($("#input-priority").val());
 			data.sn = $("#input-sn").val();
-			data.status = parseInt($("#input-status").val());
+			data.status = parseInt($("input[name=status]:checked").val());
 			data.url = $("#input-url").val();
 			data.parent_id = parseInt($("#input-parent_id").val());
 
