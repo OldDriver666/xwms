@@ -78,20 +78,16 @@
         return false;
     });
     $("#btn_submit").bind('click',function(){
-        var url = ctx + "Manage/Login";
-        var data = {"UserName":$("#ipt_username").val(),"PassWord": $.md5($("#ipt_password").val())};
-        Util.ajaxLoadData(url,data,"POST",true,function(result) {
-            if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                var userAuthList = JSON.stringify(result.UserAuthCode);
-
-                Util.cookieStorage.setCookie("accesstoken",result.AuthenticCode);
-                Util.cookieStorage.setCookie("username",result.UserName);
-                Util.cookieStorage.setCookie("nickname",result.NickName);
-                Util.cookieStorage.setCookie("userLevel",result.UserLevel);
-                Util.cookieStorage.setCookie("departId",result.DepartId);
-                Util.cookieStorage.setCookie("adminId",result.AdminId);
-                Util.cookieStorage.setCookie("userAuthCode",userAuthList);
-                //console.log(userAuthList);
+        var url = ctx + "boss/admin/login";
+        var data = {"account":$("#ipt_username").val(),"password": $.md5($("#ipt_password").val())};
+        Util.ajaxLoginData(url,data,"POST",true,function(result) {
+            if(result.code == ReturnCode.SUCCESS && result.data.accessToken != ""){
+                Util.cookieStorage.setCookie("accesstoken",result.data.accessToken);
+                Util.cookieStorage.setCookie("username",result.data.account);
+                Util.cookieStorage.setCookie("nickname",result.data.nickName);
+                Util.cookieStorage.setCookie("userLevel",result.data.roleId);
+                Util.cookieStorage.setCookie("departId",result.data.companyId);
+                Util.cookieStorage.setCookie("adminId",result.data.id);
                 window.location.href = "index.html";
             } else if(result.Status == 1){
                 alert("服务器开个小差，请稍后重试！");
