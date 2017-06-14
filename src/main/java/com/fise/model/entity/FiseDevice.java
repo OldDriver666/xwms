@@ -15,6 +15,10 @@ public class FiseDevice implements Serializable {
      * 设备IME号
      */
     private String ime;
+    
+    private String mac;
+    
+    private String code;
 
     /**
      * 状态 0-出厂 1-激活 2-删除
@@ -53,7 +57,21 @@ public class FiseDevice implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Integer getFiseId() {
 		return fiseId;
