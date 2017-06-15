@@ -49,14 +49,6 @@ public class IQueryDeviceServiceImpl implements IQueryDeviceService{
         Response response=new Response();
         List<Object> resultlist=new ArrayList<>();
         
-        if(param.getDepartid()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        
-        if(param.getType()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        
         IMUserExample example=new IMUserExample();
         Criteria criteria=example.createCriteria();
         criteria.andDepartidEqualTo(param.getDepartid());

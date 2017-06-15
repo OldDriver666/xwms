@@ -457,3 +457,165 @@ type和name都是选填，如果都不填，则查询所有信息
  "activeXM":70                    //激活的小位
 }
 ```
+
+###公司ID与设备类型配置
+####新增配置
+|   接口地址    |   /boss/departconf/addimdepartconfig        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+{"depart_id":x,                   //必填-公司/团体ID  
+ "client_type":x,                 //必填-设备类型
+ "avatar":""                      //选填-默认头像
+}
+```
+- **回复**
+```
+无内容，直接查看返回码
+```  
+
+####查询配置 
+|   接口地址    |   /boss/departconf/queryimdepartconfig        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+都不填则全部查询
+{"depart_id":x,                   //选填-公司/团体ID  
+ "client_type":x,                 //选填-设备类型
+}
+```
+- **回复**
+```
+[{"config_id":x,                   
+  "depart_id":x,
+  "client_type":x,
+  "avatar":"",
+  "created":x
+},
+ {"config_id":x,                   
+  "depart_id":x,
+  "client_type":x,
+  "avatar":"",
+  "created":x
+}
+] 
+```  
+
+####删除配置 
+|   接口地址    |   /boss/departconf/delimdepartconfig        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+{"config_id":x}                   //必填-公司设备配置ID 
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####修改配置 
+|   接口地址    |   /boss/departconf/updateimdepartconfig        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+{"config_id":x                    //必填-公司设备配置ID
+ "depart_id":x,                   //选填-公司/团体ID  
+ "client_type":x,                 //选填-设备类型
+ "avatar":""                      //选填-默认头像
+} 
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+###设备类型与设备名称配置
+####添加配置
+|   接口地址    |   boss/clienttype/addclienttype        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+{"client_type":x,                   //必填-设备类型
+ "client_name":""                   //必填-设备类型名称
+}
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####查询配置
+|   接口地址    |   boss/clienttype/queryclienttype        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+都不填则全部查询
+{"client_type":x,                   //选填-设备类型
+ "client_name":""                   //选填-设备类型名称
+}
+```
+- **回复**
+```
+[{"type_id":x,
+  "client_type":x,
+  "client_name":"",
+  "created":x
+  },
+ {"type_id":x,
+  "client_type":x,
+  "client_name":"",
+  "created":x
+  }
+]
+```   
+
+####删除配置
+|   接口地址    |   boss/clienttype/delclienttype        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+{"type_id":x}                     //必填-配置ID
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####修改配置
+|   接口地址    |   boss/clienttype/updateclienttype        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"type_id":x,                     //必填-配置ID
+ "client_type":x,                 //选填-设备类型
+ "client_name":""                 //选填-设备类型名称
+}
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 

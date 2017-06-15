@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSystemConf;
 import com.fise.model.param.SystemConfParam;
 import com.fise.server.systemconf.ISystemConfService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/systemconf")
@@ -28,6 +30,10 @@ public class SystemConfController {
 	public Response addSystemConf(@RequestBody @Valid IMSystemConf record){
 		
 		Response response=new Response();
+		
+		if(StringUtil.isEmpty(record.getType())||StringUtil.isEmpty(record.getName())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iSystemConfService.insertSystemConf(record);
@@ -55,6 +61,10 @@ public class SystemConfController {
 		
 		Response response=new Response();
 		
+		if(param.getConfigid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iSystemConfService.delSystemConf(param);
 		logger.info("end delete systemconf"+response.toString());
@@ -67,6 +77,10 @@ public class SystemConfController {
 	public Response updateSystemConf(@RequestBody @Valid IMSystemConf record){
 		
 		Response response=new Response();
+		
+		if(record.getConfigid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iSystemConfService.updateSystemConf(record);

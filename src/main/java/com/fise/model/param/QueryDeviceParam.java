@@ -13,11 +13,13 @@ public class QueryDeviceParam implements Serializable{
     
     private String account;
     
+    @NotNull
     private Integer type;
     
     private String phone;
     
     @JsonProperty("depart_id")
+    @NotNull
     private Integer departid;
     
     public Integer getDepartid() {

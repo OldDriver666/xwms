@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDevcieVersion;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/deviceversion")
@@ -29,6 +31,10 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
+		if(record.getDepartid()==null || record.getDevType()==null || StringUtil.isEmpty(record.getDevVersion())||StringUtil.isEmpty(record.getUpdateUrl())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(record.toString());
 		response=iDeviceVersionService.insertDeviceVersion(record);
 		logger.info("end insert deviceversion"+response.toString());
@@ -41,6 +47,10 @@ public class DeviceVersionController {
 	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		
+		if(param.getDepartid()==null && param.getDevType()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iDeviceVersionService.queryDeviceVersion(param);
@@ -55,6 +65,10 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
+		if(param.getVersionid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iDeviceVersionService.delDeviceVersion(param);
 		logger.info("end delete deviceversion"+response.toString());
@@ -67,6 +81,10 @@ public class DeviceVersionController {
 	public Response updateDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
 		
 		Response response=new Response();
+		
+		if(record.getVersionid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iDeviceVersionService.updateDeviceVersion(record);

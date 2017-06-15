@@ -29,10 +29,6 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 		
 		Response response=new Response();
 		
-		if(record.getClienttype()==null || StringUtil.isEmpty(record.getClientname())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		//判断添加的clienttype的设备类型是否已经存在
 		IMClientTypeExample exampleType=new IMClientTypeExample();
 		Criteria criteriaType=exampleType.createCriteria();
@@ -68,10 +64,6 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(param.getClientname()) && param.getClienttype()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		IMClientTypeExample example=new IMClientTypeExample();
 		Criteria criteria=example.createCriteria();
 		
@@ -86,7 +78,7 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 		List<IMClientType> fisedevicelist=imClientTypeDao.selectByExample(example);
 		
 		if(fisedevicelist.size()!=0){
-			response.success(fisedevicelist.get(0));
+			response.success(fisedevicelist);
 			return response;
 		}
 		
@@ -98,10 +90,6 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 		
 		Response response=new Response();
 		
-		if(param.getTypeid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		imClientTypeDao.deleteByPrimaryKey(param.getTypeid());
 		return response.success();
 	}
@@ -110,10 +98,6 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 	public Response updateClientType(IMClientType record) {
 
 		Response response=new Response();
-		
-		if(record.getTypeid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		if(!StringUtil.isEmpty(record.getClientname())){
 			//判断修改的设备的名字是否已经存在

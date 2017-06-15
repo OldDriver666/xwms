@@ -30,10 +30,6 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getType())||StringUtil.isEmpty(record.getName())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		//更新设备相关信息
 		long nowtime=System.currentTimeMillis() / 1000;
 		record.setUpdated((int)nowtime);
@@ -74,10 +70,6 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(param.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		iMSystemConfDao.deleteByPrimaryKey(param.getConfigid());
 		
 		return response.success();
@@ -87,10 +79,6 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 	public Response updateSystemConf(IMSystemConf record) {
 		
 		Response response=new Response();
-		
-		if(record.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		//更新设备相关信息
 		long nowtime=System.currentTimeMillis() / 1000;

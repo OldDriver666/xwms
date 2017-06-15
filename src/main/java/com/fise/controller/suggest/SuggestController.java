@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSuggest;
 import com.fise.model.param.SuggestParam;
 import com.fise.server.suggest.ISuggestService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/suggest")
@@ -29,6 +31,10 @@ public class SuggestController {
 		
 		Response response=new Response();
 		
+		if(record.getUserId()==null || StringUtil.isEmpty(record.getUname())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(record.toString());
 		response=iSuggestService.insertSuggest(record);
 		logger.info("end insert imsugest"+response.toString());
@@ -41,6 +47,10 @@ public class SuggestController {
 	public Response querySuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
+		
+		if(param.getUserId()==null && StringUtil.isEmpty(param.getUname())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iSuggestService.querySuggest(param);
@@ -55,6 +65,10 @@ public class SuggestController {
 		
 		Response response=new Response();
 		
+		if(param.getId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iSuggestService.delSuggest(param);
 		logger.info("end delete imsuggest"+response.toString());
@@ -67,6 +81,10 @@ public class SuggestController {
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
+		
+		if(record.getId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iSuggestService.updateSuggest(record);

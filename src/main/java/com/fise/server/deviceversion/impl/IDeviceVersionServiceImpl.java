@@ -29,9 +29,8 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		if(record.getDepartid()==null || record.getDevType()==null || StringUtil.isEmpty(record.getDevVersion())||StringUtil.isEmpty(record.getUpdateUrl())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
+		//TODO 没有判断departid,dev_type,dev_version已经存在的情况
+		
 		
 		deviceVersionDao.insertSelective(record);
 		response.success();
@@ -43,10 +42,6 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 	public Response queryDeviceVersion(DeviceVersionParam param) {
 		
 		Response response=new Response();
-		
-		if(param.getDepartid()==null && param.getDevType()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		IMDevcieVersionExample example=new IMDevcieVersionExample();
 		Criteria criteria=example.createCriteria();
@@ -75,10 +70,6 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		if(param.getVersionid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		deviceVersionDao.deleteByPrimaryKey(param.getVersionid());
 		return response.success();
 	}
@@ -88,9 +79,7 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		if(record.getVersionid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
+		//TODO 没有判断departid,dev_type,dev_version已经存在的情况
 		
 		deviceVersionDao.updateByPrimaryKeySelective(record);
 		return response.success();

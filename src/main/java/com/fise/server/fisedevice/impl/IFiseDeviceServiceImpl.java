@@ -31,10 +31,6 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getIme())||StringUtil.isEmpty(record.getAccount())||record.getType()==null||record.getDepartid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		//判断添加的设备的IME是否已经存在
 		FiseDeviceExample exampleIME=new FiseDeviceExample();
 		Criteria criteriaIME=exampleIME.createCriteria();
@@ -69,10 +65,6 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		Response response=new Response();
 		
-		if(param.getDepartid()==null){
-		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		FiseDeviceExample example=new FiseDeviceExample();
 		Criteria criteria=example.createCriteria();
 		criteria.andDepartidEqualTo(param.getDepartid());
@@ -100,10 +92,6 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		Response response=new Response();
 		
-		if(param.getFiseId()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		fiseDevicedao.deleteByPrimaryKey(param.getFiseId());
 		return response.success();
 		
@@ -113,10 +101,6 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 	public Response updateFiseDevice(FiseDevice param) {
 
 		Response response=new Response();
-		
-		if(param.getFiseId()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		if(!StringUtil.isEmpty(param.getIme())){
 			//判断修改的设备的IME是否已经存在
