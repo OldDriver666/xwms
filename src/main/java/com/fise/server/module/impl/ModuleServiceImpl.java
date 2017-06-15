@@ -9,6 +9,7 @@ import com.fise.base.Response;
 import com.fise.dao.WiModuleMapper;
 import com.fise.dao.WiPermissionMapper;
 import com.fise.model.entity.WiModule;
+import com.fise.model.entity.WiModuleExample;
 import com.fise.model.param.ModuleInsertParam;
 import com.fise.model.param.ModuleQueryParam;
 import com.fise.model.param.ModuleQueryResult;
@@ -42,8 +43,11 @@ public class ModuleServiceImpl implements IModuleService {
         module.setName(param.getName());
         module.setParentId(param.getParentId());
         module.setPriority(param.getPriority());
-        if(!param.getDescription().isEmpty()){
+        if(param.getDescription() != null){
             module.setDescription(param.getDescription());
+        }
+        if(param.getUrl() != null){
+            module.setUrl(param.getUrl());
         }
         module.setSn(param.getSn());
         module.setStatus(param.getStatus());
@@ -67,17 +71,30 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getPriority() != null){
             module.setPriority(param.getPriority());
         }
-        if(!StringUtil.isEmpty(param.getDescription())){
+        if(param.getDescription() != null){
             module.setDescription(param.getDescription());
         }
-        if(!StringUtil.isEmpty(param.getSn())){
+        if(param.getSn() != null){
             module.setSn(param.getSn());
         }
         if(param.getStatus() != null){
             module.setStatus(param.getStatus());
         }
+        if(param.getUrl() != null){
+            module.setUrl(param.getUrl());
+        }
         moduleDao.updateByPrimaryKeySelective(module);
         resp.success();
+        return resp;
+    }
+
+    @Override
+    public Response QueryModeuleAll(ModuleQueryParam param) {
+        Response resp = new Response();
+        // TODO  检测用户是否有权查询所有菜单用作管理
+        WiModuleExample example = new WiModuleExample();
+        List<WiModule> moduleList = moduleDao.selectByExample(example);
+        resp.success(moduleList);
         return resp;
     }
 

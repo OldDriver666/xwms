@@ -282,6 +282,7 @@
   </update>
   <!-- 为了减少查询 直接完成关联查询函数  -->
   <resultMap id="moduleQueryResult" type="com.fise.model.param.ModuleQueryResult">
+    <result column="id" jdbcType="INTEGER" property="permissId" />
     <result column="module_id" jdbcType="INTEGER" property="moduleId" />
     <result column="name" jdbcType="VARCHAR" property="moduleName" />
     <result column="priority" jdbcType="INTEGER" property="priority" />
@@ -293,7 +294,7 @@
     <result column="query_auth" jdbcType="INTEGER" property="queryAuth" />
   </resultMap>
   <select id="selectPermissionByRole" parameterType="java.lang.Integer"  resultMap="moduleQueryResult">
-    select p.module_id,m.name,m.priority,m.sn,m.url,m.parent_id,p.insert_auth,p.update_auth,p.query_auth
+    select p.id,p.module_id,m.name,m.priority,m.sn,m.url,m.parent_id,p.insert_auth,p.update_auth,p.query_auth
         from wi_permission p 
         left join wi_module m 
         on p.module_id=m.id

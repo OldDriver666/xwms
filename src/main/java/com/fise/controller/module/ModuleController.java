@@ -31,6 +31,14 @@ public class ModuleController {
         return resp;
     }
     
+    @RequestMapping(value = "/queryall", method = RequestMethod.POST)
+    public Response queryAll(@RequestBody @Valid ModuleQueryParam param){
+        Response resp = new Response();
+        logger.debug(param);
+        resp = moduleSvr.QueryModeuleAll(param);
+        return resp;
+    }
+    
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Response insert(@RequestBody @Valid ModuleInsertParam param){
         Response resp = new Response();

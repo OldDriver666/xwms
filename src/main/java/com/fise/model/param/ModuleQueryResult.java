@@ -14,6 +14,8 @@ import com.fise.utils.JsonUtil;
 public class ModuleQueryResult implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer permissId;
+    
     private Integer moduleId;
     
     private String moduleName;
@@ -102,6 +104,22 @@ public class ModuleQueryResult implements Serializable {
 
     public void setQueryAuth(Integer queryAuth) {
         this.queryAuth = queryAuth;
+    }
+
+    public Integer getPermissId() {
+        return permissId;
+    }
+
+    public void setPermissId(Integer permissId) {
+        this.permissId = permissId;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     @Override

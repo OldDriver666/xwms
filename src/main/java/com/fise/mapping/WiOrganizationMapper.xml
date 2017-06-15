@@ -7,7 +7,7 @@
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="contact" jdbcType="VARCHAR" property="contact" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="describtion" jdbcType="VARCHAR" property="describtion" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created" jdbcType="INTEGER" property="created" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, address, contact, email, describe, status, created, updated
+    id, name, address, contact, email, describtion, status, created, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiOrganizationExample" resultMap="BaseResultMap">
     select
@@ -113,11 +113,11 @@
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiOrganization">
     insert into wi_organization (id, name, address, 
-      contact, email, describe, 
+      contact, email, describtion, 
       status, created, updated
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{contact,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, 
+      #{contact,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{describtion,jdbcType=VARCHAR}, 
       #{status,jdbcType=TINYINT}, #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}
       )
   </insert>
@@ -139,8 +139,8 @@
       <if test="email != null">
         email,
       </if>
-      <if test="describe != null">
-        describe,
+      <if test="describtion != null">
+        describtion,
       </if>
       <if test="status != null">
         status,
@@ -168,8 +168,8 @@
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null">
-        #{describe,jdbcType=VARCHAR},
+      <if test="describtion != null">
+        #{describtion,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -206,8 +206,8 @@
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
       </if>
-      <if test="record.describe != null">
-        describe = #{record.describe,jdbcType=VARCHAR},
+      <if test="record.describtion != null">
+        describtion = #{record.describtion,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
@@ -230,7 +230,7 @@
       address = #{record.address,jdbcType=VARCHAR},
       contact = #{record.contact,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
-      describe = #{record.describe,jdbcType=VARCHAR},
+      describtion = #{record.describtion,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=TINYINT},
       created = #{record.created,jdbcType=INTEGER},
       updated = #{record.updated,jdbcType=INTEGER}
@@ -253,8 +253,8 @@
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="describe != null">
-        describe = #{describe,jdbcType=VARCHAR},
+      <if test="describtion != null">
+        describtion = #{describtion,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
@@ -274,7 +274,7 @@
       address = #{address,jdbcType=VARCHAR},
       contact = #{contact,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+      describtion = #{describtion,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
       created = #{created,jdbcType=INTEGER},
       updated = #{updated,jdbcType=INTEGER}

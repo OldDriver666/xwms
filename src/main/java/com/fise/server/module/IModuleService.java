@@ -9,6 +9,9 @@ public interface IModuleService {
     /*查询用户可见模块*/
     Response QueryModeule(ModuleQueryParam param);
     
+    /*查询所有模块*/
+    Response QueryModeuleAll(ModuleQueryParam param);
+    
     /*新增用户可见模块*/
     Response InsertModeule(ModuleInsertParam param);
     

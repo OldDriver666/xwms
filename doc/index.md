@@ -73,8 +73,9 @@ null 没有数据返回 看code是否成功
 
 ###菜单管理
 ####获取菜单权限
-|   接口地址    |   boss/module/queru         |
+|   接口地址    |   boss/module/query         |
 |   ---         |   ---                   |
+|   管理获取    |   boss/module/queryall         |
 |   请求方式    |   HTTP POST             |
 |   参数格式    |   JSON                        |
 
@@ -618,4 +619,125 @@ type和name都是选填，如果都不填，则查询所有信息
 - **回复**
 ```
 无内容，直接查看返回码
+``` 
+
+###权限管理
+####查询用户角色
+|   接口地址    |   boss/role/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"role_id":x,                 //必填-自己角色
+ "organ_id":x                 //必填-自己公司
+}
+```
+- **回复**
+```
+[
+      {
+         "id": 1,
+         "authLevel": 999,
+         "name": "BOSS",
+         "description": "沸石智能管理员账号",
+         "organizationId": 1
+      },
+      {
+         "id": 2,
+         "authLevel": 800,
+         "name": "超级管理员",
+         "description": "合作公司管理员账号",
+         "organizationId": 1
+      },
+      {
+         "id": 3,
+         "authLevel": 700,
+         "name": "管理员",
+         "description": "管理员账号",
+         "organizationId": 1
+      }
+]
+``` 
+
+####查询角色权限
+|   接口地址    |   boss/role/queryAuth        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"role_id":x,                 //必填-自己角色
+ "organ_id":x                 //必填-自己公司
+}
+```
+- **回复**
+```
+[
+      {
+         "role_id": 3,
+         "role_name": "管理员",
+         "auth_list": [
+            {
+               "moduleId": 1,
+               "moduleName": "整体概述",
+               "priority": 2300,
+               "sn": "zhengtigaisu",
+               "url": "https://www.baidu.com",
+               "insertAuth": 1,
+               "updateAuth": 1,
+               "queryAuth": 1,
+               "parent_id": 0
+            },
+            {
+               "moduleId": 3,
+               "moduleName": "报表统计",
+               "priority": 1800,
+               "sn": "baobiaotongji",
+               "url": "",
+               "insertAuth": 1,
+               "updateAuth": 1,
+               "queryAuth": 1,
+               "parent_id": 0
+            }
+         ]
+      }
+]
+``` 
+
+####修改角色权限
+|   接口地址    |   boss/role/updateAuth        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{
+   "role_id":x,
+   "permis_list":
+   [
+      {"permission_id":x,             //如果是修改必填，如果是新增不用填-权限id 从上面查询中获取id
+       "module_id":x,                 //选填-自己菜单id
+       "status":x,                    //选填-1-可见 0-不可见
+       "insert_auth":x,               //选填-新增权限
+       "update_auth":x,               //选填-更新权限
+       "query_auth":x                 //选填-查询可见权限
+      },
+      {
+       "module_id":x,                 //选填-自己菜单id
+       "status":1,                    //选填-1-可见 0-不可见
+       "insert_auth":1,               //选填-新增权限
+       "update_auth":1,               //选填-更新权限
+       "query_auth":1                 //选填-查询可见权限
+      },
+   ]
+}
+
+```
+- **回复**
+```
+无回复 看结果
 ``` 

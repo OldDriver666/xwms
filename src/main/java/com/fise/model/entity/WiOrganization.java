@@ -28,7 +28,7 @@ public class WiOrganization implements Serializable {
     /**
      * 公司简介
      */
-    private String describe;
+    private String describtion;
 
     /**
      * 0-删除，1-正常
@@ -87,12 +87,12 @@ public class WiOrganization implements Serializable {
         this.email = email;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescribtion() {
+        return describtion;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescribtion(String describtion) {
+        this.describtion = describtion;
     }
 
     public Byte getStatus() {
