@@ -88,7 +88,7 @@ $(function() {
                 data.AuthenticCode = token_value;
                 data.RoleId = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
-					if (result.Status == ReturnCode.SUCCESS) {
+					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}
@@ -102,14 +102,21 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+		var check_status = $.trim(that.find(".td-status").text());
+		var status_val = null;
+		if(check_status === "1"){
+			status_val = 1;
+		}else if(check_status === "0"){
+			status_val = 0;
+		}
         $("#input-moduleId").val(that.find(".td-moduleId").text());
         $("#input-priority").val(that.find(".td-priority").text());
         $("#input-moduleName").val(that.find(".td-moduleName").text());
         $("#input-url").val(that.find(".td-url").text());
 		$("#input-sn").val(that.find(".td-sn").text());
 		$("#input-parent_id").val(that.find(".td-parent_id").text());
-		/*$("#input-description").val(that.find(".td-roleNotes").text());
-		$("#input-status").val(that.find(".td-roleNotes").text());*/
+		$("#input-description").val(that.find(".td-description").text());
+		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
 

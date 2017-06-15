@@ -5,18 +5,17 @@ $(function() {
 	var action = {
 		//新增数据
 		add : function() {
-            var url = ctx + "BackStageManage/AddConfInfo";
-            var data = {
-                UserName : userName,
-                AuthenticCode : token_value,
-                BackStageConfName : $("#input-confName").val(),
-                BackStageConfType : $("#input-confType").val(),
-                BackStageConfValue : $("#input-confValue").val(),
-                BackStageConfAction : $("#input-confAction").val(),
-                BackStageConfStatus : $("input[name=status]:checked").val()
-            };
+            var url = ctx + "boss/systemconf/addsystemconf";
+            var data = new Object();
+            data.type = $("#input-confType").val();
+            data.name = $("#input-confName").val();
+            data.value = $("#input-confValue").val();
+            data.action = $("#input-confAction").val();
+            data.status = $("input[name=status]:checked").val();
+            data.parent_id = $("#input-confParent_id").val();
+
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if (result.Status == ReturnCode.SUCCESS) {
+                if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
@@ -25,19 +24,19 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var confname = $("#input-search-txt").val();
+            var conftype = $("#input-search-type").val();
+            var confname = $("#input-search-name").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
 
-            var url = ctx + "BackStageManage/QueryConfInfo";
-            var data = {
-                BackStageConfName : confname,
-                "UserName":userName,
-                "AuthenticCode": token_value
-            };
+            var url = ctx + "boss/systemconf/querysystemconf";
+            var data = new Object();
+            data.type = conftype;
+            data.name = confname;
+
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
-                    $("#pageTmpl").tmpl(result.BackStageConfInfo).appendTo('#pageContent');
+                    $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
@@ -52,18 +51,18 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "BackStageManage/ModifyConfInfo";
+			var url = ctx + "boss/systemconf/updatesystemconf";
 			var data = new Object();
-            data.UserName = userName;
-            data.AuthenticCode = token_value;
-			data.BackStageConfId = $("#input-id").val();
-			data.BackStageConfName = $("#input-confName").val();
-			data.BackStageConfType = $("#input-confType").val();
-			data.BackStageConfValue = $("#input-confValue").val();
-			data.BackStageConfAction = $("#input-confAction").val();
-			data.BackStageConfStatus = $("input[name=status]:checked").val();
+            data.config_id = parseInt($("#input-id").val());
+            data.type = $("#input-confType").val();
+            data.name = $("#input-confName").val();
+            data.value = $("#input-confValue").val();
+            data.action = $("#input-confAction").val();
+            data.status = $("input[name=status]:checked").val();
+            data.parent_id = $("#input-confParent_id").val();
+
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
-				if (result.Status == ReturnCode.SUCCESS) {
+				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
@@ -71,15 +70,13 @@ $(function() {
 			});
 		},
 		//删除数据
-		deleteConfig : function(id, name) {
+		deleteConfig : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "BackStageManage/DelConfInfo";
+				var url = ctx + "boss/systemconf/delsystemconf";
 				var data = new Object();
-                data.UserName = userName;
-                data.AuthenticCode = token_value;
-                data.BackStageId = id;
+                data.config_id = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
-					if (result.Status == ReturnCode.SUCCESS) {
+					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}
@@ -106,19 +103,20 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        var check_status = $.trim(that.find("td").eq(5).text());
+        var check_status = $.trim(that.find("td").eq(6).text());
         var status_val = null;
         if(check_status === "启用"){
-            status_val = 0;
+            status_val = true;
         }else if(check_status === "禁用"){
-            status_val = 1;
+            status_val = false;
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-confName").val(that.find("td").eq(1).text());
-        $("#input-confType").val(that.find("td").eq(2).text());
+        $("#input-confType").val(that.find("td").eq(1).text());
+        $("#input-confName").val(that.find("td").eq(2).text());
         $("#input-confValue").val(that.find("td").eq(3).text());
         $("#input-confAction").val(that.find("td").eq(4).text());
+        $("#input-confParent_id").val(that.find("td").eq(5).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
@@ -131,10 +129,7 @@ $(function() {
             },
             conftype : {
                 required : true
-            },
-            confvalue : {
-                required : true
-			}
+            }
         }
     });
 
