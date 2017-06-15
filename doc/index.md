@@ -681,6 +681,7 @@ type和name都是选填，如果都不填，则查询所有信息
          "role_name": "管理员",
          "auth_list": [
             {
+               "permissId":1,
                "moduleId": 1,
                "moduleName": "整体概述",
                "priority": 2300,
@@ -692,6 +693,7 @@ type和name都是选填，如果都不填，则查询所有信息
                "parent_id": 0
             },
             {
+               "permissId":2,
                "moduleId": 3,
                "moduleName": "报表统计",
                "priority": 1800,
