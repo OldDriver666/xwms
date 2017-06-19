@@ -27,7 +27,7 @@ public class ModuleServiceImpl implements IModuleService {
     private WiPermissionMapper permissionDao;
     
     @Override
-    public Response QueryModeule(ModuleQueryParam param) {
+    public Response QueryModule(ModuleQueryParam param) {
         Response resp = new Response();
         /*TODO 默认认为请求者传的roleId有效可用，不做检测 根据情况定是否检测值有效性*/
         List<ModuleQueryResult> data = permissionDao.selectPermissionByRole(param.getRoleId());
@@ -36,7 +36,7 @@ public class ModuleServiceImpl implements IModuleService {
     }
 
     @Override
-    public Response InsertModeule(ModuleInsertParam param) {
+    public Response InsertModule(ModuleInsertParam param) {
         Response resp = new Response();
         /*TODO 做角色权限判断*/
         WiModule module = new WiModule();
@@ -57,7 +57,7 @@ public class ModuleServiceImpl implements IModuleService {
     }
 
     @Override
-    public Response UpdateModeule(ModuleUpdateParam param) {
+    public Response UpdateModule(ModuleUpdateParam param) {
         /*TODO 做角色权限判断*/
         Response resp = new Response();
         WiModule module = new WiModule();
@@ -89,12 +89,20 @@ public class ModuleServiceImpl implements IModuleService {
     }
 
     @Override
-    public Response QueryModeuleAll(ModuleQueryParam param) {
+    public Response QueryModuleAll(ModuleQueryParam param) {
         Response resp = new Response();
         // TODO  检测用户是否有权查询所有菜单用作管理
         WiModuleExample example = new WiModuleExample();
         List<WiModule> moduleList = moduleDao.selectByExample(example);
         resp.success(moduleList);
+        return resp;
+    }
+
+    @Override
+    public Response DeleteModule(Integer moduleId) {
+        Response resp = new Response();
+        moduleDao.deleteByPrimaryKey(moduleId);
+        resp.success();
         return resp;
     }
 

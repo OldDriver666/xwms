@@ -7,14 +7,17 @@ import com.fise.model.param.ModuleUpdateParam;
 
 public interface IModuleService {
     /*查询用户可见模块*/
-    Response QueryModeule(ModuleQueryParam param);
+    Response QueryModule(ModuleQueryParam param);
     
     /*查询所有模块*/
-    Response QueryModeuleAll(ModuleQueryParam param);
+    Response QueryModuleAll(ModuleQueryParam param);
     
     /*新增用户可见模块*/
-    Response InsertModeule(ModuleInsertParam param);
+    Response InsertModule(ModuleInsertParam param);
     
     /*修改用户可见模块*/
-    Response UpdateModeule(ModuleUpdateParam param);
+    Response UpdateModule(ModuleUpdateParam param);
+    
+    /*删除记录*/
+    Response DeleteModule(Integer moduleId);
 }

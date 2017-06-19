@@ -71,6 +71,76 @@ http://boss.fise-wi.com
 null 没有数据返回 看code是否成功
 ```
 
+####管理员新增
+|   接口地址    |   boss/admin/insert         |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+- **请求**
+```
+{"admin_id":X,       //必填-这个值是登陆中返回的id获字段值-调用者id
+ "account":"",       //必填-新增管理员账号
+ "password":"",      //必填-密码
+ "nick_name":"",     //昵称
+ "role_id":x,        //必填-角色
+ "phone":"",
+ "email":""
+} 
+
+```
+- **回复**
+```
+null 没有数据返回 看code是否成功
+```
+
+####管理员查询
+|   接口地址    |   boss/admin/query         |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+- **请求**
+```
+{"admin_id":X,       //必填-这个值是登陆中返回的id获字段值-调用者id
+ "account":"",       //管理员账号
+ "role_id":x,        //角色
+ "company_id":x,     //公司组织id
+} 
+
+```
+- **回复**
+```
+null 没有数据返回 看code是否成功
+```
+
+####管理员修改
+|   接口地址    |   boss/admin/update         |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+- **请求**
+```
+{
+ "login_id":x,       //必填-登录者id
+ "admin_id":X,       //必填-需要修改者id
+ "account":"",       //增管理员账号
+ "password":"",      //密码
+ "nick_name":"",     //昵称
+ "role_id":x,        //角色
+ "organization_id":x,//公司组织id
+ "phone":"",
+ "email":""
+} 
+
+```
+- **回复**
+```
+null 没有数据返回 看code是否成功
+```
+
+
 ###菜单管理
 ####获取菜单权限
 |   接口地址    |   boss/module/query         |
@@ -163,6 +233,23 @@ null 没有数据返回 看code是否成功
  "status":x,            //选填-0或者1,1表示新增后可可见 0-不可见
  "url":"",              //选填-是否需要配置跳转的url
  "parent_id":x          //选填-菜单父节点，如果是顶级菜单填写0
+} 
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####删除菜单
+|   接口地址    |   boss/module/delete         |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+- **请求**
+```
+{
+ "module_id":x,         //必填-module主键id
 } 
 ```
 - **回复**
