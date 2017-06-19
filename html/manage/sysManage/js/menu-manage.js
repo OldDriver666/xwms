@@ -104,9 +104,9 @@ $(function() {
         var that = $(this).parent().parent();
 		var check_status = $.trim(that.find(".td-status").text());
 		var status_val = null;
-		if(check_status === "1"){
+		if(check_status === "可见"){
 			status_val = 1;
-		}else if(check_status === "0"){
+		}else if(check_status === "不可见"){
 			status_val = 0;
 		}
         $("#input-moduleId").val(that.find(".td-moduleId").text());

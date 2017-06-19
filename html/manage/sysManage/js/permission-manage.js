@@ -13,10 +13,10 @@ $(function() {
             var param_arr = [];
             var param = new Object();
             param.module_id = parseInt($("#input-moduleId").val());
-            param.status = parseInt($("#input-status").val());
-            param.insert_auth = parseInt($("#input-insert_auth").val());
-            param.update_auth = parseInt($("#input-update_auth").val());
-            param.query_auth = parseInt($("#input-query_auth").val());
+            param.status = $("input[name=status]:checked").val();
+            param.insert_auth = $("input[name=insert_auth]:checked").val();
+            param.update_auth = $("input[name=update_auth]:checked").val();
+            param.query_auth = $("input[name=query_auth]:checked").val();
             param_arr.push(param);
             var rold_idSel = parseInt($("#input-userRoles").val());
             var data = {
@@ -59,8 +59,6 @@ $(function() {
         },*/
 		//获取所有数据
 		loadPageData : function() {
-			/*var search_txt = $("#input-search-txt").val();
-            var type_num = $("#search-type").val();*/
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "boss/role/queryAuth";
@@ -140,10 +138,10 @@ $(function() {
             var param = new Object();
             param.permission_id = parseInt($("#input-permissId").val());
             param.module_id = parseInt($("#input-moduleId").val());
-            param.status = parseInt($("#input-status").val());
-            param.insert_auth = parseInt($("#input-insert_auth").val());
-            param.update_auth = parseInt($("#input-update_auth").val());
-            param.query_auth = parseInt($("#input-query_auth").val());
+            param.status = $("input[name=status]:checked").val();
+            param.insert_auth = $("input[name=insert_auth]:checked").val();
+            param.update_auth = $("input[name=update_auth]:checked").val();
+            param.query_auth = $("input[name=query_auth]:checked").val();
             param_arr.push(param);
             var rold_idSel = parseInt($('#search-input-userRoles option:selected').val());
             var data = {
@@ -283,11 +281,44 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+        var check_insert_auth = $.trim(that.find("td").eq(6).text());
+        var check_update_auth = $.trim(that.find("td").eq(7).text());
+        var check_query_auth = $.trim(that.find("td").eq(8).text());
+        var check_status = "可见";
+        /*var check_status = $.trim(that.find("td").eq(6).text());*/
+
+        var insert_auth_val = null;
+        var update_auth_val = null;
+        var query_auth_val = null;
+        var status_val = null;
+
+        if(check_insert_auth === "启用"){
+            insert_auth_val = 1;
+        }else if(check_insert_auth === "禁用"){
+            insert_auth_val = 0;
+        }
+        if(check_update_auth === "启用"){
+            update_auth_val = 1;
+        }else if(check_update_auth === "禁用"){
+            update_auth_val = 0;
+        }
+        if(check_query_auth === "启用"){
+            query_auth_val = 1;
+        }else if(check_query_auth === "禁用"){
+            query_auth_val = 0;
+        }
+        if(check_status === "可见"){
+            status_val = 1;
+        }else if(check_status === "不可见"){
+            status_val = 0;
+        }
+
         $("#input-permissId").val(that.find("td").eq(0).text());
         $("#input-moduleId").val(that.find("td").eq(1).text());
-        $("#input-insert_auth").val(that.find("td").eq(6).text());
-        $("#input-update_auth").val(that.find("td").eq(7).text());
-        $("#input-query_auth").val(that.find("td").eq(8).text());
+        $("input[name=insert_auth]").filter("[value=" + insert_auth_val + "]").prop('checked', true);
+        $("input[name=update_auth]").filter("[value=" + update_auth_val + "]").prop('checked', true);
+        $("input[name=query_auth]").filter("[value=" + query_auth_val + "]").prop('checked', true);
+        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#input-userRoles-txt").val($('#search-input-userRoles option:selected').text());
         $("#addTempl-modal").modal("show");
     });

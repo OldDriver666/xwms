@@ -70,11 +70,11 @@
 					</div>
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
-							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加设备信息</span>
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加角色权限</span>
 						</button>
-						<button id="btn-add-file" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal2">
+						<!--<button id="btn-add-file" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal2">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">批量添加设备</span>
-						</button>
+						</button>-->
 					</div>
 					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
 						<div class="modal-dialog">
@@ -93,21 +93,36 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-insert_auth" class="col-sm-2 control-label"><span class="necessary">*</span>新增权限</label>
+											<label class="col-sm-2 control-label">新增权限</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-insert_auth" name="insert_auth" placeholder="输入新增权限">
+												<label class="radio-inline">
+													<input type="radio" name="insert_auth" id="radio-insert_auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="insert_auth" id="radio-insert_auth-disabled" value="0"> 禁用
+												</label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-update_auth" class="col-sm-2 control-label"><span class="necessary">*</span>更新权限</label>
+											<label class="col-sm-2 control-label">修改权限</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-update_auth" name="update_auth" placeholder="输入更新权限">
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update_auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update_auth-disabled" value="0"> 禁用
+												</label>
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-query_auth" class="col-sm-2 control-label"><span class="necessary">*</span>查询可见权限</label>
+											<label class="col-sm-2 control-label">查询权限</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-query_auth" name="query_auth" placeholder="输入查询可见权限">
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query_auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query_auth-disabled" value="0"> 禁用
+												</label>
 											</div>
 										</div>
 										<div class="form-group" id="input-userRoles-wrap">
@@ -127,11 +142,12 @@
 										<div class="form-group">
 											<label class="col-sm-2 control-label">状态</label>
 											<div class="col-sm-10">
-												<select name="status" id="input-status" class="form-control">
-													<option value="">请选择</option>
-													<option value="1">新增后可见</option>
-													<option value="0">不可见</option>
-												</select>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 可见
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-disabled" value="0"> 不可见
+												</label>
 											</div>
 										</div>
 									</form>
@@ -186,9 +202,9 @@
 					<th>priority</th>
 					<th>sn</th>
 					<th>url</th>
-					<th>insertAuth</th>
-					<th>updateAuth</th>
-					<th>queryAuth</th>
+					<th>新增权限</th>
+					<th>修改权限</th>
+					<th>查询权限</th>
 					<th>parent_id</th>
 					<th>管理</th>
 				</tr>
@@ -235,13 +251,13 @@
 	<td>${priority}</td>
 	<td>${sn}</td>
 	<td>${url}</td>
-	<td>${insertAuth}</td>
-	<td>${updateAuth}</td>
-	<td>${queryAuth}</td>
+	<td>{{if insertAuth == 1}}启用{{else insertAuth == 0}}禁用{{/if}}</td>
+	<td>{{if updateAuth == 1}}启用{{else updateAuth == 0}}禁用{{/if}}</td>
+	<td>{{if queryAuth == 1}}启用{{else queryAuth == 0}}禁用{{/if}}</td>
 	<td>${parent_id}</td>
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
-	    <a href="javascript:void(0);" onclick="action.deleteItem(${permissId},'${moduleId}')">删除</a>
+	    <!--<a href="javascript:void(0);" onclick="action.deleteItem(${permissId},'${moduleId}')">删除</a>-->
 	</td>
 </tr>
 </script>

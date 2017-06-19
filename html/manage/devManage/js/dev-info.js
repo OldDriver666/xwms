@@ -268,11 +268,20 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+        var check_status = $.trim(that.find("td").eq(6).text());
+        var status_val = null;
+        if(check_status === "未激活"){
+            status_val = 0;
+        }else if(check_status === "激活"){
+            status_val = 1;
+        }
+
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-devIME").val(that.find("td").eq(1).text());
         $("#input-devXW").val(that.find("td").eq(2).text());
         $("#input-devType").val(that.find("td").eq(3).text());
        /* $("#input-devType-txt").val(that.find("td").eq(3).text());*/
+        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#input-phoneNo").val(that.find("td").eq(7).text());
         $("#input-Mark").val(that.find("td").eq(8).text());
         $("#addTempl-modal").modal("show");
@@ -321,9 +330,9 @@ $(function() {
 
     $("#dev-query-condition").validate({
         rules : {
-            devDepartID : {
+            /*devDepartID : {
                 required : true
-            }
+            }*/
         }
     });
 

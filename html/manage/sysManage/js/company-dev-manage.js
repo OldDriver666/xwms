@@ -74,6 +74,8 @@ $(function() {
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
+                        $("#input-search-depart_id").val("");
+                        $("#input-search-client_type").val("");
                         action.loadPageData();
 					}
 				});
@@ -87,10 +89,10 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑配置");
+			$("h4#addTempl-modal-label").text("编辑公司设备信息");
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加配置");
+			$("h4#addTempl-modal-label").text("添加公司设备信息");
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -114,12 +116,12 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-           /* confname : {
+            depart_id : {
                 required : true
             },
-            conftype : {
+            client_type : {
                 required : true
-            }*/
+            }
         }
     });
 
@@ -141,10 +143,16 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-txt").on('keydown', function(e) {
+	$("#input-search-depart_id").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
 
 	});
+    $("#input-search-client_type").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+
+    });
 });

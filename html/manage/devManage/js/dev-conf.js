@@ -315,7 +315,7 @@ $(function() {
 
     $("#dev-query-condition").validate({
         rules : {
-            /*devDepartID : {
+           /* devType : {
                 required : true
             }*/
         }
@@ -362,6 +362,12 @@ $(function() {
     });*/
 
 	$("#btn-search").on('click', function() {
+        if($("#input-search-devType").val() == "") {
+            $("#input-search-devType").parent().addClass("has-error");
+            var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+            $("#input-search-devType").append(err_html);
+            return;
+        }
         $("#pageThead").empty();
         action.loadPageData();
 	});

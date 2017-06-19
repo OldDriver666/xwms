@@ -1,15 +1,20 @@
 $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var admin_id = Util.cookieStorage.getCookie("adminId");
 
 	var action = {
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/clienttype/addclienttype";
+            var url = ctx + "boss/admin/insert";
             var data = new Object();
-
-            data.client_type = $("#input-client_type").val();
-            data.client_name = $("#input-client_name").val();
+			data.admin_id = parseInt(admin_id);
+			data.account = parseInt(search_client_type);
+			data.password = parseInt(search_client_type);
+			data.nick_name = parseInt(search_client_type);
+			data.role_id = search_client_name;
+			data.phone = search_client_name;
+			data.email = search_client_name;
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -25,10 +30,12 @@ $(function() {
             var search_client_name = $("#input-search-client_name").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
 
-            var url = ctx + "boss/clienttype/queryclienttype";
+            var url = ctx + "boss/admin/query";
             var data = new Object();
-            data.client_type = parseInt(search_client_type);
-            data.client_name = search_client_name;
+            data.admin_id = parseInt(admin_id);
+			data.account = parseInt(search_client_type);
+            data.role_id = search_client_name;
+			data.company_id = search_client_name;
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -48,11 +55,17 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/clienttype/updateclienttype";
+			var url = ctx + "boss/admin/update";
 			var data = new Object();
-            data.type_id = parseInt($("#input-type_id").val());
-            data.client_type = $("#input-client_type").val();
-            data.client_name = $("#input-client_name").val();
+			data.login_id = parseInt(search_client_type);
+			data.admin_id = parseInt(admin_id);
+			data.account = parseInt(search_client_type);
+			data.password = parseInt(search_client_type);
+			data.nick_name = parseInt(search_client_type);
+			data.role_id = search_client_name;
+			data.organization_id = search_client_name;
+			data.phone = search_client_name;
+			data.email = search_client_name;
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
