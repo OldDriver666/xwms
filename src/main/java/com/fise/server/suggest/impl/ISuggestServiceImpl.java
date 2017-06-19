@@ -27,18 +27,7 @@ public class ISuggestServiceImpl implements ISuggestService{
 	@Override
 	public Response insertSuggest(IMSuggest record) {
 		
-		Response response=new Response();
-		
-		//判断user_id是否已经存在
-		IMSuggestExample example=new IMSuggestExample();
-		Criteria criteria=example.createCriteria();
-		criteria.andUserIdEqualTo(record.getUserId());
-		List<IMSuggest> list=IMSuggestDao.selectByExample(example);
-		
-		if(list.size()!=0){
-			response.failure(ErrorCode.ERROR_SUGGEST_USER_ID_EXISTED);
-			return response;
-		}	
+		Response response=new Response();	
 		
 		//更新数据
 		long nowtime=System.currentTimeMillis()/1000;
@@ -57,10 +46,6 @@ public class ISuggestServiceImpl implements ISuggestService{
 		
 		IMSuggestExample example=new IMSuggestExample();
 		Criteria criteria=example.createCriteria();
-		
-		if(param.getUserId()!=null){
-			criteria.andUserIdEqualTo(param.getUserId());
-		}
 		
 		if(param.getUname()!=null){
 			criteria.andUnameEqualTo(param.getUname());

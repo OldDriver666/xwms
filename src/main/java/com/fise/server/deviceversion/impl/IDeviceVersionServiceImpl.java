@@ -29,8 +29,16 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		//TODO 没有判断departid,dev_type,dev_version已经存在的情况
-		
+		IMDevcieVersionExample example=new IMDevcieVersionExample();
+		Criteria criteria=example.createCriteria();
+		criteria.andDepartidEqualTo(record.getDepartid());
+		criteria.andDevTypeEqualTo(record.getDevType());
+		List<IMDevcieVersion> list=deviceVersionDao.selectByExample(example);
+		if(list.size()!=0){
+		    response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
+		    response.setMsg("已经存在最新版本！！！");
+		    return response;
+		}
 		
 		deviceVersionDao.insertSelective(record);
 		response.success();
@@ -79,7 +87,16 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		//TODO 没有判断departid,dev_type,dev_version已经存在的情况
+		IMDevcieVersionExample example=new IMDevcieVersionExample();
+        Criteria criteria=example.createCriteria();
+        criteria.andDepartidEqualTo(record.getDepartid());
+        criteria.andDevTypeEqualTo(record.getDevType());
+        List<IMDevcieVersion> list=deviceVersionDao.selectByExample(example);
+        if(list.size()!=0){
+            response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
+            response.setMsg("已经存在最新版本！！！");
+            return response;
+        }
 		
 		deviceVersionDao.updateByPrimaryKeySelective(record);
 		return response.success();
