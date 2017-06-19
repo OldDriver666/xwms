@@ -26,7 +26,7 @@ public class DeviceVersionController {
 	IDeviceVersionService iDeviceVersionService;
 	
 	/*添加设备版本信息*/
-	@RequestMapping(value="/adddeviceversion",method=RequestMethod.POST)
+	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
 		
 		Response response=new Response();
@@ -43,7 +43,7 @@ public class DeviceVersionController {
 	}
 	
 	/*查询设备版本信息*/
-	@RequestMapping(value="/querydeviceversion",method=RequestMethod.POST)
+	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
@@ -60,7 +60,7 @@ public class DeviceVersionController {
 	}
 	
 	/*删除设备版本信息*/
-	@RequestMapping(value="/deldeviceversion",method=RequestMethod.POST)
+	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
@@ -77,7 +77,7 @@ public class DeviceVersionController {
 	}
 	
 	/*修改设备版本信息*/
-	@RequestMapping(value="/updatedeviceversion",method=RequestMethod.POST)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public Response updateDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
 		
 		Response response=new Response();

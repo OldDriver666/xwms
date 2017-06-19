@@ -825,3 +825,185 @@ type和name都是选填，如果都不填，则查询所有信息
       }
  ]
 ```
+
+###版本控制
+####添加设备新版本
+|   接口地址    |   boss/deviceversion/add        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"depart_id"x,                     //必填-公司ID
+ "dev_type":x,                     //必填-设备类型
+ "dev_version":"",                 //必填-最新设备固件版本号
+ "update_url":"",                  //必填-更新下载地址
+ "version_info":""                 //选填-版本信息
+}                
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 
+
+####查询设备新版本
+|   接口地址    |   boss/deviceversion/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+都不填，则查询所有
+{"depart_id":x,                    //选填-公司ID
+ "dev_type":x                      //选填-设备类型
+}
+```
+- **回复**
+```
+[{"version_id":x,
+  "depart_id":x,
+  "dev_type":x,
+  "dev_version":"",
+  "status":0,
+  "version_info":"",
+  "update_url":""
+  },
+  {"version_id":x,
+  "depart_id":x,
+  "dev_type":x,
+  "dev_version":"",
+  "status":0,
+  "version_info":"",
+  "update_url":""
+  }
+]
+```
+
+####删除设备新版本
+|   接口地址    |   boss/deviceversion/del        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+{"version_id":x}                  //必填-设备版本ID
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 
+
+####修改设备新版本
+|   接口地址    |   boss/deviceversion/update        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"version_id":x,                  //必填-设备版本ID
+ "depart_id":x,                   //选填-公司ID
+ "dev_type":x,                    //选填-设备类型
+ "dev_version":"",				  //选填-最新设备固件版本号	
+ "status":0,                      //选填-0 可用    1不可用
+ "version_info":"",               //选填-版本信息
+ "update_url":""                  //选填-更新下载地址
+} 
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+###用户意见 
+####新增用户意见
+|   接口地址    |   boss/suggest/add        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"user_id":x,                     //必填-用户id
+ "uname":"",                      //必填-用户名
+ "suggestion":"",                 //选填-意见内容 
+ "contact":""                     //选填-联系方式
+}
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 
+
+####查询用户意见
+|   接口地址    |   boss/suggest/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+-**请求**
+```
+不填，则查询所有
+{"uname":""}                      //选填-用户名
+```
+- **回复**
+```
+[{"suggest_id":x,
+ "user_id":x,
+ "uname":"",
+ "status":0,
+ "suggestion":"",
+ "contact":"",
+ "created":x,
+ "updated":x
+ },
+ {"suggest_id":x,
+ "user_id":x,
+ "uname":"",
+ "status":0,
+ "suggestion":"",
+ "contact":"",
+ "created":x,
+ "updated":x
+ }
+]
+```
+
+####删除用户意见
+|   接口地址    |   boss/suggest/del        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"suggest_id":x}                  //必填-ID
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 
+
+####修改用户意见
+|   接口地址    |   boss/suggest/update        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"suggest_id":x,                  //必填-ID
+ "user_id":x,                     //选填-用户id
+ "uname":"",                      //选填-用户名
+ "status":0,                      //选填-记录状态 0 :初始正常 1:已经回复
+ "suggestion":"",                 //选填-意见内容   
+ "contact":""                     //选填-联系方式 
+ }
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 

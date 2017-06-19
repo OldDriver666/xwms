@@ -26,7 +26,7 @@ public class SuggestController {
 	ISuggestService iSuggestService;
 	
 	//添加suggest信息
-	@RequestMapping(value="/addsuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
@@ -43,14 +43,10 @@ public class SuggestController {
 	}
 	
 	//查询suggest信息
-	@RequestMapping(value="/selectsuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response querySuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
-		
-		if(param.getUserId()==null && StringUtil.isEmpty(param.getUname())){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
 		
 		logger.info(param.toString());
 		response=iSuggestService.querySuggest(param);
@@ -60,7 +56,7 @@ public class SuggestController {
 	}
 	
 	//删除suggest信息
-	@RequestMapping(value="/delsuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delSuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
@@ -77,7 +73,7 @@ public class SuggestController {
 	}
 	
 	//修改suggest信息
-	@RequestMapping(value="/updatesuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
