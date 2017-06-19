@@ -742,4 +742,86 @@ type和name都是选填，如果都不填，则查询所有信息
 - **回复**
 ```
 无回复 看结果
-``` 
+```
+
+###报表统计
+####群消息查询
+|   接口地址    |   boss/groupmessage/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"admin_id"x,"name":""}                //必填-管理员id,群的名称
+```
+- **回复**
+```
+{ [
+      {
+         "id": 29,
+         "groupid": 9,
+         "userid": 105325,
+         "msgid": 1,
+         "content": "xHiMKYHeH28J8UhORPMlAnWXrZFfV+UBo37vcxL/NUY=",
+         "type": 17,
+         "status": 0,
+         "updated": 1480581461,
+         "created": 1480581461
+      },
+      {
+         "id": 29,
+         "groupid": 9,
+         "userid": 105325,
+         "msgid": 1,
+         "content": "xHiMKYHeH28J8UhORPMlAnWXrZFfV+UBo37vcxL/NUY=",
+         "type": 17,
+         "status": 0,
+         "updated": 1480581461,
+         "created": 1480581461
+      }
+   ]
+}   
+```
+
+####回话消息查询
+|   接口地址    |   boss/sessionmessage/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"small_id"x,"big_id":x}                //必填-回话用户的ID
+```
+- **回复**
+```
+ [
+      {
+         "id": 1,
+         "relateid": 2,
+         "fromid": 105321,
+         "toid": 105322,
+         "msgid": 1,
+         "content": "bFkYRtErdXd/IxbUWaRKpnWXrZFfV+UBo37vcxL/NUY=",
+         "audiotype": 0,
+         "type": 1,
+         "status": false,
+         "updated": 1480389148,
+         "created": 1480389148
+      },
+      {
+         "id": 2,
+         "relateid": 2,
+         "fromid": 105321,
+         "toid": 105322,
+         "msgid": 2,
+         "content": "bFkYRtErdXd/IxbUWaRKpnWXrZFfV+UBo37vcxL/NUY=",
+         "audiotype": 0,
+         "type": 1,
+         "status": false,
+         "updated": 1480389329,
+         "created": 1480389329
+      }
+ ]
+```
