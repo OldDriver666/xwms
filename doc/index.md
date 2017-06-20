@@ -745,6 +745,67 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 
 ###报表统计
+####设备事件查询(分页查询)
+|   接口地址    |   boss/event/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+-**请求**
+```
+{"page_no":x,                            //选填-当前页, 默认为第1页
+ "page_size":x,                          //选填-每页记录数，默认20 
+ "param":{
+ 		  "admin_id":x,                  //必填-管理员ID
+ 		  "account":""	                 //必填-设备拼音
+ 		}
+}
+``` 
+- **回复**
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 3,
+      "page_size": 20,
+      "total_count": 388,
+      "total_page_count": 20,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 352,
+            "userId": 105392,
+            "eventKey": 0,
+            "locationX": "22.6850304676964",
+            "locationY": "113.985455450724",
+            "locationFrom": 2,
+            "battery": 1,
+            "sq": 4,
+            "eventLevel": 2,
+            "param": "",
+            "updated": 1496476310,
+            "created": 1496476310
+         },
+         {
+            "id": 351,
+            "userId": 105392,
+            "eventKey": 9,
+            "locationX": "",
+            "locationY": "",
+            "locationFrom": 0,
+            "battery": 0,
+            "sq": 0,
+            "eventLevel": 1,
+            "param": "",
+            "updated": 1496472540,
+            "created": 1496472540
+         }
+        ]
+}        
+```
+		
 ####群消息查询
 |   接口地址    |   boss/groupmessage/query        |
 |   ---         |   ---                   |

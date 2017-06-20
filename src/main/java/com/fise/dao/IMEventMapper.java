@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.fise.base.Page;
 import com.fise.model.entity.IMEvent;
 import com.fise.model.entity.IMEventExample;
+import com.fise.model.param.EventQueryParam;
 
 public interface IMEventMapper {
     long countByExample(IMEventExample example);
@@ -18,7 +20,7 @@ public interface IMEventMapper {
 
     int insertSelective(IMEvent record);
 
-    List<IMEvent> selectByExample(@Param("tableName") String tableName, @Param("example") IMEventExample example);
+    List<IMEvent> selectByExample(@Param("tableName") String tableName, @Param("example") IMEventExample example,@Param("page") Page<EventQueryParam> param);
 
     IMEvent selectByPrimaryKey(Integer id);
 

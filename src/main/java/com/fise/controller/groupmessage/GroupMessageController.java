@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.GroupMessageQueryParam;
 import com.fise.server.groupmessage.IGroupMessageService;
@@ -24,7 +25,7 @@ public class GroupMessageController {
     
     //查询群消息
     @RequestMapping(value="/groupmessage/query",method=RequestMethod.POST)
-    public Response getGroupMessages(@RequestBody @Valid GroupMessageQueryParam param){
+    public Response getGroupMessages(@RequestBody @Valid Page<GroupMessageQueryParam> param){
         
         Response response=new Response();
         

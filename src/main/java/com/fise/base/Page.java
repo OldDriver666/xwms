@@ -76,6 +76,10 @@ public class Page<T> implements Pagination,Serializable {
         return totalPageCount;
     }
     
+    public void setTotalPageCount(int totalPageCount) {
+        this.totalPageCount = totalPageCount;
+    }
+
     public void setTotalCount(long totalCount) {
         this.totalCount = totalCount;
         computeTotalPage();
