@@ -1,5 +1,7 @@
 package com.fise.controller.module;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.param.ModuleInsertParam;
 import com.fise.model.param.ModuleQueryParam;
@@ -27,7 +30,7 @@ public class ModuleController {
     public Response query(@RequestBody @Valid ModuleQueryParam param){
         Response resp = new Response();
         logger.debug(param);
-        resp = moduleSvr.QueryModeule(param);
+        resp = moduleSvr.QueryModule(param);
         return resp;
     }
     
@@ -35,7 +38,7 @@ public class ModuleController {
     public Response queryAll(@RequestBody @Valid ModuleQueryParam param){
         Response resp = new Response();
         logger.debug(param);
-        resp = moduleSvr.QueryModeuleAll(param);
+        resp = moduleSvr.QueryModuleAll(param);
         return resp;
     }
     
@@ -43,7 +46,7 @@ public class ModuleController {
     public Response insert(@RequestBody @Valid ModuleInsertParam param){
         Response resp = new Response();
         logger.debug(param);
-        resp = moduleSvr.InsertModeule(param);
+        resp = moduleSvr.InsertModule(param);
         return resp;
     }
     
@@ -51,7 +54,19 @@ public class ModuleController {
     public Response update(@RequestBody @Valid ModuleUpdateParam param){
         Response resp = new Response();
         logger.debug(param);
-        resp = moduleSvr.UpdateModeule(param);
+        resp = moduleSvr.UpdateModule(param);
+        return resp;
+    }
+    
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Response update(@RequestBody @Valid Map<String,String> param){
+        Response resp = new Response();
+        logger.debug(param.toString());
+        if(param.get("module_id") == null){
+            resp.failure(ErrorCode.ERROR_PARAM_NOT_VALID_EXCEPTION);
+        } else {
+            resp = moduleSvr.DeleteModule(new Integer(param.get("module_id")));
+        }
         return resp;
     }
 }
