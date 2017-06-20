@@ -48,6 +48,10 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
+		if(param.getDepartid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iDeviceVersionService.queryDeviceVersion(param);
 		logger.info("end select deviceversion"+response.toString());

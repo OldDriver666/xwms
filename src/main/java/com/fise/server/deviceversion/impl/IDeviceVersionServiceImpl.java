@@ -1,4 +1,4 @@
-package com.fise.server.deviceversion.impl;
+﻿package com.fise.server.deviceversion.impl;
 
 import java.util.List;
 
@@ -54,10 +54,6 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		IMDevcieVersionExample example=new IMDevcieVersionExample();
 		Criteria criteria=example.createCriteria();
 		
-		if(param.getDepartid()!=null){
-			criteria.andDepartidEqualTo(param.getDepartid());
-		}
-		
 		if(param.getDevType()!=null){
 			criteria.andDevTypeEqualTo(param.getDevType());
 		}
@@ -86,20 +82,10 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 	public Response updateDeviceVersion(IMDevcieVersion record) {
 		
 		Response response=new Response();
-		
-		IMDevcieVersionExample example=new IMDevcieVersionExample();
-        Criteria criteria=example.createCriteria();
-        criteria.andDepartidEqualTo(record.getDepartid());
-        criteria.andDevTypeEqualTo(record.getDevType());
-        List<IMDevcieVersion> list=deviceVersionDao.selectByExample(example);
-        if(list.size()!=0){
-            response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
-            response.setMsg("已经存在最新版本！！！");
-            return response;
-        }
-		
-		deviceVersionDao.updateByPrimaryKeySelective(record);
-		return response.success();
+      
+        deviceVersionDao.updateByPrimaryKeySelective(record);
+        return response.success();
+
 	}
 
 }
