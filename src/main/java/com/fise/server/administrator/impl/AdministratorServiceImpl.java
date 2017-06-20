@@ -309,7 +309,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		}
 
 		if (!StringUtil.isEmpty(param.getPhone())){
-			sqlAdmin.setPhone(param.getNickName());
+			sqlAdmin.setPhone(param.getPhone());
 		}
 
 		if(param.getStatus() != null){

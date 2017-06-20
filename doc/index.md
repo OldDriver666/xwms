@@ -85,7 +85,8 @@ null 没有数据返回 看code是否成功
  "nick_name":"",     //昵称
  "role_id":x,        //必填-角色
  "phone":"",
- "email":""
+ "email":"",
+ "organization_id":x //必填-组织id
 } 
 
 ```
