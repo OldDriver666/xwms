@@ -1,4 +1,4 @@
-﻿package com.fise.server.deviceversion.impl;
+package com.fise.server.deviceversion.impl;
 
 import java.util.List;
 

@@ -2,8 +2,6 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * @author 
  */
@@ -11,19 +9,16 @@ public class DeviceConf implements Serializable {
     /**
      * 设备号
      */
-    @JsonProperty("device_id")
     private Integer deviceId;
 
     /**
      * 家庭群组ID
      */
-    @JsonProperty("group_id")
     private Integer groupId;
 
     /**
      * 管理员ID
      */
-    @JsonProperty("master_id")
     private Integer masterId;
 
     /**
@@ -34,45 +29,39 @@ public class DeviceConf implements Serializable {
     /**
      * 电量报警开关
      */
-    @JsonProperty("alarm_battery")
-    private Boolean alarmBattery;
+    private Integer alarmBattery;
 
     /**
      * 关机报警开关
      */
-    @JsonProperty("alarm_power_off")
-    private Boolean alarmPoweroff;
+    private Integer alarmPoweroff;
 
     /**
      * 电子围栏报警开关
      */
-    @JsonProperty("alarm_pen")
-    private Boolean alarmPen;
-    
-    @JsonProperty("alarm_call")
-    private Boolean alarmCall;
+    private Integer alarmPen;
+
+    private Integer alarmCall;
 
     /**
      * 静默监听开关
      */
-    @JsonProperty("listen_silent")
-    private Boolean listenSilent;
+    private Integer listenSilent;
 
     /**
      * 是否在充电，0-没充，1-充电
      */
-    private Boolean electricize;
+    private Integer electricize;
 
     /**
      * 工作模式
      */
-    private Boolean mode;
+    private Integer mode;
 
     /**
      * 响铃模式 1-响铃 2震动 3响铃和震动
      */
-    @JsonProperty("bell_mode")
-    private Boolean bellMode;
+    private Integer bellMode;
 
     private Integer updated;
 
@@ -112,67 +101,67 @@ public class DeviceConf implements Serializable {
         this.mobile = mobile;
     }
 
-    public Boolean getAlarmBattery() {
+    public Integer getAlarmBattery() {
         return alarmBattery;
     }
 
-    public void setAlarmBattery(Boolean alarmBattery) {
+    public void setAlarmBattery(Integer alarmBattery) {
         this.alarmBattery = alarmBattery;
     }
 
-    public Boolean getAlarmPoweroff() {
+    public Integer getAlarmPoweroff() {
         return alarmPoweroff;
     }
 
-    public void setAlarmPoweroff(Boolean alarmPoweroff) {
+    public void setAlarmPoweroff(Integer alarmPoweroff) {
         this.alarmPoweroff = alarmPoweroff;
     }
 
-    public Boolean getAlarmPen() {
+    public Integer getAlarmPen() {
         return alarmPen;
     }
 
-    public void setAlarmPen(Boolean alarmPen) {
+    public void setAlarmPen(Integer alarmPen) {
         this.alarmPen = alarmPen;
     }
 
-    public Boolean getAlarmCall() {
+    public Integer getAlarmCall() {
         return alarmCall;
     }
 
-    public void setAlarmCall(Boolean alarmCall) {
+    public void setAlarmCall(Integer alarmCall) {
         this.alarmCall = alarmCall;
     }
 
-    public Boolean getListenSilent() {
+    public Integer getListenSilent() {
         return listenSilent;
     }
 
-    public void setListenSilent(Boolean listenSilent) {
+    public void setListenSilent(Integer listenSilent) {
         this.listenSilent = listenSilent;
     }
 
-    public Boolean getElectricize() {
+    public Integer getElectricize() {
         return electricize;
     }
 
-    public void setElectricize(Boolean electricize) {
+    public void setElectricize(Integer electricize) {
         this.electricize = electricize;
     }
 
-    public Boolean getMode() {
+    public Integer getMode() {
         return mode;
     }
 
-    public void setMode(Boolean mode) {
+    public void setMode(Integer mode) {
         this.mode = mode;
     }
 
-    public Boolean getBellMode() {
+    public Integer getBellMode() {
         return bellMode;
     }
 
-    public void setBellMode(Boolean bellMode) {
+    public void setBellMode(Integer bellMode) {
         this.bellMode = bellMode;
     }
 

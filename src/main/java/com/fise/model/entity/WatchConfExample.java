@@ -384,52 +384,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffEqualTo(Boolean value) {
+        public Criteria andAlarmTakeoffEqualTo(Integer value) {
             addCriterion("alarm_takeoff =", value, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffNotEqualTo(Boolean value) {
+        public Criteria andAlarmTakeoffNotEqualTo(Integer value) {
             addCriterion("alarm_takeoff <>", value, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffGreaterThan(Boolean value) {
+        public Criteria andAlarmTakeoffGreaterThan(Integer value) {
             addCriterion("alarm_takeoff >", value, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmTakeoffGreaterThanOrEqualTo(Integer value) {
             addCriterion("alarm_takeoff >=", value, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffLessThan(Boolean value) {
+        public Criteria andAlarmTakeoffLessThan(Integer value) {
             addCriterion("alarm_takeoff <", value, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffLessThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmTakeoffLessThanOrEqualTo(Integer value) {
             addCriterion("alarm_takeoff <=", value, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffIn(List<Boolean> values) {
+        public Criteria andAlarmTakeoffIn(List<Integer> values) {
             addCriterion("alarm_takeoff in", values, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffNotIn(List<Boolean> values) {
+        public Criteria andAlarmTakeoffNotIn(List<Integer> values) {
             addCriterion("alarm_takeoff not in", values, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmTakeoffBetween(Integer value1, Integer value2) {
             addCriterion("alarm_takeoff between", value1, value2, "alarmTakeoff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmTakeoffNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmTakeoffNotBetween(Integer value1, Integer value2) {
             addCriterion("alarm_takeoff not between", value1, value2, "alarmTakeoff");
             return (Criteria) this;
         }
@@ -444,52 +444,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryEqualTo(Boolean value) {
+        public Criteria andAlarmBatteryEqualTo(Integer value) {
             addCriterion("alarm_battery =", value, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryNotEqualTo(Boolean value) {
+        public Criteria andAlarmBatteryNotEqualTo(Integer value) {
             addCriterion("alarm_battery <>", value, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryGreaterThan(Boolean value) {
+        public Criteria andAlarmBatteryGreaterThan(Integer value) {
             addCriterion("alarm_battery >", value, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmBatteryGreaterThanOrEqualTo(Integer value) {
             addCriterion("alarm_battery >=", value, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryLessThan(Boolean value) {
+        public Criteria andAlarmBatteryLessThan(Integer value) {
             addCriterion("alarm_battery <", value, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryLessThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmBatteryLessThanOrEqualTo(Integer value) {
             addCriterion("alarm_battery <=", value, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryIn(List<Boolean> values) {
+        public Criteria andAlarmBatteryIn(List<Integer> values) {
             addCriterion("alarm_battery in", values, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryNotIn(List<Boolean> values) {
+        public Criteria andAlarmBatteryNotIn(List<Integer> values) {
             addCriterion("alarm_battery not in", values, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmBatteryBetween(Integer value1, Integer value2) {
             addCriterion("alarm_battery between", value1, value2, "alarmBattery");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmBatteryNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmBatteryNotBetween(Integer value1, Integer value2) {
             addCriterion("alarm_battery not between", value1, value2, "alarmBattery");
             return (Criteria) this;
         }
@@ -504,52 +504,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffEqualTo(Boolean value) {
+        public Criteria andAlarmPoweroffEqualTo(Integer value) {
             addCriterion("alarm_poweroff =", value, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffNotEqualTo(Boolean value) {
+        public Criteria andAlarmPoweroffNotEqualTo(Integer value) {
             addCriterion("alarm_poweroff <>", value, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffGreaterThan(Boolean value) {
+        public Criteria andAlarmPoweroffGreaterThan(Integer value) {
             addCriterion("alarm_poweroff >", value, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmPoweroffGreaterThanOrEqualTo(Integer value) {
             addCriterion("alarm_poweroff >=", value, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffLessThan(Boolean value) {
+        public Criteria andAlarmPoweroffLessThan(Integer value) {
             addCriterion("alarm_poweroff <", value, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffLessThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmPoweroffLessThanOrEqualTo(Integer value) {
             addCriterion("alarm_poweroff <=", value, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffIn(List<Boolean> values) {
+        public Criteria andAlarmPoweroffIn(List<Integer> values) {
             addCriterion("alarm_poweroff in", values, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffNotIn(List<Boolean> values) {
+        public Criteria andAlarmPoweroffNotIn(List<Integer> values) {
             addCriterion("alarm_poweroff not in", values, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmPoweroffBetween(Integer value1, Integer value2) {
             addCriterion("alarm_poweroff between", value1, value2, "alarmPoweroff");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmPoweroffNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmPoweroffNotBetween(Integer value1, Integer value2) {
             addCriterion("alarm_poweroff not between", value1, value2, "alarmPoweroff");
             return (Criteria) this;
         }
@@ -564,52 +564,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andStepModeEqualTo(Boolean value) {
+        public Criteria andStepModeEqualTo(Integer value) {
             addCriterion("step_mode =", value, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeNotEqualTo(Boolean value) {
+        public Criteria andStepModeNotEqualTo(Integer value) {
             addCriterion("step_mode <>", value, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeGreaterThan(Boolean value) {
+        public Criteria andStepModeGreaterThan(Integer value) {
             addCriterion("step_mode >", value, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andStepModeGreaterThanOrEqualTo(Integer value) {
             addCriterion("step_mode >=", value, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeLessThan(Boolean value) {
+        public Criteria andStepModeLessThan(Integer value) {
             addCriterion("step_mode <", value, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeLessThanOrEqualTo(Boolean value) {
+        public Criteria andStepModeLessThanOrEqualTo(Integer value) {
             addCriterion("step_mode <=", value, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeIn(List<Boolean> values) {
+        public Criteria andStepModeIn(List<Integer> values) {
             addCriterion("step_mode in", values, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeNotIn(List<Boolean> values) {
+        public Criteria andStepModeNotIn(List<Integer> values) {
             addCriterion("step_mode not in", values, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeBetween(Boolean value1, Boolean value2) {
+        public Criteria andStepModeBetween(Integer value1, Integer value2) {
             addCriterion("step_mode between", value1, value2, "stepMode");
             return (Criteria) this;
         }
 
-        public Criteria andStepModeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andStepModeNotBetween(Integer value1, Integer value2) {
             addCriterion("step_mode not between", value1, value2, "stepMode");
             return (Criteria) this;
         }
@@ -624,52 +624,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallEqualTo(Boolean value) {
+        public Criteria andAlarmCallEqualTo(Integer value) {
             addCriterion("alarm_call =", value, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallNotEqualTo(Boolean value) {
+        public Criteria andAlarmCallNotEqualTo(Integer value) {
             addCriterion("alarm_call <>", value, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallGreaterThan(Boolean value) {
+        public Criteria andAlarmCallGreaterThan(Integer value) {
             addCriterion("alarm_call >", value, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmCallGreaterThanOrEqualTo(Integer value) {
             addCriterion("alarm_call >=", value, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallLessThan(Boolean value) {
+        public Criteria andAlarmCallLessThan(Integer value) {
             addCriterion("alarm_call <", value, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallLessThanOrEqualTo(Boolean value) {
+        public Criteria andAlarmCallLessThanOrEqualTo(Integer value) {
             addCriterion("alarm_call <=", value, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallIn(List<Boolean> values) {
+        public Criteria andAlarmCallIn(List<Integer> values) {
             addCriterion("alarm_call in", values, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallNotIn(List<Boolean> values) {
+        public Criteria andAlarmCallNotIn(List<Integer> values) {
             addCriterion("alarm_call not in", values, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmCallBetween(Integer value1, Integer value2) {
             addCriterion("alarm_call between", value1, value2, "alarmCall");
             return (Criteria) this;
         }
 
-        public Criteria andAlarmCallNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andAlarmCallNotBetween(Integer value1, Integer value2) {
             addCriterion("alarm_call not between", value1, value2, "alarmCall");
             return (Criteria) this;
         }
@@ -684,52 +684,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeEqualTo(Boolean value) {
+        public Criteria andElectricizeEqualTo(Integer value) {
             addCriterion("electricize =", value, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeNotEqualTo(Boolean value) {
+        public Criteria andElectricizeNotEqualTo(Integer value) {
             addCriterion("electricize <>", value, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeGreaterThan(Boolean value) {
+        public Criteria andElectricizeGreaterThan(Integer value) {
             addCriterion("electricize >", value, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andElectricizeGreaterThanOrEqualTo(Integer value) {
             addCriterion("electricize >=", value, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeLessThan(Boolean value) {
+        public Criteria andElectricizeLessThan(Integer value) {
             addCriterion("electricize <", value, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeLessThanOrEqualTo(Boolean value) {
+        public Criteria andElectricizeLessThanOrEqualTo(Integer value) {
             addCriterion("electricize <=", value, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeIn(List<Boolean> values) {
+        public Criteria andElectricizeIn(List<Integer> values) {
             addCriterion("electricize in", values, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeNotIn(List<Boolean> values) {
+        public Criteria andElectricizeNotIn(List<Integer> values) {
             addCriterion("electricize not in", values, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeBetween(Boolean value1, Boolean value2) {
+        public Criteria andElectricizeBetween(Integer value1, Integer value2) {
             addCriterion("electricize between", value1, value2, "electricize");
             return (Criteria) this;
         }
 
-        public Criteria andElectricizeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andElectricizeNotBetween(Integer value1, Integer value2) {
             addCriterion("electricize not between", value1, value2, "electricize");
             return (Criteria) this;
         }
@@ -744,52 +744,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andModeEqualTo(Boolean value) {
+        public Criteria andModeEqualTo(Integer value) {
             addCriterion("mode =", value, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotEqualTo(Boolean value) {
+        public Criteria andModeNotEqualTo(Integer value) {
             addCriterion("mode <>", value, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeGreaterThan(Boolean value) {
+        public Criteria andModeGreaterThan(Integer value) {
             addCriterion("mode >", value, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andModeGreaterThanOrEqualTo(Integer value) {
             addCriterion("mode >=", value, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeLessThan(Boolean value) {
+        public Criteria andModeLessThan(Integer value) {
             addCriterion("mode <", value, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeLessThanOrEqualTo(Boolean value) {
+        public Criteria andModeLessThanOrEqualTo(Integer value) {
             addCriterion("mode <=", value, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeIn(List<Boolean> values) {
+        public Criteria andModeIn(List<Integer> values) {
             addCriterion("mode in", values, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotIn(List<Boolean> values) {
+        public Criteria andModeNotIn(List<Integer> values) {
             addCriterion("mode not in", values, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeBetween(Boolean value1, Boolean value2) {
+        public Criteria andModeBetween(Integer value1, Integer value2) {
             addCriterion("mode between", value1, value2, "mode");
             return (Criteria) this;
         }
 
-        public Criteria andModeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andModeNotBetween(Integer value1, Integer value2) {
             addCriterion("mode not between", value1, value2, "mode");
             return (Criteria) this;
         }
@@ -804,52 +804,52 @@ public class WatchConfExample {
             return (Criteria) this;
         }
 
-        public Criteria andBellModeEqualTo(Boolean value) {
+        public Criteria andBellModeEqualTo(Integer value) {
             addCriterion("bell_mode =", value, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeNotEqualTo(Boolean value) {
+        public Criteria andBellModeNotEqualTo(Integer value) {
             addCriterion("bell_mode <>", value, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeGreaterThan(Boolean value) {
+        public Criteria andBellModeGreaterThan(Integer value) {
             addCriterion("bell_mode >", value, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeGreaterThanOrEqualTo(Boolean value) {
+        public Criteria andBellModeGreaterThanOrEqualTo(Integer value) {
             addCriterion("bell_mode >=", value, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeLessThan(Boolean value) {
+        public Criteria andBellModeLessThan(Integer value) {
             addCriterion("bell_mode <", value, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeLessThanOrEqualTo(Boolean value) {
+        public Criteria andBellModeLessThanOrEqualTo(Integer value) {
             addCriterion("bell_mode <=", value, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeIn(List<Boolean> values) {
+        public Criteria andBellModeIn(List<Integer> values) {
             addCriterion("bell_mode in", values, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeNotIn(List<Boolean> values) {
+        public Criteria andBellModeNotIn(List<Integer> values) {
             addCriterion("bell_mode not in", values, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeBetween(Boolean value1, Boolean value2) {
+        public Criteria andBellModeBetween(Integer value1, Integer value2) {
             addCriterion("bell_mode between", value1, value2, "bellMode");
             return (Criteria) this;
         }
 
-        public Criteria andBellModeNotBetween(Boolean value1, Boolean value2) {
+        public Criteria andBellModeNotBetween(Integer value1, Integer value2) {
             addCriterion("bell_mode not between", value1, value2, "bellMode");
             return (Criteria) this;
         }
