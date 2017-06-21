@@ -53,6 +53,7 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		IMDevcieVersionExample example=new IMDevcieVersionExample();
 		Criteria criteria=example.createCriteria();
+		criteria.andDepartidEqualTo(param.getDepartid());
 		
 		if(param.getDevType()!=null){
 			criteria.andDevTypeEqualTo(param.getDevType());
