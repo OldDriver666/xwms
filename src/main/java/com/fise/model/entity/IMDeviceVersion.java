@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author 
  */
-public class IMDevcieVersion implements Serializable {
+public class IMDeviceVersion implements Serializable {
 	@JsonProperty("version_id")
     private Integer versionid;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fise.dao.IMDevcieVersionMapper">
-  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMDevcieVersion">
+<mapper namespace="com.fise.dao.IMDeviceVersionMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMDeviceVersion">
     <id column="id" jdbcType="INTEGER" property="versionid" />
     <result column="departid" jdbcType="INTEGER" property="departid" />
     <result column="dev_type" jdbcType="INTEGER" property="devType" />
@@ -71,13 +71,13 @@
   <sql id="Base_Column_List">
     id, departid, dev_type, dev_version, version_info, status, update_url
   </sql>
-  <select id="selectByExample" parameterType="com.fise.model.entity.IMDevcieVersionExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.fise.model.entity.IMDeviceVersionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from IMDevcieVersion
+    from IMDeviceVersion
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,29 +96,29 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from IMDevcieVersion
+    from IMDeviceVersion
     where id = #{versionid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from IMDevcieVersion
+    delete from IMDeviceVersion
     where id = #{versionid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMDevcieVersionExample">
-    delete from IMDevcieVersion
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMDeviceVersionExample">
+    delete from IMDeviceVersion
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fise.model.entity.IMDevcieVersion">
-    insert into IMDevcieVersion (id, departid, dev_type, 
+  <insert id="insert" parameterType="com.fise.model.entity.IMDeviceVersion">
+    insert into IMDeviceVersion (id, departid, dev_type, 
       dev_version, version_info, status, 
       update_url)
     values (#{versionid,jdbcType=INTEGER}, #{departid,jdbcType=INTEGER}, #{devType,jdbcType=INTEGER}, 
       #{devVersion,jdbcType=VARCHAR}, #{versionInfo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{updateUrl,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fise.model.entity.IMDevcieVersion">
-    insert into IMDevcieVersion
+  <insert id="insertSelective" parameterType="com.fise.model.entity.IMDeviceVersion">
+    insert into IMDeviceVersion
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="versionid != null">
         id,
@@ -166,14 +166,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fise.model.entity.IMDevcieVersionExample" resultType="java.lang.Long">
-    select count(*) from IMDevcieVersion
+  <select id="countByExample" parameterType="com.fise.model.entity.IMDeviceVersionExample" resultType="java.lang.Long">
+    select count(*) from IMDeviceVersion
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update IMDevcieVersion
+    update IMDeviceVersion
     <set>
       <if test="record.versionid != null">
         id = #{record.versionid,jdbcType=INTEGER},
@@ -202,7 +202,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update IMDevcieVersion
+    update IMDeviceVersion
     set id = #{record.versionid,jdbcType=INTEGER},
       departid = #{record.departid,jdbcType=INTEGER},
       dev_type = #{record.devType,jdbcType=INTEGER},
@@ -214,8 +214,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMDevcieVersion">
-    update IMDevcieVersion
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMDeviceVersion">
+    update IMDeviceVersion
     <set>
       <if test="departid != null">
         departid = #{departid,jdbcType=INTEGER},
@@ -238,8 +238,8 @@
     </set>
     where id = #{versionid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMDevcieVersion">
-    update IMDevcieVersion
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMDeviceVersion">
+    update IMDeviceVersion
     set departid = #{departid,jdbcType=INTEGER},
       dev_type = #{devType,jdbcType=INTEGER},
       dev_version = #{devVersion,jdbcType=VARCHAR},

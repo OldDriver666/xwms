@@ -3,7 +3,7 @@ package com.fise.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IMDevcieVersionExample {
+public class IMDeviceVersionExample {
     protected String orderByClause;
 
     protected boolean distinct;
@@ -14,7 +14,7 @@ public class IMDevcieVersionExample {
 
     private Integer offset;
 
-    public IMDevcieVersionExample() {
+    public IMDeviceVersionExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
