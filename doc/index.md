@@ -1152,4 +1152,96 @@ type和name都是选填，如果都不填，则查询所有信息
 - **回复**
 ```
 无内容，直接查看返回码
+```
+
+###设备用户查询
+####查询
+|   接口地址    |   boss/user/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+不填，则查询所有
+{"domain":"",                    //选填-用户小位号
+ "nick":""                       //选填-用户昵称
+}
+```
+- **回复**
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 105319,
+         "sex": 1,
+         "name": "13714738507",
+         "domain": "0",
+         "nick": "铭记在心",
+         "password": "c2cb6c5c0f2bfc2af2a479fdf9f07b5b",
+         "salt": "8551",
+         "province": "",
+         "city": "",
+         "country": "",
+         "phone": "13714738507",
+         "email": "123@123.com",
+         "avatar": "g0/000/000/1484449958650018_139730919216.jpg",
+         "height": 0,
+         "weight": 0,
+         "birthday": "0",
+         "type": 18,
+         "departid": 3,
+         "status": 0,
+         "created": 1480383837,
+         "updated": 1487580230,
+         "pushShieldStatus": 0,
+         "signInfo": "",
+         "lng": "113.990849",
+         "lat": "22.681539",
+         "battery": 90,
+         "sq": 0,
+         "friendNeedAuth": 1,
+         "loginSafeSwitch": 0,
+         "searchAllow": 1,
+         "onlineStatus": 0,
+         "lastOnlineTime": 0
+      },
+      {
+         "id": 105320,
+         "sex": 1,
+         "name": "18565806571",
+         "domain": "18565806571",
+         "nick": "18",
+         "password": "10cf1d003cf153547d6aa7905e8547fa",
+         "salt": "4502",
+         "province": "广东省",
+         "city": "深圳市",
+         "country": "中国",
+         "phone": "18565806571",
+         "email": "704834364@qq.com",
+         "avatar": "g0/000/000/1493197615818373_140172801484.jpg",
+         "height": 0,
+         "weight": 0,
+         "birthday": "0",
+         "type": 1,
+         "departid": 3,
+         "status": 0,
+         "created": 1480384505,
+         "updated": 1495877091,
+         "pushShieldStatus": 0,
+         "signInfo": "hhjjj",
+         "lng": "113.990832",
+         "lat": "22.681959",
+         "battery": 37,
+         "sq": 4,
+         "friendNeedAuth": 1,
+         "loginSafeSwitch": 0,
+         "searchAllow": 1,
+         "onlineStatus": 0,
+         "lastOnlineTime": 1495883709
+      }
+     ]
+}      
 ``` 
