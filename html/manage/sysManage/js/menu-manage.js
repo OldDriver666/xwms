@@ -80,13 +80,11 @@ $(function() {
 			});
 		},
 		//删除数据
-		deleteItem : function(id, name) {
+		deleteItem : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "RoleManage/DelRoleInfo";
+				var url = ctx + "boss/module/delete";
 				var data = new Object();
-                data.UserName = userName;
-                data.AuthenticCode = token_value;
-                data.RoleId = id;
+                data.module_id = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");

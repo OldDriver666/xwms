@@ -5,7 +5,7 @@ $(function() {
 
 	var action = {
 		//新增数据
-		add : function() {
+		/*add : function() {
             var url = ctx + "boss/admin/insert";
             var data = new Object();
 			data.admin_id = parseInt(admin_id);
@@ -23,21 +23,17 @@ $(function() {
                     action.loadPageData();
                 }
             });
-		},
+		},*/
 		//获取所有数据
 		loadPageData : function() {
-            var search_account = $("#input-search-account").val();
-            var search_role_id = parseInt($("#input-search-role_id").val());
-			var search_company_id = parseInt($("#input-search-company_id").val());
-
+            var search_groupName = $("#input-search-groupName").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
 
-            var url = ctx + "boss/admin/query";
+            var url = ctx + "boss/groupmessage/query";
             var data = new Object();
 			data.admin_id = parseInt(admin_id);
-			data.account = search_account;
-            data.role_id = search_role_id;
-			data.company_id = search_company_id;
+			data.name = search_groupName;
+
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -56,7 +52,7 @@ $(function() {
 
 		},
 		//编辑数据
-		edit : function() {
+		/*edit : function() {
 			var url = ctx + "boss/admin/update";
 			var data = new Object();
 			data.login_id = parseInt(admin_id);
@@ -76,9 +72,9 @@ $(function() {
                     action.loadPageData();
 				}
 			});
-		},
+		},*/
 		//删除数据
-		deleteConfig : function(id) {
+		/*deleteConfig : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
 				var url = ctx + "boss/clienttype/delclienttype";
 				var data = new Object();
@@ -92,10 +88,10 @@ $(function() {
 					}
 				});
 			}
-		}
+		}*/
 	};
 	window.action = action;
-	action.loadPageData();
+	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置

@@ -6,16 +6,14 @@ $(function() {
 	var action = {
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/admin/insert";
+            var url = ctx + "boss/deviceversion/add";
             var data = new Object();
-			data.admin_id = parseInt(admin_id);
-			data.account = $("#input-account").val();
-			data.password = $.md5($("#input-password").val());
-			data.nick_name = $("#input-nickName").val();
-			data.role_id = parseInt($("#input-roleId").val());
-			data.phone = $("#input-phone").val();
-			data.email = $("#input-email").val();
-			data.organization_id = parseInt($("#input-companyId").val());
+			data.depart_id = parseInt($("#input-depart_id").val());
+			data.dev_type = parseInt($("#input-dev_type").val());
+			data.dev_version = $("#input-dev_version").val();
+			data.version_info = $("#input-version_info").val();
+			data.update_url = $("#input-update_url").val();
+
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
@@ -26,18 +24,14 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_account = $("#input-search-account").val();
-            var search_role_id = parseInt($("#input-search-role_id").val());
-			var search_company_id = parseInt($("#input-search-company_id").val());
-
+            var search_depart_id = parseInt($("#input-search-depart_id").val());
+			var search_dev_type = parseInt($("#input-search-dev_type").val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
-            var url = ctx + "boss/admin/query";
+            var url = ctx + "boss/deviceversion/query";
             var data = new Object();
-			data.admin_id = parseInt(admin_id);
-			data.account = search_account;
-            data.role_id = search_role_id;
-			data.company_id = search_company_id;
+			data.depart_id = search_depart_id;
+			data.dev_type = search_dev_type;
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -57,17 +51,15 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/admin/update";
+			var url = ctx + "boss/deviceversion/update";
 			var data = new Object();
-			data.login_id = parseInt(admin_id);
-			data.admin_id = parseInt($("#input-id").val());
-			data.account = $("#input-account").val();
-			data.password = $("#input-password-wrap").val();
-			data.nick_name = $("#input-nickName").val();
-			data.role_id = parseInt($("#input-roleId").val());
-			data.organization_id = parseInt($("#input-companyId").val());
-			data.phone = $("#input-phone").val();
-			data.email = $("#input-email").val();
+			data.version_id = parseInt($("#input-version_id").val());
+			data.depart_id = parseInt($("#input-depart_id").val());
+			data.dev_type = parseInt($("#input-dev_type-wrap").val());
+			data.dev_version = $("#input-dev_version").val();
+			data.status = parseInt($("#input-status").val());
+			data.version_info = $("#input-version_info").val();
+			data.update_url = $("#input-update_url").val();
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -80,14 +72,14 @@ $(function() {
 		//删除数据
 		deleteConfig : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "boss/clienttype/delclienttype";
+				var url = ctx + "boss/deviceversion/del";
 				var data = new Object();
-                data.type_id = id;
+                data.version_id = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
-						$("#input-search-client_type").val("");
-						$("#input-search-client_name").val("");
+						$("#input-search-depart_id").val("");
+						$("#input-search-dev_type").val("");
                         action.loadPageData();
 					}
 				});
@@ -95,24 +87,22 @@ $(function() {
 		}
 	};
 	window.action = action;
-	action.loadPageData();
+	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑管理员");
-			$("#input-password-txt").hide();
-			$("#input-password-txt-wrap").show();
-			//$("#input-companyId-txt").show();
-			/*$("#input-status-txt").show();*/
+			$("h4#addTempl-modal-label").text("编辑设备新版本");
+			$("#input-dev_type-txt").hide();
+			$("#input-dev_type-txt-wrap").show();
+			$("#input-status-txt").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加管理员");
-			$("#input-password-txt").show();
-			$("#input-password-txt-wrap").hide();
-			//$("#input-companyId-txt").hide();
-			/*$("#input-status-txt").hide();*/
+			$("h4#addTempl-modal-label").text("添加设备新版本");
+			$("#input-dev_type-txt").show();
+			$("#input-dev_type-txt-wrap").hide();
+			$("#input-status-txt").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -122,16 +112,13 @@ $(function() {
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
 
-        $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-account").val(that.find("td").eq(1).text());
-        $("#input-password-wrap").val(that.find("td").eq(2).text());
-		$("#input-nickName").val(that.find("td").eq(3).text());
-		$("#input-roleId").val(that.find("td").eq(4).text());
-		$("#input-phone").val(that.find("td").eq(5).text());
-		$("#input-email").val(that.find("td").eq(6).text());
-		$("#input-companyId").val(that.find("td").eq(7).text());
-		/*$("#input-status").val(that.find("td").eq(8).text());*/
-
+		$("#input-version_id").val(that.find("td").eq(0).text());
+        $("#input-depart_id").val(that.find("td").eq(1).text());
+        $("#input-dev_type-wrap").val(that.find("td").eq(2).text());
+		$("#input-dev_version").val(that.find("td").eq(3).text());
+		$("#input-status").val(that.find("td").eq(4).text());
+		$("#input-version_info").val(that.find("td").eq(5).text());
+		$("#input-update_url").val(that.find("td").eq(6).text());
 
         $("#addTempl-modal").modal("show");
     });
@@ -172,13 +159,13 @@ $(function() {
         }
 
 	});
-	$("#input-search-role_id").on('keydown', function(e) {
+	$("#input-search-depart_id").on('keydown', function(e) {
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}
 
 	});
-	$("#input-search-company_id").on('keydown', function(e) {
+	$("#input-search-dev_type").on('keydown', function(e) {
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}
