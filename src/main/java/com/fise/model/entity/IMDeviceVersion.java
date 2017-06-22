@@ -1,3 +1,4 @@
+
 package com.fise.model.entity;
 
 import java.io.Serializable;
@@ -8,31 +9,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author 
  */
 public class IMDeviceVersion implements Serializable {
-	@JsonProperty("version_id")
-    private Integer versionid;
+    @JsonProperty("version_id")
+    private Integer id;
 
     /**
      * 公司ID
      */
-	@JsonProperty("depart_id")
+    @JsonProperty("depart_id")
     private Integer departid;
 
     /**
      * 设备类型
      */
-	@JsonProperty("dev_type")
+    @JsonProperty("dev_type")
     private Integer devType;
 
     /**
      * 最新设备固件版本号
      */
-	@JsonProperty("dev_version")
+    @JsonProperty("dev_version")
     private String devVersion;
 
     /**
      * 版本信息
      */
-	@JsonProperty("version_info")
+    @JsonProperty("version_info")
     private String versionInfo;
 
     private Integer status;
@@ -45,16 +46,15 @@ public class IMDeviceVersion implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-  
-    public Integer getVersionid() {
-		return versionid;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setVersionid(Integer versionid) {
-		this.versionid = versionid;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getDepartid() {
+    public Integer getDepartid() {
         return departid;
     }
 
@@ -101,4 +101,5 @@ public class IMDeviceVersion implements Serializable {
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
     }
+
 }

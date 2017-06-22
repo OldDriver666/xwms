@@ -1,8 +1,9 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fise.dao.IMDeviceVersionMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.IMDeviceVersion">
-    <id column="id" jdbcType="INTEGER" property="versionid" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="departid" jdbcType="INTEGER" property="departid" />
     <result column="dev_type" jdbcType="INTEGER" property="devType" />
     <result column="dev_version" jdbcType="VARCHAR" property="devVersion" />
@@ -97,11 +98,11 @@
     select 
     <include refid="Base_Column_List" />
     from IMDeviceVersion
-    where id = #{versionid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from IMDeviceVersion
-    where id = #{versionid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.fise.model.entity.IMDeviceVersionExample">
     delete from IMDeviceVersion
@@ -113,14 +114,14 @@
     insert into IMDeviceVersion (id, departid, dev_type, 
       dev_version, version_info, status, 
       update_url)
-    values (#{versionid,jdbcType=INTEGER}, #{departid,jdbcType=INTEGER}, #{devType,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{departid,jdbcType=INTEGER}, #{devType,jdbcType=INTEGER}, 
       #{devVersion,jdbcType=VARCHAR}, #{versionInfo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{updateUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.IMDeviceVersion">
     insert into IMDeviceVersion
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="versionid != null">
+      <if test="id != null">
         id,
       </if>
       <if test="departid != null">
@@ -143,8 +144,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="versionid != null">
-        #{versionid,jdbcType=INTEGER},
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="departid != null">
         #{departid,jdbcType=INTEGER},
@@ -175,8 +176,8 @@
   <update id="updateByExampleSelective" parameterType="map">
     update IMDeviceVersion
     <set>
-      <if test="record.versionid != null">
-        id = #{record.versionid,jdbcType=INTEGER},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.departid != null">
         departid = #{record.departid,jdbcType=INTEGER},
@@ -203,7 +204,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update IMDeviceVersion
-    set id = #{record.versionid,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=INTEGER},
       departid = #{record.departid,jdbcType=INTEGER},
       dev_type = #{record.devType,jdbcType=INTEGER},
       dev_version = #{record.devVersion,jdbcType=VARCHAR},
@@ -236,7 +237,7 @@
         update_url = #{updateUrl,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{versionid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMDeviceVersion">
     update IMDeviceVersion
@@ -246,6 +247,6 @@
       version_info = #{versionInfo,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       update_url = #{updateUrl,jdbcType=VARCHAR}
-    where id = #{versionid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

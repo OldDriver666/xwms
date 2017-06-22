@@ -65,7 +65,7 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
-		if(param.getVersionid()==null){
+		if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
@@ -82,7 +82,7 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
-		if(record.getVersionid()==null){
+		if(record.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		

@@ -14,7 +14,7 @@ import com.fise.model.entity.IMDeviceVersionExample;
 import com.fise.model.entity.IMDeviceVersionExample.Criteria;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
-import com.fise.utils.StringUtil;
+
 
 @Service
 public class IDeviceVersionServiceImpl implements IDeviceVersionService{
@@ -75,7 +75,7 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		deviceVersionDao.deleteByPrimaryKey(param.getVersionid());
+		deviceVersionDao.deleteByPrimaryKey(param.getId());
 		return response.success();
 	}
 

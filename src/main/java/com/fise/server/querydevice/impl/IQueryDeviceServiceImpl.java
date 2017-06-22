@@ -90,7 +90,7 @@ public class IQueryDeviceServiceImpl implements IQueryDeviceService{
             return response;
         }
         
-        if(param.getType()==23){
+        if(param.getType()==20){
             
             for(IMUser user:list){
                 DeviceConfMotorMeter motorMeter=DeviceConfMotorMeterDao.selectByPrimaryKey(user.getId());

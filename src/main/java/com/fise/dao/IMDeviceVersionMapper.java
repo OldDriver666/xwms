@@ -1,3 +1,4 @@
+
 package com.fise.dao;
 
 import com.fise.model.entity.IMDeviceVersion;
@@ -27,4 +28,5 @@ public interface IMDeviceVersionMapper {
     int updateByPrimaryKeySelective(IMDeviceVersion record);
 
     int updateByPrimaryKey(IMDeviceVersion record);
+
 }
