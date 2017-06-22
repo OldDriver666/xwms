@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
-import com.fise.dao.IMDevcieVersionMapper;
-import com.fise.model.entity.IMDevcieVersion;
-import com.fise.model.entity.IMDevcieVersionExample;
-import com.fise.model.entity.IMDevcieVersionExample.Criteria;
+import com.fise.dao.IMDeviceVersionMapper;
+import com.fise.model.entity.IMDeviceVersion;
+import com.fise.model.entity.IMDeviceVersionExample;
+import com.fise.model.entity.IMDeviceVersionExample.Criteria;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
-import com.fise.utils.StringUtil;
+
 
 @Service
 public class IDeviceVersionServiceImpl implements IDeviceVersionService{
@@ -22,18 +22,18 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 	private Logger logger=Logger.getLogger(getClass());
 	
 	@Autowired
-	IMDevcieVersionMapper deviceVersionDao;
+	IMDeviceVersionMapper deviceVersionDao;
 	
 	@Override
-	public Response insertDeviceVersion(IMDevcieVersion record) {
+	public Response insertDeviceVersion(IMDeviceVersion record) {
 		
 		Response response=new Response();
 		
-		IMDevcieVersionExample example=new IMDevcieVersionExample();
+		IMDeviceVersionExample example=new IMDeviceVersionExample();
 		Criteria criteria=example.createCriteria();
 		criteria.andDepartidEqualTo(record.getDepartid());
 		criteria.andDevTypeEqualTo(record.getDevType());
-		List<IMDevcieVersion> list=deviceVersionDao.selectByExample(example);
+		List<IMDeviceVersion> list=deviceVersionDao.selectByExample(example);
 		if(list.size()!=0){
 		    response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
 		    response.setMsg("已经存在最新版本！！！");
@@ -51,7 +51,7 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		IMDevcieVersionExample example=new IMDevcieVersionExample();
+		IMDeviceVersionExample example=new IMDeviceVersionExample();
 		Criteria criteria=example.createCriteria();
 		criteria.andDepartidEqualTo(param.getDepartid());
 		
@@ -59,7 +59,7 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 			criteria.andDevTypeEqualTo(param.getDevType());
 		}
 		
-		List<IMDevcieVersion> list=deviceVersionDao.selectByExample(example);
+		List<IMDeviceVersion> list=deviceVersionDao.selectByExample(example);
 		
 		if(list.size()==0){
 			return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
@@ -75,12 +75,12 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 		
 		Response response=new Response();
 		
-		deviceVersionDao.deleteByPrimaryKey(param.getVersionid());
+		deviceVersionDao.deleteByPrimaryKey(param.getId());
 		return response.success();
 	}
 
 	@Override
-	public Response updateDeviceVersion(IMDevcieVersion record) {
+	public Response updateDeviceVersion(IMDeviceVersion record) {
 		
 		Response response=new Response();
       

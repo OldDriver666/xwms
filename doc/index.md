@@ -419,7 +419,7 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 
 ####删除设备信息
-|   接口地址    |   boss/fisedevice//delfisedevice         |
+|   接口地址    |   boss/fisedevice/delfisedevice         |
 |   ---         |   ---                   |
 |   请求方式    |   HTTP POST             |
 |   参数格式    |   JSON                        |  

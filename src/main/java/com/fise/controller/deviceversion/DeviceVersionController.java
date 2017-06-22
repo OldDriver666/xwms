@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
-import com.fise.model.entity.IMDevcieVersion;
+import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
 import com.fise.utils.StringUtil;
@@ -27,7 +27,7 @@ public class DeviceVersionController {
 	
 	/*添加设备版本信息*/
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public Response addDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
+	public Response addDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
 		
@@ -65,7 +65,7 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
-		if(param.getVersionid()==null){
+		if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
@@ -78,11 +78,11 @@ public class DeviceVersionController {
 	
 	/*修改设备版本信息*/
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public Response updateDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
+	public Response updateDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
 		
-		if(record.getVersionid()==null){
+		if(record.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
