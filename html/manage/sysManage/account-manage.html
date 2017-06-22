@@ -23,7 +23,15 @@
 					<div class="navbar-form navbar-left">
 						<div class="form-group">
 							<input id="input-search-account" type="text" class="form-control" placeholder="请输入管理员账号">
-							<input id="input-search-role_id" type="text" class="form-control" placeholder="请输入角色">
+						</div>
+						<div class="form-group" >
+							<div class="col-sm-10">
+								<select name="search-userRoles" id="input-search-userRoles" class="form-control">
+									<option value="">请选择角色类型</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
 							<input id="input-search-company_id" type="text" class="form-control" placeholder="请输入公司组织id">
 						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
@@ -69,20 +77,34 @@
 												<input type="text" class="form-control" id="input-nickName" name="nickName" placeholder="输入nickName">
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" id="add-userRoles-wrap">
+											<label for="add-search-userRoles" class="col-sm-2 control-label"><span class="necessary">*</span>角色类型</label>
+											<div class="col-sm-10">
+												<select name="adduserRoles" id="add-search-userRoles" class="form-control">
+													<option value="">请选择角色类型</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" id="input-roleName-txt-wrap">
+											<label class="col-sm-2 control-label">角色类型</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-roleName-txt" name="roleName-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="input-roleId-wrap">
 											<label for="input-roleId" class="col-sm-2 control-label"><span class="necessary">*</span>roleId</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-roleId" name="client_name" placeholder="输入roleId">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-phone" class="col-sm-2 control-label"><span class="necessary">*</span>phone</label>
+											<label for="input-phone" class="col-sm-2 control-label"><span class="necessary"></span>phone</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-phone" name="phone" placeholder="输入phone">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-email" class="col-sm-2 control-label"><span class="necessary">*</span>email</label>
+											<label for="input-email" class="col-sm-2 control-label"><span class="necessary"></span>email</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-email" name="email" placeholder="输入email">
 											</div>
@@ -93,12 +115,7 @@
 												<input type="text" class="form-control" id="input-companyId" name="companyId" placeholder="输入companyId">
 											</div>
 										</div>
-										<!--<div class="form-group" id="input-status-txt">
-											<label for="input-status" class="col-sm-2 control-label"><span class="necessary">*</span>status</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-status" name="status" placeholder="输入status">
-											</div>
-										</div>-->
+
 									</form>
 								</div>
 								<div class="modal-footer">
@@ -116,7 +133,7 @@
 					<th>account</th>
 					<th>password</th>
 					<th>nickName</th>
-					<th>roleId</th>
+					<th>roleName</th>
 					<th>phone</th>
 					<th>email</th>
 					<th>companyId</th>
@@ -155,10 +172,11 @@
 	<td>${account}</td>
 	<td>${password}</td>
 	<td>${nickName}</td>
-	<td>${roleId}</td>
+	<td>${roleNameQuery(roleId)}</td>
 	<td>${phone}</td>
 	<td>${email}</td>
 	<td>${companyId}</td>
+	<td style="display:none;">${roleId}</td>
 	<!--<td>${status}</td>-->
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
@@ -166,7 +184,33 @@
 	</td>
 </tr>
 </script>
+<script type="text/x-jquery-tmpl" id="pageUserRoles">
+    <option value=${id}>${name}</option>
+</script>
 <script type="text/javascript">
+	var rolesArray = [
+		{
+			"id": 1,
+			"name": "BOSS"
+		},
+		{
+			"id": 2,
+			"name": "超级管理员"
+		},
+		{
+			"id": 3,
+			"name": "管理员"
+		}
+	];
+	var Lens = rolesArray.length;
+	function roleNameQuery(id){
+		for(var i=0; i< Lens; i++){
+			if(rolesArray[i].id == id){
+				return rolesArray[i].name;
+			}
+		}
+	}
+
 	toastr.options={
 	    positionClass : 'toast-center-center',
         showDuration: "300",

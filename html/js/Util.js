@@ -132,6 +132,22 @@ Date.prototype.format = function(format){
     return format;
 };
 
+Util.formatDateTime = function(inputTime) {
+    var date = new Date(inputTime*1000);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+}
+
 Util.showTit = function(){
 
 }
@@ -352,7 +368,10 @@ var ReturnCode = {
     EXPIRED_ACCESS_TOKEN : 2001,
     REQUEST_HEADER_PARAM_ERROR : 3001,
     REQUSET_JSON_FIELD_ERROR : 3002,
-    REQUSET_PARAM_FIELD_ERROR : 3003
+    REQUSET_PARAM_FIELD_ERROR : 3003,
+    RECORD_NOT_EXIST_ERROR : 10041,
+    DEVICE_NOT_EXIST_ERROR : 10046
+
 };
 
 Util.getPath = function(){
@@ -715,8 +734,8 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-	/*ctx = "http://192.168.2.196:8484/";  */      //test version
-    ctx = "http://192.168.2.196:8585/";        //non-stop server version
+	ctx = "http://192.168.2.196:8484/";        //test version
+   /* ctx = "http://192.168.2.196:8585/"; */       //non-stop server version
      /*ctx = "http://192.168.2.196:8610/";*/
     /*ctx = "http://bossdev.wn517.com/";*/
     Util.localStorage.add("ctx",ctx);

@@ -78,8 +78,8 @@ $(function() {
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
-						$("#input-search-depart_id").val("");
-						$("#input-search-dev_type").val("");
+						/*$("#input-search-depart_id").val("");
+						$("#input-search-dev_type").val("");*/
                         action.loadPageData();
 					}
 				});

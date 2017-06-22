@@ -51,7 +51,7 @@ $(function() {
         },*/
 		//获取所有数据
 		loadPageData : function() {
-            var search_devType = parseInt($("#input-search-devType").val());
+            var search_devType = parseInt($('#search-input-devType option:selected').val());
 			var search_txt = $("#input-search-txt").val();
             var type_num = $("#search-type").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -75,7 +75,33 @@ $(function() {
                 data.type = search_devType;
             }
 
-            var pageTmplTbodys = "pageTmplTbody" + search_devType;
+
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    $('#pageContent').find("tr").remove();
+                    /*$("#pageTmpl").tmpl(result.data).appendTo('#pageContent');*/
+
+                    var pageTmplTheads = "#" + "pageTmplThead" + search_devType;
+                    var pageTmplTbodys = "#" + "pageTmplTbody" + search_devType;
+                    $(pageTmplTheads).tmpl().appendTo('#pageThead');
+                    $(pageTmplTbodys).tmpl(result.data).appendTo('#pageContent');
+
+                    if($('#pageContent tr').length == 0){
+                        $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
+                    }
+                } else if(result.code == ReturnCode.DEVICE_NOT_EXIST_ERROR){
+                    $('#pageContent').find("tr").remove();
+                    alert("设备不存在！");
+                }else {
+                    alert("请求出错！");
+                }
+            },function() {
+                $('#pageContent').find("tr").remove();
+                alert("服务器开个小差，请稍后重试！")
+            });
+
+
+            /*var pageTmplTbodys = "pageTmplTbody" + search_devType;
             var opt = {
                 "targetContentId" : "pageContent",
                 "url" : url,
@@ -99,25 +125,25 @@ $(function() {
                 },
                 "param" : data
             };
-            this.page = new Util.Page(opt);
+            this.page = new Util.Page(opt);*/
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
-            var url = ctx + "FiseDeviceManage/GetDeviceTypeInfo";
-            var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value
-            };
+            var myDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("myDevTypeArray"));
+            $("#pageDevType").tmpl(myDevTypeArray).appendTo('#search-input-devType');
+            /*var url = ctx + "boss/clienttype/queryclienttype";
+            var data = new Object();
+            data.client_type = null;
+            data.client_name = "";
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                    $("#pageDevType").tmpl(result.DeviceTypeInfo).appendTo('#input-devType');
-                    $("#pageDevType").tmpl(result.DeviceTypeInfo).appendTo('#input-devType2');
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    $("#pageDevType").tmpl(result.data).appendTo('#search-input-devType');
                 } else {
                     alert("请求出错！");
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
-            });
+            });*/
 
         },
 
@@ -179,7 +205,7 @@ $(function() {
 
         },*/
         //获取并处理批量插入的数据
-        getDevTxtInfo : function () {
+       /* getDevTxtInfo : function () {
             var addCount = 10;
             var txtDevInfoList = $(".fileContentTxt").text();
             var txtDevType = $("#input-devType2").val();
@@ -224,7 +250,7 @@ $(function() {
                 action.addDevFile(param_arr,flag,num)
             },1000);
 
-        },
+        },*/
         //批量添加设备信息
         /*addDevFile : function (param_arr,flag,num) {
             var url = ctx + "FiseDeviceManage/InsertInfo";
@@ -254,9 +280,9 @@ $(function() {
         }*/
 	};
 	window.action = action;
-	/*action.loadPageData();
+	/*action.loadPageData();*/
 	action.loadDevTypeData();
-    action.getDevStatusData();
+    /*action.getDevStatusData();
     action.loadPrivateAuthData();*/
 
     //编辑获取数据数据
@@ -321,9 +347,9 @@ $(function() {
         }
     });
 
-    $("#input-devType").change(function(){
+    $("#search-input-devType").change(function(){
         if($(this).val() != ""){
-            $(this).parent().parent().removeClass("has-error");
+            $(this).parent().removeClass("has-error");
             $(this).next().remove();
         }
     });
@@ -362,10 +388,10 @@ $(function() {
     });*/
 
 	$("#btn-search").on('click', function() {
-        if($("#input-search-devType").val() == "") {
-            $("#input-search-devType").parent().addClass("has-error");
+        if($("#search-input-devType").val() == "") {
+            $("#search-input-devType").parent().addClass("has-error");
             var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-            $("#input-search-devType").append(err_html);
+            $("#search-input-devType").append(err_html);
             return;
         }
         $("#pageThead").empty();

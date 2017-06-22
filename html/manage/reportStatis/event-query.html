@@ -238,10 +238,10 @@
 	<td>{{if locationFrom == 0}}GPS定位{{else locationFrom == 1}}基站定位{{else locationFrom == 2}}WIFI定位{{/if}}</td>
 	<td>${battery}</td>
 	 <td>${sq}</td>
-	 <td>{{if eventLevel == 0}}广播-服务器发起的针对所有用户{{else eventLevel == 1}}持久-支持离线永久有效{{else eventLevel == 2}}采集-汇报事件记录{{else eventLevel == 3}}服务器使用事件等级{{/if}}</td>
+	 <td>{{if eventLevel == 0}}广播{{else eventLevel == 1}}消息{{else eventLevel == 2}}采集{{else eventLevel == 3}}自动{{/if}}</td>
 	 <td>${param}</td>
-	<td>${updated}</td>
-	<td>${created}</td>
+	<td>${ Util.formatDateTime(updated)}</td>
+	<td>${ Util.formatDateTime(created)}</td>
 	<!--<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteItem(${fise_id})">删除</a>
@@ -267,7 +267,7 @@
 </script>-->
 
 <script type="text/javascript">
-    toastr.options={
+	toastr.options={
         positionClass : 'toast-center-center',
         showDuration: "300",
         hideDuration: "300",

@@ -13,7 +13,7 @@ $(function() {
             data.ime = $("#input-devIME").val();
             data.account = $("#input-devXW").val();
             data.depart_id = parseInt(depart_id);
-            data.type = parseInt($("#input-devType").val());
+            data.type = parseInt($('#input-devType option:selected').val());
             data.mobile = $("#input-phoneNo").val();
             data.mark = $("#input-Mark").val();
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
@@ -82,7 +82,27 @@ $(function() {
                 var data = new Object();
                 data.depart_id = parseInt(depart_id);
             }
-            var opt = {
+
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    $('#pageContent').find("tr").remove();
+                    $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
+
+                    if($('#pageContent tr').length == 0){
+                        $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
+                    }
+                } else if(result.code == ReturnCode.RECORD_NOT_EXIST_ERROR){
+                    $('#pageContent').find("tr").remove();
+                    alert("记录不存在！");
+                }else {
+                    alert("请求出错！");
+                }
+            },function() {
+                $('#pageContent').find("tr").remove();
+                alert("服务器开个小差，请稍后重试！")
+            });
+
+            /*var opt = {
                 "targetContentId" : "pageContent",
                 "url" : url,
                 "forAuth2" : true,
@@ -103,11 +123,13 @@ $(function() {
                 },
                 "param" : data
             };
-            this.page = new Util.Page(opt);
+            this.page = new Util.Page(opt);*/
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
-            var url = ctx + "FiseDeviceManage/GetDeviceTypeInfo";
+            var myDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("myDevTypeArray"));
+            $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
+            /*var url = ctx + "FiseDeviceManage/GetDeviceTypeInfo";
             var data = {
                 "UserName":userName,
                 "AuthenticCode": token_value
@@ -121,7 +143,7 @@ $(function() {
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
-            });
+            });*/
 
         },
 
@@ -133,7 +155,7 @@ $(function() {
             data.ime = $("#input-devIME").val();
             data.account = $("#input-devXW").val();
             data.depart_id = parseInt(depart_id);
-            data.type = parseInt($("#input-devType").val());
+            data.type = parseInt($("#input-devTypeNo").val());
             data.mobile = $("#input-phoneNo").val();
             data.mark = $("#input-Mark").val();
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
@@ -279,8 +301,8 @@ $(function() {
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-devIME").val(that.find("td").eq(1).text());
         $("#input-devXW").val(that.find("td").eq(2).text());
-        $("#input-devType").val(that.find("td").eq(3).text());
-       /* $("#input-devType-txt").val(that.find("td").eq(3).text());*/
+        $("#input-devTypeNo").val(that.find("td").eq(9).text());
+        $("#input-devType-txt").val(that.find("td").eq(3).text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#input-phoneNo").val(that.find("td").eq(7).text());
         $("#input-Mark").val(that.find("td").eq(8).text());
@@ -294,12 +316,14 @@ $(function() {
 			$("h4#addTempl-modal-label").text("编辑设备信息");
             $("#input-phoneNo-wrap").show();
             $("#input-devType-wrap").hide();
+            $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加设备信息");
 			//$("#input-phoneNo-wrap").hide();
             $("#input-devType-wrap").show();
+            $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();

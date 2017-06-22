@@ -37,10 +37,12 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div id="dev-query-condition" class="navbar-form navbar-left">
-                        <div class="form-group">
-                            <label for="input-search-devType" class=" control-label"><span class="necessary">*</span>设备类型</label>
-                             <input id="input-search-devType" type="text" name="devType" class="form-control"
-                                   placeholder="请输入设备类型">
+                        <div class="form-group" >
+                            <div class="col-sm-10">
+                                <select name="search-devType" id="search-input-devType" class="form-control">
+                                    <option value="">请输入设备类型</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <select id="search-type" class="form-control">
@@ -243,6 +245,8 @@
 					<th>electricize</th>
 					<th>mode</th>
 					<th>bell_mode</th>
+					<th>updated</th>
+					<th>created</th>
 
 </tr>
 
@@ -261,6 +265,8 @@
 					<th>bell_mode</th>
 					<th>speed</th>
 					<th>speed_limit</th>
+					<th>updated</th>
+					<th>created</th>
 
 </tr>
 
@@ -280,6 +286,8 @@
 					<th>mode</th>
 					<th>bell_mode</th>
 					<th>light_time</th>
+					<th>updated</th>
+					<th>created</th>
 
 </tr>
 
@@ -287,18 +295,20 @@
 
 <script type="text/x-jquery-tmpl" id="pageTmplTbody19">
 <tr>
-	<td style="">${device_id}</td>
-	<td>${master_id}</td>
-	<td>${group_id}</td>
+	<td style="">${deviceId}</td>
+	<td>${masterId}</td>
+	<td>${groupId}</td>
 	<td>${mobile}</td>
-	<td>${alarm_pen}</td>
-	<td>${alarm_battery}</td>
-	<td>${alarm_power_off}</td>
-	<td>${listen_silent}</td>
-	<td>${alarm_call}</td>
+	<td>${alarmPen}</td>
+	<td>${alarmBattery}</td>
+	<td>${alarmPoweroff}</td>
+	<td>${listenSilent}</td>
+	<td>${alarmCall}</td>
 	<td>${electricize}</td>
 	<td>${mode}</td>
-	<td>${bell_mode}</td>
+	<td>${bellMode}</td>
+	<td>${Util.formatDateTime(updated)}</td>
+	<td>${Util.formatDateTime(created)}</td>
 
 </tr>
 
@@ -306,8 +316,8 @@
 
 <script type="text/x-jquery-tmpl" id="pageTmplTbody23">
 <tr>
-	<td style="">${device_id}</td>
-	<td>${master_id}</td>
+	<td style="">${deviceId}</td>
+	<td>${masterId}</td>
 	<td>${mobile}</td>
 	<td>${alarm_pen}</td>
 	<td>${alarm_battery}</td>
@@ -318,6 +328,8 @@
 	<td>${bell_mode}</td>
 	<td>${speed}</td>
 	<td>${speed_limit}</td>
+	<td>${Util.formatDateTime(updated)}</td>
+	<td>${Util.formatDateTime(created)}</td>
 
 </tr>
 
@@ -325,26 +337,28 @@
 
 <script type="text/x-jquery-tmpl" id="pageTmplTbody25">
 <tr>
-	<td style="">${device_id}</td>
-	<td>${master_id}</td>
-	<td>${group_id}</td>
+	<td style="">${deviceId}</td>
+	<td>${masterId}</td>
+	<td>${groupId}</td>
 	<td>${mobile}</td>
-	<td>${alarm_takeoff}</td>
-	<td>${alarm_battery}</td>
-	<td>${alarm_poweroff}</td>
-	<td>${step_mode}</td>
-	<td>${alarm_call}</td>
+	<td>${alarmTakeoff}</td>
+	<td>${alarmBattery}</td>
+	<td>${alarmPoweroff}</td>
+	<td>${stepMode}</td>
+	<td>${alarmCall}</td>
 	<td>${electricize}</td>
 	<td>${mode}</td>
-	<td>${bell_mode}</td>
-	<td>${light_time}</td>
+	<td>${bellMode}</td>
+	<td>${lightTime}</td>
+	<td>${Util.formatDateTime(updated)}</td>
+	<td>${Util.formatDateTime(created)}</td>
 
 </tr>
 
 </script>
 
 <script type="text/x-jquery-tmpl" id="pageDevType">
-    <option value=${DeviceType}>${DeviceName}</option>
+    <option value=${client_type}>${client_name}</option>
 
 </script>
 <!--<script type="text/x-jquery-tmpl" id="page_dev_active_count">
