@@ -87,7 +87,7 @@ $(function() {
 		}
 	};
 	window.action = action;
-	//action.loadPageData();
+	action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
@@ -121,27 +121,25 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-            client_type : {
+			userid : {
                 required : true
             },
-            client_name : {
-                required : true
-            }
+			uname : {
+				required : true
+			}
         }
     });
 
 	$("#btn-add-submit").on('click', function() {
-		if (!$("#form-addTempl").valid()) {
-			return;
-		}
 		var action = $("form#form-addTempl").data("action");
-		switch (action) {
-		case "add":
-			window.action.add();
-			break;
-		case "edit":
+		if(action == "add"){
+			if (!$("#form-addTempl").valid()) {
+				return;
+			}else {
+				window.action.add();
+			}
+		}else if(action == "edit"){
 			window.action.edit();
-			break;
 		}
 	});
 

@@ -61,7 +61,7 @@ $(function() {
 		loadPageData : function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "boss/role/queryAuth";
+            var url = ctx + "boss/role/allAuth";
             var data = new Object();
             data.role_id = parseInt(role_id);
             data.organ_id = parseInt(depart_id);
@@ -273,7 +273,7 @@ $(function() {
         }
 	};
 	window.action = action;
-	//action.loadPageData();
+    //action.loadPageData();
 	action.loadUserRolesData();
     //action.getDevStatusData();
    // action.loadPrivateAuthData();
@@ -332,6 +332,9 @@ $(function() {
             $("#input-moduleId-wrap").hide();
             $("#input-userRoles-wrap").hide();
             $("#input-userRoles-txt-wrap").show();
+            $("#edit_insert_auth").hide();
+            $("#edit_update_auth").hide();
+            $("#edit_query_auth").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加角色权限");
@@ -339,6 +342,9 @@ $(function() {
             $("#input-moduleId-wrap").show();
             $("#input-userRoles-wrap").show();
             $("#input-userRoles-txt-wrap").hide();
+            $("#edit_insert_auth").hide();
+            $("#edit_update_auth").hide();
+            $("#edit_query_auth").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}

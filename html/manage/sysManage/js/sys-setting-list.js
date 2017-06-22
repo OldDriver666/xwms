@@ -107,7 +107,7 @@ $(function() {
         var status_val = null;
         if(check_status === "启用"){
             status_val = true;
-        }else if(check_status === "禁用"){
+        }else if(check_status === "弃用"){
             status_val = false;
         }
 
@@ -134,7 +134,18 @@ $(function() {
     });
 
 	$("#btn-add-submit").on('click', function() {
-		if (!$("#form-addTempl").valid()) {
+        var action = $("form#form-addTempl").data("action");
+        if(action == "add"){
+            if (!$("#form-addTempl").valid()) {
+                return;
+            }else {
+                window.action.add();
+            }
+        }else if(action == "edit"){
+            window.action.edit();
+        }
+
+		/*if (!$("#form-addTempl").valid()) {
 			return;
 		}
 		var action = $("form#form-addTempl").data("action");
@@ -145,7 +156,7 @@ $(function() {
 		case "edit":
 			window.action.edit();
 			break;
-		}
+		}*/
 	});
 
 	$("#btn-search").on('click', function() {

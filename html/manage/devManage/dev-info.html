@@ -100,7 +100,6 @@
 												<select name="devType" id="input-devType" class="form-control">
 													<option value="">请选择</option>
 												</select>
-												<!--<input type="text" class="form-control" id="input-devType" name="devType" placeholder="输入设备类型">-->
 											</div>
 										</div>
 										<div class="form-group" id="input-devTypeNo-wrap">
@@ -138,12 +137,6 @@
 												</label>
 											</div>
 										</div>
-										<!--<div class="form-group" id="input-status-wrap">
-											<label for="input-status" class="col-sm-2 control-label">status</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-status" name="status" placeholder="输入status">
-											</div>
-										</div>-->
 									</form>
 								</div>
 								<div class="modal-footer">
@@ -195,8 +188,8 @@
 					<th>IME</th>
 					<th>小位号</th>
 					<th>设备类型名称</th>
-					<th>mac</th>
-					<th>code</th>
+					<!--<th>mac</th>-->
+					<!--<th>code</th>-->
 					<th>状态</th>
 					<th>电话号码</th>
 					<th>mark</th>
@@ -245,8 +238,8 @@
 	<td>${ime}</td>
 	<td>${account}</td>
 	<td>${typeNameQuery(type)}</td>
-	<td>${mac}</td>
-	<td>${code}</td>
+	<td style="display:none;">${mac}</td>
+	<td style="display:none;">${code}</td>
 	<td>{{if status == 0}}未激活 {{else status == 1}}激活{{/if}}</td>
 	<td>${mobile}</td>
 	<td>${mark}</td>

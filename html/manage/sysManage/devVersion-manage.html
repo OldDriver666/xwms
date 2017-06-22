@@ -23,7 +23,14 @@
 					<div class="navbar-form navbar-left">
 						<div class="form-group">
 							<input id="input-search-depart_id" type="text" class="form-control" placeholder="请输入公司ID">
-							<input id="input-search-dev_type" type="text" class="form-control" placeholder="请输入设备类型">
+							<!--<input id="input-search-dev_type" type="text" class="form-control" placeholder="请输入设备类型">-->
+						</div>
+						<div class="form-group" >
+							<div class="col-sm-10">
+								<select name="searchType" id="input-search-client_type" class="form-control">
+									<option value="">请输入设备类型名称</option>
+								</select>
+							</div>
 						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-search"> </span>
@@ -50,16 +57,24 @@
 												<input type="text" class="form-control" id="input-depart_id" name="depart_id" placeholder="输入depart_id">
 											</div>
 										</div>
-										<div class="form-group" id="input-dev_type-txt">
-											<label for="input-dev_type" class="col-sm-2 control-label"><span class="necessary">*</span>dev_type</label>
+										<div class="form-group" id="input-devType-wrap">
+											<label for="input-devType" class="col-sm-2 control-label"><span class="necessary">*</span>设备类型名称</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-dev_type" name="dev_type" placeholder="输入dev_type">
+												<select name="devType" id="input-devType" class="form-control">
+													<option value="">请选择</option>
+												</select>
 											</div>
 										</div>
-										<div class="form-group" id="input-dev_type-txt-wrap">
-											<label for="input-dev_type-wrap" class="col-sm-2 control-label"><span class="necessary">*</span>dev_type</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-dev_type-wrap" name="dev_type-wrap" placeholder="输入dev_type">
+										<div class="form-group" id="input-devType-txt-wrap">
+											<label class="col-sm-2 control-label">设备类型名称</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-devType-txt" name="devType-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="input-devTypeNo-wrap">
+											<label class="col-sm-2 control-label">设备类型</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-devTypeNo" name="devTypeNo" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group">
@@ -75,7 +90,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-version_info" class="col-sm-2 control-label"><span class="necessary">*</span>version_info</label>
+											<label for="input-version_info" class="col-sm-2 control-label"><span class="necessary"></span>version_info</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-version_info" name="version_info" placeholder="输入version_info">
 											</div>
@@ -138,18 +153,31 @@
 <tr>
 	<td style="display:none;">${version_id}</td>
 	<td>${depart_id}</td>
-	<td>${dev_type}</td>
+	<td>${typeNameQuery(dev_type)}</td>
 	<td>${dev_version}</td>
 	<td>${status}</td>
 	<td>${version_info}</td>
 	<td>${update_url}</td>
+	<td style="display:none;">${dev_type}</td>
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${version_id})">删除</a>
 	</td>
 </tr>
 </script>
+<script type="text/x-jquery-tmpl" id="pageDevType">
+    <option value=${client_type}>${client_name}</option>
+</script>
 <script type="text/javascript">
+	var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
+	var Lens = allDevTypeArray.length;
+	function typeNameQuery(type){
+		for(var i=0; i< Lens; i++){
+			if(allDevTypeArray[i].client_type == type){
+				return allDevTypeArray[i].client_name;
+			}
+		}
+	}
 	toastr.options={
 	    positionClass : 'toast-center-center',
         showDuration: "300",

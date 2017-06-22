@@ -8,7 +8,7 @@ $(function() {
             var url = ctx + "boss/departconf/addimdepartconfig";
             var data = new Object();
             data.depart_id = parseInt($("#input-depart_id").val());
-            data.client_type = parseInt($("#input-client_type").val());
+            data.client_type = parseInt($('#input-devType option:selected').val());
             data.avatar = $("#input-avatar").val();
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
@@ -22,7 +22,7 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var search_depart_id = parseInt($("#input-search-depart_id").val());
-            var search_client_type = parseInt($("#input-search-client_type").val());
+            var search_client_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
             var url = ctx + "boss/departconf/queryimdepartconfig";
@@ -48,13 +48,19 @@ $(function() {
             });
 
 		},
+        //获取设备类型列表数据
+        loadDevTypeData : function() {
+            var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
+            $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
+            $("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
+        },
 		//编辑数据
 		edit : function() {
 			var url = ctx + "boss/departconf/updateimdepartconfig";
 			var data = new Object();
             data.config_id = parseInt($("#input-config_id").val());
             data.depart_id = parseInt($("#input-depart_id").val());
-            data.client_type = parseInt($("#input-client_type").val());
+            data.client_type = parseInt($("#input-devTypeNo").val());
             data.avatar = $("#input-avatar").val();
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
@@ -84,15 +90,22 @@ $(function() {
 	};
 	window.action = action;
 	action.loadPageData();
+    action.loadDevTypeData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑公司设备信息");
+            $("#input-devType-wrap").hide();
+            $("#input-devTypeNo-wrap").hide();
+            $("#input-devType-txt-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加公司设备信息");
+            $("#input-devType-wrap").show();
+            $("#input-devTypeNo-wrap").hide();
+            $("#input-devType-txt-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -108,7 +121,8 @@ $(function() {
 
         $("#input-config_id").val(that.find("td").eq(0).text());
         $("#input-depart_id").val(that.find("td").eq(1).text());
-        $("#input-client_type").val(that.find("td").eq(2).text());
+        $("#input-devType-txt").val(that.find("td").eq(2).text());
+        $("#input-devTypeNo").val(that.find("td").eq(4).text());
         $("#input-avatar").val(relUrl);
         $("#addTempl-modal").modal("show");
     });
@@ -119,25 +133,24 @@ $(function() {
             depart_id : {
                 required : true
             },
-            client_type : {
+            devType : {
                 required : true
             }
         }
     });
 
 	$("#btn-add-submit").on('click', function() {
-		if (!$("#form-addTempl").valid()) {
-			return;
-		}
-		var action = $("form#form-addTempl").data("action");
-		switch (action) {
-		case "add":
-			window.action.add();
-			break;
-		case "edit":
-			window.action.edit();
-			break;
-		}
+        var action = $("form#form-addTempl").data("action");
+        if(action == "add"){
+            if (!$("#form-addTempl").valid()) {
+                return;
+            }else {
+                window.action.add();
+            }
+        }else if(action == "edit"){
+            window.action.edit();
+        }
+
 	});
 
 	$("#btn-search").on('click', function() {
@@ -149,10 +162,10 @@ $(function() {
         }
 
 	});
-    $("#input-search-client_type").on('keydown', function(e) {
-        if (e.keyCode == 13) {
+   /* $("#input-devType").change(function(){
+        if($('#input-devType').val() != null){
             action.loadPageData();
         }
+    });*/
 
-    });
 });

@@ -16,6 +16,7 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
+					action.allDevTypeQuery();
                 }
             });
 		},
@@ -46,6 +47,25 @@ $(function() {
             });
 
 		},
+		//获取所有设备类型数据
+		allDevTypeQuery: function(){
+			var allDevTypeArray = [];
+			var url = ctx + "boss/clienttype/queryclienttype";
+			var data = new Object();
+			data.client_type = null;
+			data.client_name = "";
+			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					allDevTypeArray = result.data;
+					Util.cookieStorage.setCookie("allDevTypeArray",JSON.stringify(allDevTypeArray));
+				} else {
+					alert("请求出错！");
+				}
+			},function() {
+				alert("服务器开个小差，请稍后重试！")
+			});
+
+		},
 		//编辑数据
 		edit : function() {
 			var url = ctx + "boss/clienttype/updateclienttype";
@@ -59,6 +79,7 @@ $(function() {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
+					action.allDevTypeQuery();
 				}
 			});
 		},
@@ -74,6 +95,7 @@ $(function() {
 						$("#input-search-client_type").val("");
 						$("#input-search-client_name").val("");
                         action.loadPageData();
+						action.allDevTypeQuery();
 					}
 				});
 			}

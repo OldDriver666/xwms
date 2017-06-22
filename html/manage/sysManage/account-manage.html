@@ -72,7 +72,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-nickName" class="col-sm-2 control-label"><span class="necessary">*</span>nickName</label>
+											<label for="input-nickName" class="col-sm-2 control-label"><span class="necessary"></span>nickName</label>
 											<div class="col-sm-10">
 												<input type="text" class="form-control" id="input-nickName" name="nickName" placeholder="输入nickName">
 											</div>
@@ -131,7 +131,7 @@
 				<thead>
 				<tr>
 					<th>account</th>
-					<th>password</th>
+					<!--<th>password</th>-->
 					<th>nickName</th>
 					<th>roleName</th>
 					<th>phone</th>
@@ -169,8 +169,8 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td style="display:none;">${id}</td>
-	<td>${account}</td>
-	<td>${password}</td>
+	<td >${account}</td>
+	<td style="display:none;">${password}</td>
 	<td>${nickName}</td>
 	<td>${roleNameQuery(roleId)}</td>
 	<td>${phone}</td>

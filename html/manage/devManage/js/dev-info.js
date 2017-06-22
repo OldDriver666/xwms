@@ -57,22 +57,11 @@ $(function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "boss/fisedevice/queryfisedevice";
-            /*var url = ctx + "FiseDeviceManage/QueryDeviceInfo";*/
             if(type_num == 0){
                 var data = new Object();
                 data.ime = search_txt;
                 data.account = "";
                 data.depart_id = parseInt(depart_id);
-
-                /*var data = {
-                    UserName:userName,
-                    AuthenticCode:token_value,
-                    DeviceIME:search_txt,
-                    DeviceXW:"",
-                    DepartId:parseInt(depart_id),
-                    Page:1,
-                    PageSize:20
-                }*/
             }else if(type_num == 1){
                 var data = new Object();
                 data.ime = "";
@@ -129,6 +118,7 @@ $(function() {
         loadDevTypeData : function() {
             var myDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("myDevTypeArray"));
             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
+
             /*var url = ctx + "FiseDeviceManage/GetDeviceTypeInfo";
             var data = {
                 "UserName":userName,
@@ -146,13 +136,13 @@ $(function() {
             });*/
 
         },
-
 		//编辑数据
 		edit : function() {
             var url = ctx + "boss/fisedevice/updatefisedevice";
             var data = new Object();
             data.fise_id = $("#input-id").val();
             data.ime = $("#input-devIME").val();
+            data.status = parseInt($("input[name=status]:checked").val());
             data.account = $("#input-devXW").val();
             data.depart_id = parseInt(depart_id);
             data.type = parseInt($("#input-devTypeNo").val());
@@ -205,9 +195,10 @@ $(function() {
                 alert("服务器开个小差，请稍后重试！")
             });
 
-        },
+        }
+
         //获取并处理批量插入的数据
-        getDevTxtInfo : function () {
+        /*getDevTxtInfo : function () {
             var addCount = 10;
             var txtDevInfoList = $(".fileContentTxt").text();
             var txtDevType = $("#input-devType2").val();
@@ -252,9 +243,9 @@ $(function() {
                 action.addDevFile(param_arr,flag,num)
             },1000);
 
-        },
+        },*/
         //批量添加设备信息
-        addDevFile : function (param_arr,flag,num) {
+        /*addDevFile : function (param_arr,flag,num) {
             var url = ctx + "FiseDeviceManage/InsertInfo";
             var data = {
                 UserName: userName,
@@ -279,7 +270,7 @@ $(function() {
                     $("#modal-loading").modal('hide');
                 }
             })
-        }
+        }*/
 	};
 	window.action = action;
 	action.loadPageData();
@@ -318,6 +309,7 @@ $(function() {
             $("#input-devType-wrap").hide();
             $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").show();
+            $("#input-status-wrap").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加设备信息");
@@ -325,6 +317,7 @@ $(function() {
             $("#input-devType-wrap").show();
             $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").hide();
+            $("#input-status-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -343,9 +336,6 @@ $(function() {
             devXW : {
                 required : true
             },
-            devDepartID : {
-                required : true
-            },
             devType : {
                 required : true
             }
@@ -354,12 +344,21 @@ $(function() {
 
     $("#dev-query-condition").validate({
         rules : {
-            /*devDepartID : {
-                required : true
-            }*/
+
         }
     });
-
+    $("#input-devIME").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
+    $("#input-devXW").change(function(){
+        if($(this).val() != ""){
+            $(this).parent().parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
     $("#input-devType").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
@@ -371,20 +370,11 @@ $(function() {
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
-            }else if($("#input-devType").val() == "") {
-                $("#input-devType").parent().parent().addClass("has-error");
-                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-                $("#input-devType").parent().append(err_html);
-                return;
             }else {
                 window.action.add();
             }
         }else if(action == "edit"){
-            if (!$("#form-addTempl").valid()) {
-                return;
-            }else{
-                window.action.edit();
-            }
+            window.action.edit();
         }
     });
 

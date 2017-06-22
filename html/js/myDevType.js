@@ -6,13 +6,12 @@ $(function(){
 	var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
 
-    var myDevTypeArray = [];
     //页面加载左侧Menu菜单栏
 	var Index = {
         myDevTypeQuery: function(){
             var dataArray1 = [];
             var dataArray2 = [];
-           // var myDevTypeArray = [];
+            var myDevTypeArray = [];
             var url = ctx + "boss/clienttype/queryclienttype";
             var data = new Object();
             data.client_type = null;
@@ -42,6 +41,7 @@ $(function(){
                                 }
                             }
                             Util.cookieStorage.setCookie("myDevTypeArray",JSON.stringify(myDevTypeArray));
+                            Util.cookieStorage.setCookie("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
                             alert("请求出错！");
                         }

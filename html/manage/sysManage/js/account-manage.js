@@ -185,15 +185,9 @@ $(function() {
 			account : {
                 required : true
             },
-			/*password : {
-                required : true
-            },*/
 			companyId : {
 				required : true
 			}
-			/*adduserRoles : {
-		        required : true
-	       }*/
         }
     });
 

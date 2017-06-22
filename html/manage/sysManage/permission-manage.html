@@ -91,7 +91,7 @@
 												<input type="text" class="form-control" id="input-moduleId" name="moduleId" placeholder="输入moduleId">
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" id="edit_insert_auth">
 											<label class="col-sm-2 control-label">新增权限</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
@@ -102,7 +102,7 @@
 												</label>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" id="edit_update_auth">
 											<label class="col-sm-2 control-label">修改权限</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
@@ -113,7 +113,7 @@
 												</label>
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="form-group" id="edit_query_auth">
 											<label class="col-sm-2 control-label">查询权限</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
@@ -201,10 +201,11 @@
 					<th>priority</th>
 					<th>sn</th>
 					<th>url</th>
-					<th>新增权限</th>
-					<th>修改权限</th>
-					<th>查询权限</th>
+					<!--<th>新增权限</th>-->
+					<!--<th>修改权限</th>-->
+					<!--<th>查询权限</th>-->
 					<th>parent_id</th>
+					<th>status</th>
 					<th>管理</th>
 				</tr>
 				</thead>
@@ -250,10 +251,11 @@
 	<td>${priority}</td>
 	<td>${sn}</td>
 	<td>${url}</td>
-	<td>{{if insertAuth == 1}}启用{{else insertAuth == 0}}禁用{{/if}}</td>
-	<td>{{if updateAuth == 1}}启用{{else updateAuth == 0}}禁用{{/if}}</td>
-	<td>{{if queryAuth == 1}}启用{{else queryAuth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if insertAuth == 1}}启用{{else insertAuth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if updateAuth == 1}}启用{{else updateAuth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if queryAuth == 1}}启用{{else queryAuth == 0}}禁用{{/if}}</td>
 	<td>${parent_id}</td>
+	<td>${status}</td>
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <!--<a href="javascript:void(0);" onclick="action.deleteItem(${permissId},'${moduleId}')">删除</a>-->

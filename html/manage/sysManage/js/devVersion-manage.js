@@ -9,7 +9,7 @@ $(function() {
             var url = ctx + "boss/deviceversion/add";
             var data = new Object();
 			data.depart_id = parseInt($("#input-depart_id").val());
-			data.dev_type = parseInt($("#input-dev_type").val());
+			data.dev_type = parseInt($('#input-devType option:selected').val());
 			data.dev_version = $("#input-dev_version").val();
 			data.version_info = $("#input-version_info").val();
 			data.update_url = $("#input-update_url").val();
@@ -25,7 +25,7 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var search_depart_id = parseInt($("#input-search-depart_id").val());
-			var search_dev_type = parseInt($("#input-search-dev_type").val());
+			var search_dev_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
             var url = ctx + "boss/deviceversion/query";
@@ -42,12 +42,19 @@ $(function() {
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
                 } else {
-                    alert("请求出错！");
+					alert("请求出错，没有获取到相应数据！");
+                    /*alert("请求出错！");*/
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
 
+		},
+		//获取设备类型列表数据
+		loadDevTypeData : function() {
+			var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
+			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
+			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
 		},
 		//编辑数据
 		edit : function() {
@@ -55,7 +62,7 @@ $(function() {
 			var data = new Object();
 			data.version_id = parseInt($("#input-version_id").val());
 			data.depart_id = parseInt($("#input-depart_id").val());
-			data.dev_type = parseInt($("#input-dev_type-wrap").val());
+			data.dev_type = parseInt($("#input-devTypeNo").val());
 			data.dev_version = $("#input-dev_version").val();
 			data.status = parseInt($("#input-status").val());
 			data.version_info = $("#input-version_info").val();
@@ -87,6 +94,7 @@ $(function() {
 		}
 	};
 	window.action = action;
+	action.loadDevTypeData();
 	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
@@ -94,14 +102,22 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑设备新版本");
-			$("#input-dev_type-txt").hide();
-			$("#input-dev_type-txt-wrap").show();
+			$("#input-devType-wrap").hide();
+			$("#input-devTypeNo-wrap").hide();
+			$("#input-devType-txt-wrap").show();
+
+			/*$("#input-dev_type-txt").hide();
+			$("#input-dev_type-txt-wrap").show();*/
 			$("#input-status-txt").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加设备新版本");
-			$("#input-dev_type-txt").show();
-			$("#input-dev_type-txt-wrap").hide();
+			$("#input-devType-wrap").show();
+			$("#input-devTypeNo-wrap").hide();
+			$("#input-devType-txt-wrap").hide();
+
+			/*$("#input-dev_type-txt").show();
+			$("#input-dev_type-txt-wrap").hide();*/
 			$("#input-status-txt").hide();
 			$form.data("action", "add");
 			$form[0].reset();
@@ -114,7 +130,8 @@ $(function() {
 
 		$("#input-version_id").val(that.find("td").eq(0).text());
         $("#input-depart_id").val(that.find("td").eq(1).text());
-        $("#input-dev_type-wrap").val(that.find("td").eq(2).text());
+		$("#input-devType-txt").val(that.find("td").eq(2).text());
+		$("#input-devTypeNo").val(that.find("td").eq(7).text());
 		$("#input-dev_version").val(that.find("td").eq(3).text());
 		$("#input-status").val(that.find("td").eq(4).text());
 		$("#input-version_info").val(that.find("td").eq(5).text());
@@ -126,28 +143,33 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-            client_type : {
+			depart_id : {
                 required : true
             },
-            client_name : {
+			devType : {
                 required : true
-            }
+            },
+			dev_version : {
+				required : true
+			},
+			update_url : {
+				required : true
+			}
         }
     });
 
 	$("#btn-add-submit").on('click', function() {
-		if (!$("#form-addTempl").valid()) {
-			return;
-		}
 		var action = $("form#form-addTempl").data("action");
-		switch (action) {
-		case "add":
-			window.action.add();
-			break;
-		case "edit":
+		if(action == "add"){
+			if (!$("#form-addTempl").valid()) {
+				return;
+			}else {
+				window.action.add();
+			}
+		}else if(action == "edit"){
 			window.action.edit();
-			break;
 		}
+
 	});
 
 	$("#btn-search").on('click', function() {
@@ -165,11 +187,11 @@ $(function() {
 		}
 
 	});
-	$("#input-search-dev_type").on('keydown', function(e) {
+	/*$("#input-search-dev_type").on('keydown', function(e) {
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}
 
-	});
+	});*/
 
 });
