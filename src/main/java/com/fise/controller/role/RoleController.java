@@ -54,6 +54,21 @@ public class RoleController {
         return resp;
     }
     
+    @RequestMapping(value = "/allAuth", method = RequestMethod.POST)
+    public Response queryAllAuth(@RequestBody Map<String, Object> param){
+        Response resp = new Response();
+        logger.debug(param.toString());
+        Integer amdinRole = (Integer)param.get("role_id");
+        Integer amdinOrgid = (Integer)param.get("organ_id");
+        if(amdinRole == null || amdinOrgid == null){
+            resp.failure(ErrorCode.ERROR_PRRAM_NOT_COMPLETE_EXCEPTION);
+        } else {
+            resp = roleSvr.queryRoleAuthForUpdate(amdinRole, amdinOrgid);
+        }
+
+        return resp;
+    }
+    
     @RequestMapping(value = "/updateAuth", method = RequestMethod.POST)
     public Response update(@RequestBody @Valid RolePermissionParam param){
         Response resp = new Response();

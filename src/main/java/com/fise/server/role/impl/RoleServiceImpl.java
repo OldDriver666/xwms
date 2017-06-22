@@ -60,6 +60,12 @@ public class RoleServiceImpl implements IRoleService {
             //查询子角色权限
             List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
             tmpResult = permissionDao.selectPermissionByRole(role.getId());
+            for(ModuleQueryResult tmpAuth : tmpResult){
+                if(tmpAuth.getStatus() != 1){
+                    //移除所有不可见的
+                    tmpResult.remove(tmpAuth);
+                }
+            }
             //赋值对应角色权限
             RoleAuthResult tmpData = new RoleAuthResult();
             tmpData.setRoleId(role.getId());
@@ -108,6 +114,33 @@ public class RoleServiceImpl implements IRoleService {
             }
         }
         resp.success();
+        return resp;
+    }
+
+    @Override
+    public Response queryRoleAuthForUpdate(Integer adminRole, Integer orgId) {
+        /*TODO 根据组织ID查询角色*/
+        Response resp = new Response();
+        //需要返回的真实JSON格式数据
+        List<RoleAuthResult> data = new ArrayList<RoleAuthResult>();
+        
+        WiOrganizationRole admin = roleDao.selectByPrimaryKey(adminRole);
+        WiOrganizationRoleExample example = new WiOrganizationRoleExample();
+        WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
+        criterion.andAuthLevelLessThanOrEqualTo(admin.getAuthLevel());
+        List<WiOrganizationRole> roleList = roleDao.selectByExample(example);
+        for(WiOrganizationRole role : roleList){
+            //查询子角色权限
+            List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
+            tmpResult = permissionDao.selectPermissionByRole(role.getId());
+            //赋值对应角色权限
+            RoleAuthResult tmpData = new RoleAuthResult();
+            tmpData.setRoleId(role.getId());
+            tmpData.setRoleName(role.getName());
+            tmpData.setAuthList(tmpResult);
+            data.add(tmpData);
+        }
+        resp.success(data);
         return resp;
     }
 
