@@ -356,6 +356,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
         }
         adminList.clear();
         adminList = adminDao.selectByExample(example);
+        for ( int index=0; index < adminList.size();index++){
+            adminList.get(index).setPassword("");
+        }
         resp.success(adminList);
         return resp;
     }

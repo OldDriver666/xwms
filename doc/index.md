@@ -752,6 +752,7 @@ type和name都是选填，如果都不填，则查询所有信息
 ####查询角色权限
 |   接口地址    |   boss/role/queryAuth        |
 |   ---         |   ---                   |
+|   包括不可见  |   boss/role/allAuth           |
 |   请求方式    |   HTTP POST             |
 |   参数格式    |   JSON                        | 
 

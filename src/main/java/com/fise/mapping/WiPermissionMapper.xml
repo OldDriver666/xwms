@@ -289,15 +289,16 @@
     <result column="sn" jdbcType="VARCHAR" property="sn" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="insert_auth" jdbcType="INTEGER" property="insertAuth" />
     <result column="update_auth" jdbcType="INTEGER" property="updateAuth" />
     <result column="query_auth" jdbcType="INTEGER" property="queryAuth" />
   </resultMap>
   <select id="selectPermissionByRole" parameterType="java.lang.Integer"  resultMap="moduleQueryResult">
-    select p.id,p.module_id,m.name,m.priority,m.sn,m.url,m.parent_id,p.insert_auth,p.update_auth,p.query_auth
+    select p.id,p.module_id,p.status,m.name,m.priority,m.sn,m.url,m.parent_id,p.insert_auth,p.update_auth,p.query_auth
         from wi_permission p 
         left join wi_module m 
         on p.module_id=m.id
-        where p.status=1 and m.status = 1 and p.role_id=#{roleId,jdbcType=INTEGER} ;
+        where m.status = 1 and p.role_id=#{roleId,jdbcType=INTEGER} ;
   </select>
 </mapper>
