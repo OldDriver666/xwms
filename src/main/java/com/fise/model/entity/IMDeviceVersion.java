@@ -1,3 +1,4 @@
+
 package com.fise.model.entity;
 
 import java.io.Serializable;
@@ -100,4 +101,5 @@ public class IMDeviceVersion implements Serializable {
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
     }
+
 }

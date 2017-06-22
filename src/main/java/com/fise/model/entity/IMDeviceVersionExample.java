@@ -1,3 +1,4 @@
+
 package com.fise.model.entity;
 
 import java.util.ArrayList;
@@ -669,4 +670,5 @@ public class IMDeviceVersionExample {
             this(condition, value, secondValue, null);
         }
     }
+
 }
