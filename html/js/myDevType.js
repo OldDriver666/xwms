@@ -43,14 +43,14 @@ $(function(){
                             Util.cookieStorage.setCookie("myDevTypeArray",JSON.stringify(myDevTypeArray));
                             Util.cookieStorage.setCookie("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
-                            alert("请求出错！");
+                            alert(result_query.msg);
                         }
                     },function() {
                         alert("服务器开个小差，请稍后重试！")
                     });
 
                 } else {
-                    alert("请求出错！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")

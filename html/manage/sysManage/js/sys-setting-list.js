@@ -19,6 +19,8 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
+                }else{
+                    alert(result.msg);
                 }
             });
 		},
@@ -42,7 +44,7 @@ $(function() {
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
                 } else {
-                    alert("请求出错！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
@@ -66,7 +68,9 @@ $(function() {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
-				}
+				}else{
+                    alert(result.msg);
+                }
 			});
 		},
 		//删除数据
@@ -79,7 +83,9 @@ $(function() {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
-					}
+					}else{
+                        alert(result.msg);
+                    }
 				});
 			}
 		}
@@ -162,10 +168,14 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-txt").on('keydown', function(e) {
+	$("#input-search-type").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
-
 	});
+    $("#input-search-name").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
 });

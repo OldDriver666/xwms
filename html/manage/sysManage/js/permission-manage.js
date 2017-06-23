@@ -12,11 +12,16 @@ $(function() {
             var url = ctx + "boss/role/updateAuth";
             var param_arr = [];
             var param = new Object();
-            param.module_id = parseInt($("#input-moduleId").val());
-            param.status = $("input[name=status]:checked").val();
+            param.module_id = parseInt($("#input-moduleName").val());
+            param.status =  parseInt($("input[name=status]:checked").val());
+            param.insert_auth =  parseInt($("input[name=insert_auth]:checked").val());
+            param.update_auth =  parseInt($("input[name=update_auth]:checked").val());
+            param.query_auth =  parseInt($("input[name=query_auth]:checked").val());
+
+            /*param.status = $("input[name=status]:checked").val();
             param.insert_auth = $("input[name=insert_auth]:checked").val();
             param.update_auth = $("input[name=update_auth]:checked").val();
-            param.query_auth = $("input[name=query_auth]:checked").val();
+            param.query_auth = $("input[name=query_auth]:checked").val();*/
             param_arr.push(param);
             var rold_idSel = parseInt($("#input-userRoles").val());
             var data = {
@@ -29,10 +34,8 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
-                }else if(result.Status == 1){
-                    toastr.error(result.ErrorInfo);
-				}else{
-                	alert("添加失败！");
+                }else{
+                    alert(result.msg);
 				}
             });
 		},
@@ -81,10 +84,8 @@ $(function() {
                         }
                     }
 
-                } else if(result.Status == 1){
-                    alert("服务器开个小差，请稍后重试！");
                 } else {
-                    alert("账户名、密码或错误！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！");
@@ -124,11 +125,29 @@ $(function() {
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-devType2');
                 } else {
-                    alert("请求出错！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
+        },
+        //获取所有菜单数据
+        loadMenuData : function() {
+            var url = ctx + "boss/module/queryall";
+            var data = new Object();
+            data.admin_id = parseInt(admin_id);
+            data.role_id = parseInt(role_id);
+
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
+                } else {
+                    alert(result.msg);
+                }
+            },function() {
+                alert("服务器开个小差，请稍后重试！")
+            });
+
         },
 
 		//编辑数据
@@ -138,10 +157,15 @@ $(function() {
             var param = new Object();
             param.permission_id = parseInt($("#input-permissId").val());
             param.module_id = parseInt($("#input-moduleId").val());
-            param.status = $("input[name=status]:checked").val();
+            param.status = parseInt($("input[name=status]:checked").val());
+            param.insert_auth = parseInt($("input[name=insert_auth]:checked").val());
+            param.update_auth = parseInt($("input[name=update_auth]:checked").val());
+            param.query_auth = parseInt($("input[name=query_auth]:checked").val());
+
+            /*param.status = $("input[name=status]:checked").val();
             param.insert_auth = $("input[name=insert_auth]:checked").val();
             param.update_auth = $("input[name=update_auth]:checked").val();
-            param.query_auth = $("input[name=query_auth]:checked").val();
+            param.query_auth = $("input[name=query_auth]:checked").val();*/
             param_arr.push(param);
             var rold_idSel = parseInt($('#search-input-userRoles option:selected').val());
             var data = {
@@ -154,6 +178,8 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
+                }else{
+                    alert(result.msg);
                 }
             });
 		},
@@ -166,10 +192,12 @@ $(function() {
                 data.AuthenticCode = token_value;
                 data.DeviceId = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
-					if (result.Status == ReturnCode.SUCCESS) {
+					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
-					}
+					}else{
+                        alert(result.msg);
+                    }
 				});
 			}
 		},
@@ -275,6 +303,7 @@ $(function() {
 	window.action = action;
     //action.loadPageData();
 	action.loadUserRolesData();
+    action.loadMenuData();
     //action.getDevStatusData();
    // action.loadPrivateAuthData();
 
@@ -284,8 +313,8 @@ $(function() {
         var check_insert_auth = $.trim(that.find("td").eq(6).text());
         var check_update_auth = $.trim(that.find("td").eq(7).text());
         var check_query_auth = $.trim(that.find("td").eq(8).text());
-        var check_status = "可见";
-        /*var check_status = $.trim(that.find("td").eq(6).text());*/
+        var check_status = $.trim(that.find("td").eq(10).text());
+
 
         var insert_auth_val = null;
         var update_auth_val = null;
@@ -315,6 +344,7 @@ $(function() {
 
         $("#input-permissId").val(that.find("td").eq(0).text());
         $("#input-moduleId").val(that.find("td").eq(1).text());
+        $("#input-moduleName-txt").val(that.find("td").eq(2).text());
         $("input[name=insert_auth]").filter("[value=" + insert_auth_val + "]").prop('checked', true);
         $("input[name=update_auth]").filter("[value=" + update_auth_val + "]").prop('checked', true);
         $("input[name=query_auth]").filter("[value=" + query_auth_val + "]").prop('checked', true);
@@ -329,6 +359,8 @@ $(function() {
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑角色权限");
             $("#input-phoneNo-wrap").show();
+            $("#input-moduleName-wrap").hide();
+            $("#input-moduleName-txt-wrap").show();
             $("#input-moduleId-wrap").hide();
             $("#input-userRoles-wrap").hide();
             $("#input-userRoles-txt-wrap").show();
@@ -339,7 +371,9 @@ $(function() {
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加角色权限");
 			$("#input-phoneNo-wrap").hide();
-            $("#input-moduleId-wrap").show();
+            $("#input-moduleName-wrap").show();
+            $("#input-moduleName-txt-wrap").hide();
+            $("#input-moduleId-wrap").hide();
             $("#input-userRoles-wrap").show();
             $("#input-userRoles-txt-wrap").hide();
             $("#edit_insert_auth").hide();

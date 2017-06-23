@@ -89,10 +89,8 @@
                 Util.cookieStorage.setCookie("departId",result.data.companyId);
                 Util.cookieStorage.setCookie("adminId",result.data.id);
                 window.location.href = "index.html";
-            } else if(result.Status == 1){
-                alert("服务器开个小差，请稍后重试！");
-            } else {
-                alert("账户名、密码或错误！");
+            }  else {
+                alert(result.msg);
             }
         },function() {
             alert("服务器开个小差，请稍后重试！");

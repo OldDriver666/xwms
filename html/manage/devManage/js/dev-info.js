@@ -21,10 +21,8 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
-                }else if(result.code == 1){
-                    toastr.error(result.ErrorInfo);
-				}else{
-                	alert("添加失败！");
+                }else{
+                	alert(result.msg);
 				}
             });
 		},
@@ -82,9 +80,10 @@ $(function() {
                     }
                 } else if(result.code == ReturnCode.RECORD_NOT_EXIST_ERROR){
                     $('#pageContent').find("tr").remove();
-                    alert("记录不存在！");
+                    alert(result.msg);
                 }else {
-                    alert("请求出错！");
+                    $('#pageContent').find("tr").remove();
+                    alert(result.msg);
                 }
             },function() {
                 $('#pageContent').find("tr").remove();
@@ -118,23 +117,6 @@ $(function() {
         loadDevTypeData : function() {
             var myDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("myDevTypeArray"));
             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
-
-            /*var url = ctx + "FiseDeviceManage/GetDeviceTypeInfo";
-            var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value
-            };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                    $("#pageDevType").tmpl(result.DeviceTypeInfo).appendTo('#input-devType');
-                    $("#pageDevType").tmpl(result.DeviceTypeInfo).appendTo('#input-devType2');
-                } else {
-                    alert("请求出错！");
-                }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
-            });*/
-
         },
 		//编辑数据
 		edit : function() {
@@ -153,6 +135,8 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
+                }else{
+                    alert(result.msg);
                 }
             });
 		},
@@ -166,7 +150,9 @@ $(function() {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
-					}
+					}else{
+                        alert(result.msg);
+                    }
 				});
 			}
 		},
@@ -189,7 +175,7 @@ $(function() {
                     $("#page_xw_active_count").tmpl(result.data).appendTo('#xw_active_count');
 
                 } else {
-                    alert("请求出错！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")

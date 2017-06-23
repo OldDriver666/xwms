@@ -44,7 +44,7 @@ $(function() {
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
                 } else {
-                    alert("请求出错！");
+					alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")

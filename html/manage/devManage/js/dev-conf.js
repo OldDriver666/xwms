@@ -79,8 +79,6 @@ $(function() {
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
-                    /*$("#pageTmpl").tmpl(result.data).appendTo('#pageContent');*/
-
                     var pageTmplTheads = "#" + "pageTmplThead" + search_devType;
                     var pageTmplTbodys = "#" + "pageTmplTbody" + search_devType;
                     $(pageTmplTheads).tmpl().appendTo('#pageThead');
@@ -91,9 +89,10 @@ $(function() {
                     }
                 } else if(result.code == ReturnCode.DEVICE_NOT_EXIST_ERROR){
                     $('#pageContent').find("tr").remove();
-                    alert("设备不存在！");
+                    alert(result.msg);
                 }else {
-                    alert("请求出错！");
+                    $('#pageContent').find("tr").remove();
+                    alert(result.msg);
                 }
             },function() {
                 $('#pageContent').find("tr").remove();
@@ -131,20 +130,6 @@ $(function() {
         loadDevTypeData : function() {
             var myDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("myDevTypeArray"));
             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#search-input-devType');
-            /*var url = ctx + "boss/clienttype/queryclienttype";
-            var data = new Object();
-            data.client_type = null;
-            data.client_name = "";
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
-                    $("#pageDevType").tmpl(result.data).appendTo('#search-input-devType');
-                } else {
-                    alert("请求出错！");
-                }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
-            });*/
-
         },
 
 		//编辑数据
@@ -280,8 +265,8 @@ $(function() {
         }*/
 	};
 	window.action = action;
+    action.loadDevTypeData();
 	/*action.loadPageData();*/
-	action.loadDevTypeData();
     /*action.getDevStatusData();
     action.loadPrivateAuthData();*/
 

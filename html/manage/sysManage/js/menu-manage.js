@@ -28,7 +28,9 @@ $(function() {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
-                }
+                }else{
+					alert(result.msg);
+				}
             });
 		},
 		//获取所有数据
@@ -48,7 +50,7 @@ $(function() {
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
                 } else {
-                    alert("请求出错！");
+					alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
@@ -75,7 +77,7 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
-					alert("编辑失败！请正确填写内容");
+					alert(result.msg);
 				}
 			});
 		},
@@ -89,6 +91,8 @@ $(function() {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
+					}else{
+						alert(result.msg);
 					}
 				});
 			}
