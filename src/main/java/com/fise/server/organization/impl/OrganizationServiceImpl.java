@@ -12,7 +12,6 @@ import com.fise.dao.WiOrganizationMapper;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.entity.WiOrganizationExample;
 import com.fise.model.entity.WiOrganizationExample.Criteria;
-import com.fise.model.param.QueryOrganizationParam;
 import com.fise.server.organization.IOrganizationService;
 import com.fise.utils.DateUtil;
 
