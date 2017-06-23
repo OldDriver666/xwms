@@ -1337,3 +1337,98 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 无内容，直接查看返回码
 ```
+
+###设备出厂 
+####新增设备
+|   接口地址    |   boss/accountmanage/add        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"depart_id":x,                //必填-公司iD 
+ "description":"",             //选填-描述
+ "begin_account":"",           //选填-设备起始编号
+ "end_account":"",             //选填-设备结束编号
+ "status":1                    //选填-0-初始 1-已经出厂    
+}
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####查询设备
+|   接口地址    |   boss/accountmanage/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+没有，则查询所有
+{"depart_id":x}                 //选填-公司id
+```
+- **回复**
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 1,
+         "description": "试产100小位号",
+         "status": 1,
+         "created": 0,
+         "depart_id": 1,
+         "begin_account": "W0101000001",
+         "end_account": "W0101000099"
+      },
+      {
+         "id": 2,
+         "description": "正式产小位号段",
+         "status": 0,
+         "created": 0,
+         "depart_id": 1,
+         "begin_account": "W0101003000",
+         "end_account": "W0101006100"
+      }
+   ]
+}
+```
+
+####删除设备
+|   接口地址    |   boss/accountmanage/del        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"id":x}                    //必填-id
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####修改设备
+|   接口地址    |   boss/accountmanage/update        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"id":2,                                //必填-id
+ "description": "",                     //选填-描述
+ "status": 0,                           //选填-设备状态
+ "depart_id": 1,                        //选填-公司id
+ "begin_account": "W0101003000",        //选填-设备起始编号  
+ "end_account": "W0101006100"           //选填-设备结束编号 
+} 
+- **回复**
+```
+无内容，直接查看返回码
+```
