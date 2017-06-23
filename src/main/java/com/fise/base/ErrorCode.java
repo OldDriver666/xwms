@@ -57,6 +57,8 @@ public enum ErrorCode {
 	ERROR_SUGGEST_USER_ID_EXISTED("user_id已经存在",10045),
 	ERROR_CAMERA_CONF_DEVICE_EXISTED("设备不存在",10046),
 	
+	ERROR_ACCOUNT_LOCK("账号被锁定", 10100),
+	
 	ERROR_CACHE("缓存错误！", 997),
 	ERROR_DATABASE("数据库错误！", 998),
 	ERROR_SYSTEM("系统错误！", 999);

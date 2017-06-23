@@ -1,5 +1,6 @@
 package com.fise.server.module.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,14 @@ public class ModuleServiceImpl implements IModuleService {
     public Response QueryModule(ModuleQueryParam param) {
         Response resp = new Response();
         /*TODO 默认认为请求者传的roleId有效可用，不做检测 根据情况定是否检测值有效性*/
+        List<ModuleQueryResult> returnData = new ArrayList<ModuleQueryResult>();
         List<ModuleQueryResult> data = permissionDao.selectPermissionByRole(param.getRoleId());
-        resp.success(data);
+        for(ModuleQueryResult tmpData : data){
+            if(tmpData.getStatus() != 0){
+                returnData.add(tmpData);
+            }
+        }
+        resp.success(returnData);
         return resp;
     }
 

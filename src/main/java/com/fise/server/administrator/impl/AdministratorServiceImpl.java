@@ -63,7 +63,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
 			resp.failure(ErrorCode.ERROR_PASSWORD_INCORRECT);
 			return resp;
 		}
-		
+		if ( admin.getStatus() == 0){
+		    resp.failure(ErrorCode.ERROR_ACCOUNT_LOCK);
+		}
 		resp = login(admin);
 		return resp;
 
@@ -351,8 +353,8 @@ public class AdministratorServiceImpl implements IAdministratorService {
         if(param.getCompanyId() != null){
             queryWhere.andCompanyIdEqualTo(param.getCompanyId());
         }
-        if(param.getRuleId() != null){
-            queryWhere.andRoleIdEqualTo(param.getRuleId());
+        if(param.getRoleId() != null){
+            queryWhere.andRoleIdEqualTo(param.getRoleId());
         }
         adminList.clear();
         adminList = adminDao.selectByExample(example);

@@ -6,13 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiOrganizationMapper;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.entity.WiOrganizationExample;
 import com.fise.model.entity.WiOrganizationExample.Criteria;
-import com.fise.model.param.QueryOrganizationParam;
 import com.fise.server.organization.IOrganizationService;
 import com.fise.utils.DateUtil;
 

@@ -2,7 +2,6 @@ package com.fise.server.organization;
 
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganization;
-import com.fise.model.param.QueryOrganizationParam;
 
 public interface IOrganizationService {
     /*查询用户可见模块*/

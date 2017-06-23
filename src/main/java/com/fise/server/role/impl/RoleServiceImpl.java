@@ -59,18 +59,18 @@ public class RoleServiceImpl implements IRoleService {
         for(WiOrganizationRole role : roleList){
             //查询子角色权限
             List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
+            List<ModuleQueryResult> tmpResult2 = new ArrayList<ModuleQueryResult>();
             tmpResult = permissionDao.selectPermissionByRole(role.getId());
             for(ModuleQueryResult tmpAuth : tmpResult){
-                if(tmpAuth.getStatus() != 1){
-                    //移除所有不可见的
-                    tmpResult.remove(tmpAuth);
+                if(tmpAuth.getStatus() == 1){
+                    tmpResult2.add(tmpAuth);
                 }
             }
             //赋值对应角色权限
             RoleAuthResult tmpData = new RoleAuthResult();
             tmpData.setRoleId(role.getId());
             tmpData.setRoleName(role.getName());
-            tmpData.setAuthList(tmpResult);
+            tmpData.setAuthList(tmpResult2);
             data.add(tmpData);
         }
         resp.success(data);
