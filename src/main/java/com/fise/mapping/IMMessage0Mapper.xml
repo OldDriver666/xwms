@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.IMMessage0Mapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.IMMessage0">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="relateId" jdbcType="INTEGER" property="relateid" />
+    <result column="fromId" jdbcType="INTEGER" property="fromid" />
+    <result column="toId" jdbcType="INTEGER" property="toid" />
+    <result column="msgId" jdbcType="INTEGER" property="msgid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="audiotype" jdbcType="TINYINT" property="audiotype" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="updated" jdbcType="INTEGER" property="updated" />
+    <result column="created" jdbcType="INTEGER" property="created" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, relateId, fromId, toId, msgId, content, audiotype, type, status, updated, created
+  </sql>
+  <select id="selectByExample" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from IMMessage_0
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from IMMessage_0
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.IMMessage0Example">
+    delete from IMMessage_0
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.IMMessage0">
+    insert into IMMessage_0 (id, relateId, fromId, 
+      toId, msgId, content, 
+      audiotype, type, status, 
+      updated, created)
+    values (#{id,jdbcType=INTEGER}, #{relateid,jdbcType=INTEGER}, #{fromid,jdbcType=INTEGER}, 
+      #{toid,jdbcType=INTEGER}, #{msgid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{audiotype,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{status,jdbcType=BIT}, 
+      #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.IMMessage0">
+    insert into IMMessage_0
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="relateid != null">
+        relateId,
+      </if>
+      <if test="fromid != null">
+        fromId,
+      </if>
+      <if test="toid != null">
+        toId,
+      </if>
+      <if test="msgid != null">
+        msgId,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="audiotype != null">
+        audiotype,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="relateid != null">
+        #{relateid,jdbcType=INTEGER},
+      </if>
+      <if test="fromid != null">
+        #{fromid,jdbcType=INTEGER},
+      </if>
+      <if test="toid != null">
+        #{toid,jdbcType=INTEGER},
+      </if>
+      <if test="msgid != null">
+        #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="audiotype != null">
+        #{audiotype,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.IMMessage0Example" resultType="java.lang.Long">
+    select count(*) from IMMessage_0
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update IMMessage_0
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.relateid != null">
+        relateId = #{record.relateid,jdbcType=INTEGER},
+      </if>
+      <if test="record.fromid != null">
+        fromId = #{record.fromid,jdbcType=INTEGER},
+      </if>
+      <if test="record.toid != null">
+        toId = #{record.toid,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgid != null">
+        msgId = #{record.msgid,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.audiotype != null">
+        audiotype = #{record.audiotype,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update IMMessage_0
+    set id = #{record.id,jdbcType=INTEGER},
+      relateId = #{record.relateid,jdbcType=INTEGER},
+      fromId = #{record.fromid,jdbcType=INTEGER},
+      toId = #{record.toid,jdbcType=INTEGER},
+      msgId = #{record.msgid,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      audiotype = #{record.audiotype,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=BIT},
+      updated = #{record.updated,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.IMMessage0">
+    update IMMessage_0
+    <set>
+      <if test="relateid != null">
+        relateId = #{relateid,jdbcType=INTEGER},
+      </if>
+      <if test="fromid != null">
+        fromId = #{fromid,jdbcType=INTEGER},
+      </if>
+      <if test="toid != null">
+        toId = #{toid,jdbcType=INTEGER},
+      </if>
+      <if test="msgid != null">
+        msgId = #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="audiotype != null">
+        audiotype = #{audiotype,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.IMMessage0">
+    update IMMessage_0
+    set relateId = #{relateid,jdbcType=INTEGER},
+      fromId = #{fromid,jdbcType=INTEGER},
+      toId = #{toid,jdbcType=INTEGER},
+      msgId = #{msgid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      audiotype = #{audiotype,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      status = #{status,jdbcType=BIT},
+      updated = #{updated,jdbcType=INTEGER},
+      created = #{created,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

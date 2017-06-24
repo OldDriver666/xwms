@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeviceVersionParam {
 	@JsonProperty("version_id")
-    private Integer versionid;
+    private Integer id;
 
     /**
      * 公司ID
@@ -18,15 +18,15 @@ public class DeviceVersionParam {
 	@JsonProperty("dev_type")
     private Integer devType;
 
-	public Integer getVersionid() {
-		return versionid;
-	}
+	public Integer getId() {
+        return id;
+    }
 
-	public void setVersionid(Integer versionid) {
-		this.versionid = versionid;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getDepartid() {
+    public Integer getDepartid() {
 		return departid;
 	}
 

@@ -15,15 +15,9 @@ public class FiseDevice implements Serializable {
      * 设备IME号
      */
     private String ime;
-
-    /**
-     * 设备蓝牙地址
-     */
+    
     private String mac;
-
-    /**
-     * 设备暗码
-     */
+    
     private String code;
 
     /**
@@ -63,7 +57,21 @@ public class FiseDevice implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Integer getFiseId() {
 		return fiseId;
@@ -79,22 +87,6 @@ public class FiseDevice implements Serializable {
 
     public void setIme(String ime) {
         this.ime = ime;
-    }
-
-    public String getMac() {
-        return mac;
-    }
-
-    public void setMac(String mac) {
-        this.mac = mac;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public Boolean getStatus() {

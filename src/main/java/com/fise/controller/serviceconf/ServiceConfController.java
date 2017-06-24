@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMServiceConf;
 import com.fise.model.param.ServiceConfParam;
 import com.fise.server.serviceconf.IServiceConfService;
+import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/serviceconf")
 public class ServiceConfController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -28,6 +30,10 @@ public class ServiceConfController {
 	public Response addServiceConf(@RequestBody @Valid IMServiceConf record){
 		
 		Response response=new Response();
+		
+		if(StringUtil.isEmpty(record.getServiceName())||StringUtil.isEmpty(record.getServicePwd())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iServiceConfService.insertServiceConf(record);
@@ -42,6 +48,10 @@ public class ServiceConfController {
 		
 		Response response=new Response();
 		
+		if(StringUtil.isEmpty(param.getServiceName()) || StringUtil.isEmpty(param.getServicePwd())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iServiceConfService.selectServiceConf(param);
 		logger.info("end select imserviceconf"+response.toString());
@@ -55,6 +65,10 @@ public class ServiceConfController {
 		
 		Response response=new Response();
 		
+		if(param.getConfigid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iServiceConfService.delServiceConf(param);
 		logger.info("end delete imserviceconf"+response.toString());
@@ -67,6 +81,10 @@ public class ServiceConfController {
 	public Response updateServiceConf(@RequestBody @Valid IMServiceConf record){
 		
 		Response response=new Response();
+		
+		if(record.getConfigid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iServiceConfService.updateServiceConf(record);

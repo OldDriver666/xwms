@@ -42,12 +42,12 @@ public class AuthAspect {
         String keyPrefix = null;
         String fitUA = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_FIT_USER_AGENT);
         if (StringUtil.isEmpty(fitUA)) {
-            throw new RequestHeaderException("FIT-UA is empty!");
+            throw new RequestHeaderException("FISE-UA is empty!");
         }
         
         String[] uaField = fitUA.split("\\|");
         if (uaField.length < 5) {
-            throw new RequestHeaderException("FIT-UA format error!");
+            throw new RequestHeaderException("FISE-UA format error!");
         }
         
         String platform = uaField[0];
@@ -56,7 +56,7 @@ public class AuthAspect {
         String id = uaField[3];
         String versionName = uaField[4];
         
-        logger.debug("UA=" + uaField.toString() + " URI=" + uri);
+        logger.debug("UA=" + fitUA + " URI=" + uri);
         if (StringUtil.isEmpty(id)) {
             throw new RequestHeaderException("user id is empty!");
         }
@@ -65,7 +65,7 @@ public class AuthAspect {
         }
         HttpContext.setVersionName(versionName);
         HttpContext.setPlatform(platform);
-        if (uri.startsWith("/boss")) {
+        if (uri.startsWith("/boss") || uri.startsWith("/managesvr")) {
             HttpContext.setMemberId(Integer.parseInt(id));
             accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
             redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;

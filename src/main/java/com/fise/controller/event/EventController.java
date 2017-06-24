@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.EventQueryParam;
 import com.fise.server.device.IEventService;
+
 
 @RestController
 @RequestMapping("/boss")
@@ -24,7 +26,7 @@ public class EventController {
 	
 	/*查询设备事件*/
 	@RequestMapping(value="/event/query",method=RequestMethod.POST)
-	public Response queryEvent(@RequestBody @Valid EventQueryParam param){
+	public Response queryEvent(@RequestBody @Valid Page<EventQueryParam> param){
 		
 		Response response=new Response();
 		

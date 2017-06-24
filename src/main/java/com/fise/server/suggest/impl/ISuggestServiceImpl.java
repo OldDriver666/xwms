@@ -27,22 +27,7 @@ public class ISuggestServiceImpl implements ISuggestService{
 	@Override
 	public Response insertSuggest(IMSuggest record) {
 		
-		Response response=new Response();
-		
-		if(record.getUserId()==null || StringUtil.isEmpty(record.getUname())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
-		//判断user_id是否已经存在
-		IMSuggestExample example=new IMSuggestExample();
-		Criteria criteria=example.createCriteria();
-		criteria.andUserIdEqualTo(record.getUserId());
-		List<IMSuggest> list=IMSuggestDao.selectByExample(example);
-		
-		if(list.size()!=0){
-			response.failure(ErrorCode.ERROR_SUGGEST_USER_ID_EXISTED);
-			return response;
-		}	
+		Response response=new Response();	
 		
 		//更新数据
 		long nowtime=System.currentTimeMillis()/1000;
@@ -59,16 +44,8 @@ public class ISuggestServiceImpl implements ISuggestService{
 		
 		Response response=new Response();
 		
-		if(param.getUserId()==null && StringUtil.isEmpty(param.getUname())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		IMSuggestExample example=new IMSuggestExample();
 		Criteria criteria=example.createCriteria();
-		
-		if(param.getUserId()!=null){
-			criteria.andUserIdEqualTo(param.getUserId());
-		}
 		
 		if(param.getUname()!=null){
 			criteria.andUnameEqualTo(param.getUname());
@@ -88,10 +65,6 @@ public class ISuggestServiceImpl implements ISuggestService{
 		
 		Response response=new Response();
 		
-		if(param.getId()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		IMSuggestDao.deleteByPrimaryKey(param.getId());
 		
 		return response.success();
@@ -101,10 +74,6 @@ public class ISuggestServiceImpl implements ISuggestService{
 	public Response updateSuggest(IMSuggest record) {
 		
 		Response response=new Response();
-		
-		if(record.getId()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		if(record.getUserId()!=null){
 			IMSuggestExample example=new IMSuggestExample();

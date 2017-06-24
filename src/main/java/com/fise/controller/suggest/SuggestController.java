@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSuggest;
 import com.fise.model.param.SuggestParam;
 import com.fise.server.suggest.ISuggestService;
+import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/suggest")
 public class SuggestController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -24,10 +26,14 @@ public class SuggestController {
 	ISuggestService iSuggestService;
 	
 	//添加suggest信息
-	@RequestMapping(value="/addsuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
+		
+		if(record.getUserId()==null || StringUtil.isEmpty(record.getUname())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iSuggestService.insertSuggest(record);
@@ -37,7 +43,7 @@ public class SuggestController {
 	}
 	
 	//查询suggest信息
-	@RequestMapping(value="/selectsuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response querySuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
@@ -50,10 +56,14 @@ public class SuggestController {
 	}
 	
 	//删除suggest信息
-	@RequestMapping(value="/delsuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delSuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
+		
+		if(param.getId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iSuggestService.delSuggest(param);
@@ -63,10 +73,14 @@ public class SuggestController {
 	}
 	
 	//修改suggest信息
-	@RequestMapping(value="/updatesuggest",method=RequestMethod.POST)
+	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
+		
+		if(record.getId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iSuggestService.updateSuggest(record);

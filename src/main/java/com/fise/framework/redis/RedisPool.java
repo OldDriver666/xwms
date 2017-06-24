@@ -48,8 +48,8 @@ public class RedisPool {
 		if ("true".equals(redisProperties.getProperty("redis_test_on_borrow"))) {
 			isTestOnBorrow = true;
 		}
-		if ("true".equals(redisProperties.getProperty("redis_test_on_borrow"))) {
-			isTestOnBorrow = true;
+		if ("true".equals(redisProperties.getProperty("redis_test_while_idle"))) {
+		    isTestWhileIdle = true;
 		}
 		int maxTotal = Integer.parseInt(redisProperties.getProperty("redis_max_total"));
 		int maxIdle = Integer.parseInt(redisProperties.getProperty("redis_max_idle"));

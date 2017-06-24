@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
-import com.fise.model.entity.IMDevcieVersion;
+import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
+import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/deviceversion")
 public class DeviceVersionController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -24,10 +26,14 @@ public class DeviceVersionController {
 	IDeviceVersionService iDeviceVersionService;
 	
 	/*添加设备版本信息*/
-	@RequestMapping(value="/adddeviceversion",method=RequestMethod.POST)
-	public Response addDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
+	@RequestMapping(value="/add",method=RequestMethod.POST)
+	public Response addDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
+		
+		if(record.getDepartid()==null || record.getDevType()==null || StringUtil.isEmpty(record.getDevVersion())||StringUtil.isEmpty(record.getUpdateUrl())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iDeviceVersionService.insertDeviceVersion(record);
@@ -37,10 +43,14 @@ public class DeviceVersionController {
 	}
 	
 	/*查询设备版本信息*/
-	@RequestMapping(value="/querydeviceversion",method=RequestMethod.POST)
+	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		
+		if(param.getDepartid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iDeviceVersionService.queryDeviceVersion(param);
@@ -50,10 +60,14 @@ public class DeviceVersionController {
 	}
 	
 	/*删除设备版本信息*/
-	@RequestMapping(value="/deldeviceversion",method=RequestMethod.POST)
+	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		
+		if(param.getId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iDeviceVersionService.delDeviceVersion(param);
@@ -63,10 +77,14 @@ public class DeviceVersionController {
 	}
 	
 	/*修改设备版本信息*/
-	@RequestMapping(value="/updatedeviceversion",method=RequestMethod.POST)
-	public Response updateDeviceVersion(@RequestBody @Valid IMDevcieVersion record){
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public Response updateDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
+		
+		if(record.getId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iDeviceVersionService.updateDeviceVersion(record);

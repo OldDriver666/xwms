@@ -18,8 +18,8 @@ public class AdminQuery {
 	@MaxLength(value = 40)
 	private String account;
 	
-    @JsonProperty("rule_id")
-    private Integer ruleId;
+    @JsonProperty("role_id")
+    private Integer roleId;
 
 	public Integer getAdminId() {
         return adminId;
@@ -45,12 +45,12 @@ public class AdminQuery {
         this.account = account;
     }
 
-    public Integer getRuleId() {
-        return ruleId;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRuleId(Integer ruleId) {
-        this.ruleId = ruleId;
+    public void setRoleId(Integer ruleId) {
+        this.roleId = ruleId;
     }
 
     public String toString() {

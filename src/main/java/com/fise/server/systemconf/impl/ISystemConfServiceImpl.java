@@ -2,6 +2,7 @@ package com.fise.server.systemconf.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,6 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getName()) || StringUtil.isEmpty(record.getValue())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		//更新设备相关信息
 		long nowtime=System.currentTimeMillis() / 1000;
 		record.setUpdated((int)nowtime);
@@ -47,13 +44,17 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(param.getName())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		IMSystemConfExample example=new IMSystemConfExample();
 		Criteria criteria=example.createCriteria();
-		criteria.andNameEqualTo(param.getName());
+		
+		if(!StringUtil.isEmpty(param.getType())){
+		    criteria.andTypeEqualTo(param.getType());
+		}
+		
+		if(!StringUtil.isEmpty(param.getName())){
+		    criteria.andNameEqualTo(param.getName());
+		}
+		
 		List<IMSystemConf> list=iMSystemConfDao.selectByExample(example);
 		
 		if(list.size()==0){
@@ -69,10 +70,6 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 		
 		Response response=new Response();
 		
-		if(param.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		iMSystemConfDao.deleteByPrimaryKey(param.getConfigid());
 		
 		return response.success();
@@ -82,10 +79,6 @@ public class ISystemConfServiceImpl implements ISystemConfService{
 	public Response updateSystemConf(IMSystemConf record) {
 		
 		Response response=new Response();
-		
-		if(record.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		//更新设备相关信息
 		long nowtime=System.currentTimeMillis() / 1000;

@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSplash;
 import com.fise.model.param.SplashParam;
 import com.fise.server.splash.ISplashService;
+import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/splash")
 public class SplashController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -28,6 +30,10 @@ public class SplashController {
 	public Response addSplash(@RequestBody @Valid IMSplash record){
 		
 		Response response=new Response();
+		
+		if(StringUtil.isEmpty(record.getName())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=iSplashService.insertSplash(record);
@@ -42,6 +48,10 @@ public class SplashController {
 		
 		Response response=new Response();
 		
+		if(StringUtil.isEmpty(param.getName())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iSplashService.querySplash(param);
 		logger.info("end select imsplash"+response.toString());
@@ -55,6 +65,10 @@ public class SplashController {
 		
 		Response response=new Response();
 		
+		if(param.getSplashid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iSplashService.delSplash(param);
 		logger.info("end delete imsplash"+response.toString());
@@ -67,6 +81,10 @@ public class SplashController {
 	public Response updateSplash(@RequestBody @Valid IMSplash record){
 			
 		Response response=new Response();
+		
+		if(record.getSplashid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 			
 		logger.info(record.toString());
 		response=iSplashService.updateSplash(record);

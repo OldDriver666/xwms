@@ -29,10 +29,6 @@ public class ISplashServiceImpl implements ISplashService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getName())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		//更新数据
 		long nowtime=System.currentTimeMillis()/1000;
 		record.setCreated((int)nowtime);
@@ -46,10 +42,6 @@ public class ISplashServiceImpl implements ISplashService{
 	public Response querySplash(SplashParam param) {
 		
 		Response response=new Response();
-		
-		if(StringUtil.isEmpty(param.getName())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		IMSplashExample example=new IMSplashExample();
 		Criteria criteria=example.createCriteria();
@@ -69,10 +61,6 @@ public class ISplashServiceImpl implements ISplashService{
 		
 		Response response=new Response();
 		
-		if(param.getSplashid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		splashDao.deleteByPrimaryKey(param.getSplashid());
 		
 		return response.success();
@@ -82,10 +70,6 @@ public class ISplashServiceImpl implements ISplashService{
 	public Response updateSplash(IMSplash record) {
 		
 		Response response=new Response();
-		
-		if(record.getSplashid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		long nowtime=System.currentTimeMillis()/1000;
 		record.setCreated(null);

@@ -29,11 +29,6 @@ public class IDepartConfigServiceImpl implements IDepartConfigService{
 		
 		Response response=new Response();
 		
-		if(record.getDepartid()==null && record.getClienttype()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
-		
 		//判断添加的设备的clientType是否已经配置
 		IMDepartConfigExample exampleAccount=new IMDepartConfigExample();
 		Criteria criteriaAccount=exampleAccount.createCriteria();
@@ -56,10 +51,6 @@ public class IDepartConfigServiceImpl implements IDepartConfigService{
 	public Response queryDepartConfig(DepartConfigParam param) {
 		
 		Response response=new Response();
-		
-		if(param.getDepartid()==null && param.getClienttype()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		IMDepartConfigExample example=new IMDepartConfigExample();
 		Criteria criteria=example.createCriteria();
@@ -88,10 +79,6 @@ public class IDepartConfigServiceImpl implements IDepartConfigService{
 		
 		Response response=new Response();
 		
-		if(param.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		imDepartConfigDao.deleteByPrimaryKey(param.getConfigid());
 		
 		return response.success();	
@@ -101,10 +88,6 @@ public class IDepartConfigServiceImpl implements IDepartConfigService{
 	public Response updateDepartConfig(IMDepartConfig record) {
 
 		Response response=new Response();
-		
-		if(record.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		if(record.getClienttype()!=null){
 			//判断修改的设备的clientType是否已经配置

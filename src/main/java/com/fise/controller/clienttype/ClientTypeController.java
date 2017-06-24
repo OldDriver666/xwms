@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMClientType;
 import com.fise.model.param.ClientTypeParam;
 import com.fise.server.clienttype.IClientTypeService;
+import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/clienttype")
 public class ClientTypeController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -28,6 +30,10 @@ public class ClientTypeController {
 	public Response addClientType(@RequestBody @Valid IMClientType param){
 		
 		Response response=new Response();
+		
+		if(param.getClienttype()==null || StringUtil.isEmpty(param.getClientname())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=imClientTypeService.insertClientType(param);
@@ -55,6 +61,10 @@ public class ClientTypeController {
 		
 		Response response=new Response();
 		
+		if(param.getTypeid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=imClientTypeService.delClientType(param);
 		logger.info("end delete IMClientType"+response.toString());
@@ -67,6 +77,10 @@ public class ClientTypeController {
 	public Response updateFiseDevice(@RequestBody @Valid IMClientType record){
 
 		Response response=new Response();
+		
+		if(record.getTypeid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(record.toString());
 		response=imClientTypeService.updateClientType(record);

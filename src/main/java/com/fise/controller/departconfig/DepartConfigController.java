@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDepartConfig;
 import com.fise.model.param.DepartConfigParam;
 import com.fise.server.departconfig.IDepartConfigService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/boss/departconf")
 public class DepartConfigController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -28,6 +29,10 @@ public class DepartConfigController {
 	public Response addImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 		
 		Response response=new Response();
+		
+		if(param.getDepartid()==null || param.getClienttype()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iDepartConfigService.insertDepartConfig(param);
@@ -55,6 +60,10 @@ public class DepartConfigController {
 		
 		Response response=new Response();
 		
+		if(param.getConfigid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=iDepartConfigService.delDepartConfig(param);
 		logger.info("end delete imdepartconfig"+response.toString());
@@ -67,6 +76,10 @@ public class DepartConfigController {
 	public Response updateImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 
 		Response response=new Response();
+		
+		if(param.getConfigid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=iDepartConfigService.updateDepartConfig(param);

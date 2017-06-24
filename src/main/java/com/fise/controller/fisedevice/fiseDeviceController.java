@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
 import com.fise.server.fisedevice.IFiseDeviceService;
+import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/boss")
+@RequestMapping("/boss/fisedevice")
 public class fiseDeviceController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -28,6 +30,10 @@ public class fiseDeviceController {
 	public Response addFiseDevice(@RequestBody @Valid FiseDevice param){
 		
 		Response response=new Response();
+		
+		if(StringUtil.isEmpty(param.getIme())||StringUtil.isEmpty(param.getAccount())||param.getType()==null||param.getDepartid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=fiseDeviceService.insertFiseDevice(param);
@@ -42,6 +48,10 @@ public class fiseDeviceController {
 		
 		Response response=new Response();
 		
+		if(param.getDepartid()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=fiseDeviceService.queryFiseDevice(param);
 		logger.info("end query fisedevice"+response.toString());
@@ -55,6 +65,10 @@ public class fiseDeviceController {
 		
 		Response response=new Response();
 		
+		if(param.getFiseId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+		
 		logger.info(param.toString());
 		response=fiseDeviceService.delFiseDevice(param);
 		logger.info("end delete fisedevice"+response.toString());
@@ -67,6 +81,10 @@ public class fiseDeviceController {
 	public Response updateFiseDevice(@RequestBody @Valid FiseDevice param){
 
 		Response response=new Response();
+		
+		if(param.getFiseId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
 		
 		logger.info(param.toString());
 		response=fiseDeviceService.updateFiseDevice(param);

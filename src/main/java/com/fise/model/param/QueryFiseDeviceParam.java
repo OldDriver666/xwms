@@ -2,7 +2,6 @@ package com.fise.model.param;
 
 import java.io.Serializable;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 

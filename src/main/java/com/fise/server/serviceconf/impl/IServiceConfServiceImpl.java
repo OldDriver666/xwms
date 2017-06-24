@@ -30,10 +30,6 @@ public class IServiceConfServiceImpl implements IServiceConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(record.getServiceName())||StringUtil.isEmpty(record.getServicePwd())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		//判断添加的servicename是否已经存在
 		IMServiceConfExample exampleIME=new IMServiceConfExample();
 		Criteria criteriaIME=exampleIME.createCriteria();
@@ -59,10 +55,6 @@ public class IServiceConfServiceImpl implements IServiceConfService{
 		
 		Response response=new Response();
 		
-		if(StringUtil.isEmpty(param.getServiceName()) || StringUtil.isEmpty(param.getServicePwd())){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		IMServiceConfExample example=new IMServiceConfExample();
 		Criteria criteria=example.createCriteria();
 		criteria.andServiceNameEqualTo(param.getServiceName());
@@ -84,10 +76,6 @@ public class IServiceConfServiceImpl implements IServiceConfService{
 		
 		Response response=new Response();
 		
-		if(param.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
 		IMServiceConfDao.deleteByPrimaryKey(param.getConfigid());
 		
 		return response.success();
@@ -97,10 +85,6 @@ public class IServiceConfServiceImpl implements IServiceConfService{
 	public Response updateServiceConf(IMServiceConf record) {
 		
 		Response response=new Response();
-		
-		if(record.getConfigid()==null){
-			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
 		
 		if(!StringUtil.isEmpty(record.getServiceName())){
 			//判断添加的servicename是否已经存在
