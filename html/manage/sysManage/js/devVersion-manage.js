@@ -143,6 +143,13 @@ $(function() {
         $("#addTempl-modal").modal("show");
     });
 
+	$("#input-search-depart_id").change(function () {
+		if ($(this).val() != "") {
+			$(this).parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
@@ -176,25 +183,23 @@ $(function() {
 	});
 
 	$("#btn-search").on('click', function() {
-        action.loadPageData();
-	});
-	$("#input-search-account").on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            action.loadPageData();
-        }
-
+		if($("#input-search-depart_id").val() == "") {
+			$("#input-search-depart_id").parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#input-search-depart_id").append(err_html);
+			return;
+		}
+		action.loadPageData();
 	});
 	$("#input-search-depart_id").on('keydown', function(e) {
-		if (e.keyCode == 13) {
-			action.loadPageData();
+		if($("#input-search-depart_id").val() == "") {
+			$("#input-search-depart_id").parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#input-search-depart_id").append(err_html);
+			return;
 		}
+		action.loadPageData();
 
 	});
-	/*$("#input-search-dev_type").on('keydown', function(e) {
-		if (e.keyCode == 13) {
-			action.loadPageData();
-		}
-
-	});*/
 
 });

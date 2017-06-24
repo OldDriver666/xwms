@@ -123,7 +123,9 @@ $(function() {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
-                    action.myDevTypeQuery();
+                    if(parseInt($("#input-depart_id").val()) == parseInt(depart_id)){
+                        action.myDevTypeQuery();
+                    }
 				}else{
                     alert(result.msg);
                 }
@@ -141,6 +143,7 @@ $(function() {
                         $("#input-search-depart_id").val("");
                         $("#input-search-client_type").val("");
                         action.loadPageData();
+                        action.myDevTypeQuery();
 					}else{
                         alert(result.msg);
                     }
@@ -186,6 +189,7 @@ $(function() {
         $("#input-avatar").val(relUrl);
         $("#addTempl-modal").modal("show");
     });
+
 
 	//验证表单
     $("#form-addTempl").validate({
