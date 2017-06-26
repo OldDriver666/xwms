@@ -13,6 +13,7 @@ import com.fise.model.entity.WiOrganizationExample;
 import com.fise.model.entity.WiOrganizationExample.Criteria;
 import com.fise.server.organization.IOrganizationService;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 
 @Service
 public class OrganizationServiceImpl implements IOrganizationService {
@@ -26,7 +27,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         WiOrganizationExample example = new WiOrganizationExample();
         Criteria criteria=example.createCriteria();
         
-        if(name!=null){
+        if(!StringUtil.isEmpty(name)){
             criteria.andNameEqualTo(name);
         }
   
