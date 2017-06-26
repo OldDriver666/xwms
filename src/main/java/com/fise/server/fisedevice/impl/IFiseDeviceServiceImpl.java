@@ -80,8 +80,15 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		
 		List<FiseDevice> fisedevicelist=fiseDevicedao.selectByPage(example,page);
 		
+		Page<FiseDevice> page2=new Page<FiseDevice>();
+		page2.setPageNo(page.getPageNo());
+        page2.setPageSize(page.getPageSize());
+        page2.setTotalCount(page.getTotalCount());
+        page2.setTotalPageCount(page.getTotalPageCount());
+        page2.setResult(fisedevicelist);
+        
 		if(fisedevicelist.size()!=0){
-			response.success(fisedevicelist);
+			response.success(page2);
 			return response;
 		}
 		

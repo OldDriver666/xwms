@@ -391,37 +391,58 @@ type和name都是选填，如果都不填，则查询所有信息
 {
    "code": 0,
    "msg": "ok",
-   "data": [
-      {
-         "ime": "135790246811229",
-         "mac": "49:04:22:f8:62:66",
-         "code": "E5217ED8D7D4B40AF34FE02905CC39EC",
-         "status": true,
-         "account": "test_dev8",
-         "type": 19,
-         "mobile": "test_dev8",
-         "mark": "",
-         "updated": 1480406086,
-         "created": 1480406086,
-         "fise_id": 9,
-         "depart_id": 1
-      },
-      {
-         "ime": "135790246811230",
-         "mac": "",
-         "code": "",
-         "status": true,
-         "account": "test_dev9",
-         "type": 20,
-         "mobile": "test_dev9",
-         "mark": "",
-         "updated": 0,
-         "created": 0,
-         "fise_id": 15,
-         "depart_id": 1
-      }
-        ]
-}        
+   "data": {
+      "page_no": 1,
+      "page_size": 20,
+      "total_count": 89,
+      "total_page_count": 5,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "ime": "135790246811229",
+            "mac": "49:04:22:f8:62:66",
+            "code": "E5217ED8D7D4B40AF34FE02905CC39EC",
+            "status": true,
+            "account": "test_dev8",
+            "type": 19,
+            "mobile": "test_dev8",
+            "mark": "",
+            "updated": 1480406086,
+            "created": 1480406086,
+            "fise_id": 9,
+            "depart_id": 1
+         },
+         {
+            "ime": "135790246811230",
+            "mac": "",
+            "code": "",
+            "status": true,
+            "account": "test_dev9",
+            "type": 20,
+            "mobile": "test_dev9",
+            "mark": "",
+            "updated": 0,
+            "created": 0,
+            "fise_id": 15,
+            "depart_id": 1
+         },
+         {
+            "ime": "135790246811231",
+            "mac": "",
+            "code": "",
+            "status": true,
+            "account": "test_dev10",
+            "type": 20,
+            "mobile": "test_dev10",
+            "mark": "",
+            "updated": 0,
+            "created": 0,
+            "fise_id": 16,
+            "depart_id": 1
+         }
+         ]
+}         
 ```
 
 ####删除设备信息
