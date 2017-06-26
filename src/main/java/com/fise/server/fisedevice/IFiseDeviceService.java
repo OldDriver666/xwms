@@ -1,5 +1,6 @@
 package com.fise.server.fisedevice;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
@@ -9,7 +10,7 @@ public interface IFiseDeviceService {
 	public Response insertFiseDevice(FiseDevice record);
 	
 	/*查询设备信息*/
-	public Response queryFiseDevice(QueryFiseDeviceParam param);
+	public Response queryFiseDevice(Page<QueryFiseDeviceParam> page);
 	
 	/*删除fise设备*/
 	public Response delFiseDevice(QueryFiseDeviceParam param);

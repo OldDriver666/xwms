@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.FiseDeviceMapper;
 
@@ -61,23 +62,23 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 	}
 
 	@Override
-	public Response queryFiseDevice(QueryFiseDeviceParam param) {
+	public Response queryFiseDevice(Page<QueryFiseDeviceParam> page) {
 		
 		Response response=new Response();
 		
 		FiseDeviceExample example=new FiseDeviceExample();
 		Criteria criteria=example.createCriteria();
-		criteria.andDepartidEqualTo(param.getDepartid());
+		criteria.andDepartidEqualTo(page.getParam().getDepartid());
 		
-		if(!StringUtil.isEmpty(param.getIme())){
-			criteria.andImeEqualTo(param.getIme());
+		if(!StringUtil.isEmpty(page.getParam().getIme())){
+			criteria.andImeEqualTo(page.getParam().getIme());
 		}
 		
-		if(!StringUtil.isEmpty(param.getAccount())){
-			criteria.andAccountEqualTo(param.getAccount());	
+		if(!StringUtil.isEmpty(page.getParam().getAccount())){
+			criteria.andAccountEqualTo(page.getParam().getAccount());	
 		} 
 		
-		List<FiseDevice> fisedevicelist=fiseDevicedao.selectByExample(example);
+		List<FiseDevice> fisedevicelist=fiseDevicedao.selectByPage(example,page);
 		
 		if(fisedevicelist.size()!=0){
 			response.success(fisedevicelist);

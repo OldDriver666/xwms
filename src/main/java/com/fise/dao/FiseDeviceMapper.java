@@ -1,7 +1,10 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.entity.FiseDeviceExample;
+import com.fise.model.param.QueryFiseDeviceParam;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,6 +20,8 @@ public interface FiseDeviceMapper {
     int insertSelective(FiseDevice record);
 
     List<FiseDevice> selectByExample(FiseDeviceExample example);
+    
+    List<FiseDevice> selectByPage(@Param("example") FiseDeviceExample example,@Param("page") Page<QueryFiseDeviceParam> page);
 
     FiseDevice selectByPrimaryKey(Integer id);
 
