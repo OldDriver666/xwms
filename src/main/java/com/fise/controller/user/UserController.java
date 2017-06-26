@@ -1,4 +1,4 @@
-package com.fise.controller.queryuser;
+package com.fise.controller.user;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.Response;
 import com.fise.model.param.QueryUserParam;
-import com.fise.server.queryuser.IQueryUserService;
+import com.fise.server.user.IUserService;
 
 @RestController
 @RequestMapping("/boss/user")
-public class QueryUserController {
+public class UserController {
     
     private Logger logger=Logger.getLogger(getClass());
     
     @Resource
-    IQueryUserService IQueryUserService;
+    IUserService IQueryUserService;
     
     @RequestMapping(value="/query",method=RequestMethod.POST)
     public Response queryUserInfo(@RequestBody @Valid QueryUserParam param){
