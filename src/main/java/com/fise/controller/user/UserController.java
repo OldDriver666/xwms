@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.QueryUserParam;
 import com.fise.server.user.IUserService;
@@ -23,7 +24,7 @@ public class UserController {
     IUserService IQueryUserService;
     
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response queryUserInfo(@RequestBody @Valid QueryUserParam param){
+    public Response queryUserInfo(@RequestBody @Valid Page<QueryUserParam> param){
         
         Response response=new Response();
 
