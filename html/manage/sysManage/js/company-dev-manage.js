@@ -8,7 +8,7 @@ $(function() {
 		add : function() {
             var url = ctx + "boss/departconf/addimdepartconfig";
             var data = new Object();
-            data.depart_id = parseInt($("#input-depart_id").val());
+            data.depart_id = parseInt($('#input-depart_id option:selected').val());
             data.client_type = parseInt($('#input-devType option:selected').val());
             data.avatar = $("#input-avatar").val();
 
@@ -28,7 +28,7 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_depart_id = parseInt($("#input-search-depart_id").val());
+            var search_depart_id = parseInt($('#input-search-name option:selected').val());
             var search_client_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
@@ -109,12 +109,18 @@ $(function() {
             });
 
         },
+        //获取全部公司团体数据
+        loadCompanyInfoData: function(){
+            var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+            $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
+            $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
+        },
 		//编辑数据
 		edit : function() {
 			var url = ctx + "boss/departconf/updateimdepartconfig";
 			var data = new Object();
             data.config_id = parseInt($("#input-config_id").val());
-            data.depart_id = parseInt($("#input-depart_id").val());
+            data.depart_id = parseInt($('#input-depart_idNo').val());
             data.client_type = parseInt($("#input-devTypeNo").val());
             data.avatar = $("#input-avatar").val();
 
@@ -123,7 +129,7 @@ $(function() {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
-                    if(parseInt($("#input-depart_id").val()) == parseInt(depart_id)){
+                    if(parseInt($("#input-depart_idNo").val()) == parseInt(depart_id)){
                         action.myDevTypeQuery();
                     }
 				}else{
@@ -154,6 +160,7 @@ $(function() {
 	window.action = action;
 	action.loadPageData();
     action.loadDevTypeData();
+    action.loadCompanyInfoData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
@@ -163,12 +170,18 @@ $(function() {
             $("#input-devType-wrap").hide();
             $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").show();
+            $("#input-depart_id-wrap").hide();
+            $("#input-depart_id-txt-wrap").show();
+            $("#input-depart_idNo-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加公司设备信息");
             $("#input-devType-wrap").show();
             $("#input-devTypeNo-wrap").hide();
             $("#input-devType-txt-wrap").hide();
+            $("#input-depart_id-wrap").show();
+            $("#input-depart_id-txt-wrap").hide();
+            $("#input-depart_idNo-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -177,15 +190,16 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        var imgUrl = that.find("td").eq(3).find("img").prop("src");
+        var imgUrl = that.find("td").eq(4).find("img").prop("src");
         var arrObj = imgUrl.split("//");
         var startIndx = arrObj[1].indexOf("/");
         var relUrl = arrObj[1].substring(startIndx).slice(1);
 
         $("#input-config_id").val(that.find("td").eq(0).text());
-        $("#input-depart_id").val(that.find("td").eq(1).text());
-        $("#input-devType-txt").val(that.find("td").eq(2).text());
-        $("#input-devTypeNo").val(that.find("td").eq(4).text());
+        $("#input-depart_id-txt").val(that.find("td").eq(2).text());
+        $("#input-depart_idNo").val(that.find("td").eq(1).text());
+        $("#input-devType-txt").val(that.find("td").eq(3).text());
+        $("#input-devTypeNo").val(that.find("td").eq(5).text());
         $("#input-avatar").val(relUrl);
         $("#addTempl-modal").modal("show");
     });

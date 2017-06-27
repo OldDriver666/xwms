@@ -8,7 +8,7 @@ $(function() {
 		add : function() {
             var url = ctx + "boss/deviceversion/add";
             var data = new Object();
-			data.depart_id = parseInt($("#input-depart_id").val());
+			data.depart_id = parseInt($("#input-depart_id  option:selected").val());
 			data.dev_type = parseInt($('#input-devType option:selected').val());
 			data.dev_version = $("#input-dev_version").val();
 			data.version_info = $("#input-version_info").val();
@@ -26,7 +26,7 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_depart_id = parseInt($("#input-search-depart_id").val());
+            var search_depart_id = parseInt($('#input-search-depart_id option:selected').val());
 			var search_dev_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
@@ -44,6 +44,7 @@ $(function() {
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
                 } else {
+					$('#pageContent').find("tr").remove();
 					alert(result.msg);
                 }
             },function() {
@@ -57,12 +58,18 @@ $(function() {
 			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
 			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
 		},
+		//获取全部公司团体数据
+		loadCompanyInfoData: function(){
+			var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');
+		},
 		//编辑数据
 		edit : function() {
 			var url = ctx + "boss/deviceversion/update";
 			var data = new Object();
 			data.version_id = parseInt($("#input-version_id").val());
-			data.depart_id = parseInt($("#input-depart_id").val());
+			data.depart_id = parseInt($("#input-depart_id  option:selected").val());
 			data.dev_type = parseInt($("#input-devTypeNo").val());
 			data.dev_version = $("#input-dev_version").val();
 			data.status = parseInt($("#input-status").val());
@@ -98,6 +105,7 @@ $(function() {
 	};
 	window.action = action;
 	action.loadDevTypeData();
+	action.loadCompanyInfoData();
 	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
@@ -105,22 +113,18 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑设备新版本");
+			$("#input-depart_id-wrap").hide();
 			$("#input-devType-wrap").hide();
 			$("#input-devTypeNo-wrap").hide();
 			$("#input-devType-txt-wrap").show();
-
-			/*$("#input-dev_type-txt").hide();
-			$("#input-dev_type-txt-wrap").show();*/
 			$("#input-status-txt").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加设备新版本");
+			$("#input-depart_id-wrap").show();
 			$("#input-devType-wrap").show();
 			$("#input-devTypeNo-wrap").hide();
 			$("#input-devType-txt-wrap").hide();
-
-			/*$("#input-dev_type-txt").show();
-			$("#input-dev_type-txt-wrap").hide();*/
 			$("#input-status-txt").hide();
 			$form.data("action", "add");
 			$form[0].reset();
@@ -130,9 +134,10 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+		var depart_id_val = that.find("td").eq(1).val();
 
 		$("#input-version_id").val(that.find("td").eq(0).text());
-        $("#input-depart_id").val(that.find("td").eq(1).text());
+		$("#input-depart_id option[value='"+depart_id_val+"']").attr("selected","selected");
 		$("#input-devType-txt").val(that.find("td").eq(2).text());
 		$("#input-devTypeNo").val(that.find("td").eq(7).text());
 		$("#input-dev_version").val(that.find("td").eq(3).text());

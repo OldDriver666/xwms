@@ -19,6 +19,7 @@ $(function(){
                 Util.cookieStorage.clearCookie("userLevel");
                 Util.cookieStorage.clearCookie("myDevTypeArray");
                 Util.cookieStorage.clearCookie("allDevTypeArray");
+                Util.cookieStorage.clearCookie("allCompanyArray");
                 window.location.href = "login.html";
             } else if(result.Status == 1){
                 alert("服务器开个小差，请稍后重试！");
