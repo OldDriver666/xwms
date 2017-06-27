@@ -121,9 +121,9 @@ $(function() {
         var that = $(this).parent().parent();
 		var check_status = $.trim(that.find("td").eq(2).text());
 		var status_val = null;
-		if(check_status === "未激活"){
+		if(check_status === "登记"){
 			status_val = 0;
-		}else if(check_status === "激活"){
+		}else if(check_status === "出厂"){
 			status_val = 1;
 		}
 

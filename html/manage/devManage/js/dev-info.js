@@ -50,57 +50,20 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             //var search_departID = $("#input-search-departID").val();
-			var search_txt = $("#input-search-txt").val();
-            var type_num = $("#search-type").val();
+			var search_IME = $("#input-search-IME").val();
+            var search_XW = $("#input-search-XW").val();
+
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "boss/fisedevice/queryfisedevice";
-            if(type_num == 0){
-                var data = new Object();
+            var data = new Object();
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "ime":search_txt,
-                    "account":"",
+                    "ime":search_IME,
+                    "account":search_XW,
                     "depart_id":parseInt(depart_id)
                 };
-            }else if(type_num == 1){
-                var data = new Object();
-                data.page_no = 1;
-                data.page_size = 20;
-                data.param = {
-                    "ime": "",
-                    "account":search_txt,
-                    "depart_id":parseInt(depart_id)
-                };
-            }else if(type_num == 2){
-                var data = new Object();
-                data.page_no = 1;
-                data.page_size = 20;
-                data.param = {
-                    "depart_id":parseInt(depart_id)
-                };
-            }
-
-            /*Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
-                    $('#pageContent').find("tr").remove();
-                    $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
-
-                    if($('#pageContent tr').length == 0){
-                        $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
-                    }
-                } else if(result.code == ReturnCode.RECORD_NOT_EXIST_ERROR){
-                    $('#pageContent').find("tr").remove();
-                    alert(result.msg);
-                }else {
-                    $('#pageContent').find("tr").remove();
-                    alert(result.msg);
-                }
-            },function() {
-                $('#pageContent').find("tr").remove();
-                alert("服务器开个小差，请稍后重试！")
-            });*/
 
             var opt = {
                 "targetContentId" : "pageContent",
@@ -391,12 +354,18 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-txt").on('keydown', function(e) {
+	$("#input-search-IME").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
 
 	});
+    $("#input-search-XW").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+
+    });
 });
 
 

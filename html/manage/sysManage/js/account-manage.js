@@ -8,6 +8,13 @@ $(function() {
 	var action = {
 		//新增数据
 		add : function() {
+			var add_company_id = null;
+			if(1 == parseInt(role_id)){
+				add_company_id = parseInt($('#add-companyId option:selected').val());
+			}else{
+				add_company_id = parseInt(depart_id);
+			}
+
             var url = ctx + "boss/admin/insert";
             var data = new Object();
 			data.admin_id = parseInt(admin_id);
@@ -17,7 +24,8 @@ $(function() {
 			data.role_id = parseInt($('#add-search-userRoles option:selected').val());
 			data.phone = $("#input-phone").val();
 			data.email = $("#input-email").val();
-			data.organization_id = parseInt($('#add-companyId option:selected').val());
+			data.organization_id = add_company_id;
+
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
@@ -30,9 +38,26 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_account = $("#input-search-account").val();
-            var search_role_id = parseInt($('#input-search-userRoles option:selected').val());
-			var search_company_id = parseInt($('#input-search-company_id option:selected').val());
+			var search_account = $("#input-search-account").val();
+			var search_role_id = parseInt($('#input-search-userRoles option:selected').val());
+			var search_company_id = null;
+			if(1 == parseInt(role_id)){
+				$("#input-search-company_id-wrap").show();
+				$("#input-search-company_id-txt-wrap").hide();
+				$("#add-companyId-wrap").show();
+				$("#role-companyId-wrap").show();
+				search_company_id = parseInt($('#input-search-company_id option:selected').val());
+
+			}else{
+				$("#input-search-company_id-wrap").hide();
+				$("#input-search-company_id-txt-wrap").show();
+				$("#add-companyId-wrap").hide();
+				$("#role-companyId-wrap").hide();
+				search_company_id = parseInt(depart_id);
+				var my_companyName = companyNameQuery(search_company_id);
+				$("#input-search-company_id-txt").val(my_companyName);
+
+			}
 
             var td_len = $("#table thead tr th").length;//表格字段数量
 
@@ -61,22 +86,6 @@ $(function() {
 		},
 		//获取当前用户角色列表数据
 		loadUserRolesData : function() {
-			/*var rolesArray = [
-				{
-					"id": 1,
-					"name": "BOSS"
-				},
-				{
-					"id": 2,
-					"name": "超级管理员"
-				},
-				{
-					"id": 3,
-					"name": "管理员"
-				}
-			];
-			$("#pageUserRoles").tmpl(rolesArray).appendTo('#input-search-userRoles');*/
-
 			var url = ctx + "boss/role/query";
 			var data = new Object();
 			data.role_id = parseInt(role_id);
@@ -94,18 +103,24 @@ $(function() {
 		},
 		//新增用户角色
 		addUserRolesData : function() {
+			var add_company_id = null;
+			if(1 == parseInt(role_id)){
+				add_company_id = parseInt($('#role-companyId option:selected').val());
+			}else{
+				add_company_id = parseInt(depart_id);
+			}
 			var url = ctx + "boss/role/add";
 			var data = new Object();
 			data.authLevel = parseInt($("#input-authLevel").val());
 			data.name = $("#input-name").val();
 			data.description = $("#input-description").val();
-			data.organizationId = parseInt($('#role-companyId option:selected').val());
+			data.organizationId = add_company_id;
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS){
 					$("#addTempl2-modal").modal('hide');
 					toastr.success("添加成功!");
-					action.myUserRolesData(parseInt($('#role-companyId option:selected').val()));
+					action.myUserRolesData(add_company_id);
 				} else {
 					alert(result.msg);
 				}
@@ -143,20 +158,30 @@ $(function() {
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
+
 		},
 		//编辑数据
 		edit : function() {
+			var pwd ="";
+			var pwd2 = $("#modify-password-wrap").val();
+			if(pwd2 == null || pwd2 == ""){
+				pwd = $("#input-password-wrap").val();
+			}else{
+				pwd = $.md5(pwd2);
+			}
+
 			var url = ctx + "boss/admin/update";
 			var data = new Object();
 			data.login_id = parseInt(admin_id);
 			data.admin_id = parseInt($("#input-id").val());
 			data.account = $("#input-account").val();
-			data.password = $("#input-password-wrap").val();
+			data.password = pwd;
 			data.nick_name = $("#input-nickName").val();
 			data.role_id = parseInt($("#input-roleId").val());
 			data.organization_id = parseInt($("#input-companyId").val());
 			data.phone = $("#input-phone").val();
 			data.email = $("#input-email").val();
+			data.status = parseInt($("input[name=status]:checked").val());
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -188,9 +213,9 @@ $(function() {
 		}
 	};
 	window.action = action;
-	action.loadPageData();
 	action.loadUserRolesData();
 	action.loadCompanyInfoData();
+	action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
@@ -205,11 +230,11 @@ $(function() {
 			$("#input-roleName-txt-wrap").show();
 			$("#add-companyId-txt-wrap").show();
 			$("#input-companyId-txt").hide();
-			/*$("#input-status-txt").show();*/
+			$("#modify-password-txt-wrap").show();
+			$("#edit-status-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加管理员");
-			$("#add-companyId-wrap").show();
 			$("#input-password-txt").show();
 			$("#input-password-txt-wrap").hide();
 			$("#input-roleId-wrap").hide();
@@ -217,7 +242,8 @@ $(function() {
 			$("#input-roleName-txt-wrap").hide();
 			$("#add-companyId-txt-wrap").hide();
 			$("#input-companyId-txt").hide();
-			/*$("#input-status-txt").hide();*/
+			$("#modify-password-txt-wrap").hide();
+			$("#edit-status-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -239,6 +265,13 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+		var check_status = $.trim(that.find("td").eq(10).text());
+		var status_val = null;
+		if(check_status === "可用"){
+			status_val = 1;
+		}else if(check_status === "不可用"){
+			status_val = 0;
+		}
 
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-account").val(that.find("td").eq(1).text());
@@ -250,6 +283,7 @@ $(function() {
 		$("#input-email").val(that.find("td").eq(6).text());
 		$("#add-companyId-txt").val(that.find("td").eq(7).text());
 		$("#input-companyId").val(that.find("td").eq(9).text());
+		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
 		/*$("#input-status").val(that.find("td").eq(8).text());*/
 
 
