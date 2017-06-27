@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.RolePermissionParam;
 import com.fise.server.role.IRoleService;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/role")
@@ -80,5 +82,18 @@ public class RoleController {
             resp.setMsg("更新权限列表为空");
         }
         return resp;
+    }
+    
+    @RequestMapping(value="/add",method=RequestMethod.POST)
+    public Response add(@RequestBody @Valid WiOrganizationRole role){
+        Response response=new Response();
+        
+        if(role.getAuthLevel()==null || StringUtil.isEmpty(role.getName())){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
+        response=roleSvr.addRole(role);
+        
+        return response;
     }
 }

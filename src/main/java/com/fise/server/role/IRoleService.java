@@ -1,6 +1,7 @@
 package com.fise.server.role;
 
 import com.fise.base.Response;
+import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.RolePermissionParam;
 
 public interface IRoleService {
@@ -15,4 +16,7 @@ public interface IRoleService {
 	
 	/*修改角色权限配置*/
 	public Response updateRoleAuth(RolePermissionParam param);
+	
+	/*新增角色*/
+	public Response addRole(WiOrganizationRole role);
 }

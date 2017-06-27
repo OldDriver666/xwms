@@ -66,7 +66,8 @@ public class AccountManageServiceImpl implements IAccountManageService{
         Response response=new Response();
         
         accountDao.updateByPrimaryKeySelective(param);
-        return null;
+        
+        return response.success();
     }
 
 }

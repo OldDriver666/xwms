@@ -7,11 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.dao.WiPermissionMapper;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
+import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
 import com.fise.model.entity.WiPermission;
 import com.fise.model.entity.WiPermissionExample;
 import com.fise.model.param.ModuleQueryResult;
@@ -19,6 +21,7 @@ import com.fise.model.param.RolePermissionParam;
 import com.fise.model.result.RoleAuthResult;
 import com.fise.server.role.IRoleService;
 import com.fise.utils.DateUtil;
+import com.fise.utils.StringUtil;
 
 @Service
 public class RoleServiceImpl implements IRoleService {
@@ -142,6 +145,28 @@ public class RoleServiceImpl implements IRoleService {
         }
         resp.success(data);
         return resp;
+    }
+
+    @Override
+    public Response addRole(WiOrganizationRole role) {
+        
+        Response response=new Response();
+        
+        //判断角色name是否已经存在
+        WiOrganizationRoleExample example=new WiOrganizationRoleExample();
+        Criteria criteria=example.createCriteria();
+        criteria.andNameEqualTo(role.getName());
+        List<WiOrganizationRole> list=roleDao.selectByExample(example);
+        
+        if(list.size()!=0){
+            response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
+            response.setMsg("新增的角色已经存在！！！");
+            return response;
+        }
+        
+        roleDao.insertSelective(role);
+        
+        return response.success();
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
@@ -44,16 +45,16 @@ public class fiseDeviceController {
 	
 	/*查询fise设备  设备IME号    账号account*/
 	@RequestMapping(value="/queryfisedevice",method=RequestMethod.POST)
-	public Response queryFiseDevice(@RequestBody @Valid QueryFiseDeviceParam param){
+	public Response queryFiseDevice(@RequestBody @Valid Page<QueryFiseDeviceParam> page){
 		
 		Response response=new Response();
 		
-		if(param.getDepartid()==null){
+		if(page.getParam().getDepartid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
-		response=fiseDeviceService.queryFiseDevice(param);
+		logger.info(page.toString());
+		response=fiseDeviceService.queryFiseDevice(page);
 		logger.info("end query fisedevice"+response.toString());
 		
 		return response;

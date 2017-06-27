@@ -370,7 +370,7 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ```  
 
-####查询设备信息
+####查询设备信息(分页查询)
 |   接口地址    |   boss/fisedevice/queryfisedevice         |
 |   ---         |   ---                   |
 |   请求方式    |   HTTP POST             |
@@ -378,44 +378,71 @@ type和name都是选填，如果都不填，则查询所有信息
 
 -**请求**
 ```
-{"ime":"",                    //选填-设备IME号
- "account":"",                //选填-小位号-账号 
- "depart_id":x                //必填-公司/团体ID
+{"page_no":x,                            //选填-当前页, 默认为第1页
+ "page_size":x,                          //选填-每页记录数，默认20
+ "param":{"ime":"",                      //选填-设备IME号
+           "account":"",                 //选填-小位号-账号 
+           "depart_id":x                 //必填-公司/团体ID
+           }
 }
 ```
 - **回复**
 ```
-返回一个json数组
-[
-      {
-         "fise_id": 1,
-         "ime": "135790246811221",
-         "mac": "49:04:22:f8:62:66",
-         "code": "E5217ED8D7D4B40AF34FE02905CC39EC",
-         "status": 1,
-         "account": "test_dev0",
-         "depart_id": 29,
-         "type": 19,
-         "mobile": "test_dev0",
-         "mark":"",
-	     "updated":1480406017,
-	     "created":1480406017 
-      },
-      {
-	     "fise_id": 2,
-         "ime": "135790246811223",
-         "mac": "49:04:22:f8:62:66",
-         "code": "E5217ED8D7D4B40AF34FE02905CC39EC",
-         "status": 1,
-         "account": "test_dev2",
-         "depart_id": 29,
-         "type": 19,
-         "mobile": "test_dev2",
-         "mark":"",
-	     "updated":1480406017,
-	     "created":1480406017
-	}
-]
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 20,
+      "total_count": 89,
+      "total_page_count": 5,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "ime": "135790246811229",
+            "mac": "49:04:22:f8:62:66",
+            "code": "E5217ED8D7D4B40AF34FE02905CC39EC",
+            "status": true,
+            "account": "test_dev8",
+            "type": 19,
+            "mobile": "test_dev8",
+            "mark": "",
+            "updated": 1480406086,
+            "created": 1480406086,
+            "fise_id": 9,
+            "depart_id": 1
+         },
+         {
+            "ime": "135790246811230",
+            "mac": "",
+            "code": "",
+            "status": true,
+            "account": "test_dev9",
+            "type": 20,
+            "mobile": "test_dev9",
+            "mark": "",
+            "updated": 0,
+            "created": 0,
+            "fise_id": 15,
+            "depart_id": 1
+         },
+         {
+            "ime": "135790246811231",
+            "mac": "",
+            "code": "",
+            "status": true,
+            "account": "test_dev10",
+            "type": 20,
+            "mobile": "test_dev10",
+            "mark": "",
+            "updated": 0,
+            "created": 0,
+            "fise_id": 16,
+            "depart_id": 1
+         }
+         ]
+}         
 ```
 
 ####删除设备信息
@@ -710,6 +737,25 @@ type和name都是选填，如果都不填，则查询所有信息
 ``` 
 
 ###权限管理
+####新增用户角色
+|   接口地址    |   boss/role/add        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+-**请求**
+```
+{"authLevel":x,                      //必填-角色权值
+ "name":"",                          //必填-角色名称
+ "description":"",                   //选填-角色描述
+ "organizationId":x                  //选填-角色的公司id
+}
+```
+- **回复**
+```
+无内容，直接查看返回码
+``` 
+
 ####查询用户角色
 |   接口地址    |   boss/role/query        |
 |   ---         |   ---                   |

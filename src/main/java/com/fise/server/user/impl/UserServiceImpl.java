@@ -1,4 +1,4 @@
-package com.fise.server.queryuser.impl;
+package com.fise.server.user.impl;
 
 import java.util.List;
 
@@ -12,10 +12,11 @@ import com.fise.model.entity.IMUser;
 import com.fise.model.entity.IMUserExample;
 import com.fise.model.entity.IMUserExample.Criteria;
 import com.fise.model.param.QueryUserParam;
-import com.fise.server.queryuser.IQueryUserService;
+import com.fise.server.user.IUserService;
+import com.fise.utils.StringUtil;
 
 @Service
-public class QueryUserServiceImpl implements IQueryUserService{
+public class UserServiceImpl implements IUserService{
     
     @Autowired
     IMUserMapper IMUserDao;
@@ -28,11 +29,11 @@ public class QueryUserServiceImpl implements IQueryUserService{
         IMUserExample example=new IMUserExample();
         Criteria criteria=example.createCriteria();
         
-        if(param.getDomain()!=null){
+        if(!StringUtil.isEmpty(param.getDomain())){
             criteria.andDomainEqualTo(param.getDomain());
         }
         
-        if(param.getNick()!=null){
+        if(!StringUtil.isEmpty(param.getNick())){
             criteria.andNickEqualTo(param.getNick());
         }
         
