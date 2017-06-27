@@ -69,7 +69,7 @@ $(function() {
 			var url = ctx + "boss/deviceversion/update";
 			var data = new Object();
 			data.version_id = parseInt($("#input-version_id").val());
-			data.depart_id = parseInt($("#input-depart_id  option:selected").val());
+			data.depart_id = parseInt($('#input-depart_idNo').val());
 			data.dev_type = parseInt($("#input-devTypeNo").val());
 			data.dev_version = $("#input-dev_version").val();
 			data.status = parseInt($("#input-status").val());
@@ -114,6 +114,8 @@ $(function() {
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑设备新版本");
 			$("#input-depart_id-wrap").hide();
+			$("#input-depart_id-txt-wrap").show();
+			$("#input-depart_idNo-wrap").hide();
 			$("#input-devType-wrap").hide();
 			$("#input-devTypeNo-wrap").hide();
 			$("#input-devType-txt-wrap").show();
@@ -122,6 +124,8 @@ $(function() {
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加设备新版本");
 			$("#input-depart_id-wrap").show();
+			$("#input-depart_id-txt-wrap").hide();
+			$("#input-depart_idNo-wrap").hide();
 			$("#input-devType-wrap").show();
 			$("#input-devTypeNo-wrap").hide();
 			$("#input-devType-txt-wrap").hide();
@@ -134,10 +138,11 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-		var depart_id_val = that.find("td").eq(1).val();
+
 
 		$("#input-version_id").val(that.find("td").eq(0).text());
-		$("#input-depart_id option[value='"+depart_id_val+"']").attr("selected","selected");
+		$("#input-depart_id-txt").val(that.find("td").eq(1).text());
+		$("#input-depart_idNo").val(that.find("td").eq(8).text());
 		$("#input-devType-txt").val(that.find("td").eq(2).text());
 		$("#input-devTypeNo").val(that.find("td").eq(7).text());
 		$("#input-dev_version").val(that.find("td").eq(3).text());
