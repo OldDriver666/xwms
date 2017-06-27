@@ -745,7 +745,8 @@ type和name都是选填，如果都不填，则查询所有信息
 
 -**请求**
 ```
-{"authLevel":x,                      //必填-角色权值
+{"admin_id":x,                       //必填-这个值是登陆中返回的id获字段值-调用者id
+ "authLevel":x,                      //必填-角色权值
  "name":"",                          //必填-角色名称
  "description":"",                   //选填-角色描述
  "organizationId":x                  //选填-角色的公司id

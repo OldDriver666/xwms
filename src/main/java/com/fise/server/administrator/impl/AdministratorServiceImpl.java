@@ -268,7 +268,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		WiAdmin loginAdmin = new WiAdmin();
 		example.clear();
 		Criteria loginWhere = example.createCriteria();
-		loginWhere.andIdEqualTo(param.getAdminId());
+		loginWhere.andIdEqualTo(param.getLoginId());
 		adminList.clear();
 		adminList = adminDao.selectByExample(example);
 		if (adminList.size() == 0) {
@@ -290,6 +290,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
 		if (!StringUtil.isEmpty(param.getEmail())){
 			sqlAdmin.setEmail(param.getEmail());
+		}
+		if(!StringUtil.isEmpty(param.getPassword())){
+		    sqlAdmin.setPassword(StringUtil.md5(param.getPassword()));
 		}
 
 		if (!StringUtil.isEmpty(param.getNickName())){
