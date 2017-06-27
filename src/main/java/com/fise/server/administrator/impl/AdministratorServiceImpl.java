@@ -292,7 +292,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 			sqlAdmin.setEmail(param.getEmail());
 		}
 		if(!StringUtil.isEmpty(param.getPassword())){
-		    sqlAdmin.setPassword(StringUtil.md5(param.getPassword()));
+		    sqlAdmin.setPassword(param.getPassword());
 		}
 
 		if (!StringUtil.isEmpty(param.getNickName())){
