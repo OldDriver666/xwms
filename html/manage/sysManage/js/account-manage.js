@@ -14,11 +14,10 @@ $(function() {
 			data.account = $("#input-account").val();
 			data.password = $.md5($("#input-password").val());
 			data.nick_name = $("#input-nickName").val();
-			data.role_id = $('#add-search-userRoles option:selected').val();
-			//data.role_id = parseInt($('#add-search-userRoles option:selected').val());
+			data.role_id = parseInt($('#add-search-userRoles option:selected').val());
 			data.phone = $("#input-phone").val();
 			data.email = $("#input-email").val();
-			data.organization_id = parseInt($("#input-companyId").val());
+			data.organization_id = parseInt($('#add-companyId option:selected').val());
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
@@ -33,7 +32,7 @@ $(function() {
 		loadPageData : function() {
             var search_account = $("#input-search-account").val();
             var search_role_id = parseInt($('#input-search-userRoles option:selected').val());
-			var search_company_id = parseInt($("#input-search-company_id").val());
+			var search_company_id = parseInt($('#input-search-company_id option:selected').val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
 
@@ -62,7 +61,7 @@ $(function() {
 		},
 		//获取当前用户角色列表数据
 		loadUserRolesData : function() {
-			var rolesArray = [
+			/*var rolesArray = [
 				{
 					"id": 1,
 					"name": "BOSS"
@@ -76,7 +75,7 @@ $(function() {
 					"name": "管理员"
 				}
 			];
-			$("#pageUserRoles").tmpl(rolesArray).appendTo('#input-search-userRoles');
+			$("#pageUserRoles").tmpl(rolesArray).appendTo('#input-search-userRoles');*/
 
 			var url = ctx + "boss/role/query";
 			var data = new Object();
@@ -85,12 +84,65 @@ $(function() {
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
+					$("#pageUserRoles").tmpl(result.data).appendTo('#input-search-userRoles');
 				} else {
 					alert(result.msg);
 				}
 			},function() {
 				alert("服务器开个小差，请稍后重试！")
 			});
+		},
+		//新增用户角色
+		addUserRolesData : function() {
+			var url = ctx + "boss/role/add";
+			var data = new Object();
+			data.authLevel = parseInt($("#input-authLevel").val());
+			data.name = $("#input-name").val();
+			data.description = $("#input-description").val();
+			data.organizationId = parseInt($('#role-companyId option:selected').val());
+
+			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS){
+					$("#addTempl2-modal").modal('hide');
+					toastr.success("添加成功!");
+					action.myUserRolesData(parseInt($('#role-companyId option:selected').val()));
+				} else {
+					alert(result.msg);
+				}
+			},function() {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		},
+		//获取当前用户角色列表数据
+		myUserRolesData : function(selDepartId) {
+			var url = ctx + "boss/role/query";
+			var data = new Object();
+			data.role_id = parseInt(role_id);
+			data.organ_id = parseInt(depart_id);
+			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					var myUserRolesArray = [];
+					myUserRolesArray = result.data;
+					if(selDepartId == parseInt(depart_id)){
+						$('#add-search-userRoles').empty();
+						$('#input-search-userRoles').empty();
+						$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
+						$("#pageUserRoles").tmpl(result.data).appendTo('#input-search-userRoles');
+					}
+					Util.cookieStorage.setCookie("myUserRolesArray",JSON.stringify(myUserRolesArray));
+				} else {
+					alert(result.msg);
+				}
+			},function() {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		},
+		//获取全部公司团体数据
+		loadCompanyInfoData: function(){
+			var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
+			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
 		},
 		//编辑数据
 		edit : function() {
@@ -125,8 +177,8 @@ $(function() {
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
-						$("#input-search-client_type").val("");
-						$("#input-search-client_name").val("");
+						/*$("#input-search-client_type").val("");
+						$("#input-search-client_name").val("");*/
                         action.loadPageData();
 					}else{
 						alert(result.msg);
@@ -138,29 +190,47 @@ $(function() {
 	window.action = action;
 	action.loadPageData();
 	action.loadUserRolesData();
+	action.loadCompanyInfoData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑管理员");
+			$("#add-companyId-wrap").hide();
 			$("#input-password-txt").hide();
 			$("#input-password-txt-wrap").hide();
 			$("#input-roleId-wrap").hide();
 			$("#add-userRoles-wrap").hide();
 			$("#input-roleName-txt-wrap").show();
-			//$("#input-companyId-txt").show();
+			$("#add-companyId-txt-wrap").show();
+			$("#input-companyId-txt").hide();
 			/*$("#input-status-txt").show();*/
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加管理员");
+			$("#add-companyId-wrap").show();
 			$("#input-password-txt").show();
 			$("#input-password-txt-wrap").hide();
 			$("#input-roleId-wrap").hide();
 			$("#add-userRoles-wrap").show();
 			$("#input-roleName-txt-wrap").hide();
-			//$("#input-companyId-txt").hide();
+			$("#add-companyId-txt-wrap").hide();
+			$("#input-companyId-txt").hide();
 			/*$("#input-status-txt").hide();*/
+			$form.data("action", "add");
+			$form[0].reset();
+		}
+	});
+
+	$("#addTempl2-modal").on('show.bs.modal', function(e) {
+		// 处理modal label显示及表单重置
+		var $form = $("form#form-addTempl2");
+		if (!e.relatedTarget) {
+			$("h4#addTempl2-modal-label").text("编辑用户角色");
+			$form.data("action", "edit");
+		} else if (e.relatedTarget.id = "btn-add") {
+			$("h4#addTempl2-modal-label").text("添加用户角色");
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -178,7 +248,8 @@ $(function() {
 		$("#input-roleId").val(that.find("td").eq(8).text());
 		$("#input-phone").val(that.find("td").eq(5).text());
 		$("#input-email").val(that.find("td").eq(6).text());
-		$("#input-companyId").val(that.find("td").eq(7).text());
+		$("#add-companyId-txt").val(that.find("td").eq(7).text());
+		$("#input-companyId").val(that.find("td").eq(9).text());
 		/*$("#input-status").val(that.find("td").eq(8).text());*/
 
 
@@ -190,12 +261,19 @@ $(function() {
         rules : {
 			account : {
                 required : true
-            },
-			companyId : {
-				required : true
-			}
+            }
         }
     });
+	$("#form-addTempl2").validate({
+		rules : {
+			authLevel : {
+				required : true
+			},
+			name : {
+				required : true
+			}
+		}
+	});
 
 	$("#btn-add-submit").on('click', function() {
 		var action = $("form#form-addTempl").data("action");
@@ -212,6 +290,11 @@ $(function() {
 				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
 				$("#add-search-userRoles").parent().append(err_html);
 				return;
+			}else if($("#add-companyId").val() == "") {
+				$("#add-companyId").parent().parent().addClass("has-error");
+				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+				$("#add-companyId").parent().append(err_html);
+				return;
 			}else {
 				window.action.add();
 			}
@@ -221,6 +304,17 @@ $(function() {
 				return;
 			}else{
 				window.action.edit();
+			}
+		}
+	});
+
+	$("#btn-add-submit2").on('click', function() {
+		var action = $("form#form-addTempl2").data("action");
+		if(action == "add"){
+			if (!$("#form-addTempl2").valid()) {
+				return;
+			}else {
+				window.action.addUserRolesData();
 			}
 		}
 	});

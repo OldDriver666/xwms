@@ -31,8 +31,12 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<input id="input-search-company_id" type="text" class="form-control" placeholder="请输入公司组织id">
+						<div class="form-group" >
+							<div class="col-sm-10">
+								<select name="search-company-id" id="input-search-company_id" class="form-control">
+									<option value="">请选择公司组织id</option>
+								</select>
+							</div>
 						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-search"> </span>
@@ -41,6 +45,9 @@
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加管理员</span>
+						</button>
+						<button id="btn-add-userRoles" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl2-modal">
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加用户角色</span>
 						</button>
 					</div>
 					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
@@ -109,6 +116,20 @@
 												<input type="text" class="form-control" id="input-email" name="email" placeholder="输入email">
 											</div>
 										</div>
+										<div class="form-group" id="add-companyId-wrap">
+											<label for="add-companyId" class="col-sm-2 control-label"><span class="necessary">*</span>companyId</label>
+											<div class="col-sm-10">
+												<select name="add-companyId" id="add-companyId" class="form-control">
+													<option value="">请选择companyId</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" id="add-companyId-txt-wrap">
+											<label class="col-sm-2 control-label">公司团体名称</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="add-companyId-txt" name="add-companyId-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
 										<div class="form-group" id="input-companyId-txt">
 											<label for="input-companyId" class="col-sm-2 control-label"><span class="necessary">*</span>companyId</label>
 											<div class="col-sm-10">
@@ -125,6 +146,54 @@
 							</div><!-- /.modal-content -->
 						</div><!-- /.modal -->
 					</div>
+
+
+					<div class="modal fade" id="addTempl2-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="addTempl2-modal-label">添加/编辑用户角色</h4>
+								</div>
+								<div class="modal-body">
+									<form id="form-addTempl2" data-action="" class="form-horizontal">
+										<div class="form-group">
+											<label for="input-authLevel" class="col-sm-2 control-label"><span class="necessary">*</span>角色权值</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-authLevel" name="authLevel" placeholder="输入角色权值">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-name" class="col-sm-2 control-label"><span class="necessary">*</span>角色名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-name" name="name" placeholder="输入角色名称">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="input-description" class="col-sm-2 control-label"><span class="necessary"></span>角色描述</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="input-description" name="description" placeholder="输入角色描述">
+											</div>
+										</div>
+										<div class="form-group" id="role-companyId-wrap">
+											<label for="role-companyId" class="col-sm-2 control-label"><span class="necessary"></span>角色的公司id</label>
+											<div class="col-sm-10">
+												<select name="role-companyId" id="role-companyId" class="form-control">
+													<option value="">请选择companyId</option>
+												</select>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									<button id="btn-add-submit2" type="button" class="btn btn-primary">提交</button>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
+					</div>
+
+
 				</div>
 			</nav>
 			<table id="table" class="table table-striped table-hover">
@@ -175,8 +244,9 @@
 	<td>${roleNameQuery(roleId)}</td>
 	<td>${phone}</td>
 	<td>${email}</td>
-	<td>${companyId}</td>
+	<td>${companyNameQuery(companyId)}</td>
 	<td style="display:none;">${roleId}</td>
+	<td style="display:none;">${companyId}</td>
 	<!--<td>${status}</td>-->
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
@@ -187,26 +257,26 @@
 <script type="text/x-jquery-tmpl" id="pageUserRoles">
     <option value=${id}>${name}</option>
 </script>
+<script type="text/x-jquery-tmpl" id="pageCompanyInfo">
+    <option value=${id}>${name}</option>
+</script>
 <script type="text/javascript">
-	var rolesArray = [
-		{
-			"id": 1,
-			"name": "BOSS"
-		},
-		{
-			"id": 2,
-			"name": "超级管理员"
-		},
-		{
-			"id": 3,
-			"name": "管理员"
-		}
-	];
-	var Lens = rolesArray.length;
+	var myUserRolesArray = JSON.parse(Util.cookieStorage.getCookie("myUserRolesArray"));
+	var Lens1 = myUserRolesArray.length;
 	function roleNameQuery(id){
-		for(var i=0; i< Lens; i++){
-			if(rolesArray[i].id == id){
-				return rolesArray[i].name;
+		for(var i=0; i< Lens1; i++){
+			if(myUserRolesArray[i].id == id){
+				return myUserRolesArray[i].name;
+			}
+		}
+	}
+
+	var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+	var Lens2 = allCompanyArray.length;
+	function companyNameQuery(type){
+		for(var i=0; i< Lens2; i++){
+			if(allCompanyArray[i].id == type){
+				return allCompanyArray[i].name;
 			}
 		}
 	}
