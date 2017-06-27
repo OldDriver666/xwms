@@ -121,6 +121,14 @@
       </if>
     </if>
   </select>
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from IMUser
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </select>
   <delete id="deleteByExample" parameterType="com.fise.model.entity.IMUserExample">
     delete from IMUser
     <if test="_parameter != null">

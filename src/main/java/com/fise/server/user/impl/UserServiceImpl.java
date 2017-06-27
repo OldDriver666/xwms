@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMUserMapper;
 import com.fise.model.entity.IMUser;
@@ -22,27 +23,35 @@ public class UserServiceImpl implements IUserService{
     IMUserMapper IMUserDao;
     
     @Override
-    public Response queryUser(QueryUserParam param) {
+    public Response queryUser(Page<QueryUserParam> param) {
         
         Response response=new Response();
         
         IMUserExample example=new IMUserExample();
         Criteria criteria=example.createCriteria();
         
-        if(!StringUtil.isEmpty(param.getDomain())){
-            criteria.andDomainEqualTo(param.getDomain());
+        if(!StringUtil.isEmpty(param.getParam().getDomain())){
+            criteria.andDomainEqualTo(param.getParam().getDomain());
         }
         
-        if(!StringUtil.isEmpty(param.getNick())){
-            criteria.andNickEqualTo(param.getNick());
+        if(!StringUtil.isEmpty(param.getParam().getNick())){
+            criteria.andNickEqualTo(param.getParam().getNick());
         }
         
-        List<IMUser> list=IMUserDao.selectByExample(example);
-        
+        List<IMUser> list=IMUserDao.selectByPage(example,param);
+              
         if(list.size()==0){
             return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
         }
-        response.success(list);
+        
+        Page<IMUser> page=new Page<IMUser>();
+        page.setPageNo(param.getPageNo());
+        page.setPageSize(param.getPageSize());
+        page.setTotalCount(param.getTotalCount());
+        page.setTotalPageCount(param.getTotalPageCount());
+        page.setResult(list);
+        
+        response.success(page);
         return response;
     }
 
