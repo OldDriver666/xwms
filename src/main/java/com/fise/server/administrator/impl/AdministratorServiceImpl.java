@@ -241,7 +241,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
 		record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
 		record.setSalt(nNow.toString().substring(5, 9));
-		record.setStatus(1);
+		record.setStatus(param.getStatus());
 		record.setAccessToken("");
 		record.setLastLogin(0);
 		adminDao.insert(record);

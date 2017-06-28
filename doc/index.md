@@ -83,6 +83,7 @@ null 没有数据返回 看code是否成功
  "account":"",       //必填-新增管理员账号
  "password":"",      //必填-密码
  "nick_name":"",     //昵称
+ "status":1,         //0-不可用，1-可用   默认为1
  "role_id":x,        //必填-角色
  "phone":"",
  "email":"",
@@ -129,6 +130,7 @@ null 没有数据返回 看code是否成功
  "account":"",       //增管理员账号
  "password":"",      //密码
  "nick_name":"",     //昵称
+ "status":1,         //0-不可用，1-可用   
  "role_id":x,        //角色
  "organization_id":x,//公司组织id
  "phone":"",
