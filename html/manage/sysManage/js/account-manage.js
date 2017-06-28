@@ -139,6 +139,7 @@ $(function() {
 					var myUserRolesArray = [];
 					myUserRolesArray = result.data;
 					if(selDepartId == parseInt(depart_id)){
+
 						$('#add-search-userRoles').empty();
 						$('#input-search-userRoles').empty();
 						$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
@@ -188,7 +189,10 @@ $(function() {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
+					$("#modify-password-wrap").val("");
+
 				}else{
+					$("#modify-password-wrap").val("");
 					alert(result.msg);
 				}
 			});

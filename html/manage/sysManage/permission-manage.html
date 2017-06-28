@@ -36,15 +36,6 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-form navbar-left">
-						<!--<div class="form-group">
-							<select id="search-type" class="form-control">
-								<option value="0" selected="selected">设备IME</option>
-								<option value="1">小位号</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<input id="input-search-txt" type="text" class="form-control" placeholder="请输入查询内容">
-						</div>-->
 						<div class="form-group" >
 							<div class="col-sm-10">
 								<select name="search-userRoles" id="search-input-userRoles" class="form-control">
@@ -57,23 +48,11 @@
 						</button>
 					</div>
 					<div class="navbar-form navbar-left">
-						<!--<div style="height:34px; line-height: 34px; display: inline-block; margin-right:20px;">
-							<label>激活数量：</label><span id="dev_active_count"></span>
-						</div>
-						<div style="height:34px; line-height: 34px; display: inline-block; margin-right:20px;">
-							<label>未激活数量：</label><span id="dev_unActive_count"></span>
-						</div>
-						<div style="height:34px; line-height: 34px; display: inline-block;">
-							<label>在线数量：</label><span id="dev_online_count"></span>
-						</div>-->
 					</div>
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加角色权限</span>
 						</button>
-						<!--<button id="btn-add-file" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal2">
-							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">批量添加设备</span>
-						</button>-->
 					</div>
 					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
 						<div class="modal-dialog">
@@ -86,23 +65,23 @@
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-permissId">
 										<div class="form-group" id="input-moduleName-wrap">
-											<label for="input-moduleName" class="col-sm-2 control-label"><span class="necessary">*</span>moduleName</label>
+											<label for="input-moduleName" class="col-sm-2 control-label"><span class="necessary">*</span>菜单名称</label>
 											<div class="col-sm-10">
 												<select name="moduleName" id="input-moduleName" class="form-control">
-													<option value="">请选择</option>
+													<option value="">请选择菜单名称</option>
 												</select>
 											</div>
 										</div>
 										<div class="form-group" id="input-moduleName-txt-wrap">
-											<label class="col-sm-2 control-label">moduleName</label>
+											<label class="col-sm-2 control-label">菜单名称</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-moduleName-txt" name="roleName-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="input-moduleId-wrap">
-											<label for="input-moduleId" class="col-sm-2 control-label"><span class="necessary">*</span>moduleId</label>
+											<label for="input-moduleId" class="col-sm-2 control-label"><span class="necessary">*</span>菜单ID</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-moduleId" name="moduleId" placeholder="输入moduleId">
+												<input type="text" class="form-control" id="input-moduleId" name="moduleId" placeholder="请输入菜单ID">
 											</div>
 										</div>
 										<div class="form-group" id="edit_insert_auth">
@@ -142,7 +121,7 @@
 											<label for="input-userRoles" class="col-sm-2 control-label"><span class="necessary">*</span>角色类型</label>
 											<div class="col-sm-10">
 												<select name="userRoles" id="input-userRoles" class="form-control">
-													<option value="">请选择</option>
+													<option value="">请选择角色类型</option>
 												</select>
 											</div>
 										</div>
@@ -211,16 +190,16 @@
 			<table id="table" class="table table-striped table-hover">
 				<thead>
 				<tr>
-					<th>moduleId</th>
-					<th>moduleName</th>
-					<th>priority</th>
-					<th>sn</th>
-					<th>url</th>
+					<th>菜单ID</th>
+					<th>菜单名称</th>
+					<th>Priority</th>
+					<th>SN</th>
+					<th>URL</th>
 					<!--<th>新增权限</th>-->
 					<!--<th>修改权限</th>-->
 					<!--<th>查询权限</th>-->
-					<th>parent_id</th>
-					<th>status</th>
+					<th>ParentID</th>
+					<th>状态</th>
 					<th>管理</th>
 				</tr>
 				</thead>

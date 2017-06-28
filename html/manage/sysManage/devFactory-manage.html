@@ -24,7 +24,7 @@
 						<div class="form-group" >
 							<div class="col-sm-10">
 								<select name="searchName" id="input-search-name" class="form-control">
-									<option value="">请选择公司团体名称</option>
+									<option value="">请选择公司名称</option>
 								</select>
 							</div>
 						</div>
@@ -34,7 +34,7 @@
 					</div>
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
-							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加公司设备信息</span>
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加设备出厂信息</span>
 						</button>
 					</div>
 					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
@@ -42,36 +42,36 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑公司设备信息</h4>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑设备出厂信息</h4>
 								</div>
 								<div class="modal-body">
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-id">
 										<div class="form-group" id="input-depart_id-wrap">
-											<label for="input-depart_id" class="col-sm-2 control-label"><span class="necessary">*</span>公司团体</label>
+											<label for="input-depart_id" class="col-sm-2 control-label"><span class="necessary">*</span>公司名称</label>
 											<div class="col-sm-10">
 												<select name="depart_id" id="input-depart_id" class="form-control">
-													<option value="">请选择公司团体名称</option>
+													<option value="">请选择公司名称</option>
 												</select>
 											</div>
 										</div>
 										<div class="form-group" id="input-depart_id-txt-wrap">
-											<label class="col-sm-2 control-label">公司团体</label>
+											<label class="col-sm-2 control-label">公司名称</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-depart_id-txt" name="depart_id-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="input-depart_idNo-wrap">
-											<label class="col-sm-2 control-label">公司团体ID</label>
+											<label class="col-sm-2 control-label">公司ID</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-depart_idNo" name="depart_idNo" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 
 										<div class="form-group" id="input-description-txt-wrap">
-											<label class="col-sm-2 control-label">描述</label>
+											<label class="col-sm-2 control-label">简介</label>
 											<div class="col-sm-10 form-txt">
-												<input type="text" class="form-control" id="input-description" name="description-txt" placeholder="输入description">
+												<input type="text" class="form-control" id="input-description" name="description-txt" placeholder="请输入简介信息">
 											</div>
 										</div>
 										<div class="form-group" id="input-status-wrap">
@@ -86,15 +86,15 @@
 											</div>
 										</div>
 										<div class="form-group" id="input-begin_account-txt-wrap">
-											<label class="col-sm-2 control-label">begin_account</label>
+											<label class="col-sm-2 control-label">开始号码</label>
 											<div class="col-sm-10 form-txt">
-												<input type="text" class="form-control" id="input-begin_account" name="begin_account-txt"  placeholder="输入begin_account" >
+												<input type="text" class="form-control" id="input-begin_account" name="begin_account-txt"  placeholder="请输入开始小位号" >
 											</div>
 										</div>
 										<div class="form-group" id="input-end_account-txt-wrap">
-											<label class="col-sm-2 control-label">end_account</label>
+											<label class="col-sm-2 control-label">结束号码</label>
 											<div class="col-sm-10 form-txt">
-												<input type="text" class="form-control" id="input-end_account" name="end_account-txt"    placeholder="输入end_account" >
+												<input type="text" class="form-control" id="input-end_account" name="end_account-txt"    placeholder="请输入结束小位号" >
 											</div>
 										</div>
 									</form>
@@ -111,12 +111,12 @@
 			<table id="table" class="table table-striped table-hover">
 				<thead>
 				<tr>
-					<th>description</th>
-					<th>status</th>
-					<th>created</th>
-					<th>depart_id</th>
-					<th>begin_account</th>
-					<th>end_account</th>
+					<th>简介</th>
+					<th>状态</th>
+					<th>创建时间</th>
+					<th>公司名称</th>
+					<th>开始小位号</th>
+					<th>结束小位号</th>
 					<th>管理</th>
 				</tr>
 				</thead>

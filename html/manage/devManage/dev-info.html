@@ -37,7 +37,7 @@
 				<div class="container-fluid">
 					<div id="dev-query-condition" class="navbar-form navbar-left">
 						<div class="form-group">
-							<input id="input-search-IME" type="text" class="form-control" placeholder="请输入设备IME">
+							<input id="input-search-IME" type="text" class="form-control" placeholder="请输入设备IME号">
 							<input id="input-search-XW" type="text" class="form-control" placeholder="请输入小位号">
 						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
@@ -79,20 +79,20 @@
 										<div class="form-group">
 											<label for="input-devIME" class="col-sm-2 control-label"><span class="necessary">*</span>IME</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-devIME" name="devIME" placeholder="输入设备IME">
+												<input type="text" class="form-control" id="input-devIME" name="devIME" placeholder="请输入设备IME号">
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="input-devXW" class="col-sm-2 control-label"><span class="necessary">*</span>小位号</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-devXW" name="devXW" placeholder="输入小位号">
+												<input type="text" class="form-control" id="input-devXW" name="devXW" placeholder="请输入小位号">
 											</div>
 										</div>
 										<div class="form-group" id="input-devType-wrap">
 											<label for="input-devType" class="col-sm-2 control-label"><span class="necessary">*</span>设备类型</label>
 											<div class="col-sm-10">
 												<select name="devType" id="input-devType" class="form-control">
-													<option value="">请选择</option>
+													<option value="">请选择设备类型</option>
 												</select>
 											</div>
 										</div>
@@ -103,7 +103,7 @@
 											</div>
 										</div>
 										<div class="form-group" id="input-devType-txt-wrap">
-											<label class="col-sm-2 control-label">设备类型名称</label>
+											<label class="col-sm-2 control-label">设备类型</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-devType-txt" name="devType-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
@@ -111,13 +111,13 @@
 										<div class="form-group" id="input-phoneNo-wrap">
 											<label for="input-phoneNo" class="col-sm-2 control-label">电话号码</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-phoneNo" name="phoneNo" placeholder="输入电话号码">
+												<input type="text" class="form-control" id="input-phoneNo" name="phoneNo" placeholder="请输入电话号码">
 											</div>
 										</div>
 										<div class="form-group" id="input-Mark-wrap">
-											<label for="input-Mark" class="col-sm-2 control-label">mark</label>
+											<label for="input-Mark" class="col-sm-2 control-label">备注</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-Mark" name="Mark" placeholder="输入mark">
+												<input type="text" class="form-control" id="input-Mark" name="Mark" placeholder="请输入备注信息">
 											</div>
 										</div>
 										<div class="form-group" id="input-status-wrap">
@@ -186,9 +186,9 @@
 					<!--<th>code</th>-->
 					<th>状态</th>
 					<th>电话号码</th>
-					<th>mark</th>
-					<th>updated</th>
-					<th>created</th>
+					<th>备注</th>
+					<th>更新时间</th>
+					<th>创建时间</th>
 					<th>管理</th>
 				</tr>
 				</thead>

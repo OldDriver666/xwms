@@ -24,7 +24,7 @@
 						<div class="form-group" >
 							<div class="col-sm-10">
 								<select name="searchDepartid" id="input-search-depart_id" class="form-control">
-									<option value="">请选择公司团体</option>
+									<option value="">请选择公司名称</option>
 								</select>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 					</div>
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
-							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加设备新版本</span>
+							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加设备版本</span>
 						</button>
 					</div>
 					<div class="modal fade" id="addTempl-modal" tabindex="-1" role="dialog" aria-labelledby="addTempl-modal-label" aria-hidden="true">
@@ -49,27 +49,27 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑设备新版本</h4>
+									<h4 class="modal-title" id="addTempl-modal-label">添加/编辑设备版本信息</h4>
 								</div>
 								<div class="modal-body">
 									<form id="form-addTempl" data-action="" class="form-horizontal">
 										<input type="hidden" id="input-version_id">
 										<div class="form-group" id="input-depart_id-wrap">
-											<label for="input-depart_id" class="col-sm-2 control-label"><span class="necessary">*</span>公司团体</label>
+											<label for="input-depart_id" class="col-sm-2 control-label"><span class="necessary">*</span>公司名称</label>
 											<div class="col-sm-10">
 												<select name="depart_id" id="input-depart_id" class="form-control">
-													<option value="">请选择公司团体名称</option>
+													<option value="">请选择公司名称</option>
 												</select>
 											</div>
 										</div>
 										<div class="form-group" id="input-depart_id-txt-wrap">
-											<label class="col-sm-2 control-label">公司团体</label>
+											<label class="col-sm-2 control-label">公司名称</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-depart_id-txt" name="depart_id-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group" id="input-depart_idNo-wrap">
-											<label class="col-sm-2 control-label">公司团体ID</label>
+											<label class="col-sm-2 control-label">公司ID</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-depart_idNo" name="depart_idNo" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
@@ -79,7 +79,7 @@
 											<label for="input-devType" class="col-sm-2 control-label"><span class="necessary">*</span>设备类型</label>
 											<div class="col-sm-10">
 												<select name="devType" id="input-devType" class="form-control">
-													<option value="">请选择设备类型名称</option>
+													<option value="">请选择设备类型</option>
 												</select>
 											</div>
 										</div>
@@ -102,15 +102,15 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-update_url" class="col-sm-2 control-label"><span class="necessary">*</span>升级url</label>
+											<label for="input-update_url" class="col-sm-2 control-label"><span class="necessary">*</span>升级URL</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-update_url" name="update_url" placeholder="请输入升级url">
+												<input type="text" class="form-control" id="input-update_url" name="update_url" placeholder="请输入升级URL地址">
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="input-version_info" class="col-sm-2 control-label"><span class="necessary"></span>版本信息</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-version_info" name="version_info" placeholder="请输入版本信息">
+												<input type="text" class="form-control" id="input-version_info" name="version_info" placeholder="请输入设备版本信息">
 											</div>
 										</div>
 										<div class="form-group" id="input-status-txt">
@@ -133,12 +133,12 @@
 			<table id="table" class="table table-striped table-hover">
 				<thead>
 				<tr>
-					<th>公司团体名称</th>
+					<th>公司名称</th>
 					<th>设备类型</th>
 					<th>设备版本</th>
 					<th>状态</th>
 					<th>版本信息</th>
-					<th>升级url</th>
+					<th>升级URL</th>
 					<th>管理</th>
 				</tr>
 				</thead>

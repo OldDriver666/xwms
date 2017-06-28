@@ -112,7 +112,7 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑设备新版本");
+			$("h4#addTempl-modal-label").text("编辑设备版本信息");
 			$("#input-depart_id-wrap").hide();
 			$("#input-depart_id-txt-wrap").show();
 			$("#input-depart_idNo-wrap").hide();
@@ -122,7 +122,7 @@ $(function() {
 			$("#input-status-txt").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加设备新版本");
+			$("h4#addTempl-modal-label").text("添加设备版本信息");
 			$("#input-depart_id-wrap").show();
 			$("#input-depart_id-txt-wrap").hide();
 			$("#input-depart_idNo-wrap").hide();

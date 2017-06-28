@@ -57,22 +57,31 @@ $(function() {
             var url = ctx + "boss/user/query";
             if(type_num == 0){
                 var data = new Object();
-                data.domain = search_txt;
-                data.nick = "";
-
+                data.page_no = 1;
+                data.page_size = 20;
+                data.param = {
+                    "domain":search_txt,
+                    "nick":""
+                };
             }else if(type_num == 1){
                 var data = new Object();
-                data.domain = "";
-                data.nick = search_txt;
-
+                data.page_no = 1;
+                data.page_size = 20;
+                data.param = {
+                    "domain":"",
+                    "nick":search_txt
+                };
             }else if(type_num == 2){
                 var data = new Object();
-                data.domain = "";
-                data.nick = "";
-
+                data.page_no = 1;
+                data.page_size = 20;
+                data.param = {
+                    "domain":"",
+                    "nick":""
+                };
             }
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            /*Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -90,9 +99,9 @@ $(function() {
             },function() {
                 $('#pageContent').find("tr").remove();
                 alert("服务器开个小差，请稍后重试！")
-            });
+            });*/
 
-            /*var opt = {
+            var opt = {
                 "targetContentId" : "pageContent",
                 "url" : url,
                 "forAuth2" : true,
@@ -109,11 +118,11 @@ $(function() {
                     }
                 },
                 "resultFilter" : function(result) {
-                    return result.data;
+                    return result.data.result;
                 },
                 "param" : data
             };
-            this.page = new Util.Page(opt);*/
+            this.page = new Util.Page(opt);
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
@@ -591,14 +600,14 @@ Util.Page = (function() {
         var contentType = null;
         if (data) {
             this.filterParam = data;
-            this.pageSize = 20;
-            this.pageNow = 1;
-            /*this.pageSize = data.PageSize;*/
-            /*this.pageNow = data.Page;*/
+           /* this.pageSize = 20;
+            this.pageNow = 1;*/
+            this.pageSize = data.page_size;
+            this.pageNow = data.page_no;
         }
         var sendData = {
-            "PageSize" : this.pageSize,
-            "Page" : this.pageNow
+            "page_size" : this.pageSize,
+            "page_no" : this.pageNow
         };
         if (this.forAuth2 == true) {
             if(data){
@@ -620,7 +629,7 @@ Util.Page = (function() {
             if(!result.data){
                 result.data = null;
             }
-            that.allPageSize = Math.ceil(result.data.length/that.pageSize);
+            that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
             if (that.resultFilter) {
                 list = that.resultFilter(result);
@@ -658,7 +667,7 @@ Util.Page = (function() {
                 h_.attr("html", i);
             }
 
-            that.initPageBtns(result.data.length,that.allPageSize);
+            that.initPageBtns(result.data.total_count,that.allPageSize);
             target.find(".load_icon").remove();
             //如果查询到的数据长度为0；
             if (list.length == 0) {
