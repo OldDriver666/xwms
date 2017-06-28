@@ -21,6 +21,8 @@ public class AdminInsert {
 	@MaxLength(value = 50)
 	private String password;
 	
+	private Integer status;
+	
 	@JsonProperty("nick_name")
 	private String nickName;
 	
@@ -48,7 +50,15 @@ public class AdminInsert {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setPassword(String password) {
 		this.password = password;
 	}
 

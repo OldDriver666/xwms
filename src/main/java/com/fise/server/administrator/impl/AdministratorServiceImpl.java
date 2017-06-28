@@ -241,7 +241,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
 		record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
 		record.setSalt(nNow.toString().substring(5, 9));
-		record.setStatus(1);
+		record.setStatus(param.getStatus());
 		record.setAccessToken("");
 		record.setLastLogin(0);
 		adminDao.insert(record);
@@ -268,7 +268,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		WiAdmin loginAdmin = new WiAdmin();
 		example.clear();
 		Criteria loginWhere = example.createCriteria();
-		loginWhere.andIdEqualTo(param.getAdminId());
+		loginWhere.andIdEqualTo(param.getLoginId());
 		adminList.clear();
 		adminList = adminDao.selectByExample(example);
 		if (adminList.size() == 0) {
@@ -290,6 +290,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
 		if (!StringUtil.isEmpty(param.getEmail())){
 			sqlAdmin.setEmail(param.getEmail());
+		}
+		if(!StringUtil.isEmpty(param.getPassword())){
+		    sqlAdmin.setPassword(param.getPassword());
 		}
 
 		if (!StringUtil.isEmpty(param.getNickName())){

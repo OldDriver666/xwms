@@ -4,13 +4,17 @@ package com.fise.server.role.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.dao.WiPermissionMapper;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
@@ -31,6 +35,9 @@ public class RoleServiceImpl implements IRoleService {
     
     @Autowired
     private WiPermissionMapper permissionDao;
+    
+    @Autowired
+    private WiAdminMapper adminDao;
     
     @Override
     public Response queryAll(Integer adminRole, Integer orgId) {
@@ -152,10 +159,27 @@ public class RoleServiceImpl implements IRoleService {
         
         Response response=new Response();
         
+        //判断用户权限
+        WiAdminExample example1=new WiAdminExample();
+        WiAdminExample.Criteria criteria1=example1.createCriteria();
+        criteria1.andIdEqualTo(role.getAdminid());
+        List<WiAdmin> list1=adminDao.selectByExample(example1);
+        Integer roleid=list1.get(0).getRoleId();
+        
+        WiOrganizationRoleExample example = new WiOrganizationRoleExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(roleid);
+        List<WiOrganizationRole> list2=roleDao.selectByExample(example);
+        if(list2.get(0).getAuthLevel()<role.getAuthLevel()){
+            response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+            response.setMsg("无权创建更高级的用户");
+            return response;
+        }
+        
         //判断角色name是否已经存在
-        WiOrganizationRoleExample example=new WiOrganizationRoleExample();
-        Criteria criteria=example.createCriteria();
-        criteria.andNameEqualTo(role.getName());
+        example.clear();
+        Criteria criteri = example.createCriteria();
+        criteri.andNameEqualTo(role.getName());
         List<WiOrganizationRole> list=roleDao.selectByExample(example);
         
         if(list.size()!=0){
