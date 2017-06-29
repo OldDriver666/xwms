@@ -81,7 +81,7 @@
         var url = ctx + "boss/admin/login";
         var data = {"account":$("#ipt_username").val(),"password": $.md5($("#ipt_password").val())};
         Util.ajaxLoginData(url,data,"POST",true,function(result) {
-            if(result.code == ReturnCode.SUCCESS && result.data.accessToken != ""){
+            if(result.code == ReturnCode.SUCCESS ){
                 Util.cookieStorage.setCookie("accesstoken",result.data.accessToken);
                 Util.cookieStorage.setCookie("username",result.data.account);
                 Util.cookieStorage.setCookie("nickname",result.data.nickName);

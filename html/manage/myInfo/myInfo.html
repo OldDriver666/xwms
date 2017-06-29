@@ -51,22 +51,22 @@
 			<div class="modal-body">
 				<form id="form-editPW" data-action="" class="form-horizontal">
 					<input type="hidden" id="input-id">
-					<div class="form-group">
+					<!--<div class="form-group">
 						<label for="ipt_username" class="col-sm-2 control-label"><span class="necessary">*</span>用户名</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="ipt_username" name="username" placeholder="输入用户名">
 						</div>
-					</div>
+					</div>-->
 					<div class="form-group">
-						<label for="ipt_old_password" class="col-sm-2 control-label"><span class="necessary">*</span>旧密码</label>
+						<label for="ipt_old_password" class="col-sm-2 control-label"><span class="necessary">*</span>新密码</label>
 						<div class="col-sm-10">
-							<input type="password" class="form-control" id="ipt_old_password" name="password" placeholder="输入旧密码">
+							<input type="password" class="form-control" id="ipt_old_password" name="password" placeholder="请输入新密码">
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="ipt_new_password" class="col-sm-2 control-label"><span class="necessary">*</span>新密码</label>
+						<label for="ipt_new_password" class="col-sm-2 control-label"><span class="necessary">*</span>确认新密码</label>
 						<div class="col-sm-10">
-							<input type="password" class="form-control" id="ipt_new_password" name="confirmPassword" placeholder="输入新密码">
+							<input type="password" class="form-control" id="ipt_new_password" name="confirmPassword" placeholder="请再次输入新密码">
 						</div>
 					</div>
 				</form>
@@ -88,7 +88,7 @@
 			<div class="modal-body">
 				<form id="form-NickName" data-action="" class="form-horizontal">
 					<div class="form-group">
-						<label for="ipt_username" class="col-sm-2 control-label"><span class="necessary">*</span>昵称</label>
+						<label for="ipt_nickname" class="col-sm-2 control-label"><span class="necessary">*</span>昵称</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="ipt_nickname" name="nickname" placeholder="输入昵称">
 						</div>
@@ -114,56 +114,99 @@
 <script>
 $(function() {
     //获取cookie
+	var admin_id = Util.cookieStorage.getCookie("adminId");
     var nickName = Util.cookieStorage.getCookie("nickname");
     var userName = Util.cookieStorage.getCookie("username");
-    var token_value = Util.cookieStorage.getCookie("accesstoken");
+
     $(".nickName_txt").text(nickName);
     $(".userName_txt").text(userName);
 
-    $("#form_editPW, #form_NickName").submit(function (e) {
-        return false;
-    });
+	$("#ipt_old_password").change(function(){
+		if($(this).val() != ""){
+			$(this).parent().parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#ipt_new_password").change(function(){
+		if($(this).val() != ""){
+			$(this).parent().parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#ipt_nickname").change(function(){
+		if($(this).val() != ""){
+			$(this).parent().parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
 
     //修改密码
     $("#btn_submit").bind('click', function (e) {
-        var url = ctx + "Manage/ModifyPassword";
-        var data = {
-            "AuthenticCode": token_value,
-            "UserName": userName,
-            "Oldpassword": $.md5($("#ipt_old_password").val()),
-            "Newpassword": $.md5($("#ipt_new_password").val())
-        };
+		var pwd1 = $("#ipt_old_password").val();
+		var pwd2 = $("#ipt_new_password").val();
+		if (pwd1 == "" ) {
+			$("#ipt_old_password").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#ipt_old_password").parent().append(err_html);
+			return;
+		} else if(pwd2 == ""){
+			$("#ipt_new_password").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#ipt_new_password").parent().append(err_html);
+			return;
+		}else if(pwd1 == pwd2){
+			var pwd =  $.md5(pwd2);
+			var url = ctx + "boss/admin/update";
+			var data = new Object();
+			data.login_id = parseInt(admin_id);
+			data.admin_id = parseInt(admin_id);
+			data.password = pwd;
 
-        Util.ajaxLoadData(url,data,"POST",true,function (result) {
-            if (result.Status == ReturnCode.SUCCESS && result.AuthenticCode != "") {
-                $("#editPW-modal").modal('hide');
-                alert("修改完成！");
-            } else {
-                alert("账户名、密码或错误！");
-            }
-        },function () {
-            alert("服务器开个小差，请稍后重试！")
-        });
+			Util.ajaxLoadData(url, data, "POST", true, function (result) {
+				if (result.code == ReturnCode.SUCCESS) {
+					$("#editPW-modal").modal('hide');
+					alert("修改完成！");
+				} else {
+					alert(result.msg);
+				}
+			}, function () {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		}else{
+			alert("两次输入的密码不一致！")
+		}
     });
 
     //修改昵称
     $("#btn_submit1").bind('click',function(e){
-        var newNickName = $("#ipt_nickname").val();
-        var url = ctx + "Manage/ModifyNickName";
-        var data = {"AuthenticCode":token_value,"UserName":userName,"NewNickName":newNickName};
+		if ($("#ipt_nickname").val() == "") {
+			$("#ipt_nickname").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+			$("#ipt_nickname").parent().append(err_html);
+			return;
+		}else {
+			var newNickName = $("#ipt_nickname").val();
+			var url = ctx + "boss/admin/update";
+			var data = new Object();
+			data.login_id = parseInt(admin_id);
+			data.admin_id = parseInt(admin_id);
+			data.nick_name = newNickName;
 
-        Util.ajaxLoadData(url,data,"POST",true,function(result) {
-            if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                Util.cookieStorage.setCookie("nickname",newNickName);
-                $(".nickName_txt").text(newNickName);
-                $("#NickName-modal").modal('hide');
-                alert("修改完成！");
-            } else {
-                alert("修改失败！");
-            }
-        },function() {
-            alert("服务器开个小差，请稍后重试！")
-        });
+			Util.ajaxLoadData(url, data, "POST", true, function (result) {
+				if (result.code == ReturnCode.SUCCESS) {
+					Util.cookieStorage.setCookie("nickname", newNickName);
+					$(".nickName_txt").text(newNickName);
+					$("#NickName-modal").modal('hide');
+					alert("修改完成！");
+				} else {
+					alert(result.msg);
+				}
+			}, function () {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		}
     });
 
 });
