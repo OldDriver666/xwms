@@ -357,7 +357,15 @@ public class AdministratorServiceImpl implements IAdministratorService {
             queryWhere.andCompanyIdEqualTo(param.getCompanyId());
         }
         if(param.getRoleId() != null){
-            queryWhere.andRoleIdEqualTo(param.getRoleId());
+            if(param.getRoleId()>loginAdmin.getRoleId()){
+                queryWhere.andRoleIdEqualTo(param.getRoleId());
+            }else{
+                resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+                resp.setMsg("权限错误,不能查询比自己等级高的用户");
+                return resp;
+            }
+        }else {
+            queryWhere.andRoleIdGreaterThan(loginAdmin.getRoleId());
         }
         adminList.clear();
         adminList = adminDao.selectByExample(example);
