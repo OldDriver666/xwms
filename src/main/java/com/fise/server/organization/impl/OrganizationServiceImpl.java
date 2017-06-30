@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiOrganizationMapper;
 import com.fise.model.entity.WiOrganization;
@@ -49,6 +50,11 @@ public class OrganizationServiceImpl implements IOrganizationService {
     @Override
     public Response UpdateOrganization(WiOrganization param) {
         Response resp =new Response();
+        
+        if(StringUtil.isEmpty(param.getName())){
+            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
         param.setUpdated(DateUtil.getLinuxTimeStamp());
         organDao.updateByPrimaryKeySelective(param);
         return resp;

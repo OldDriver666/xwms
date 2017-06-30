@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiModuleMapper;
 import com.fise.dao.WiPermissionMapper;
@@ -69,6 +70,17 @@ public class ModuleServiceImpl implements IModuleService {
         Response resp = new Response();
         WiModule module = new WiModule();
         module.setId(param.getModuleId());
+        
+        if(StringUtil.isEmpty(param.getName())){
+            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        if(param.getPriority()!=null){
+            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        if(StringUtil.isEmpty(param.getSn())){
+            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
         if(!StringUtil.isEmpty(param.getName())){
             module.setName(param.getName());
         }

@@ -14,6 +14,7 @@ import com.fise.model.entity.IMDeviceVersionExample;
 import com.fise.model.entity.IMDeviceVersionExample.Criteria;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.deviceversion.IDeviceVersionService;
+import com.fise.utils.StringUtil;
 
 
 @Service
@@ -83,7 +84,17 @@ public class IDeviceVersionServiceImpl implements IDeviceVersionService{
 	public Response updateDeviceVersion(IMDeviceVersion record) {
 		
 		Response response=new Response();
-      
+		
+		if(StringUtil.isEmpty(record.getDevVersion())){
+		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+        if(StringUtil.isEmpty(record.getUpdateUrl())){
+            response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        if(record.getStatus()==null){
+            response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        
         deviceVersionDao.updateByPrimaryKeySelective(record);
         return response.success();
 
