@@ -107,6 +107,12 @@ public class RoleServiceImpl implements IRoleService {
             
             if(tmp.getId() == null){
                 //for insert
+                if(param.getRoleId()==null){
+                    return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+                }
+                if(tmp.getModuleId()==null){
+                    return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+                }
                 dbValue.setRoleId(param.getRoleId());
                 dbValue.setCreated(DateUtil.getLinuxTimeStamp());
                 dbValue.setUpdated(DateUtil.getLinuxTimeStamp());
