@@ -99,6 +99,13 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 
 		Response response=new Response();
 		
+		if(StringUtil.isEmpty(record.getClientname())){
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+		if(record.getTypeid()==null){
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+		
 		if(!StringUtil.isEmpty(record.getClientname())){
 			//判断修改的设备的名字是否已经存在
 			IMClientTypeExample exampleIME=new IMClientTypeExample();

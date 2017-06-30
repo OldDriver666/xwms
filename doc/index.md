@@ -109,11 +109,47 @@ null 没有数据返回 看code是否成功
  "role_id":x,        //角色
  "company_id":x,     //公司组织id
 } 
-
 ```
 - **回复**
 ```
-null 没有数据返回 看code是否成功
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 1,
+         "account": "18601735176",
+         "salt": "3678",
+         "password": "",
+         "nickName": "廖国顺",
+         "roleId": 3,
+         "companyId": 1,
+         "phone": "",
+         "email": "",
+         "accessToken": "",
+         "status": 1,
+         "lastLogin": 1498122594,
+         "created": 1225404661,
+         "updated": 1498547576
+      },
+      {
+         "id": 3,
+         "account": "chenzhongchao",
+         "salt": "1540",
+         "password": "",
+         "nickName": "陈钟超",
+         "roleId": 3,
+         "companyId": 1,
+         "phone": "",
+         "email": "",
+         "accessToken": null,
+         "status": 1,
+         "lastLogin": null,
+         "created": 1496315408,
+         "updated": 1496396165
+      }
+      ]
+}      
 ```
 
 ####管理员修改
@@ -1104,7 +1140,7 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 {"version_id":x,                  //必填-设备版本ID
  "dev_version":"",				  //选填-最新设备固件版本号	
- "status":0,                      //选填-0 可用    1不可用
+ "status":0,                      //选填-0 不可用    1 可用
  "version_info":"",               //选填-版本信息
  "update_url":""                  //选填-更新下载地址
 } 

@@ -110,6 +110,13 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 
 		Response response=new Response();
 		
+		if(StringUtil.isEmpty(param.getIme())){
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+		if(StringUtil.isEmpty(param.getAccount())){
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+		
 		if(!StringUtil.isEmpty(param.getIme())){
 			//判断修改的设备的IME是否已经存在
 			FiseDeviceExample exampleIME=new FiseDeviceExample();
