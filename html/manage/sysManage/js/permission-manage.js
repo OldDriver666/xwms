@@ -18,10 +18,6 @@ $(function() {
             param.update_auth =  parseInt($("input[name=update_auth]:checked").val());
             param.query_auth =  parseInt($("input[name=query_auth]:checked").val());
 
-            /*param.status = $("input[name=status]:checked").val();
-            param.insert_auth = $("input[name=insert_auth]:checked").val();
-            param.update_auth = $("input[name=update_auth]:checked").val();
-            param.query_auth = $("input[name=query_auth]:checked").val();*/
             param_arr.push(param);
             var rold_idSel = parseInt($("#input-userRoles").val());
             var data = {
@@ -410,6 +406,11 @@ $(function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
+                return;
+            }else if($("#input-moduleName").val() == "") {
+                $("#input-moduleName").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-moduleName").parent().append(err_html);
                 return;
             }else if($("#input-userRoles").val() == "") {
                 $("#input-userRoles").parent().parent().addClass("has-error");

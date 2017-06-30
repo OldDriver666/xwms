@@ -17,7 +17,7 @@ import com.fise.server.suggest.ISuggestService;
 import com.fise.utils.StringUtil;
 
 @Service
-public class ISuggestServiceImpl implements ISuggestService{
+public class SuggestServiceImpl implements ISuggestService{
 
 	private Logger logger=Logger.getLogger(getClass());
 	

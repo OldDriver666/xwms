@@ -52,28 +52,17 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var search_devType = parseInt($('#search-input-devType option:selected').val());
-			var search_txt = $("#input-search-txt").val();
-            var type_num = $("#search-type").val();
+			var search_account = $("#input-search-account").val();
+            var search_phone = $("#input-search-phone").val();
+
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "boss/querydevice";
-            if(type_num == 0){
-                var data = new Object();
-                data.account = search_txt;
-                data.phone = "";
+            var data = new Object();
+                data.account = search_account;
+                data.phone = search_phone;
                 data.depart_id = parseInt(depart_id);
                 data.type = search_devType;
-            }else if(type_num == 1){
-                var data = new Object();
-                data.account = "";
-                data.phone = search_txt;
-                data.depart_id = parseInt(depart_id);
-                data.type = search_devType;
-            }else if(type_num == 2){
-                var data = new Object();
-                data.depart_id = parseInt(depart_id);
-                data.type = search_devType;
-            }
 
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
@@ -378,9 +367,10 @@ $(function() {
             var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
             $("#search-input-devType").append(err_html);
             return;
+        }else{
+            $("#pageThead").empty();
+            action.loadPageData();
         }
-        $("#pageThead").empty();
-        action.loadPageData();
 	});
     $("#input-search-devType").on('keydown', function(e) {
         if (e.keyCode == 13) {
@@ -389,13 +379,18 @@ $(function() {
         }
 
     });
-	$("#input-search-txt").on('keydown', function(e) {
+	$("#input-search-account").on('keydown', function(e) {
         if (e.keyCode == 13) {
             $("#pageThead").empty();
             action.loadPageData();
         }
-
 	});
+    $("#input-search-phone").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            $("#pageThead").empty();
+            action.loadPageData();
+        }
+    });
 });
 
 

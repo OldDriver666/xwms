@@ -17,7 +17,7 @@ import com.fise.server.departconfig.IDepartConfigService;
 
 
 @Service
-public class IDepartConfigServiceImpl implements IDepartConfigService{
+public class DepartConfigServiceImpl implements IDepartConfigService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	

@@ -157,9 +157,9 @@ $(function() {
     });
 
 	$("#btn-add-submit").on('click', function() {
-		/*if (!$("#form-addTempl").valid()) {
+		if (!$("#form-addTempl").valid()) {
 			return;
-		}*/
+		}
 		var action = $("form#form-addTempl").data("action");
 		switch (action) {
 		case "add":

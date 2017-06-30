@@ -7,19 +7,21 @@ $(function() {
 	var action = {
 		//获取用户和设备在线及注册人数的数据
 		getUserDevData : function() {
-            var url = ctx + "DateCountManage/GetDeviceCountInfo";
-            var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value,
-                "RoleLevel":parseInt(role_level),
-                "DepartId":parseInt(depart_id)
-            };
+            var url = ctx + "boss/devicecount";
+            var data = new Object();
+            data.depart_id = parseInt(depart_id);
+
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                    $("#pageUserOnline").tmpl(result.XWInfo).appendTo('#xwUserOnlineInfo');
-                    $("#pageUserReg").tmpl(result.XWInfo).appendTo('#xwUserRegInfo');
-                    $("#pageDevOnline").tmpl(result.DeviceInfo).appendTo('#devUserOnlineInfo');
-                    $("#pageDevActive").tmpl(result.DeviceInfo).appendTo('#devUserActiveInfo');
+                if(result.code == ReturnCode.SUCCESS){
+                    $('#devUserOnlineInfo').empty();
+                    $('#devUserActiveInfo').empty();
+                    $('#xwUserOnlineInfo').empty();
+                    $('#xwUserRegInfo').empty();
+
+                    $("#pageUserOnline").tmpl(result.data).appendTo('#xwUserOnlineInfo');
+                    $("#pageUserReg").tmpl(result.data).appendTo('#xwUserRegInfo');
+                    $("#pageDevOnline").tmpl(result.data).appendTo('#devUserOnlineInfo');
+                    $("#pageDevActive").tmpl(result.data).appendTo('#devUserActiveInfo');
                 } else {
                     alert("请求出错！");
                 }
@@ -376,20 +378,20 @@ $(function() {
 	};
 	window.action = action;
 	action.getUserDevData();
-	action.getClientTypeData();
+	//action.getClientTypeData();
 	//action.refreshOnTime();
 
 
     var nowTime = getNowFormatDate();//当前日期
     var init_days = 3;//初始时的天数
     var init_starDate = changeDate(nowTime, init_days);//初始时的开始日期
-    action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
+   // action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
     //点击日期选择天数，显示相应天数的数据
     $(".group li").on("click",function(){
         $(this).addClass("curr").siblings().removeClass("curr");
         var days = $(this).data("days");
         var starDate = changeDate(nowTime, days);
-        action.getUseRegData(starDate,nowTime,days);
+       // action.getUseRegData(starDate,nowTime,days);
     });
     //计算当前日期减去天数=目标日期
     function changeDate(date, days) {
