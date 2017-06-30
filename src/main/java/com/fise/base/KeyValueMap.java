@@ -7,25 +7,30 @@ import com.fise.utils.JsonUtil;
 public class KeyValueMap  implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    private Object key;
+    private String keyName;
     
-    private Object value;
+    private Object keyValue;
 
-    public Object getKey() {
-        return key;
+
+    public String getKeyName() {
+        return keyName;
     }
 
-    public void setKey(Object key) {
-        this.key = key;
+
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
     }
 
-    public Object getValue() {
-        return value;
+
+    public Object getKeyValue() {
+        return keyValue;
     }
 
-    public void setValue(Object value) {
-        this.value = value;
+
+    public void setKeyValue(Object keyValue) {
+        this.keyValue = keyValue;
     }
+
 
     @Override
     public String toString() {

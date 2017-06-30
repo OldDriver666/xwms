@@ -46,7 +46,7 @@ public class ReportController {
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
             resp.setMsg("公司不能为空");
         } else {
-            resp = reportSvr.queryAboutPage(param.get("organ_id"));
+            resp = reportSvr.queryAboutPage((Integer)param.get("organ_id"));
         }
         return resp;
     }
