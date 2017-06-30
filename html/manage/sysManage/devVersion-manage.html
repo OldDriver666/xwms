@@ -113,12 +113,18 @@
 												<input type="text" class="form-control" id="input-version_info" name="version_info" placeholder="请输入设备版本信息">
 											</div>
 										</div>
-										<div class="form-group" id="input-status-txt">
-											<label for="input-status" class="col-sm-2 control-label"><span class="necessary">*</span>状态</label>
+										<div class="form-group" id="input-status-wrap">
+											<label class="col-sm-2 control-label">状态</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-status" name="status" placeholder="请输入状态">
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-enabled" value="0" checked> 不可用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="status" id="radio-status-disabled" value="1"> 可用
+												</label>
 											</div>
 										</div>
+
 									</form>
 								</div>
 								<div class="modal-footer">
@@ -173,7 +179,7 @@
 	<td>${companyNameQuery(depart_id)}</td>
 	<td>${typeNameQuery(dev_type)}</td>
 	<td>${dev_version}</td>
-	<td>${status}</td>
+	<td>{{if status == 0}}不可用{{else status == 1}}可用{{/if}}</td>
 	<td>${version_info}</td>
 	<td>${update_url}</td>
 	<td style="display:none;">${dev_type}</td>

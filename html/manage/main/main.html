@@ -42,7 +42,7 @@
 		</div>
 	</div>
 
-	<div class="head-filter-wrap">
+	<!--<div class="head-filter-wrap">
 		<form class="layui-form" action="">
 			<div class="layui-field-box">
 				<div class="layui-form-item">			
@@ -55,21 +55,23 @@
 					        <li data-days="30">最近30天</li>
 		            	</ul>
 			      	</div>
-			      	<!--<div class="control-bar float-l mg-r-10 w-120">
+
+
+			      	&lt;!&ndash;<div class="control-bar float-l mg-r-10 w-120">
 				        <input type="text" name="date" id="date1" lay-verify="date1" placeholder="开始时间" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
 				    </div>
 				    <div class="layui-form-mid">-</div>
 				    <div class="control-bar float-l mg-r-20 w-120">
 				        <input type="text" name="date" id="date2" lay-verify="date2" placeholder="结束时间" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
-				    </div>-->
+				    </div>&ndash;&gt;
 				    
 				</div>
 				
 			</div>
 		</form>
-	</div>
+	</div>-->
 
-	<div class="user-attr  clearfix">
+	<!--<div class="user-attr  clearfix">
         <div class="clearfix table-grid">
             <div class="left">
                 <div class="table-grid-item">
@@ -96,7 +98,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 
 <script type="text/javascript" src="../../js/jquery.min.js"></script>
@@ -108,16 +110,16 @@
 <script src="../../js/json2.js"></script>
 
 <script type="text/x-jquery-tmpl" id="pageUserOnline">
-${OnlineXW}
+${online_XM}
 </script>
 <script type="text/x-jquery-tmpl" id="pageUserReg">
-${RegisterXW}
+${active_XM}
 </script>
 <script type="text/x-jquery-tmpl" id="pageDevOnline">
-${OnlineDevice}
+${online_device}
 </script>
 <script type="text/x-jquery-tmpl" id="pageDevActive">
-${ActiveDevice}
+${active_device}
 </script>
 <script>
 	layui.use(['form', 'laydate'], function() {
@@ -139,10 +141,10 @@ ${ActiveDevice}
 </script>
 
 <script>
-    var userRegChart = echarts.init(document.getElementById('tongji-userReg'));
+   /* var userRegChart = echarts.init(document.getElementById('tongji-userReg'));
     var userGrowthChart = echarts.init(document.getElementById('tongji-userGrowth'));
 	var userClientChart = echarts.init(document.getElementById('tongji-userClient'));
-    var userAreaChart = echarts.init(document.getElementById('tongji-userArea'));
+    var userAreaChart = echarts.init(document.getElementById('tongji-userArea'));*/
 </script>
 
 </body>

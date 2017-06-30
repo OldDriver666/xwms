@@ -26,27 +26,6 @@ $(function() {
 				}
             });
 		},
-        //获取当前用户拥有的系统操作权限信息
-        /*loadPrivateAuthData : function() {
-            var url = ctx + "Manage/GetPrivateAuth";
-            var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value,
-                "AuthFid": parseInt(url_param_id),  //AuthDirId
-                "UserId": parseInt(admin_id)   //AdminId
-            };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                    var a = result.UsertAuthCode;
-                    console.log(JSON.stringify(a));
-                } else {
-                    alert("请求出错！");
-                }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
-            });
-
-        },*/
 		//获取所有数据
 		loadPageData : function() {
             //var search_departID = $("#input-search-departID").val();
@@ -296,9 +275,6 @@ $(function() {
             },
             devXW : {
                 required : true
-            },
-            devType : {
-                required : true
             }
         }
     });
@@ -331,11 +307,20 @@ $(function() {
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
                 return;
+            }else if($('#input-devType option:selected').val() == "") {
+                $("#input-password").parent().parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-password").parent().append(err_html);
+                return;
             }else {
                 window.action.add();
             }
         }else if(action == "edit"){
-            window.action.edit();
+            if (!$("#form-addTempl").valid()) {
+                return;
+            }else{
+                window.action.edit();
+            }
         }
     });
 

@@ -175,7 +175,7 @@ $(function() {
 			var data = new Object();
 			data.login_id = parseInt(admin_id);
 			data.admin_id = parseInt($("#input-id").val());
-			data.account = $("#input-account").val();
+			data.account = $("#input-account-txt").val();
 			data.password = pwd;
 			data.nick_name = $("#input-nickName").val();
 			data.role_id = parseInt($("#input-roleId").val());
@@ -226,6 +226,8 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑管理员");
+			$("#input-account-wrap").hide();
+			$("#input-account-txt-wrap").show();
 			$("#add-companyId-wrap").hide();
 			$("#input-password-txt").hide();
 			$("#input-password-txt-wrap").hide();
@@ -239,6 +241,8 @@ $(function() {
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加管理员");
+			$("#input-account-wrap").show();
+			$("#input-account-txt-wrap").hide();
 			$("#input-password-txt").show();
 			$("#input-password-txt-wrap").hide();
 			$("#input-roleId-wrap").hide();
@@ -278,7 +282,7 @@ $(function() {
 		}
 
         $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-account").val(that.find("td").eq(1).text());
+        $("#input-account-txt").val(that.find("td").eq(1).text());
         $("#input-password-wrap").val(that.find("td").eq(2).text());
 		$("#input-nickName").val(that.find("td").eq(3).text());
 		$("#input-roleName-txt").val(that.find("td").eq(4).text());
@@ -337,12 +341,7 @@ $(function() {
 				window.action.add();
 			}
 		}else if(action == "edit"){
-			//window.action.edit();
-			if (!$("#form-addTempl").valid()) {
-				return;
-			}else{
 				window.action.edit();
-			}
 		}
 	});
 

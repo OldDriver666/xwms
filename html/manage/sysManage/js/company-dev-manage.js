@@ -172,7 +172,7 @@ $(function() {
             $("#input-devType-txt-wrap").show();
             $("#input-depart_id-wrap").hide();
             $("#input-depart_id-txt-wrap").show();
-            $("#input-depart_idNo-wrap").show();
+            $("#input-depart_idNo-wrap").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加公司设备信息");
@@ -226,7 +226,7 @@ $(function() {
                 window.action.add();
             }
         }else if(action == "edit"){
-            window.action.edit();
+                window.action.edit();
         }
 
 	});

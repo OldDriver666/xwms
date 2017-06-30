@@ -173,7 +173,11 @@ $(function() {
 				window.action.add();
 			}
 		}else if(action == "edit"){
-			window.action.edit();
+			if (!$("#form-addTempl").valid()) {
+				return;
+			}else {
+			    window.action.edit();
+			}
 		}
 	});
 

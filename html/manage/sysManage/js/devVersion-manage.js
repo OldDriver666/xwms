@@ -72,7 +72,7 @@ $(function() {
 			data.depart_id = parseInt($('#input-depart_idNo').val());
 			data.dev_type = parseInt($("#input-devTypeNo").val());
 			data.dev_version = $("#input-dev_version").val();
-			data.status = parseInt($("#input-status").val());
+			data.status = parseInt($("input[name=status]:checked").val());
 			data.version_info = $("#input-version_info").val();
 			data.update_url = $("#input-update_url").val();
 
@@ -119,7 +119,7 @@ $(function() {
 			$("#input-devType-wrap").hide();
 			$("#input-devTypeNo-wrap").hide();
 			$("#input-devType-txt-wrap").show();
-			$("#input-status-txt").show();
+			$("#input-status-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加设备版本信息");
@@ -129,7 +129,7 @@ $(function() {
 			$("#input-devType-wrap").show();
 			$("#input-devTypeNo-wrap").hide();
 			$("#input-devType-txt-wrap").hide();
-			$("#input-status-txt").hide();
+			$("#input-status-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -138,6 +138,13 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+		var check_status = $.trim(that.find("td").eq(4).text());
+		var status_val = null;
+		if(check_status === "不可用"){
+			status_val = 0;
+		}else if(check_status === "可用"){
+			status_val = 1;
+		}
 
 
 		$("#input-version_id").val(that.find("td").eq(0).text());
@@ -146,7 +153,7 @@ $(function() {
 		$("#input-devType-txt").val(that.find("td").eq(2).text());
 		$("#input-devTypeNo").val(that.find("td").eq(7).text());
 		$("#input-dev_version").val(that.find("td").eq(3).text());
-		$("#input-status").val(that.find("td").eq(4).text());
+		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
 		$("#input-version_info").val(that.find("td").eq(5).text());
 		$("#input-update_url").val(that.find("td").eq(6).text());
 
@@ -187,7 +194,7 @@ $(function() {
 				window.action.add();
 			}
 		}else if(action == "edit"){
-			window.action.edit();
+			    window.action.edit();
 		}
 
 	});

@@ -147,7 +147,7 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-			name : {
+			depart_id : {
                 required : true
             }
         }

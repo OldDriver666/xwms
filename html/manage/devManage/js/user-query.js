@@ -50,36 +50,20 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             //var search_departID = $("#input-search-departID").val();
-			var search_txt = $("#input-search-txt").val();
-            var type_num = $("#search-type").val();
+			var search_domain = $("#input-search-domain").val();
+            var search_nick = $("#input-search-nick").val();
+
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
             var url = ctx + "boss/user/query";
-            if(type_num == 0){
-                var data = new Object();
+            var data = new Object();
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "domain":search_txt,
-                    "nick":""
+                    "domain":search_domain,
+                    "nick":search_nick
                 };
-            }else if(type_num == 1){
-                var data = new Object();
-                data.page_no = 1;
-                data.page_size = 20;
-                data.param = {
-                    "domain":"",
-                    "nick":search_txt
-                };
-            }else if(type_num == 2){
-                var data = new Object();
-                data.page_no = 1;
-                data.page_size = 20;
-                data.param = {
-                    "domain":"",
-                    "nick":""
-                };
-            }
+
 
             /*Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -390,12 +374,16 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-txt").on('keydown', function(e) {
+	$("#input-search-domain").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
-
-	});
+    });
+    $("#input-search-nick").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
 });
 
 
