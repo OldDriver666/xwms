@@ -52,7 +52,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         Response resp =new Response();
         
         if(StringUtil.isEmpty(param.getName())){
-            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
         param.setUpdated(DateUtil.getLinuxTimeStamp());

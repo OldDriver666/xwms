@@ -76,10 +76,10 @@ public class ISuggestServiceImpl implements ISuggestService{
 		Response response=new Response();
 		
 		if(record.getUserId()==null){
-		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		if(StringUtil.isEmpty(record.getUname())){
-		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
 		if(record.getUserId()!=null){

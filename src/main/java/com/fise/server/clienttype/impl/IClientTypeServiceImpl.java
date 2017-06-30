@@ -100,10 +100,10 @@ public class IClientTypeServiceImpl implements IClientTypeService{
 		Response response=new Response();
 		
 		if(StringUtil.isEmpty(record.getClientname())){
-		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		if(record.getTypeid()==null){
-		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
 		if(!StringUtil.isEmpty(record.getClientname())){

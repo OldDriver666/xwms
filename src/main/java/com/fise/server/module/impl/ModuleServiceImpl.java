@@ -72,13 +72,13 @@ public class ModuleServiceImpl implements IModuleService {
         module.setId(param.getModuleId());
         
         if(StringUtil.isEmpty(param.getName())){
-            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         if(param.getPriority()!=null){
-            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         if(StringUtil.isEmpty(param.getSn())){
-            resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
         if(!StringUtil.isEmpty(param.getName())){

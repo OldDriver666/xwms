@@ -111,10 +111,10 @@ public class IFiseDeviceServiceImpl implements IFiseDeviceService{
 		Response response=new Response();
 		
 		if(StringUtil.isEmpty(param.getIme())){
-		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		if(StringUtil.isEmpty(param.getAccount())){
-		    response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
 		}
 		
 		if(!StringUtil.isEmpty(param.getIme())){
