@@ -65,6 +65,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		}
 		if ( admin.getStatus() == 0){
 		    resp.failure(ErrorCode.ERROR_ACCOUNT_LOCK);
+		    return resp;
 		}
 		resp = login(admin);
 		return resp;
