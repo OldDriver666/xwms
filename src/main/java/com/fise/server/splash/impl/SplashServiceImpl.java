@@ -17,7 +17,7 @@ import com.fise.server.splash.ISplashService;
 import com.fise.utils.StringUtil;
 
 @Service
-public class ISplashServiceImpl implements ISplashService{
+public class SplashServiceImpl implements ISplashService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	
