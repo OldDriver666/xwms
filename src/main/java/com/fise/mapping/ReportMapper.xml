@@ -17,15 +17,23 @@
     order by created desc;
   </select>
 
-  <select id="queryUserSexCount" parameterType="java.lang.Integer" resultType="java.util.Map">
+  <resultMap type="com.fise.base.KeyValueMap" id="userSexResultMap">
+    <result column="sex" jdbcType="VARCHAR" property="keyName" />
+    <result column="count" jdbcType="INTEGER" property="keyValue" />
+  </resultMap>
+  <select id="queryUserSexCount" parameterType="java.lang.Integer" resultMap="userSexResultMap">
     select case sex when 1 then '男' when 0 then '女' else '未知' end as sex,
            count(1) as count 
     from IMUser 
     where departId = #{companyId,jdbcType=INTEGER}
     group by sex;
   </select>
-  
-  <select id="queryUserTypeCount" parameterType="java.lang.Integer" resultType="java.util.Map">
+
+  <resultMap type="com.fise.base.KeyValueMap" id="userTypeResultMap">
+    <result column="type" jdbcType="INTEGER" property="keyName" />
+    <result column="count" jdbcType="INTEGER" property="keyValue" />
+  </resultMap>
+  <select id="queryUserTypeCount" parameterType="java.lang.Integer" resultMap="userTypeResultMap">
     select type,
            count(1) as count 
     from IMUser 
@@ -33,8 +41,12 @@
     group by type;
   </select>
 
-  <select id="queryUserProviceCount" parameterType="java.lang.Integer" resultType="java.util.Map">
-    select province,
+  <resultMap type="com.fise.base.KeyValueMap" id="userAddResultMap">
+    <result column="province" jdbcType="VARCHAR" property="keyName" />
+    <result column="count" jdbcType="INTEGER" property="keyValue" />
+  </resultMap>
+  <select id="queryUserProviceCount" parameterType="java.lang.Integer" resultMap="userAddResultMap">
+    select if(length(province) &gt; 0,province,'未知') as province,
            count(1) as count 
     from IMUser 
     where departId = #{companyId,jdbcType=INTEGER}

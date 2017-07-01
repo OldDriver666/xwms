@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.KeyValueMap;
 import com.fise.base.Response;
 import com.fise.dao.ReportMapper;
 import com.fise.model.param.ReportActivateParam;
@@ -24,7 +25,11 @@ public class ReportServiceImpl implements IReportService {
     public Response queryActivate(ReportActivateParam param) {
         Response resp = new Response();
         List<ActivateResult> data = reportDao.queryActivateCountByDate(param);
-        resp.success(data);
+        Map<String, Integer> resultData = new HashMap<String, Integer>();
+        for (ActivateResult tmp : data){
+            resultData.put(tmp.getQueryDate(), tmp.getCount());
+        }
+        resp.success(resultData);
         return resp;
     }
 
@@ -32,17 +37,31 @@ public class ReportServiceImpl implements IReportService {
     public Response queryAboutPage(Integer companyId) {
         Response resp = new Response();
         
-        List<Map<String, Integer>> sexCount = reportDao.queryUserSexCount(companyId);
-        List<Map<Integer, Integer>> typeCount = reportDao.queryUserTypeCount(companyId);
-        List<Map<String, Integer>> provinceCount = reportDao.queryUserProviceCount(companyId);
+        List<KeyValueMap> sexCount = reportDao.queryUserSexCount(companyId);
+        List<KeyValueMap> typeCount = reportDao.queryUserTypeCount(companyId);
+        List<KeyValueMap> provinceCount = reportDao.queryUserProviceCount(companyId);
         
-        Map<String, Object>  result = new HashMap<String, Object>();
-        result.put("sex", sexCount);
-        result.put("type", typeCount);
-        result.put("province", provinceCount);
+        Map<String, Object> resultData = new HashMap<String, Object>();
+        
+        Map<String, Integer> sexData = new HashMap<String, Integer>();
+        for (KeyValueMap tmp : sexCount){
+            sexData.put(tmp.getKeyName(), ((Long)tmp.getKeyValue()).intValue());
+        }
+        resultData.put("sex", sexData);
 
-        resp.success(result);
+        Map<String, Integer> typeData = new HashMap<String, Integer>();
+        for (KeyValueMap tmp : typeCount){
+            typeData.put(tmp.getKeyName(), ((Long)tmp.getKeyValue()).intValue());
+        }
+        resultData.put("type", typeData);
         
+        Map<String, Integer> provinceData = new HashMap<String, Integer>();
+        for (KeyValueMap tmp : provinceCount){
+            provinceData.put(tmp.getKeyName(), ((Long)tmp.getKeyValue()).intValue());
+        }
+        resultData.put("province", provinceData);
+
+        resp.success(resultData);
         return resp;
     }
 
