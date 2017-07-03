@@ -17,7 +17,7 @@ import com.fise.server.clienttype.IClientTypeService;
 import com.fise.utils.StringUtil;
 
 @Service
-public class IClientTypeServiceImpl implements IClientTypeService{
+public class ClientTypeServiceImpl implements IClientTypeService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	

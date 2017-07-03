@@ -26,7 +26,7 @@ import com.fise.utils.StringUtil;
 
 
 @Service
-public class IQueryDeviceServiceImpl implements IQueryDeviceService{
+public class QueryDeviceServiceImpl implements IQueryDeviceService{
     
     @Autowired
     IMUserMapper IMUserDao;
@@ -63,7 +63,6 @@ public class IQueryDeviceServiceImpl implements IQueryDeviceService{
         }
         
         List<IMUser> list=IMUserDao.selectByExample(example);
-        
         if(list.size()==0){
             response.failure(ErrorCode.ERROR_CAMERA_CONF_DEVICE_EXISTED);
         }

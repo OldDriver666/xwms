@@ -20,7 +20,7 @@ import com.fise.server.fisedevice.IFiseDeviceService;
 import com.fise.utils.StringUtil;
 
 @Service
-public class IFiseDeviceServiceImpl implements IFiseDeviceService{
+public class FiseDeviceServiceImpl implements IFiseDeviceService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	

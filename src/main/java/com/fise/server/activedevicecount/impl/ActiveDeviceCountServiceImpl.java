@@ -12,7 +12,7 @@ import com.fise.model.result.DeviceCountResult;
 import com.fise.server.activedevicecount.IActiveDeviceCountService;
 
 @Service
-public class IActiveDeviceCountServiceImpl implements IActiveDeviceCountService{
+public class ActiveDeviceCountServiceImpl implements IActiveDeviceCountService{
     
     @Autowired
     IMUserMapper IMUserDao;

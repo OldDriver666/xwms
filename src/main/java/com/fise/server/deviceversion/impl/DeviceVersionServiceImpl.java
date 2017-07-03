@@ -18,7 +18,7 @@ import com.fise.utils.StringUtil;
 
 
 @Service
-public class IDeviceVersionServiceImpl implements IDeviceVersionService{
+public class DeviceVersionServiceImpl implements IDeviceVersionService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	

@@ -18,7 +18,7 @@ import com.fise.server.systemconf.ISystemConfService;
 import com.fise.utils.StringUtil;
 
 @Service
-public class ISystemConfServiceImpl implements ISystemConfService{
+public class SystemConfServiceImpl implements ISystemConfService{
 	
 	private Logger logger=Logger.getLogger(getClass());
 	
