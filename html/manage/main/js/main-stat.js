@@ -32,47 +32,42 @@ $(function() {
 
         //获取每天注册用户统计的数据
         getUseRegData : function(startTime,endTime,days) {
+            var begin_date = getReqFormatDate(startTime);
+            var end_date = getReqFormatDate(endTime);
             var v_y = startTime.substr(0,4);
             var v_m = startTime.substr(5,2);
             var v_d = startTime.substr(8,2);
-            var url = ctx + "DateCountManage/GetRegisterCountInfo";
+            var url = ctx + "boss/report/activate";
             var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value,
-                "RoleLevel":parseInt(role_level),
-                "DepartId":parseInt(depart_id),
-                "StartTime":startTime,
-                "EndTime":endTime,
-                "Days":days
+                "organ_id":parseInt(depart_id),
+                "begin_date":begin_date,
+                "end_date":end_date
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     var data_arr = [];
                     var data_arr1 = [];
-                    var dayCount = result.DeviceInfo;
-                    for(i=0; i<dayCount.length; i++){
+                    var data_arr2 = [];
+                    var dayCount = result.data;
+                    for(items in dayCount){
+                        var value = dayCount[items];
+                        data_arr1.push(items);
+                        data_arr2.push(value);
+                    }
 
-                        var startDay = new Date(v_y,v_m,v_d);
-                        var paramDay = 24 * 3600 * 1000 * i;
-                        var toolTipName = new Date(+startDay + paramDay);
-                        var xName = [toolTipName.getFullYear(), toolTipName.getMonth(), toolTipName.getDate()].join('/');
-
-                        var name = dayCount[i].Days;
-                        var value = dayCount[i].RegisterCount;
-                        var value1 = dayCount[i].RateOfIncrease;
-
-                        var list_item = '{"name":"'+toolTipName.toString()+'","value":["'+xName+'",'+value+']}';
-                        var list_item1 = '{"name":"'+toolTipName.toString()+'","value":["'+xName+'",'+value1+']}';
-
-                        data_arr.push(list_item);
-                        data_arr1.push(list_item1);
-                    };
-
+                    var Len_Count = Object.getOwnPropertyNames(dayCount).length;
+                 for(i=0; i<Len_Count; i++){
+                     var name = data_arr1[i];
+                     var str_year = name.substr(0,4);
+                     var str_month = name.substr(4,2);
+                     var str_date = name.substr(6,2);
+                     var xName = [str_year, str_month, str_date].join('/');
+                     var value = data_arr2[i];
+                     var list_item = '{"name":"'+name+'","value":["'+xName+'",'+value+']}';
+                     data_arr.push(list_item);
+                     };
                     var data_str = "["+data_arr+"]";
                     var data = JSON.parse(data_str);
-                    var data_str1 = "["+data_arr1+"]";
-                    var data1 = JSON.parse(data_str1);
 
                     if(role_level == 3){
                         option = {
@@ -84,8 +79,13 @@ $(function() {
                                 trigger: 'axis',
                                 formatter: function (params) {
                                     params = params[0];
-                                    var date = new Date(params.name);
-                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1];
+                                    var str = params.name;
+                                    var str_year = str.substr(0, 4);
+                                    var str_month = str.substr(4, 2);
+                                    var str_date = str.substr(6, 2);
+                                    return str_year + '/' + str_month + '/' + str_date + ' : ' + params.value[1];
+                                   /* var date = new Date(params.name);
+                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1];*/
                                 },
                                 axisPointer: {
                                     animation: false
@@ -115,50 +115,6 @@ $(function() {
                         };
                         userRegChart.setOption(option);
 
-                        option1 = {
-                            title: {
-                                text: '用户注册增长率',
-                                x:'center'
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                formatter: function (params) {
-                                    params = params[0];
-                                    var date = new Date(params.name);
-                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1]*100+"%";
-                                },
-                                axisPointer: {
-                                    animation: false
-                                }
-                            },
-                            xAxis: {
-                                type: 'time',
-                                splitLine: {
-                                    show: false
-                                }
-                            },
-                            yAxis: {
-                                type: 'value',
-                                boundaryGap: [0, '100%'],
-                                axisLabel: {
-                                    formatter: function (val) {
-                                        return val * 100 + '%';
-                                    }
-                                },
-                                splitLine: {
-                                    show: false
-                                }
-                            },
-                            series: [{
-                                name: '用户注册增长率',
-                                type: 'line',
-                                showSymbol: true,
-                                hoverAnimation: false,
-                                smooth: true,
-                                data: data1
-                            }]
-                        };
-                        userGrowthChart.setOption(option1);
                     }else{
                         option = {
                             title: {
@@ -169,8 +125,13 @@ $(function() {
                                 trigger: 'axis',
                                 formatter: function (params) {
                                     params = params[0];
-                                    var date = new Date(params.name);
-                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1];
+                                    var str = params.name;
+                                    var str_year = str.substr(0, 4);
+                                    var str_month = str.substr(4, 2);
+                                    var str_date = str.substr(6, 2);
+                                    return str_year + '/' + str_month + '/' + str_date + ' : ' + params.value[1];
+                                    /*var date = new Date(params.name);
+                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1];*/
                                 },
                                 axisPointer: {
                                     animation: false
@@ -199,94 +160,71 @@ $(function() {
                             }]
                         };
                         userRegChart.setOption(option);
-
-                        option1 = {
-                            title: {
-                                text: '设备激活增长率',
-                                x:'center'
-                            },
-                            tooltip: {
-                                trigger: 'axis',
-                                formatter: function (params) {
-                                    params = params[0];
-                                    var date = new Date(params.name);
-                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1]+"%";
-                                },
-                                axisPointer: {
-                                    animation: false
-                                }
-                            },
-                            xAxis: {
-                                type: 'time',
-                                splitLine: {
-                                    show: false
-                                }
-                            },
-                            yAxis: {
-                                type: 'value',
-                                boundaryGap: [0, '100%'],
-                                axisLabel: {
-                                    formatter: function (val) {
-                                        return val + '%';
-                                    }
-                                },
-                                splitLine: {
-                                    show: false
-                                }
-                            },
-                            series: [{
-                                name: '设备激活增长率',
-                                type: 'line',
-                                showSymbol: true,
-                                hoverAnimation: false,
-                                smooth: true,
-                                data: data1
-                            }]
-                        };
-                        userGrowthChart.setOption(option1);
                     }
 
                 } else {
-                    alert("请求出错！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
 
         },
+
         //获取注册用户客户端类型的数据
         getClientTypeData : function() {
-            var url = ctx + "DateCountManage/GetClientCountInfo";
+            var url = ctx + "boss/report/dashboard";
             var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value,
-                "RoleLevel":parseInt(role_level),
-                "DepartId":parseInt(depart_id)
+                "organ_id":parseInt(depart_id)
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+
                     //客户端类型信息
                     var data_arr = [];
-                    for(i=0; i<result.ClientTypeCount.length; i++){
-                        var name = result.ClientTypeCount[i].TypeName;
-                        var value = result.ClientTypeCount[i].RegisterCount;
-                        var list_item = '{"name":"'+name+'","value":"'+value+'","color":"#4'+i+'72a7"}';
+                    var data_nameArray = [];
+                    var data_valArray = [];
+                    var devTypes = result.data.type;
+                    for(items in devTypes){
+                        var name = typeNameQuery(items);
+                        var value = devTypes[items];
+                        var list_item = '{"name":"'+name+'","value":"'+value+'"}';
                         data_arr.push(list_item);
-                    };
+                       /* data_nameArray.push(items);
+                        data_valArray.push(value);*/
+                    }
+
+                   /* var nameArray = action.myDevTypeQuery(data_nameArray);*/
+
                     var data_str = "["+data_arr+"]";
                     var data = JSON.parse(data_str);
 
+
                     //地域信息
                     var data_arr1 = [];
-                    for(i=0; i<result.ClientPlaceCount.length; i++){
-                        var name = result.ClientPlaceCount[i].AddressName;
-                        //var name_filter = name.substr(0,name.length-1);
-                        var value = result.ClientPlaceCount[i].RegisterCount;
+                    var devProvinces = result.data.province;
+                    for(items1 in devProvinces){
+                        var name = items1;
+                        var value = devProvinces[items1];
                         var list_item1 = '{"name":"'+name+'","value":'+value+'}';
                         data_arr1.push(list_item1);
-                    };
+                    }
                     var data_str1 = "["+data_arr1+"]";
                     var data1 = JSON.parse(data_str1);
+
+
+                    //客户性别信息
+                    var data_arr2 = [];
+                    var devSexs = result.data.sex;
+                    for(items2 in devSexs){
+                        var name = items2;
+                        var value = devSexs[items2];
+                        var list_item2 = '{"name":"'+name+'","value":"'+value+'"}';
+                        /*var list_item2 = '{"name":"'+name+'","value":"'+value+'","color":"#4'+i+'72a7"}';*/
+                        data_arr2.push(list_item2);
+                    }
+                    var data_str2 = "["+data_arr2+"]";
+                    var data2 = JSON.parse(data_str2);
 
                     //用户客户端类型
                     option = {
@@ -364,34 +302,63 @@ $(function() {
                             }
                         ]
                     };
-
                     userAreaChart.setOption(option1);
 
+
+                    //用户性别类型
+                    option2 = {
+                        title : {
+                            text: '用户性别类型',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        series : [
+                            {
+                                name: '用户性别类型',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data: data2,
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    userSexChart.setOption(option2);
+
                 } else {
-                    alert("请求出错！");
+                    alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
         }
-
 	};
 	window.action = action;
-	action.getUserDevData();
-	//action.getClientTypeData();
+    //action.allDevTypeQuery();
+    action.getUserDevData();
+	action.getClientTypeData();
 	//action.refreshOnTime();
 
 
     var nowTime = getNowFormatDate();//当前日期
     var init_days = 3;//初始时的天数
     var init_starDate = changeDate(nowTime, init_days);//初始时的开始日期
-   // action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
+    action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
     //点击日期选择天数，显示相应天数的数据
     $(".group li").on("click",function(){
         $(this).addClass("curr").siblings().removeClass("curr");
         var days = $(this).data("days");
         var starDate = changeDate(nowTime, days);
-       // action.getUseRegData(starDate,nowTime,days);
+        action.getUseRegData(starDate,nowTime,days);
     });
     //计算当前日期减去天数=目标日期
     function changeDate(date, days) {
@@ -422,6 +389,12 @@ $(function() {
             strDate = "0" + strDate;
         }
         var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+    //获取时间格式YYYYMMDD
+    function getReqFormatDate(date) {
+        var b = date.split("-");
+        var currentdate = b[0] + b[1] +b[2]; //日期字符串
         return currentdate;
     }
 
