@@ -35,27 +35,6 @@ $(function() {
 				}
             });
 		},
-        //获取当前用户拥有的系统操作权限信息
-       /* loadPrivateAuthData : function() {
-            var url = ctx + "Manage/GetPrivateAuth";
-            var data = {
-                "UserName":userName,
-                "AuthenticCode": token_value,
-                "AuthFid": parseInt(url_param_id),  //AuthDirId
-                "UserId": parseInt(admin_id)   //AdminId
-            };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                    var a = result.UsertAuthCode;
-                    console.log(JSON.stringify(a));
-                } else {
-                    alert("请求出错！");
-                }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
-            });
-
-        },*/
 		//获取所有数据
 		loadPageData : function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
@@ -66,48 +45,34 @@ $(function() {
             data.organ_id = parseInt(depart_id);
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS && result.data != "") {
                     $('#pageContent').empty();
-                    var userRoleSel = parseInt($("#search-input-userRoles").val());
-                    var Len_Parent = result.data.length;
-                    for(var i=0; i < Len_Parent; i++){
-                        if(userRoleSel == result.data[i].role_id){
-                            var Len_Child = result.data[i].auth_list.length;
-                            var parentData = result.data[i].auth_list;
-                            for(var j=0; j<Len_Child; j++ ){
-                                $("#pageTmpl").tmpl(parentData[j]).appendTo('#pageContent');
+                    var userRoleSel = parseInt($("#search-input-userRoles option:selected").val());
+                    if ($("#search-input-userRoles option:selected").val() == "") {
+                        alert("请选择角色类型");
+                    } else {
+                        var Len_Parent = result.data.length;
+                        var findVal = false;
+                        for (var i = 0; i < Len_Parent; i++) {
+                            if (userRoleSel == result.data[i].role_id) {
+                                var Len_Child = result.data[i].auth_list.length;
+                                var parentData = result.data[i].auth_list;
+                                for (var j = 0; j < Len_Child; j++) {
+                                    $("#pageTmpl").tmpl(parentData[j]).appendTo('#pageContent');
+                                    findVal = true;
+                                }
                             }
                         }
+                        if (findVal == false) {
+                            alert("记录不存在");
+                        }
                     }
-
                 } else {
                     alert(result.msg);
                 }
             },function() {
                 alert("服务器开个小差，请稍后重试！");
             });
-            /*var opt = {
-                "targetContentId" : "pageContent",
-                "url" : url,
-                "forAuth2" : true,
-                "rowTemplateId" : "pageTmpl",
-                "contextUrl" : ctx,
-                "pageBtnsContentId" : "pagination",
-                "tmplEvents" : {
-                    setTime : function(time) {
-                        if (time) {
-                            var times = new Date(time);
-                            time = times.format('yyyy-MM-dd hh:mm:ss');
-                        }
-                        return time;
-                    }
-                },
-                "resultFilter" : function(result) {
-                    return result.data;
-                },
-                "param" : data
-            };
-            this.page = new Util.Page(opt);*/
 		},
         //获取设备类型列表数据
         loadUserRolesData : function() {
@@ -157,11 +122,6 @@ $(function() {
             param.insert_auth = parseInt($("input[name=insert_auth]:checked").val());
             param.update_auth = parseInt($("input[name=update_auth]:checked").val());
             param.query_auth = parseInt($("input[name=query_auth]:checked").val());
-
-            /*param.status = $("input[name=status]:checked").val();
-            param.insert_auth = $("input[name=insert_auth]:checked").val();
-            param.update_auth = $("input[name=update_auth]:checked").val();
-            param.query_auth = $("input[name=query_auth]:checked").val();*/
             param_arr.push(param);
             var rold_idSel = parseInt($('#search-input-userRoles option:selected').val());
             var data = {
@@ -197,30 +157,6 @@ $(function() {
 				});
 			}
 		},
-        //获取设备统计数据
-       /* getDevStatusData : function() {
-            var url = ctx + "FiseDeviceManage/GetCompanyDeviceInfo";
-            var data = {
-                "UserName":userName,
-                "AuthenticCode":token_value,
-                "DepartId":parseInt(depart_id)
-            };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
-                    $('#dev_active_count').empty();
-                    $('#dev_unActive_count').empty();
-                    $('#dev_online_count').empty();
-                    $("#page_dev_active_count").tmpl(result.DeviceInfo).appendTo('#dev_active_count');
-                    $("#page_dev_unActive_count").tmpl(result.DeviceInfo).appendTo('#dev_unActive_count');
-                    $("#page_dev_online_count").tmpl(result.DeviceInfo).appendTo('#dev_online_count');
-                } else {
-                    alert("请求出错！");
-                }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
-            });
-
-        },*/
         //获取并处理批量插入的数据
         getDevTxtInfo : function () {
             var addCount = 10;

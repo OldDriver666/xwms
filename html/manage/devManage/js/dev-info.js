@@ -136,87 +136,11 @@ $(function() {
             });
 
         }
-
-        //获取并处理批量插入的数据
-        /*getDevTxtInfo : function () {
-            var addCount = 10;
-            var txtDevInfoList = $(".fileContentTxt").text();
-            var txtDevType = $("#input-devType2").val();
-            var txtDevInfo_arr = txtDevInfoList.split(/\s+/);//文件里一共有多少条数据
-            var txt_IME_arr = [];
-            var txt_XW_arr = [];
-            for(i=0; i<txtDevInfo_arr.length; i++){
-                var txt_dev_item_arr = txtDevInfo_arr[i].split(",");
-                txt_IME_arr.push(txt_dev_item_arr[1]);//得到所有IME参数值的数组
-                txt_XW_arr.push(txt_dev_item_arr[3]);//得到所有XW参数值的数组
-            };
-            var add_data_count = Math.ceil(txtDevInfo_arr.length/addCount);//计算得到要通过执行几次插入
-            var add_data_last =  txtDevInfo_arr.length % addCount;//计算得到最后一次插入时，还剩几条数据
-
-            //每隔一定时间调用一次插入
-            var s = null;
-            var k = -1;
-           s = setInterval(function(){
-                k++;
-                var flag = null;
-                var n = k * addCount;
-                var num = 10;//每次插入几条数据的参数
-                if(k == add_data_count-1){
-                    var m = n + add_data_last;
-                    flag = 1;
-                    num = add_data_last;//如果执行到最后一次调用，最后一次剩下的数据条数赋给num,作为对应的参数值
-                    clearInterval(s);//执行完最后一次调用后关闭计时器
-                }else{
-                    var m = n + addCount;
-                }
-                var param_arr = [];
-                param_arr.splice(0, param_arr.length);//每执行完一次后清空下该数组
-               //遍历分批次插入时，每一次要插入的数据
-                for (l = n; l < m; l++) {
-                    var param = new Object();
-                    param.DeviceIME = txt_IME_arr[l];
-                    param.DeviceXW = txt_XW_arr[l];
-                    param.DepartId = parseInt(depart_id);
-                    param.ProductType = parseInt(txtDevType);
-                    param_arr.push(param);
-                }
-                action.addDevFile(param_arr,flag,num)
-            },1000);
-
-        },*/
-        //批量添加设备信息
-        /*addDevFile : function (param_arr,flag,num) {
-            var url = ctx + "FiseDeviceManage/InsertInfo";
-            var data = {
-                UserName: userName,
-                AuthenticCode: token_value,
-                DeviceNo: num,//每次插入几条数据
-                DeviceInfo: param_arr
-            };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if (result.Status == ReturnCode.SUCCESS) {
-                    //通过函数传参得到flag,如果值为1时说明已经执行到最后一次调用，然后关闭弹窗，提示添加完成，获取最新数据
-                     if(parseInt(flag) == 1){
-                         $("#modal-loading").modal('hide');
-                         toastr.success("添加完成!");
-                         action.loadPageData();
-                         action.getDevStatusData();
-                     }
-                }else if(result.Status == 1){
-                    toastr.error(result.ErrorInfo);
-                    $("#modal-loading").modal('hide');
-                }else{
-                    alert("添加失败！");
-                    $("#modal-loading").modal('hide');
-                }
-            })
-        }*/
 	};
 	window.action = action;
 	action.loadPageData();
 	action.loadDevTypeData();
     action.getDevStatusData();
-    //action.loadPrivateAuthData();
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
@@ -583,6 +507,7 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
+                alert("记录不存在");
             }
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
