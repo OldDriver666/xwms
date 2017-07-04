@@ -56,16 +56,16 @@ $(function() {
                     }
 
                     var Len_Count = Object.getOwnPropertyNames(dayCount).length;
-                 for(i=0; i<Len_Count; i++){
-                     var name = data_arr1[i];
-                     var str_year = name.substr(0,4);
-                     var str_month = name.substr(4,2);
-                     var str_date = name.substr(6,2);
-                     var xName = [str_year, str_month, str_date].join('/');
-                     var value = data_arr2[i];
-                     var list_item = '{"name":"'+name+'","value":["'+xName+'",'+value+']}';
-                     data_arr.push(list_item);
-                     };
+                    for(i=0; i<Len_Count; i++){
+                         var name = data_arr1[i];
+                         var str_year = name.substr(0,4);
+                         var str_month = name.substr(4,2);
+                         var str_date = name.substr(6,2);
+                         var xName = [str_year, str_month, str_date].join('/');
+                         var value = data_arr2[i];
+                         var list_item = '{"name":"'+name+'","value":["'+xName+'",'+value+']}';
+                         data_arr.push(list_item);
+                       };
                     var data_str = "["+data_arr+"]";
                     var data = JSON.parse(data_str);
 
@@ -186,12 +186,13 @@ $(function() {
                     var data_valArray = [];
                     var devTypes = result.data.type;
                     for(items in devTypes){
-                        var name = typeNameQuery(items);
+                        var name = items;
+                        /*var name = typeNameQuery(items);*/
                         var value = devTypes[items];
                         var list_item = '{"name":"'+name+'","value":"'+value+'"}';
                         data_arr.push(list_item);
-                       /* data_nameArray.push(items);
-                        data_valArray.push(value);*/
+                        data_nameArray.push(items);
+                        data_valArray.push(value);
                     }
 
                    /* var nameArray = action.myDevTypeQuery(data_nameArray);*/
@@ -220,7 +221,6 @@ $(function() {
                         var name = items2;
                         var value = devSexs[items2];
                         var list_item2 = '{"name":"'+name+'","value":"'+value+'"}';
-                        /*var list_item2 = '{"name":"'+name+'","value":"'+value+'","color":"#4'+i+'72a7"}';*/
                         data_arr2.push(list_item2);
                     }
                     var data_str2 = "["+data_arr2+"]";
@@ -343,10 +343,8 @@ $(function() {
         }
 	};
 	window.action = action;
-    //action.allDevTypeQuery();
     action.getUserDevData();
 	action.getClientTypeData();
-	//action.refreshOnTime();
 
 
     var nowTime = getNowFormatDate();//当前日期
@@ -397,15 +395,4 @@ $(function() {
         var currentdate = b[0] + b[1] +b[2]; //日期字符串
         return currentdate;
     }
-
-
-	/*$("#btn-search").on('click', function() {
-        action.loadPageData();
-	});
-	$("#input-search-txt").on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            action.loadPageData();
-        }
-
-	});*/
 });

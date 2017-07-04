@@ -40,10 +40,13 @@ $(function() {
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
-                } else {
+                } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
+					$('#pageContent').find("tr").remove();
+					alert("记录不存在");
+                }else {
 					$('#pageContent').find("tr").remove();
 					alert(result.msg);
-                }
+				}
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
