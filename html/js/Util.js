@@ -16,11 +16,11 @@ Util.ajaxLoginData = function(url,data,type,async,callback,errorCallback){
             if(callback){
                 if(result != "") {
                     // 未登录直接跳转至登录
-                    if(result.Status == ReturnCode.EXPIRED_ACCESS_TOKEN) {
+                    if(result.code == ReturnCode.EXPIRED_ACCESS_TOKEN) {
                         alert("登录已失效或无此访问权限，请重新登录后尝试！");
                         location.href = ctx + "/login.html";
                     }
-                    if(result.Status == ReturnCode.REQUEST_HEADER_PARAM_ERROR) {
+                    if(result.code == ReturnCode.REQUEST_HEADER_PARAM_ERROR) {
                         alert("您还未登录，请登录后访问！");
                         location.href = ctx + "/login.html";
                     }
@@ -75,11 +75,11 @@ Util.ajaxLoadData = function(url,data,type,async,callback,errorCallback){
             if(callback){
                 if(result != "") {
                     // 未登录直接跳转至登录
-                    if(result.Status == ReturnCode.EXPIRED_ACCESS_TOKEN) {
+                    if(result.code == ReturnCode.EXPIRED_ACCESS_TOKEN) {
                         alert("登录已失效或无此访问权限，请重新登录后尝试！");
                         location.href = ctx + "/login.html";
                     }
-                    if(result.Status == ReturnCode.REQUEST_HEADER_PARAM_ERROR) {
+                    if(result.code == ReturnCode.REQUEST_HEADER_PARAM_ERROR) {
                         alert("您还未登录，请登录后访问！");
                         location.href = ctx + "/login.html";
                     }
@@ -770,6 +770,7 @@ Util.pathName = function(){
     };
     Util.ajaxLoadData(url,null,callback,"post",null,false);
 };*/
+
 $(function(){
     //初始化localStorage
     Util.localStorage.init();

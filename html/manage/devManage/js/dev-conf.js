@@ -76,9 +76,9 @@ $(function() {
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
                     }
-                } else if(result.code == ReturnCode.DEVICE_NOT_EXIST_ERROR){
+                } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
                     $('#pageContent').find("tr").remove();
-                    alert(result.msg);
+                    alert("没有查到该设备信息");
                 }else {
                     $('#pageContent').find("tr").remove();
                     alert(result.msg);
