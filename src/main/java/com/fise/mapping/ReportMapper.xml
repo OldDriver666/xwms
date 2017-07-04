@@ -22,7 +22,7 @@
     <result column="count" jdbcType="INTEGER" property="keyValue" />
   </resultMap>
   <select id="queryUserSexCount" parameterType="java.lang.Integer" resultMap="userSexResultMap">
-    select case sex when 1 then '男' when 0 then '女' else '未知' end as sex,
+    select case sex when 1 then '男' when 2 then '女' else '未知' end as sex,
            count(1) as count 
     from IMUser 
     where departId = #{companyId,jdbcType=INTEGER}

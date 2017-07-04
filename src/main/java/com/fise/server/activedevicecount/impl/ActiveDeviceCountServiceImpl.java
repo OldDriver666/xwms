@@ -28,18 +28,18 @@ public class ActiveDeviceCountServiceImpl implements IActiveDeviceCountService{
         
         criteria.andDepartidEqualTo(param.getDepartid());
         criteria.andTypeLessThan(19);
-        result.setActiveXM(IMUserDao.selectByExample(example).size());
+        result.setActiveXM((int)IMUserDao.countByExample(example));
         criteria.andOnlineStatusEqualTo(1);
-        result.setOnlineXM(IMUserDao.selectByExample(example).size());
+        result.setOnlineXM((int)IMUserDao.countByExample(example));
         
         IMUserExample example2=new IMUserExample();
         Criteria criteria2=example2.createCriteria();
         
         criteria2.andDepartidEqualTo(param.getDepartid());
         criteria2.andTypeGreaterThanOrEqualTo(19);
-        result.setActiveDevice(IMUserDao.selectByExample(example2).size());
+        result.setActiveDevice((int)IMUserDao.countByExample(example2));
         criteria2.andOnlineStatusEqualTo(1);
-        result.setOnlineDevice(IMUserDao.selectByExample(example2).size());
+        result.setOnlineDevice((int)IMUserDao.countByExample(example2));
         
         response.success(result);
         return response;
