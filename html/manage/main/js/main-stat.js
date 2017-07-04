@@ -179,27 +179,8 @@ $(function() {
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
-
                     //客户端类型信息
-                    var data_arr = [];
-                    var data_nameArray = [];
-                    var data_valArray = [];
-                    var devTypes = result.data.type;
-                    for(items in devTypes){
-                        var name = items;
-                        /*var name = typeNameQuery(items);*/
-                        var value = devTypes[items];
-                        var list_item = '{"name":"'+name+'","value":"'+value+'"}';
-                        data_arr.push(list_item);
-                        data_nameArray.push(items);
-                        data_valArray.push(value);
-                    }
-
-                   /* var nameArray = action.myDevTypeQuery(data_nameArray);*/
-
-                    var data_str = "["+data_arr+"]";
-                    var data = JSON.parse(data_str);
-
+                    action.myDevTypeQuery(JSON.stringify(result.data.type));
 
                     //地域信息
                     var data_arr1 = [];
@@ -226,7 +207,7 @@ $(function() {
                     var data_str2 = "["+data_arr2+"]";
                     var data2 = JSON.parse(data_str2);
 
-                    //用户客户端类型
+                 /*   //用户客户端类型
                     option = {
                         title : {
                             text: '用户客户端类型',
@@ -253,7 +234,7 @@ $(function() {
                             }
                         ]
                     };
-                    userClientChart.setOption(option);
+                    userClientChart.setOption(option);*/
 
 
                     //用户地域分布
@@ -340,12 +321,89 @@ $(function() {
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
+        },
+        myDevTypeQuery: function(nameParamArray){
+            var devTypes = JSON.parse(nameParamArray);
+            var data_arr = [];
+            var nameArray = [];
+            var countArray = [];
+            var myTypeArray = [];
+            for(items in devTypes){
+                nameArray.push(items);
+                countArray.push(devTypes[items]);
+            }
+
+            var url = ctx + "boss/clienttype/queryclienttype";
+            var data = new Object();
+            data.client_type = null;
+            data.client_name = "";
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    var allDevTypeArray = result.data;
+                    var Lens1 = nameArray.length;
+                    var Lens2 = allDevTypeArray.length;
+                    for(var i=0; i< Lens1; i++){
+                        for(var j=0; j< Lens2; j++){
+                            if(allDevTypeArray[j].client_type == nameArray[i]){
+                                var typeName = allDevTypeArray[j].client_name;
+                                myTypeArray.push(typeName);
+                            }
+                        }
+                    }
+
+                    //客户端类型信息
+
+                    for(var i=0; i < countArray.length; i++){
+                         var name = myTypeArray[i];
+                         var value = countArray[i];
+                         var list_item = '{"name":"'+name+'","value":"'+value+'"}';
+                         data_arr.push(list_item);
+                    }
+
+                    var data_str = "["+data_arr+"]";
+                    var data = JSON.parse(data_str);
+
+                    //用户客户端类型
+                    option = {
+                        title : {
+                            text: '用户客户端类型',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        series : [
+                            {
+                                name: '用户客户端类型',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data: data,
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    userClientChart.setOption(option);
+
+                } else {
+                    alert(result.msg);
+                }
+            },function() {
+                alert("服务器开个小差，请稍后重试！")
+            });
+
         }
 	};
 	window.action = action;
     action.getUserDevData();
 	action.getClientTypeData();
-
 
     var nowTime = getNowFormatDate();//当前日期
     var init_days = 3;//初始时的天数
