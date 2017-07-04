@@ -55,17 +55,21 @@ public class ReportServiceImpl implements IReportService {
         }
         resultData.put("type", typeData);
         
+        String splitStr = new String();
+        int index = 0;
         Map<String, Integer> provinceData = new HashMap<String, Integer>();
         for (KeyValueMap tmp : provinceCount){
-            provinceData.put(tmp.getKeyName(), ((Long)tmp.getKeyValue()).intValue());
+            //去掉"省"字
+            splitStr = tmp.getKeyName();
+            index = splitStr.indexOf("省");
+            if (index == -1){
+                index = splitStr.length();
+            }
+            provinceData.put(splitStr.substring(0, index), ((Long)tmp.getKeyValue()).intValue());
         }
         resultData.put("province", provinceData);
-
         resp.success(resultData);
         return resp;
     }
-
-
-
 
 }
