@@ -74,7 +74,7 @@ public class ModuleServiceImpl implements IModuleService {
         if(StringUtil.isEmpty(param.getName())){
             return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-        if(param.getPriority()!=null){
+        if(param.getPriority()==null){
             return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         if(StringUtil.isEmpty(param.getSn())){
