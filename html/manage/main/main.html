@@ -152,8 +152,6 @@ ${active_device}
 				}
 			}
 		});
-
-		
 	});
 </script>
 
@@ -163,16 +161,6 @@ ${active_device}
     var userAreaChart = echarts.init(document.getElementById('tongji-userArea'));
 	var userSexChart = echarts.init(document.getElementById('tongji-userSex'));
 </script>
-<script type="text/javascript">
-	var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
-	var Lens1 = allDevTypeArray.length;
-	function typeNameQuery(type){
-		for(var i=0; i< Lens1; i++){
-			if(allDevTypeArray[i].client_type == type){
-				return allDevTypeArray[i].client_name;
-			}
-		}
-	}
-</script>
+
 </body>
 </html>
