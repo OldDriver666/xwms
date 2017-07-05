@@ -1685,3 +1685,93 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 无内容，直接查看返回码
 ```
+
+###短信平台
+####新增短信平台
+|   接口地址    |   boss/smsplatfrom/add        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+- **请求**
+```
+{"platfrom_name":"",               //必填-短信平台名称
+ "status":1,                       //选填-0-弃用 1-使用  默认为1
+ "config":""                       //选填-短信平台配置 
+ }
+``` 
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####查询短信平台
+|   接口地址    |   boss/smsplatfrom/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+- **请求**
+```
+不填则查询所有
+{"platfrom_name":""}                //选填-短信平台名称
+```
+- **回复**
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+        {
+         "status": false,
+         "config": "{\"liuzhaoxin\":\"lihai\"}\n",
+         "updated": 0,
+         "created": 0,
+         "smsplatfrom_id": 8,
+         "platfrom_name": "1112"
+      },
+      {
+         "status": true,
+         "config": "{}\n",
+         "updated": 0,
+         "created": 0,
+         "smsplatfrom_id": 9,
+         "platfrom_name": "afds"
+      }
+     ]
+}
+```
+
+####修改短信平台
+|   接口地址    |   boss/smsplatfrom/update        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |   
+
+- **请求**
+```
+{"smsplatfrom_id":x,                //必填-短信平台ID
+ "platfrom_name":"",                //必填-短信平台名称
+ "status":1,                        //选填--0-弃用 1-使用
+ "config":""                        //选填-短信平台配置
+ }   
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
+
+####删除短信平台
+|   接口地址    |   boss/smsplatfrom/del        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |  
+
+- **请求**
+```
+{"smsplatfrom_id":x}               //必填-短信平台ID
+```
+- **回复**
+```
+无内容，直接查看返回码
+```
