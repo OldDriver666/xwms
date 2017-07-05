@@ -150,19 +150,6 @@ $(function() {
         }else if(action == "edit"){
             window.action.edit();
         }
-
-		/*if (!$("#form-addTempl").valid()) {
-			return;
-		}
-		var action = $("form#form-addTempl").data("action");
-		switch (action) {
-		case "add":
-			window.action.add();
-			break;
-		case "edit":
-			window.action.edit();
-			break;
-		}*/
 	});
 
 	$("#btn-search").on('click', function() {
