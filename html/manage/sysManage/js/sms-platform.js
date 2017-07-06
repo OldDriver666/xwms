@@ -9,16 +9,11 @@ $(function() {
 	var action = {
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/module/insert";
+            var url = ctx + "boss/smsplatfrom/add";
 			var data = new Object();
-			data.admin_id = parseInt(admin_id),
-			data.name = $("#input-moduleName").val();
-			data.description = $("#input-description").val();
-			data.priority = parseInt($("#input-priority").val());
-			data.sn = $("#input-sn").val();
+			data.platfrom_name = $("#input-platfrom_name").val();
 			data.status = parseInt($("input[name=status]:checked").val());
-			data.url = $("#input-url").val();
-			data.parent_id = parseInt($("#input-parent_id").val());
+			data.config = $("#input-config").val();
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -32,12 +27,16 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
+			var search_uname = $("#input-search-uname").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
-			var url = ctx + "boss/module/queryall";
-			var data = {
-				"admin_id":parseInt(admin_id),
-				"role_id":parseInt(role_level)
-			};
+			var url = ctx + "boss/smsplatfrom/query";
+			var data = new Object();
+			if(search_uname == ""){
+				data.platfrom_name = "";
+			}else{
+				data.platfrom_name = search_uname;
+			}
+
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
@@ -56,17 +55,12 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/module/update";
+			var url = ctx + "boss/smsplatfrom/update";
 			var data = new Object();
-            data.admin_id = parseInt(admin_id),
-			data.module_id = parseInt($("#input-moduleId").val());
-			data.name = $("#input-moduleName").val();
-            data.description = $("#input-description").val();
-			data.priority = parseInt($("#input-priority").val());
-			data.sn = $("#input-sn").val();
+			data.smsplatfrom_id = parseInt($("#input-smsplatfrom_id").val());
+			data.platfrom_name = $("#input-platfrom_name-txt").val();
 			data.status = parseInt($("input[name=status]:checked").val());
-			data.url = $("#input-url").val();
-			data.parent_id = parseInt($("#input-parent_id").val());
+			data.config = $("#input-config").val();
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -81,9 +75,9 @@ $(function() {
 		//删除数据
 		deleteItem : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "boss/module/delete";
+				var url = ctx + "boss/smsplatfrom/del";
 				var data = new Object();
-                data.module_id = id;
+                data.smsplatfrom_id = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
@@ -101,20 +95,16 @@ $(function() {
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-		var check_status = $.trim(that.find(".td-status").text());
+		var check_status = $.trim(that.find("td").eq(3).text());
 		var status_val = null;
-		if(check_status === "可见"){
+		if(check_status === "使用"){
 			status_val = 1;
-		}else if(check_status === "不可见"){
+		}else if(check_status === "弃用"){
 			status_val = 0;
 		}
-        $("#input-moduleId").val(that.find(".td-moduleId").text());
-        $("#input-priority").val(that.find(".td-priority").text());
-        $("#input-moduleName").val(that.find(".td-moduleName").text());
-        $("#input-url").val(that.find(".td-url").text());
-		$("#input-sn").val(that.find(".td-sn").text());
-		$("#input-parent_id").val(that.find(".td-parent_id").text());
-		$("#input-description").val(that.find(".td-description").text());
+        $("#input-smsplatfrom_id").val(that.find("td").eq(0).text());
+        $("#input-platfrom_name-txt").val(that.find("td").eq(1).text());
+        $("#input-config").val(that.find("td").eq(2).text());
 		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
@@ -124,9 +114,13 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑菜单信息");
+			$("#input-platfrom_name-wrap").hide();
+			$("#input-platfrom_name-txt-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加菜单信息");
+			$("#input-platfrom_name-wrap").show();
+			$("#input-platfrom_name-txt-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -135,43 +129,29 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-			moduleName : {
+			platfrom_name : {
                 required : true
-            },
-			priority : {
-				required : true
-			},
-			sn : {
-				required : true
-			},
-			status : {
-				required : true
-			},
-			parent_id : {
-				required : true
-			}
+            }
         }
     });
 
 	$("#btn-add-submit").on('click', function() {
-		if (!$("#form-addTempl").valid()) {
-			return;
-		}
 		var action = $("form#form-addTempl").data("action");
-		switch (action) {
-		case "add":
-			window.action.add();
-			break;
-		case "edit":
+		if(action == "add"){
+			if (!$("#form-addTempl").valid()) {
+				return;
+			}else {
+				window.action.add();
+			}
+		}else if(action == "edit"){
 			window.action.edit();
-			break;
 		}
 	});
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-	$("#input-search-txt").on('keydown', function(e) {
+	$("#input-search-uname").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }

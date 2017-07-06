@@ -62,16 +62,25 @@
 												<input type="text" class="form-control" id="input-action_name" name="action_name" placeholder="请输入场景名称">
 											</div>
 										</div>
-										<div class="form-group" id="input-platfrom_id-wrap">
-											<label for="input-platfrom_id" class="col-sm-2 control-label"><span class="necessary">*</span>短信平台ID</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-platfrom_id" name="platfrom_id" placeholder="请输入短信平台ID">
-											</div>
-										</div>
+
 										<div class="form-group" id="input-platfrom_id-txt-wrap">
 											<label class="col-sm-2 control-label"><span class="necessary">*</span>短信平台ID</label>
 											<div class="col-sm-10 form-txt">
 												<input type="text" class="form-control" id="input-platfrom_id-txt" name="platfrom_id-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+											</div>
+										</div>
+										<div class="form-group" id="input-platfrom_name-wrap">
+											<label for="input-platfrom_name" class="col-sm-2 control-label"><span class="necessary">*</span>短信平台名称</label>
+											<div class="col-sm-10">
+												<select name="platfrom_name" id="input-platfrom_name" class="form-control">
+													<option value="">请选择短信平台名称</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group" id="input-platfrom_name-txt-wrap">
+											<label class="col-sm-2 control-label"><span class="necessary">*</span>短信平台名称</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="input-platfrom_name-txt" name="platfrom_name-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
 											</div>
 										</div>
 										<div class="form-group">
@@ -97,7 +106,7 @@
 				<tr>
 					<th>场景号</th>
 					<th>场景名称</th>
-					<th>短信平台ID</th>
+					<th>短信平台名称</th>
 					<th>短信模板</th>
 					<th>更新时间</th>
 					<th>创建时间</th>
@@ -124,7 +133,7 @@
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
 <script src="../../resource/lib/jquery.md5.js"></script>
-<script type ="text/javascript" src="js/sms-manage.js"></script>
+<script type ="text/javascript" src="js/sms-template.js"></script>
 <!-- jQuery Validate -->
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
@@ -134,15 +143,19 @@
 	<td style="display:none;">${id}</td>
 	<td >${action}</td>
 	<td>${action_name}</td>
-	<td >${platfrom_id}</td>
+	<td >${platfrom_name}</td>
 	<td>${template_name}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
+	<td style="display:none;">${platfrom_id}</td>
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
 	</td>
 </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="pageSMSTmpl">
+    <option value=${smsplatfrom_id}>${platfrom_name}</option>
 </script>
 <script type="text/javascript">
 	toastr.options={
