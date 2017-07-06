@@ -11,8 +11,8 @@ $(function() {
             data.name = $("#input-confName").val();
             data.value = $("#input-confValue").val();
             data.action = $("#input-confAction").val();
-            data.status = $("input[name=status]:checked").val();
-            data.parent_id = $("#input-confParent_id").val();
+            data.status = parseInt($("input[name=status]:checked").val());
+            data.parent_id = parseInt($("#input-confParent_id").val());
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -60,8 +60,8 @@ $(function() {
             data.name = $("#input-confName").val();
             data.value = $("#input-confValue").val();
             data.action = $("#input-confAction").val();
-            data.status = $("input[name=status]:checked").val();
-            data.parent_id = $("#input-confParent_id").val();
+            data.status = parseInt($("input[name=status]:checked").val());
+            data.parent_id = parseInt($("#input-confParent_id").val());
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -112,9 +112,9 @@ $(function() {
         var check_status = $.trim(that.find("td").eq(6).text());
         var status_val = null;
         if(check_status === "启用"){
-            status_val = true;
+            status_val = 1;
         }else if(check_status === "弃用"){
-            status_val = false;
+            status_val = 0;
         }
 
         $("#input-id").val(that.find("td").eq(0).text());
@@ -140,6 +140,13 @@ $(function() {
     });
 
 	$("#btn-add-submit").on('click', function() {
+        if(isNaN($("#input-confParent_id").val())) {
+            $("#input-confParent_id").parent().parent().addClass("has-error");
+            var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
+            $("#input-confParent_id").parent().append(err_html);
+            return;
+        }
+
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
             if (!$("#form-addTempl").valid()) {
@@ -148,9 +155,16 @@ $(function() {
                 window.action.add();
             }
         }else if(action == "edit"){
-            window.action.edit();
+               window.action.edit();
         }
 	});
+
+    $("#input-confParent_id").change(function () {
+        if(!isNaN($(this).val())) {
+            $(this).parent().removeClass("has-error");
+            $(this).next().remove();
+        }
+    });
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();

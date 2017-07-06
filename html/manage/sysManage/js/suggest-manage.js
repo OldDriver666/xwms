@@ -60,7 +60,7 @@ $(function() {
 			data.suggest_id = parseInt($("#input-suggest_id").val());
 			data.user_id = parseInt($("#input-user_id").val());
 			data.uname = $("#input-uname").val();
-			data.status = parseInt($("#input-status").val());
+			data.status = parseInt($("input[name=status]:checked").val());
 			data.suggestion = $("#input-suggestion").val();
 			data.contact = $("#input-contact").val();
 
@@ -100,11 +100,11 @@ $(function() {
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
 			$("h4#addTempl-modal-label").text("编辑用户意见");
-			$("#input-status-txt").show();
+			$("#input-status-txt-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加用户意见");
-			$("#input-status-txt").hide();
+			$("#input-status-txt-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -113,11 +113,18 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
+		var check_status = $.trim(that.find("td").eq(3).text());
+		var status_val = null;
+		if(check_status === "已经回复"){
+			status_val = 1;
+		}else if(check_status === "初始正常"){
+			status_val = 0;
+		}
 
 		$("#input-suggest_id").val(that.find("td").eq(0).text());
         $("#input-user_id").val(that.find("td").eq(1).text());
         $("#input-uname").val(that.find("td").eq(2).text());
-		$("#input-status").val(that.find("td").eq(3).text());
+		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
 		$("#input-suggestion").val(that.find("td").eq(4).text());
 		$("#input-contact").val(that.find("td").eq(5).text());
 

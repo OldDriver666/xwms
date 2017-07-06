@@ -150,6 +150,12 @@ $(function() {
 		if (!$("#form-addTempl").valid()) {
 			return;
 		}
+		if(isNaN($("#input-client_type").val())) {
+			$("#input-client_type").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
+			$("#input-client_type").parent().append(err_html);
+			return;
+		}
 		var action = $("form#form-addTempl").data("action");
 		switch (action) {
 		case "add":
@@ -161,10 +167,31 @@ $(function() {
 		}
 	});
 
+	$("#input-client_type").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#input-search-client_type").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+		}
+	});
+
 	$("#btn-search").on('click', function() {
+		if(isNaN($("#input-search-client_type").val())) {
+			$("#input-search-client_type").parent().addClass("has-error");
+			return;
+		}
         action.loadPageData();
 	});
 	$("#input-search-client_type").on('keydown', function(e) {
+		if(isNaN($("#input-search-client_type").val())) {
+			$("#input-search-client_type").parent().addClass("has-error");
+			return;
+		}
         if (e.keyCode == 13) {
             action.loadPageData();
         }

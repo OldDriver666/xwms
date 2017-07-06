@@ -25,7 +25,7 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_uname = $("#input-search-uname").val();
+            var search_uname = parseInt($("#input-search-uname").val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
             var url = ctx + "boss/sms/query";
@@ -179,12 +179,25 @@ $(function() {
 			window.action.edit();
 		}
 	});
+	$("#input-search-uname").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+		}
+	});
 
 	$("#btn-search").on('click', function() {
+		if(isNaN($("#input-search-uname").val())) {
+			$("#input-search-uname").parent().addClass("has-error");
+			return;
+		}
         action.loadPageData();
 	});
 
 	$("#input-search-uname").on('keydown', function(e) {
+		if(isNaN($("#input-search-uname").val())) {
+			$("#input-search-uname").parent().addClass("has-error");
+			return;
+		}
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}
