@@ -59,6 +59,11 @@ public class SmsPlatfromServiceImpl implements ISmsPlatfromService{
         }
         
         List<IMSmsPlatfrom> list=smsPlatfromDao.selectByExample(example);
+        
+        if(list.size()==0){
+            return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+        }
+        
         response.success(list);
         return response;
     }
