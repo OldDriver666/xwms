@@ -3,6 +3,7 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 /**
  * @author 
@@ -88,4 +89,11 @@ public class WiAccountManage implements Serializable {
     public void setCreated(Integer created) {
         this.created = created;
     }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+    
+    
 }

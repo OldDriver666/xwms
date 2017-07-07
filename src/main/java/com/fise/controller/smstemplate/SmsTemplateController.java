@@ -28,12 +28,12 @@ public class SmsTemplateController {
     public Response addSmsTemplate(@RequestBody @Valid IMSmsTemplate record){
         
         Response response=new Response();
+        logger.info(record.toString());
         
         if(record.getPlatfromId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        logger.info(record.toString());
         response=smsTemplateService.addSmsTemplate(record);
         return response;
     }
@@ -42,6 +42,7 @@ public class SmsTemplateController {
     public Response querySmsTemplate(@RequestBody @Valid SmsTemplateParam param){
         
         Response response=new Response();
+        logger.info(param.toString());
         
         response=smsTemplateService.querySmsTemplate(param);
         
@@ -52,6 +53,7 @@ public class SmsTemplateController {
     public Response updateSmsTemplate(@RequestBody @Valid IMSmsTemplate record){
         
         Response response=new Response();
+        logger.info(record.toString());
         
         if(record.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
@@ -68,6 +70,7 @@ public class SmsTemplateController {
     public Response delSmsTemplate(@RequestBody @Valid IMSmsTemplate record){
         
         Response response=new Response();
+        logger.info(record.toString());
         
         if(record.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);

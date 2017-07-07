@@ -3,6 +3,7 @@ package com.fise.model.param;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class SmsPlatfromParam implements Serializable{
     
@@ -28,6 +29,11 @@ public class SmsPlatfromParam implements Serializable{
 
     public void setPlatfromName(String platfromName) {
         this.platfromName = platfromName;
+    }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
     }
     
     

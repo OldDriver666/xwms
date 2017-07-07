@@ -1,6 +1,7 @@
 package com.fise.model.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class DepartConfigParam {
 	@JsonProperty("config_id")
@@ -41,5 +42,10 @@ public class DepartConfigParam {
 	public void setClienttype(Integer clienttype) {
 		this.clienttype = clienttype;
 	}
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
     
 }

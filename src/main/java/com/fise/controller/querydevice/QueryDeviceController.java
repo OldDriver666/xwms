@@ -27,7 +27,7 @@ public class QueryDeviceController {
     public Response queryDeviceByAccount(@RequestBody @Valid QueryDeviceParam param){
         
         Response response=new Response();
-        
+        logger.info(param.toString());
         response=iQueryDeviceService.queryDeviceByAccount(param);
         
         return response;

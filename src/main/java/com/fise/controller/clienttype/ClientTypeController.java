@@ -30,12 +30,12 @@ public class ClientTypeController {
 	public Response addClientType(@RequestBody @Valid IMClientType param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getClienttype()==null || StringUtil.isEmpty(param.getClientname())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=imClientTypeService.insertClientType(param);
 		logger.info("end insert IMClientType "+response.toString());
 		
@@ -60,12 +60,12 @@ public class ClientTypeController {
 	public Response delFiseDevice(@RequestBody @Valid ClientTypeParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getTypeid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=imClientTypeService.delClientType(param);
 		logger.info("end delete IMClientType"+response.toString());
 		
@@ -77,12 +77,12 @@ public class ClientTypeController {
 	public Response updateFiseDevice(@RequestBody @Valid IMClientType record){
 
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(record.getTypeid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=imClientTypeService.updateClientType(record);
 		logger.info("end update IMClientType"+response.toString());
 		

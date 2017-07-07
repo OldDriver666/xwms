@@ -29,7 +29,7 @@ public class ModuleController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response query(@RequestBody @Valid ModuleQueryParam param){
         Response resp = new Response();
-        logger.debug(param);
+        logger.info(param);
         resp = moduleSvr.QueryModule(param);
         return resp;
     }
@@ -37,7 +37,7 @@ public class ModuleController {
     @RequestMapping(value = "/queryall", method = RequestMethod.POST)
     public Response queryAll(@RequestBody @Valid ModuleQueryParam param){
         Response resp = new Response();
-        logger.debug(param);
+        logger.info(param);
         resp = moduleSvr.QueryModuleAll(param);
         return resp;
     }
@@ -45,7 +45,7 @@ public class ModuleController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Response insert(@RequestBody @Valid ModuleInsertParam param){
         Response resp = new Response();
-        logger.debug(param);
+        logger.info(param);
         resp = moduleSvr.InsertModule(param);
         return resp;
     }
@@ -53,7 +53,7 @@ public class ModuleController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Response update(@RequestBody @Valid ModuleUpdateParam param){
         Response resp = new Response();
-        logger.debug(param);
+        logger.info(param);
         resp = moduleSvr.UpdateModule(param);
         return resp;
     }
@@ -61,7 +61,7 @@ public class ModuleController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Response update(@RequestBody @Valid Map<String,String> param){
         Response resp = new Response();
-        logger.debug(param.toString());
+        logger.info(param.toString());
         if(param.get("module_id") == null){
             resp.failure(ErrorCode.ERROR_PARAM_NOT_VALID_EXCEPTION);
         } else {

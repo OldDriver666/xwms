@@ -1,4 +1,4 @@
-package com.fise.server.device;
+package com.fise.server.event;
 
 import com.fise.base.Page;
 import com.fise.base.Response;

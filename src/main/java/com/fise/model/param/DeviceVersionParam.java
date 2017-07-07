@@ -1,6 +1,7 @@
 package com.fise.model.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class DeviceVersionParam {
 	@JsonProperty("version_id")
@@ -41,6 +42,11 @@ public class DeviceVersionParam {
 	public void setDevType(Integer devType) {
 		this.devType = devType;
 	}
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 	
 	
 }

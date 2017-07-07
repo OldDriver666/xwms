@@ -1,6 +1,7 @@
 package com.fise.model.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class ClientTypeParam {
 	@JsonProperty("type_id")
@@ -41,6 +42,11 @@ public class ClientTypeParam {
 	public void setClientname(String clientname) {
 		this.clientname = clientname;
 	}
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 	
 	
 }

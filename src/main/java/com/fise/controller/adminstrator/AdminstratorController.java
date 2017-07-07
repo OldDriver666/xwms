@@ -48,6 +48,7 @@ public class AdminstratorController {
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public Response logout(@RequestBody @Valid LogoutParam param, HttpServletRequest request) {
 		Response resp = new Response();
+		logger.info(param.toString());
 		resp = adminSvr.logout(param, request);
 		
 		return resp;
@@ -56,7 +57,7 @@ public class AdminstratorController {
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public Response adminInsert(@RequestBody @Valid AdminInsert param) {
 		Response resp = new Response();
-		logger.debug(param.toString());
+		logger.info(param.toString());
 		resp = adminSvr.insertAdmin(param);
 		return resp;
 	}
@@ -64,7 +65,7 @@ public class AdminstratorController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
 		Response resp = new Response();
-		logger.debug(param.toString());
+		logger.info(param.toString());
 		resp = adminSvr.updateAdmin(param);
 		return resp;
 	}
@@ -72,6 +73,7 @@ public class AdminstratorController {
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public Response adminQuery(@RequestBody @Valid AdminQuery param){
 	    Response resp = new Response();
+	    logger.info(param.toString());
 	    resp = adminSvr.queryAdmin(param);
 	    return resp;
 	}

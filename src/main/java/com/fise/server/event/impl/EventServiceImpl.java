@@ -1,4 +1,4 @@
-package com.fise.server.device.impl;
+package com.fise.server.event.impl;
 
 import java.util.List;
 
@@ -15,7 +15,8 @@ import com.fise.model.entity.IMEventExample;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.IMUserExample;
 import com.fise.model.param.EventQueryParam;
-import com.fise.server.device.IEventService;
+import com.fise.server.event.IEventService;
+
 
 @Service
 public class EventServiceImpl implements IEventService {

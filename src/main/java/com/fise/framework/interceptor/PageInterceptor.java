@@ -21,6 +21,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.scripting.defaults.DefaultParameterHandler;
+import org.apache.log4j.Logger;
 
 import com.fise.base.Page;
 import com.fise.base.Pagination;
@@ -37,7 +38,7 @@ import com.fise.base.Pagination;
  */
 @Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }) })
 public class PageInterceptor implements Interceptor {
-
+    
 	private String databaseType;// 数据库类型，不同的数据库有不同的分页方法
 
 	/**
@@ -74,7 +75,7 @@ public class PageInterceptor implements Interceptor {
 				}
 			}
 		}
-
+		
 		// 这里我们简单的通过传入的参数含有Pagination对象就认定它是需要进行分页操作的。
 		if (page != null) {
 			// 通过反射获取delegate父类BaseStatementHandler的mappedStatement属性
@@ -92,6 +93,7 @@ public class PageInterceptor implements Interceptor {
 			// 利用反射设置当前BoundSql对应的sql属性为我们建立好的分页Sql语句
 			ReflectUtil.setFieldValue(boundSql, "sql", pageSql);
 		}
+		
 		return invocation.proceed();
 	}
 

@@ -30,12 +30,12 @@ public class DeviceVersionController {
 	public Response addDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(record.getDepartid()==null || record.getDevType()==null || StringUtil.isEmpty(record.getDevVersion())||StringUtil.isEmpty(record.getUpdateUrl())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iDeviceVersionService.insertDeviceVersion(record);
 		logger.info("end insert deviceversion"+response.toString());
 		
@@ -47,12 +47,12 @@ public class DeviceVersionController {
 	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getDepartid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iDeviceVersionService.queryDeviceVersion(param);
 		logger.info("end select deviceversion"+response.toString());
 		
@@ -64,12 +64,12 @@ public class DeviceVersionController {
 	public Response delDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iDeviceVersionService.delDeviceVersion(param);
 		logger.info("end delete deviceversion"+response.toString());
 		
@@ -81,12 +81,12 @@ public class DeviceVersionController {
 	public Response updateDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(record.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iDeviceVersionService.updateDeviceVersion(record);
 		logger.info("end update deviceversion"+response.toString());
 		
