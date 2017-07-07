@@ -107,13 +107,18 @@ $(function() {
 		addUserRolesData : function() {
 			var add_company_id = null;
 			if(1 == parseInt(role_id)){
-				add_company_id = parseInt($('#role-companyId option:selected').val());
+				if($('#role-companyId option:selected').val() == ""){
+					add_company_id = null;
+				}else{
+					add_company_id = parseInt($('#role-companyId option:selected').val());
+				}
 			}else{
 				add_company_id = parseInt(depart_id);
 			}
 
 			var url = ctx + "boss/role/add";
 			var data = new Object();
+			data.admin_id = parseInt(admin_id);
 			data.authLevel = parseInt($("#input-authLevel").val());
 			data.name = $("#input-name").val();
 			data.description = $("#input-description").val();
@@ -141,7 +146,7 @@ $(function() {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					var myUserRolesArray = [];
 					myUserRolesArray = result.data;
-					if(selDepartId == parseInt(depart_id)){
+					if((selDepartId == parseInt(depart_id)) || (selDepartId == null)){
 						$('#add-search-userRoles').empty();
 						$('#input-search-userRoles').empty();
 						$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
