@@ -27,7 +27,7 @@ public class ReportController {
     @RequestMapping(value = "/activate", method = RequestMethod.POST)
     public Response queryActivate(@RequestBody ReportActivateParam param){
         Response resp = new Response();
-        logger.debug(param.toString());
+        logger.info(param.toString());
         if( param.getBeginDate().compareTo(param.getEndDate()) > 0 ){
             //开始日期大于结束日期
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
@@ -42,6 +42,8 @@ public class ReportController {
     @RequestMapping(value = "/dashboard", method = RequestMethod.POST)
     public Response queryDashboard(@RequestBody Map<String,Integer> param){
         Response resp = new Response();
+        logger.info(param.toString());
+        
         if( param.get("organ_id") == null ){
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
             resp.setMsg("公司不能为空");

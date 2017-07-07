@@ -1,6 +1,7 @@
 package com.fise.model.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class ServiceConfParam {
 	@JsonProperty("config_id")
@@ -46,6 +47,11 @@ public class ServiceConfParam {
 	public void setAuthcode(String authcode) {
 		this.authcode = authcode;
 	}
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 	
 	
 }

@@ -30,12 +30,12 @@ public class SplashController {
 	public Response addSplash(@RequestBody @Valid IMSplash record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(StringUtil.isEmpty(record.getName())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iSplashService.insertSplash(record);
 		logger.info("end insert imsplash"+response.toString());
 		
@@ -47,12 +47,12 @@ public class SplashController {
 	public Response querySplash(@RequestBody @Valid SplashParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(StringUtil.isEmpty(param.getName())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iSplashService.querySplash(param);
 		logger.info("end select imsplash"+response.toString());
 		
@@ -64,12 +64,12 @@ public class SplashController {
 	public Response delSplash(@RequestBody @Valid SplashParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getSplashid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iSplashService.delSplash(param);
 		logger.info("end delete imsplash"+response.toString());
 		
@@ -81,12 +81,12 @@ public class SplashController {
 	public Response updateSplash(@RequestBody @Valid IMSplash record){
 			
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(record.getSplashid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 			
-		logger.info(record.toString());
 		response=iSplashService.updateSplash(record);
 		logger.info("end update imsplash"+response.toString());
 			

@@ -30,12 +30,12 @@ public class SystemConfController {
 	public Response addSystemConf(@RequestBody @Valid IMSystemConf record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(StringUtil.isEmpty(record.getType())||StringUtil.isEmpty(record.getName())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iSystemConfService.insertSystemConf(record);
 		logger.info("end insert systemconf"+response.toString());
 		
@@ -60,12 +60,12 @@ public class SystemConfController {
 	public Response delSystemConf(@RequestBody @Valid SystemConfParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iSystemConfService.delSystemConf(param);
 		logger.info("end delete systemconf"+response.toString());
 		
@@ -77,12 +77,12 @@ public class SystemConfController {
 	public Response updateSystemConf(@RequestBody @Valid IMSystemConf record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(record.getConfigid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iSystemConfService.updateSystemConf(record);
 		logger.info("end update systemconf"+response.toString());
 		

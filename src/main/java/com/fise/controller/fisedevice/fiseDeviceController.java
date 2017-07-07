@@ -31,12 +31,12 @@ public class fiseDeviceController {
 	public Response addFiseDevice(@RequestBody @Valid FiseDevice param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(StringUtil.isEmpty(param.getIme())||StringUtil.isEmpty(param.getAccount())||param.getType()==null||param.getDepartid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=fiseDeviceService.insertFiseDevice(param);
 		logger.info("end insert fisedevice"+response.toString());
 		
@@ -48,12 +48,12 @@ public class fiseDeviceController {
 	public Response queryFiseDevice(@RequestBody @Valid Page<QueryFiseDeviceParam> page){
 		
 		Response response=new Response();
+		logger.info(page.toString());
 		
 		if(page.getParam().getDepartid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(page.toString());
 		response=fiseDeviceService.queryFiseDevice(page);
 		logger.info("end query fisedevice"+response.toString());
 		
@@ -65,12 +65,12 @@ public class fiseDeviceController {
 	public Response delFiseDevice(@RequestBody @Valid QueryFiseDeviceParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getFiseId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=fiseDeviceService.delFiseDevice(param);
 		logger.info("end delete fisedevice"+response.toString());
 		
@@ -82,12 +82,12 @@ public class fiseDeviceController {
 	public Response updateFiseDevice(@RequestBody @Valid FiseDevice param){
 
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getFiseId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=fiseDeviceService.updateFiseDevice(param);
 		logger.info("end update fisedevice"+response.toString());
 		

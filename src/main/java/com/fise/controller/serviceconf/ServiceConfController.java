@@ -30,12 +30,12 @@ public class ServiceConfController {
 	public Response addServiceConf(@RequestBody @Valid IMServiceConf record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(StringUtil.isEmpty(record.getServiceName())||StringUtil.isEmpty(record.getServicePwd())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iServiceConfService.insertServiceConf(record);
 		logger.info("end insert imserviceconf"+response.toString());
 		
@@ -47,12 +47,12 @@ public class ServiceConfController {
 	public Response queryServiceConf(@RequestBody @Valid ServiceConfParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(StringUtil.isEmpty(param.getServiceName()) || StringUtil.isEmpty(param.getServicePwd())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		logger.info(param.toString());
+	
 		response=iServiceConfService.selectServiceConf(param);
 		logger.info("end select imserviceconf"+response.toString());
 		
@@ -64,12 +64,12 @@ public class ServiceConfController {
 	public Response delServiceConf(@RequestBody @Valid ServiceConfParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iServiceConfService.delServiceConf(param);
 		logger.info("end delete imserviceconf"+response.toString());
 		
@@ -81,12 +81,12 @@ public class ServiceConfController {
 	public Response updateServiceConf(@RequestBody @Valid IMServiceConf record){
 		
 		Response response=new Response();
+		logger.info(record.toString());
 		
 		if(record.getConfigid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(record.toString());
 		response=iServiceConfService.updateServiceConf(record);
 		logger.info("end update imserviceconf"+response.toString());
 		

@@ -27,7 +27,7 @@ public class FiseCountController {
     public Response getDeviceCount(@RequestBody @Valid DeviceCountParam param){
         
         Response response=new Response();
-        
+        logger.info(param.toString());
         response=iActiveDeviceCountService.getActiveDeviceCount(param);
         
         return response;

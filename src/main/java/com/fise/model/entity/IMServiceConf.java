@@ -3,6 +3,7 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 /**
  * @author 
@@ -86,4 +87,10 @@ public class IMServiceConf implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+    
 }

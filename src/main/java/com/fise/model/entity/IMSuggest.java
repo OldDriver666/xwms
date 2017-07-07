@@ -3,6 +3,7 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 /**
  * @author 
@@ -109,4 +110,10 @@ public class IMSuggest implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+    
 }

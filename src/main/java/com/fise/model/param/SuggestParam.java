@@ -1,6 +1,7 @@
 package com.fise.model.param;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class SuggestParam {
 	@JsonProperty("suggest_id")
@@ -37,6 +38,11 @@ public class SuggestParam {
 	public void setUname(String uname) {
 		this.uname = uname;
 	}
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
     
     
 }

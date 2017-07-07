@@ -29,7 +29,8 @@ public class RoleController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response query(@RequestBody Map<String, Object> param){
         Response resp = new Response();
-        logger.debug(param.toString());
+        logger.info(param.toString());
+        
         Integer amdinRole = (Integer)param.get("role_id");
         Integer amdinOrgid = (Integer)param.get("organ_id");
         if(amdinRole == null || amdinOrgid == null){
@@ -44,7 +45,7 @@ public class RoleController {
     @RequestMapping(value = "/queryAuth", method = RequestMethod.POST)
     public Response queryAuth(@RequestBody Map<String, Object> param){
         Response resp = new Response();
-        logger.debug(param.toString());
+        logger.info(param.toString());
         Integer amdinRole = (Integer)param.get("role_id");
         Integer amdinOrgid = (Integer)param.get("organ_id");
         if(amdinRole == null || amdinOrgid == null){
@@ -59,7 +60,8 @@ public class RoleController {
     @RequestMapping(value = "/allAuth", method = RequestMethod.POST)
     public Response queryAllAuth(@RequestBody Map<String, Object> param){
         Response resp = new Response();
-        logger.debug(param.toString());
+        logger.info(param.toString());
+        
         Integer amdinRole = (Integer)param.get("role_id");
         Integer amdinOrgid = (Integer)param.get("organ_id");
         if(amdinRole == null || amdinOrgid == null){
@@ -74,7 +76,8 @@ public class RoleController {
     @RequestMapping(value = "/updateAuth", method = RequestMethod.POST)
     public Response update(@RequestBody @Valid RolePermissionParam param){
         Response resp = new Response();
-        logger.debug(param);
+        logger.info(param.toString());
+        
         if(param.getPermisList().size() > 0){
             resp = roleSvr.updateRoleAuth(param);
         } else {
@@ -87,6 +90,7 @@ public class RoleController {
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response add(@RequestBody @Valid WiOrganizationRole role){
         Response response=new Response();
+        logger.info(role.toString());
         
         if(role.getAuthLevel()==null || StringUtil.isEmpty(role.getName())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);

@@ -90,16 +90,16 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getPriority() != null){
             module.setPriority(param.getPriority());
         }
-        if(param.getDescription() != null){
+        if(!StringUtil.isEmpty(param.getDescription())){
             module.setDescription(param.getDescription());
         }
-        if(param.getSn() != null){
+        if(!StringUtil.isEmpty(param.getSn())){
             module.setSn(param.getSn());
         }
         if(param.getStatus() != null){
             module.setStatus(param.getStatus());
         }
-        if(param.getUrl() != null){
+        if(!StringUtil.isEmpty(param.getUrl())){
             module.setUrl(param.getUrl());
         }
         moduleDao.updateByPrimaryKeySelective(module);

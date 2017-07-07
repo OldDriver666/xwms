@@ -2,6 +2,8 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fise.utils.JsonUtil;
+
 /**
  * @author 
  */
@@ -118,4 +120,10 @@ public class WiOrganization implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+    
 }

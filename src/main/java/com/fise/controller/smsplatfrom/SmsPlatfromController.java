@@ -29,12 +29,12 @@ public class SmsPlatfromController {
     public Response addSmsPlatfrom(@RequestBody @Valid IMSmsPlatfrom record){
         
         Response response=new Response();
+        logger.info(record.toString());
         
         if(StringUtil.isEmpty(record.getPlatfromName())){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        logger.info(record.toString());
         response=smsPlatfromService.addSmsPlatfrom(record);
         return response;
     }
@@ -52,6 +52,7 @@ public class SmsPlatfromController {
     public Response updateSmsPlatfrom(@RequestBody @Valid IMSmsPlatfrom record){
         
         Response response=new Response();
+        logger.info(record.toString());
         
         if(record.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
@@ -61,7 +62,6 @@ public class SmsPlatfromController {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        logger.info(record.toString());
         response=smsPlatfromService.updateSmsPlatfrom(record);
         return response;
     }
@@ -70,12 +70,12 @@ public class SmsPlatfromController {
     public Response delSmsPlatfrom(@RequestBody @Valid SmsPlatfromParam param){
         
         Response response =new Response();
+        logger.info(param.toString());
         
         if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        logger.info(param.toString());
         response=smsPlatfromService.delSmsPlatfrom(param);
         return response;
     }

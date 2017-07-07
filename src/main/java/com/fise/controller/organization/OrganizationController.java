@@ -32,6 +32,7 @@ public class OrganizationController {
 	public Response queryOrgan(@RequestBody @Valid Map<String, Object> map){
 		
 		Response response=new Response();
+		logger.info(map.toString());
 		String name=(String) map.get("name");
 		response=organtSvr.QueryOrganization(name);
 		
@@ -43,12 +44,12 @@ public class OrganizationController {
     public Response insertOrgan(@RequestBody @Valid WiOrganization param){
         
         Response response=new Response();
+        logger.info(param.toString());
         
         if(param.getName()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        logger.info(param.toString());
         response=organtSvr.InsertOrganization(param);
         
         return response;
@@ -59,12 +60,12 @@ public class OrganizationController {
     public Response updateOrgan(@RequestBody @Valid WiOrganization param){
      
      Response response=new Response();
+     logger.info(param.toString());
      
      if(param.getId()==null){
          return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
      }
      
-     logger.info(param.toString());
      response=organtSvr.UpdateOrganization(param);
      
      return response;
@@ -74,6 +75,7 @@ public class OrganizationController {
     public Response delOrgan(@RequestBody @Valid WiOrganization param){
         
        Response response=new Response();
+       logger.info(param.toString());
        
        if(param.getId()==null){
            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);

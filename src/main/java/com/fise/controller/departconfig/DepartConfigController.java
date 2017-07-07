@@ -29,12 +29,12 @@ public class DepartConfigController {
 	public Response addImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getDepartid()==null || param.getClienttype()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		logger.info(param.toString());
+	
 		response=iDepartConfigService.insertDepartConfig(param);
 		logger.info("end insert imdepartconfig"+response.toString());
 		
@@ -59,12 +59,12 @@ public class DepartConfigController {
 	public Response delImdepartConfig(@RequestBody @Valid DepartConfigParam param){
 		
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iDepartConfigService.delDepartConfig(param);
 		logger.info("end delete imdepartconfig"+response.toString());
 		
@@ -76,12 +76,12 @@ public class DepartConfigController {
 	public Response updateImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 
 		Response response=new Response();
+		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		logger.info(param.toString());
 		response=iDepartConfigService.updateDepartConfig(param);
 		logger.info("end update imdepartconfig"+response.toString());
 		

@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.EventQueryParam;
-import com.fise.server.device.IEventService;
+import com.fise.server.event.IEventService;
+
 
 
 @RestController

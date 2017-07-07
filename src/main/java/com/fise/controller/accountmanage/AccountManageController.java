@@ -15,6 +15,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiAccountManage;
 import com.fise.server.accountmanage.IAccountManageService;
+import com.fise.utils.JsonUtil;
 
 @RestController
 @RequestMapping("/boss/accountmanage")
@@ -42,6 +43,7 @@ public class AccountManageController {
     public Response queryAccount(@RequestBody @Valid Map<String, Object> map){
         
         Response response=new Response();
+        logger.info(map.toString());
         Integer id=(Integer) map.get("depart_id");
         response=accountManageService.queryAccount(id);
         return response;
@@ -51,6 +53,7 @@ public class AccountManageController {
     public Response delAccount(@RequestBody @Valid Map<String, Object> map){
         
         Response response=new Response();
+        logger.info(map.toString());
         Integer id=(Integer) map.get("id");
         if(id==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
@@ -62,7 +65,7 @@ public class AccountManageController {
     @RequestMapping(value="/update",method=RequestMethod.POST)
     public Response updateAccount(@RequestBody @Valid WiAccountManage param){
         Response response=new Response();
-        
+        logger.info(param.toString());
         if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
