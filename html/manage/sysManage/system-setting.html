@@ -78,10 +78,10 @@
 											<label class="col-sm-2 control-label">状态</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-enabled" value="true" checked> 启用
+													<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 启用
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-disabled" value="false"> 弃用
+													<input type="radio" name="status" id="radio-status-disabled" value="0"> 弃用
 												</label>
 											</div>
 										</div>
@@ -140,7 +140,7 @@
 	<td>${value}</td>
 	<td>${action}</td>
 	<td>${parent_id}</td>
-	<td>{{if status == true}}启用{{else status == false}}弃用{{/if}}</td>
+	<td>{{if status == 1}}启用{{else status == 0}}弃用{{/if}}</td>
 	<td>
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${config_id})">删除</a>

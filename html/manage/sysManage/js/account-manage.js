@@ -111,6 +111,7 @@ $(function() {
 			}else{
 				add_company_id = parseInt(depart_id);
 			}
+
 			var url = ctx + "boss/role/add";
 			var data = new Object();
 			data.authLevel = parseInt($("#input-authLevel").val());
@@ -141,7 +142,6 @@ $(function() {
 					var myUserRolesArray = [];
 					myUserRolesArray = result.data;
 					if(selDepartId == parseInt(depart_id)){
-
 						$('#add-search-userRoles').empty();
 						$('#input-search-userRoles').empty();
 						$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
@@ -161,7 +161,6 @@ $(function() {
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
-
 		},
 		//编辑数据
 		edit : function() {
@@ -352,9 +351,21 @@ $(function() {
 		if(action == "add"){
 			if (!$("#form-addTempl2").valid()) {
 				return;
+			}else if(isNaN($("#input-authLevel").val())) {
+				$("#input-authLevel").parent().parent().addClass("has-error");
+				var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
+				$("#input-authLevel").parent().append(err_html);
+				return;
 			}else {
 				window.action.addUserRolesData();
 			}
+		}
+	});
+
+	$("#input-authLevel").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+			$(this).next().remove();
 		}
 	});
 

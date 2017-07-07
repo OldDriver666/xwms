@@ -1,17 +1,19 @@
 $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
-    var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var depart_id = Util.cookieStorage.getCookie("departId");
+	var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
+	var nick_name = Util.cookieStorage.getCookie("nickname");
 
 	var action = {
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/sms/add";
-            var data = new Object();
-			data.platfrom_id = parseInt($("#input-platfrom_id").val());
-			data.action = $("#input-action").val();
-			data.action_name = $("#input-action_name").val();
-			data.template_name = $("#input-template_name").val();
+            var url = ctx + "boss/smsplatfrom/add";
+			var data = new Object();
+			data.platfrom_name = $("#input-platfrom_name").val();
+			data.status = parseInt($("input[name=status]:checked").val());
+			data.config = $("#input-config").val();
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -25,17 +27,15 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_uname = $("#input-search-uname").val();
+			var search_uname = $("#input-search-uname").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
-
-            var url = ctx + "boss/sms/query";
-            var data = new Object();
+			var url = ctx + "boss/smsplatfrom/query";
+			var data = new Object();
 			if(search_uname == ""){
-				data.action = null;
+				data.platfrom_name = "";
 			}else{
-				data.action = search_uname;
+				data.platfrom_name = search_uname;
 			}
-
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -55,13 +55,12 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/sms/update";
+			var url = ctx + "boss/smsplatfrom/update";
 			var data = new Object();
-			data.id = parseInt($("#input-id").val());
-			data.platfrom_id = parseInt($("#input-platfrom_id-txt").val());
-			data.action = $("#input-action-txt").val();
-			data.action_name = $("#input-action_name").val();
-			data.template_name = $("#input-template_name").val();
+			data.smsplatfrom_id = parseInt($("#input-smsplatfrom_id").val());
+			data.platfrom_name = $("#input-platfrom_name-txt").val();
+			data.status = parseInt($("input[name=status]:checked").val());
+			data.config = $("#input-config").val();
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -74,15 +73,14 @@ $(function() {
 			});
 		},
 		//删除数据
-		deleteConfig : function(id) {
+		deleteItem : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "boss/sms/del";
+				var url = ctx + "boss/smsplatfrom/del";
 				var data = new Object();
-                data.id = id;
+                data.smsplatfrom_id = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
-						$("#input-search-uname").val("");
                         action.loadPageData();
 					}else{
 						alert(result.msg);
@@ -94,44 +92,44 @@ $(function() {
 	window.action = action;
 	action.loadPageData();
 
+    //编辑获取数据数据
+    $("#pageContent").on("click",".table-edit-btn",function(){
+        var that = $(this).parent().parent();
+		var check_status = $.trim(that.find("td").eq(3).text());
+		var status_val = null;
+		if(check_status === "使用"){
+			status_val = 1;
+		}else if(check_status === "弃用"){
+			status_val = 0;
+		}
+        $("#input-smsplatfrom_id").val(that.find("td").eq(0).text());
+        $("#input-platfrom_name-txt").val(that.find("td").eq(1).text());
+        $("#input-config").val(that.find("td").eq(2).text());
+		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
+        $("#addTempl-modal").modal("show");
+    });
+
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑短信模板");
-			$("#input-platfrom_id-wrap").hide();
-			$("#input-platfrom_id-txt-wrap").show();
-			$("#input-action-wrap").hide();
-			$("#input-action-txt-wrap").show();
+			$("h4#addTempl-modal-label").text("编辑菜单信息");
+			$("#input-platfrom_name-wrap").hide();
+			$("#input-platfrom_name-txt-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加短信模板");
-			$("#input-platfrom_id-wrap").show();
-			$("#input-platfrom_id-txt-wrap").hide();
-			$("#input-action-wrap").show();
-			$("#input-action-txt-wrap").hide();
+			$("h4#addTempl-modal-label").text("添加菜单信息");
+			$("#input-platfrom_name-wrap").show();
+			$("#input-platfrom_name-txt-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
 	});
 
-    //编辑获取数据
-    $("#pageContent").on("click",".table-edit-btn",function(){
-        var that = $(this).parent().parent();
-		$("#input-id").val(that.find("td").eq(0).text());
-		$("#input-action-txt").val(that.find("td").eq(1).text());
-		$("#input-action_name").val(that.find("td").eq(2).text());
-		$("#input-platfrom_id-txt").val(that.find("td").eq(3).text());
-		$("#input-template_name").val(that.find("td").eq(4).text());
-
-
-        $("#addTempl-modal").modal("show");
-    });
-
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-			platfrom_id : {
+			platfrom_name : {
                 required : true
             }
         }
@@ -153,12 +151,10 @@ $(function() {
 	$("#btn-search").on('click', function() {
         action.loadPageData();
 	});
-
 	$("#input-search-uname").on('keydown', function(e) {
-		if (e.keyCode == 13) {
-			action.loadPageData();
-		}
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
 
 	});
-
 });

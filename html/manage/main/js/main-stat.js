@@ -69,10 +69,10 @@ $(function() {
                     var data_str = "["+data_arr+"]";
                     var data = JSON.parse(data_str);
 
-                    if(role_level == 3){
+                    if(role_level == 1){
                         option = {
                             title: {
-                                text: '用户注册数量',
+                                text: '用户激活/注册数量',
                                 x:'center'
                             },
                             tooltip: {
@@ -105,7 +105,7 @@ $(function() {
                                 }
                             },
                             series: [{
-                                name: '用户注册数量',
+                                name: '用户激活/注册数量',
                                 type: 'line',
                                 showSymbol: true,
                                 hoverAnimation: false,
@@ -118,7 +118,7 @@ $(function() {
                     }else{
                         option = {
                             title: {
-                                text: '设备激活数量',
+                                text: '设备激活/注册数量',
                                 x:'center'
                             },
                             tooltip: {
@@ -151,7 +151,7 @@ $(function() {
                                 }
                             },
                             series: [{
-                                name: '设备激活数量',
+                                name: '设备激活/注册数量',
                                 type: 'line',
                                 showSymbol: true,
                                 hoverAnimation: false,

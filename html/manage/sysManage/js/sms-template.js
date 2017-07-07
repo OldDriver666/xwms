@@ -6,12 +6,12 @@ $(function() {
 	var action = {
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/suggest/add";
+            var url = ctx + "boss/sms/add";
             var data = new Object();
-			data.user_id = parseInt($("#input-user_id").val());
-			data.uname = $("#input-uname").val();
-			data.suggestion = $("#input-suggestion").val();
-			data.contact = $("#input-contact").val();
+			data.platfrom_id = parseInt($("#input-platfrom_name  option:selected").val());
+			data.action = $("#input-action").val();
+			data.action_name = $("#input-action_name").val();
+			data.template_name = $("#input-template_name").val();
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -25,26 +25,25 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_uname = $("#input-search-uname").val();
+            var search_uname = parseInt($("#input-search-uname").val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
-            var url = ctx + "boss/suggest/query";
+            var url = ctx + "boss/sms/query";
             var data = new Object();
 			if(search_uname == ""){
-				data.uname = null;
+				data.action = null;
 			}else{
-				data.uname = search_uname;
+				data.action = search_uname;
 			}
 
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
-                    $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
-
-                    if($('#pageContent tr').length == 0){
+					action.loadSMSData(JSON.stringify(result.data));
+                    /*if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
-					}
+					}*/
                 } else {
 					alert(result.msg);
                 }
@@ -53,16 +52,43 @@ $(function() {
             });
 
 		},
+		//获取所有短信平台数据
+		loadSMSData : function(paramArray) {
+			var url = ctx + "boss/smsplatfrom/query";
+			var data = new Object();
+			data.platfrom_name = "";
+			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+					$("#pageSMSTmpl").tmpl(result.data).appendTo('#input-platfrom_name');
+					var platformArray = result.data;
+					var templateArray = JSON.parse(paramArray);
+					for(var i=0; i< templateArray.length; i++){
+						for(var j=0; j< platformArray.length; j++){
+							if (templateArray[i].platfrom_id == platformArray[j].smsplatfrom_id){
+								var t = platformArray[j].platfrom_name;
+								templateArray[i].platfrom_name = t;
+							}
+						}
+
+					}
+					$("#pageTmpl").tmpl(templateArray).appendTo('#pageContent');
+
+				} else {
+					alert(result.msg);
+				}
+			},function() {
+				alert("服务器开个小差，请稍后重试！")
+			});
+		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/suggest/update";
+			var url = ctx + "boss/sms/update";
 			var data = new Object();
-			data.suggest_id = parseInt($("#input-suggest_id").val());
-			data.user_id = parseInt($("#input-user_id").val());
-			data.uname = $("#input-uname").val();
-			data.status = parseInt($("input[name=status]:checked").val());
-			data.suggestion = $("#input-suggestion").val();
-			data.contact = $("#input-contact").val();
+			data.id = parseInt($("#input-id").val());
+			data.platfrom_id = parseInt($("#input-platfrom_id-txt").val());
+			data.action = $("#input-action").val();
+			data.action_name = $("#input-action_name").val();
+			data.template_name = $("#input-template_name").val();
 
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -77,9 +103,9 @@ $(function() {
 		//删除数据
 		deleteConfig : function(id) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "boss/suggest/del";
+				var url = ctx + "boss/sms/del";
 				var data = new Object();
-                data.suggest_id = id;
+                data.id = id;
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
@@ -99,12 +125,20 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑用户意见");
-			$("#input-status-txt-wrap").show();
+			$("h4#addTempl-modal-label").text("编辑短信模板");
+			$("#input-platfrom_id-txt-wrap").hide();
+			$("#input-platfrom_name-wrap").hide();
+			$("#input-platfrom_name-txt-wrap").show();
+			$("#input-action-wrap").show();
+			$("#input-action-txt-wrap").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加用户意见");
-			$("#input-status-txt-wrap").hide();
+			$("h4#addTempl-modal-label").text("添加短信模板");
+			$("#input-platfrom_id-txt-wrap").hide();
+			$("#input-platfrom_name-wrap").show();
+			$("#input-platfrom_name-txt-wrap").hide();
+			$("#input-action-wrap").show();
+			$("#input-action-txt-wrap").hide();
 			$form.data("action", "add");
 			$form[0].reset();
 		}
@@ -113,20 +147,13 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-		var check_status = $.trim(that.find("td").eq(3).text());
-		var status_val = null;
-		if(check_status === "已经回复"){
-			status_val = 1;
-		}else if(check_status === "初始正常"){
-			status_val = 0;
-		}
+		$("#input-id").val(that.find("td").eq(0).text());
+		$("#input-action").val(that.find("td").eq(1).text());
+		$("#input-action_name").val(that.find("td").eq(2).text());
+		$("#input-platfrom_id-txt").val(that.find("td").eq(7).text());
+		$("#input-template_name").val(that.find("td").eq(4).text());
+		$("#input-platfrom_name-txt").val(that.find("td").eq(3).text());
 
-		$("#input-suggest_id").val(that.find("td").eq(0).text());
-        $("#input-user_id").val(that.find("td").eq(1).text());
-        $("#input-uname").val(that.find("td").eq(2).text());
-		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-		$("#input-suggestion").val(that.find("td").eq(4).text());
-		$("#input-contact").val(that.find("td").eq(5).text());
 
         $("#addTempl-modal").modal("show");
     });
@@ -134,12 +161,9 @@ $(function() {
 	//验证表单
     $("#form-addTempl").validate({
         rules : {
-			userid : {
+			platfrom_name : {
                 required : true
-            },
-			uname : {
-				required : true
-			}
+            }
         }
     });
 
@@ -155,17 +179,25 @@ $(function() {
 			window.action.edit();
 		}
 	});
+	$("#input-search-uname").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+		}
+	});
 
 	$("#btn-search").on('click', function() {
+		if(isNaN($("#input-search-uname").val())) {
+			$("#input-search-uname").parent().addClass("has-error");
+			return;
+		}
         action.loadPageData();
 	});
-	$("#input-search-account").on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            action.loadPageData();
-        }
 
-	});
 	$("#input-search-uname").on('keydown', function(e) {
+		if(isNaN($("#input-search-uname").val())) {
+			$("#input-search-uname").parent().addClass("has-error");
+			return;
+		}
 		if (e.keyCode == 13) {
 			action.loadPageData();
 		}

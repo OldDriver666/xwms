@@ -9,9 +9,6 @@ $(function() {
 	var action = {
 		//新增数据
 		add : function() {
-			if (!$("#form-addTempl").valid()) {
-				return;
-			}
             var url = ctx + "boss/module/insert";
 			var data = new Object();
 			data.admin_id = parseInt(admin_id),
@@ -160,6 +157,18 @@ $(function() {
 		if (!$("#form-addTempl").valid()) {
 			return;
 		}
+		if(isNaN($("#input-priority").val())) {
+			$("#input-priority").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
+			$("#input-priority").parent().append(err_html);
+			return;
+		}
+		if(isNaN($("#input-parent_id").val())) {
+			$("#input-parent_id").parent().parent().addClass("has-error");
+			var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
+			$("#input-parent_id").parent().append(err_html);
+			return;
+		}
 		var action = $("form#form-addTempl").data("action");
 		switch (action) {
 		case "add":
@@ -168,6 +177,20 @@ $(function() {
 		case "edit":
 			window.action.edit();
 			break;
+		}
+	});
+
+	$("#input-priority").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+			$(this).next().remove();
+		}
+	});
+
+	$("#input-parent_id").change(function () {
+		if(!isNaN($(this).val())) {
+			$(this).parent().removeClass("has-error");
+			$(this).next().remove();
 		}
 	});
 
