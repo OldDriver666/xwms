@@ -60,14 +60,14 @@ $(function () {
     });
 
     $("#input-search-account").change(function () {
-        if ($(this).val() != ""){
+        if (($("#input-search-account").val() != "") &&( $.trim($("#input-search-account").val()) != "")){
             $(this).parent().removeClass("has-error");
             $(this).next().remove();
         }
     });
 
     $("#btn-search").on('click', function () {
-        if($("#input-search-account").val() == "") {
+        if(($("#input-search-account").val() == "") ||( $.trim($("#input-search-account").val()) == "")) {
             $("#input-search-account").parent().addClass("has-error");
             var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
             $("#input-search-account").append(err_html);
@@ -313,7 +313,7 @@ Util.Page = (function () {
             }
 
             if (result.code == ReturnCode.SUCCESS && result.data.result.length == 0) {
-                alert("请输入查询设备小位号");
+                alert("记录不存在");
             }
 
             that.allPageSize = Math.ceil(result.data.total_count / that.pageSize);
