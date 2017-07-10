@@ -2,15 +2,20 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
+
 /**
  * @author 
  */
 public class ElectricFence implements Serializable {
+    @JsonProperty("fence_id")
     private Integer fenceId;
 
     /**
      * 设备ID
      */
+    @JsonProperty("device_id")
     private Integer deviceId;
 
     /**
@@ -112,4 +117,10 @@ public class ElectricFence implements Serializable {
     public void setCreated(Integer created) {
         this.created = created;
     }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+    
 }

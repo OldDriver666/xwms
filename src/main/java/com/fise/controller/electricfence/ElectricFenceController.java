@@ -1,9 +1,10 @@
-package com.fise.controller.impl;
+package com.fise.controller.electricfence;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,22 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
-import com.fise.model.entity.DeviceCrontab;
-import com.fise.model.param.DeviceCrontabParam;
-import com.fise.server.devicecrontab.IDeviceCrontabService;
+import com.fise.model.entity.ElectricFence;
+import com.fise.model.param.ElectricFenceParam;
+import com.fise.server.electricfence.IElectricFenceService;
 import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/boss/devicecrontab")
-public class DeviceCrontabController {
+@RequestMapping("/boss/electricfence")
+public class ElectricFenceController {
     
     private Logger logger=Logger.getLogger(getClass());
     
     @Resource
-    IDeviceCrontabService deviceCrontabService;
+    IElectricFenceService electricFenceService;
     
     @RequestMapping(value="/add",method=RequestMethod.POST)
-    public Response addDeviceCrontab(@RequestBody @Valid DeviceCrontab record){
+    public Response addElectricFence(@RequestBody @Valid ElectricFence record){
         
         Response response=new Response();
         logger.info(record.toString());
@@ -35,13 +36,12 @@ public class DeviceCrontabController {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        response=deviceCrontabService.addDeviceCrontab(record);
+        response=electricFenceService.addElectricFence(record);
         return response;
     }
     
     @RequestMapping(value="/query",method=RequestMethod.POST)
-    public Response queryDeviceCrontab(@RequestBody @Valid DeviceCrontabParam param){
-        
+    public Response queryElectricFence(@RequestBody @Valid ElectricFenceParam param){
         Response response=new Response();
         logger.info(param.toString());
         
@@ -49,35 +49,34 @@ public class DeviceCrontabController {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        response=deviceCrontabService.queryDeviceCrontab(param);
+        response=electricFenceService.queryElectricFence(param);
         return response;
     }
     
     @RequestMapping(value="/update",method=RequestMethod.POST)
-    public Response updateDeviceCrontab(@RequestBody @Valid DeviceCrontab record){
+    public Response updateElectricFence(@RequestBody @Valid ElectricFence record){
         
         Response response=new Response();
         logger.info(record.toString());
         
-        if(record.getTaskId()==null){
+        if(record.getFenceId()==null ||record.getDeviceId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
         
-        response=deviceCrontabService.updateDeviceCrontab(record);
+        response=electricFenceService.updateElectricFence(record);
         return response;
     }
     
     @RequestMapping(value="/del",method=RequestMethod.POST)
-    public Response delDeviceCrontab(@RequestBody @Valid DeviceCrontabParam param){
+    public Response delElectricFence(@RequestBody @Valid ElectricFenceParam param){
         
         Response response=new Response();
         logger.info(param.toString());
         
-        if(param.getTaskId()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        
-        response=deviceCrontabService.delDeviceCrobtab(param);
+        if(param.getFenceId()==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL); 
+         }
+        response=electricFenceService.delElectricFence(param);
         return response;
     }
 }
