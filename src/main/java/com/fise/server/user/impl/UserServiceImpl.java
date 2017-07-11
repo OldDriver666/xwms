@@ -38,6 +38,10 @@ public class UserServiceImpl implements IUserService{
             criteria.andNickEqualTo(param.getParam().getNick());
         }
         
+        if(param.getParam().getUserId() != null){
+            criteria.andIdEqualTo(param.getParam().getUserId());
+        }
+        
         List<IMUser> list=IMUserDao.selectByPage(example,param);
               
         if(list.size()==0){

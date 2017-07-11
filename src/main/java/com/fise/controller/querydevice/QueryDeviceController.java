@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.param.QueryDeviceParam;
 import com.fise.server.querydevice.IQueryDeviceService;
+import com.qq.jutil.string.StringUtil;
 
 @RestController
 @RequestMapping("/boss")
@@ -28,8 +30,13 @@ public class QueryDeviceController {
         
         Response response=new Response();
         logger.info(param.toString());
-        response=iQueryDeviceService.queryDeviceByAccount(param);
-        
+        if(StringUtil.isEmpty(param.getAccount()) && StringUtil.isEmpty(param.getPhone()) && param.getDepartid() == null){
+            response.setErrorCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION);
+            response.setMsg("请输入查询条件");
+        } else {
+            response=iQueryDeviceService.queryDeviceByAccount(param);
+        }
+
         return response;
     }
     

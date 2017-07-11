@@ -2,9 +2,6 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fise.utils.JsonUtil;
-
 /**
  * @author 
  */
@@ -14,13 +11,11 @@ public class DeviceControl implements Serializable {
     /**
      * 设备号
      */
-    @JsonProperty("device_id")
     private Integer deviceId;
 
     /**
      * 权限类型:0-管理员 1-亲情 2-白名单 3-紧急号码
      */
-    @JsonProperty("auth_type")
     private Integer authType;
 
     private String mobile;
@@ -101,10 +96,4 @@ public class DeviceControl implements Serializable {
     public void setCreated(Integer created) {
         this.created = created;
     }
-
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
-    
 }
