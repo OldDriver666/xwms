@@ -33,25 +33,28 @@ http://boss.fise-wi.com
 
 - **请求**
 ```
-{"account":"#userphone#","password":"#md5#"}
+{
+  "account":"#userphone#",
+  "password":"#md5#"
+}
 ```
 - **回复**
 ```
 {
-      "id": 1,
-      "account": "18601735176",
-      "salt": "",
-      "password": "",
-      "nickName": "廖国顺",
-      "roleId": 3,
-      "companyId": 1,
-      "phone": "",
-      "email": "",
-      "accessToken": "6d2c021da6524976a8d037cd2b66a891",
-      "status": 1,
-      "lastLogin": 1496891165,
-      "created": 1225404661,
-      "updated": 1496806101
+    "id": 1,
+    "account": "18601735176",
+    "salt": "",
+    "password": "",
+    "nickName": "廖国顺",
+    "roleId": 3,
+    "companyId": 1,
+    "phone": "",
+    "email": "",
+    "accessToken": "6d2c021da6524976a8d037cd2b66a891",
+    "status": 1,
+    "lastLogin": 1496891165,
+    "created": 1225404661,
+    "updated": 1496806101
 }
 ```
 
