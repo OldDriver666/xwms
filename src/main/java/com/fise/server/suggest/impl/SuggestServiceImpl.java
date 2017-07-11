@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMSuggestMapper;
 import com.fise.model.entity.IMSuggest;
@@ -40,23 +41,31 @@ public class SuggestServiceImpl implements ISuggestService{
 	}
 
 	@Override
-	public Response querySuggest(SuggestParam param) {
+	public Response querySuggest(Page<SuggestParam> param) {
 		
 		Response response=new Response();
 		
 		IMSuggestExample example=new IMSuggestExample();
 		Criteria criteria=example.createCriteria();
 		
-		if(param.getUname()!=null){
-			criteria.andUnameEqualTo(param.getUname());
+		if(param.getParam().getUname()!=null){
+			criteria.andUnameEqualTo(param.getParam().getUname());
 		}
+		example.setOrderByClause("created desc");
 		
-		List<IMSuggest> list=IMSuggestDao.selectByExample(example);
+		List<IMSuggest> list=IMSuggestDao.selectByExamplebypage(example, param);
 		if(list.size()==0){
 			return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
 		}
 		
-		response.success(list);
+		Page<IMSuggest> page=new Page<IMSuggest>();
+		page.setPageNo(param.getCurrentPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+		
+		response.success(page);
 		return response;
 	}
 

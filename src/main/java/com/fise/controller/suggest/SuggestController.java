@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSuggest;
 import com.fise.model.param.SuggestParam;
@@ -44,7 +45,7 @@ public class SuggestController {
 	
 	//查询suggest信息
 	@RequestMapping(value="/query",method=RequestMethod.POST)
-	public Response querySuggest(@RequestBody @Valid SuggestParam param){
+	public Response querySuggest(@RequestBody @Valid Page<SuggestParam> param){
 		
 		Response response=new Response();
 		
