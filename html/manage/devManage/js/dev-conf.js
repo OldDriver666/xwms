@@ -8,40 +8,96 @@ $(function() {
 	var action = {
 		//获取所有数据
 		loadPageData : function() {
+            if($("#search-input-devType").val() == "") {
+                $("#search-input-devType").parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#search-input-devType").append(err_html);
+                return;
+            }
+
             var search_devType = parseInt($('#search-input-devType option:selected').val());
 			var search_account = $("#input-search-account").val();
             var search_phone = $("#input-search-phone").val();
+            var search_device_id = $("#input-search-device_id").val();
 
+
+            if((search_account == "")&&(search_phone == "")&&(search_device_id == "")){
+                alert("请至少输入“设备ID/设备账号/设备电话号码”中的一项进行搜索");
+                return;
+            }
             var td_len = $("#table thead tr th").length;//表格字段数量
+            var td_len1 = $("#table1 thead tr th").length;//表格字段数量
+            var td_len2 = $("#table2 thead tr th").length;//表格字段数量
+            var td_len3 = $("#table3 thead tr th").length;//表格字段数量
             $("#pagination").hide();
+            $("#pagination1").hide();
+            $("#pagination2").hide();
+            $("#pagination3").hide();
             var url = ctx + "boss/querydevice";
             var data = new Object();
                 data.account = search_account;
                 data.phone = search_phone;
                 data.depart_id = parseInt(depart_id);
                 data.type = search_devType;
+                data.device_id = parseInt(search_device_id);
 
 
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
+                    $('#pageContent1').find("tr").remove();
+                    $('#pageContent2').find("tr").remove();
+                    $('#pageContent3').find("tr").remove();
+
                     var pageTmplTheads = "#" + "pageTmplThead" + search_devType;
                     var pageTmplTbodys = "#" + "pageTmplTbody" + search_devType;
                     $(pageTmplTheads).tmpl().appendTo('#pageThead');
-                    $(pageTmplTbodys).tmpl(result.data).appendTo('#pageContent');
+                    $(pageTmplTbodys).tmpl(result.data.base_info).appendTo('#pageContent');
+
+                    $(FenceTmplThead).tmpl().appendTo('#pageThead1');
+                    $(FenceTmplTbody).tmpl(result.data.electri_fence).appendTo('#pageContent1');
+
+                    $(ControlTmplThead).tmpl().appendTo('#pageThead2');
+                    $(ControlTmplTbody).tmpl(result.data.control).appendTo('#pageContent2');
+
+                    if(search_devType == 25) {
+                        $(CrontabTmplThead).tmpl().appendTo('#pageThead3');
+                        $(CrontabTmplTbody).tmpl(result.data.crontab).appendTo('#pageContent3');
+
+                        if($('#pageContent3 tr').length == 0){
+                            $('#pageContent3').append("<tr><td  colspan='" + td_len3 + "' class='t_a_c'>暂无数据</td></tr>");
+                        }
+                    }
+
 
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
                     }
+                    if($('#pageContent1 tr').length == 0){
+                        $('#pageContent1').append("<tr><td  colspan='" + td_len1 + "' class='t_a_c'>暂无数据</td></tr>");
+                    }
+                    if($('#pageContent2 tr').length == 0){
+                        $('#pageContent2').append("<tr><td  colspan='" + td_len2 + "' class='t_a_c'>暂无数据</td></tr>");
+                    }
+
                 } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
                     $('#pageContent').find("tr").remove();
+                    $('#pageContent1').find("tr").remove();
+                    $('#pageContent2').find("tr").remove();
+                    $('#pageContent3').find("tr").remove();
                     alert("没有查到该设备信息");
                 }else {
                     $('#pageContent').find("tr").remove();
+                    $('#pageContent1').find("tr").remove();
+                    $('#pageContent2').find("tr").remove();
+                    $('#pageContent3').find("tr").remove();
                     alert(result.msg);
                 }
             },function() {
                 $('#pageContent').find("tr").remove();
+                $('#pageContent1').find("tr").remove();
+                $('#pageContent2').find("tr").remove();
+                $('#pageContent3').find("tr").remove();
                 alert("服务器开个小差，请稍后重试！")
             });
 
@@ -56,6 +112,23 @@ $(function() {
 	};
 	window.action = action;
     action.loadDevTypeData();
+
+/*    //获取fence数据
+    $("#pageContent").on("click",".table-fence-btn",function(){
+        $("#addTempl-modal").modal("show");
+    });
+
+    //获取control数据
+    $("#pageContent").on("click",".table-control-btn",function(){
+        $("#addTempl-modal").modal("show");
+    });
+
+    //获取crontab数据
+    $("#pageContent").on("click",".table-crontab-btn",function(){
+        $("#addTempl-modal").modal("show");
+    });*/
+
+
 
 
     $("#dev-query-condition").validate({
@@ -81,12 +154,18 @@ $(function() {
             return;
         }else{
             $("#pageThead").empty();
+            $("#pageThead1").empty();
+            $("#pageThead2").empty();
+            $("#pageThead3").empty();
             action.loadPageData();
         }
 	});
     $("#input-search-devType").on('keydown', function(e) {
         if (e.keyCode == 13) {
             $("#pageThead").empty();
+            $("#pageThead1").empty();
+            $("#pageThead2").empty();
+            $("#pageThead3").empty();
             action.loadPageData();
         }
 
@@ -94,15 +173,35 @@ $(function() {
 	$("#input-search-account").on('keydown', function(e) {
         if (e.keyCode == 13) {
             $("#pageThead").empty();
+            $("#pageThead1").empty();
+            $("#pageThead2").empty();
+            $("#pageThead3").empty();
             action.loadPageData();
         }
 	});
     $("#input-search-phone").on('keydown', function(e) {
         if (e.keyCode == 13) {
             $("#pageThead").empty();
+            $("#pageThead1").empty();
+            $("#pageThead2").empty();
+            $("#pageThead3").empty();
             action.loadPageData();
         }
     });
+    $("#input-search-device_id").on('keydown', function(e) {
+        if(isNaN($("#input-search-device_id").val())) {
+            $("#input-search-device_id").parent().addClass("has-error");
+            return;
+        }
+        if (e.keyCode == 13) {
+            $("#pageThead").empty();
+            $("#pageThead1").empty();
+            $("#pageThead2").empty();
+            $("#pageThead3").empty();
+            action.loadPageData();
+        }
+    });
+
 });
 
 

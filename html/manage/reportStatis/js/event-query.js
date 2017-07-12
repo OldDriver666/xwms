@@ -77,6 +77,12 @@ $(function () {
     });
     $("#input-search-account").on('keydown', function (e) {
         if (e.keyCode == 13) {
+            if(($("#input-search-account").val() == "") ||( $.trim($("#input-search-account").val()) == "")) {
+                $("#input-search-account").parent().addClass("has-error");
+                var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
+                $("#input-search-account").append(err_html);
+                return;
+            }
             action.loadPageData();
         }
 

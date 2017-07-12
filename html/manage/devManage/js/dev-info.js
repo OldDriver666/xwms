@@ -514,7 +514,7 @@ Util.Page = (function() {
             if (that.resultFilter) {
                 list = that.resultFilter(result);
             } else {
-                list = result.data;
+                list = result.data.result;
             }
 
             // 把当前索引号添加进去

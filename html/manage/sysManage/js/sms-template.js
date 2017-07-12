@@ -30,7 +30,7 @@ $(function() {
 
             var url = ctx + "boss/sms/query";
             var data = new Object();
-			if(search_uname == ""){
+			if((search_uname == "")&&(search_uname != 0)){
 				data.action = null;
 			}else{
 				data.action = search_uname;
