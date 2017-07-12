@@ -16,6 +16,9 @@ public class QueryDeviceParam implements Serializable{
     @NotNull
     private Integer type;
     
+    @JsonProperty("device_id")
+    private Integer deviceId;
+    
     private String phone;
     
     @JsonProperty("depart_id")
@@ -52,6 +55,14 @@ public class QueryDeviceParam implements Serializable{
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public Integer getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Integer deviceId) {
+        this.deviceId = deviceId;
     }
 
     @Override

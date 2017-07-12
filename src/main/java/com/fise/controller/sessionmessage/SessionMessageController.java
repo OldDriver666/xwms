@@ -27,7 +27,7 @@ public class SessionMessageController {
         Response response=new Response();
         logger.info(param.toString());
         response=iSessionMessageService.query(param);
-        logger.info("end select message"+response.toString());
+        
         
         return response;
     }

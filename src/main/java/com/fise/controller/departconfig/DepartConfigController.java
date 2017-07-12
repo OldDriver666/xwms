@@ -36,7 +36,7 @@ public class DepartConfigController {
         }
 	
 		response=iDepartConfigService.insertDepartConfig(param);
-		logger.info("end insert imdepartconfig"+response.toString());
+		
 		
 		return response;
 	}
@@ -49,7 +49,7 @@ public class DepartConfigController {
 		
 		logger.info(param.toString());
 		response=iDepartConfigService.queryDepartConfig(param);
-		logger.info("end query imdepartconfig"+response.toString());
+		
 		
 		return response;
 	}
@@ -66,7 +66,7 @@ public class DepartConfigController {
         }
 		
 		response=iDepartConfigService.delDepartConfig(param);
-		logger.info("end delete imdepartconfig"+response.toString());
+		
 		
 		return response;
 	}
@@ -83,7 +83,7 @@ public class DepartConfigController {
         }
 		
 		response=iDepartConfigService.updateDepartConfig(param);
-		logger.info("end update imdepartconfig"+response.toString());
+		
 		
 		return response;
 	}

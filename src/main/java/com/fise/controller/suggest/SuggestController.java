@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSuggest;
 import com.fise.model.param.SuggestParam;
@@ -37,20 +38,20 @@ public class SuggestController {
         }
 		
 		response=iSuggestService.insertSuggest(record);
-		logger.info("end insert imsugest"+response.toString());
+		
 		
 		return response;
 	}
 	
 	//查询suggest信息
 	@RequestMapping(value="/query",method=RequestMethod.POST)
-	public Response querySuggest(@RequestBody @Valid SuggestParam param){
+	public Response querySuggest(@RequestBody @Valid Page<SuggestParam> param){
 		
 		Response response=new Response();
 		
 		logger.info(param.toString());
 		response=iSuggestService.querySuggest(param);
-		logger.info("end query imsuggest"+response.toString());
+		
 		
 		return response;
 	}
@@ -67,7 +68,7 @@ public class SuggestController {
         }
 		
 		response=iSuggestService.delSuggest(param);
-		logger.info("end delete imsuggest"+response.toString());
+		
 		
 		return response;
 	}
@@ -84,7 +85,7 @@ public class SuggestController {
         }
 		
 		response=iSuggestService.updateSuggest(record);
-		logger.info("end update imsuggest"+response.toString());
+		
 		
 		return response;
 	}

@@ -37,7 +37,7 @@ public class SystemConfController {
         }
 		
 		response=iSystemConfService.insertSystemConf(record);
-		logger.info("end insert systemconf"+response.toString());
+		
 		
 		return response;
 	}
@@ -50,7 +50,7 @@ public class SystemConfController {
 		
 		logger.info(param.toString());
 		response=iSystemConfService.querySystemConf(param);
-		logger.info("end select systemconf"+response.toString());
+		
 		
 		return response;
 	}
@@ -67,7 +67,7 @@ public class SystemConfController {
         }
 		
 		response=iSystemConfService.delSystemConf(param);
-		logger.info("end delete systemconf"+response.toString());
+		
 		
 		return response;
 	}
@@ -84,7 +84,7 @@ public class SystemConfController {
         }
 		
 		response=iSystemConfService.updateSystemConf(record);
-		logger.info("end update systemconf"+response.toString());
+		
 		
 		return response;
 	}

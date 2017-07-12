@@ -37,7 +37,7 @@ public class ClientTypeController {
         }
 		
 		response=imClientTypeService.insertClientType(param);
-		logger.info("end insert IMClientType "+response.toString());
+		
 		
 		return response;
 	}
@@ -50,7 +50,7 @@ public class ClientTypeController {
 		
 		logger.info(param.toString());
 		response=imClientTypeService.queryClientType(param);
-		logger.info("end query IMClientType"+response.toString());
+		
 		
 		return response;
 	}
@@ -67,7 +67,7 @@ public class ClientTypeController {
         }
 		
 		response=imClientTypeService.delClientType(param);
-		logger.info("end delete IMClientType"+response.toString());
+		
 		
 		return response;
 	}
@@ -84,7 +84,7 @@ public class ClientTypeController {
         }
 		
 		response=imClientTypeService.updateClientType(record);
-		logger.info("end update IMClientType"+response.toString());
+		
 		
 		return response;
 	}
