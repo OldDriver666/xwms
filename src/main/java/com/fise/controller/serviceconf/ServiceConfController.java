@@ -37,7 +37,7 @@ public class ServiceConfController {
         }
 		
 		response=iServiceConfService.insertServiceConf(record);
-		logger.info("end insert imserviceconf"+response.toString());
+		
 		
 		return response;
 	}
@@ -54,7 +54,7 @@ public class ServiceConfController {
         }
 	
 		response=iServiceConfService.selectServiceConf(param);
-		logger.info("end select imserviceconf"+response.toString());
+		
 		
 		return response;
 	}
@@ -71,7 +71,7 @@ public class ServiceConfController {
         }
 		
 		response=iServiceConfService.delServiceConf(param);
-		logger.info("end delete imserviceconf"+response.toString());
+		
 		
 		return response;
 	}
@@ -88,7 +88,7 @@ public class ServiceConfController {
         }
 		
 		response=iServiceConfService.updateServiceConf(record);
-		logger.info("end update imserviceconf"+response.toString());
+		
 		
 		return response;
 	}

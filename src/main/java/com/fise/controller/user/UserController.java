@@ -30,7 +30,7 @@ public class UserController {
 
         logger.info(param.toString());
         response=IQueryUserService.queryUser(param);
-        logger.info("end query user"+response.toString());
+       
         
         return response;
     }

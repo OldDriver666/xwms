@@ -37,7 +37,6 @@ public class AdminstratorController {
 		try {
 			logger.info(param.toString());
 			resp = adminSvr.login(param);
-			logger.info("end login resp=" + resp.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.failure(ErrorCode.ERROR_SYSTEM);

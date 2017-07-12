@@ -38,7 +38,7 @@ public class SuggestController {
         }
 		
 		response=iSuggestService.insertSuggest(record);
-		logger.info("end insert imsugest"+response.toString());
+		
 		
 		return response;
 	}
@@ -51,7 +51,7 @@ public class SuggestController {
 		
 		logger.info(param.toString());
 		response=iSuggestService.querySuggest(param);
-		logger.info("end query imsuggest"+response.toString());
+		
 		
 		return response;
 	}
@@ -68,7 +68,7 @@ public class SuggestController {
         }
 		
 		response=iSuggestService.delSuggest(param);
-		logger.info("end delete imsuggest"+response.toString());
+		
 		
 		return response;
 	}
@@ -85,7 +85,7 @@ public class SuggestController {
         }
 		
 		response=iSuggestService.updateSuggest(record);
-		logger.info("end update imsuggest"+response.toString());
+		
 		
 		return response;
 	}

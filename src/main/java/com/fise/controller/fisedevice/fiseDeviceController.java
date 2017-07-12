@@ -38,7 +38,7 @@ public class fiseDeviceController {
         }
 		
 		response=fiseDeviceService.insertFiseDevice(param);
-		logger.info("end insert fisedevice"+response.toString());
+		
 		
 		return response;
 	}
@@ -55,7 +55,7 @@ public class fiseDeviceController {
         }
 		
 		response=fiseDeviceService.queryFiseDevice(page);
-		logger.info("end query fisedevice"+response.toString());
+		
 		
 		return response;
 	}
@@ -72,7 +72,7 @@ public class fiseDeviceController {
         }
 		
 		response=fiseDeviceService.delFiseDevice(param);
-		logger.info("end delete fisedevice"+response.toString());
+		
 		
 		return response;
 	}
@@ -89,7 +89,7 @@ public class fiseDeviceController {
         }
 		
 		response=fiseDeviceService.updateFiseDevice(param);
-		logger.info("end update fisedevice"+response.toString());
+		
 		
 		return response;
 	}

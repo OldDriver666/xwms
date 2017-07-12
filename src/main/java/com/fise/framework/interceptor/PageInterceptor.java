@@ -39,6 +39,8 @@ import com.fise.base.Pagination;
 @Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }) })
 public class PageInterceptor implements Interceptor {
     
+    private Logger logger=Logger.getLogger(getClass());
+    
 	private String databaseType;// 数据库类型，不同的数据库有不同的分页方法
 
 	/**
@@ -62,7 +64,7 @@ public class PageInterceptor implements Interceptor {
 		BoundSql boundSql = delegate.getBoundSql();
 		// 拿到当前绑定Sql的参数对象，就是我们在调用对应的Mapper映射语句时所传入的参数对象
 		Object paramObj = boundSql.getParameterObject();
-
+		
 		// 判断参数里是否有page对象
 		Pagination page = null;
 		if (paramObj instanceof Pagination) {
@@ -93,6 +95,8 @@ public class PageInterceptor implements Interceptor {
 			// 利用反射设置当前BoundSql对应的sql属性为我们建立好的分页Sql语句
 			ReflectUtil.setFieldValue(boundSql, "sql", pageSql);
 		}
+		
+		logger.info(boundSql.getSql());
 		
 		return invocation.proceed();
 	}

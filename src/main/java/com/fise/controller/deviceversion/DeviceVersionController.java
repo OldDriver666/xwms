@@ -37,7 +37,7 @@ public class DeviceVersionController {
         }
 		
 		response=iDeviceVersionService.insertDeviceVersion(record);
-		logger.info("end insert deviceversion"+response.toString());
+		
 		
 		return response;
 	}
@@ -54,7 +54,7 @@ public class DeviceVersionController {
         }
 		
 		response=iDeviceVersionService.queryDeviceVersion(param);
-		logger.info("end select deviceversion"+response.toString());
+		
 		
 		return response;
 	}
@@ -71,7 +71,7 @@ public class DeviceVersionController {
         }
 		
 		response=iDeviceVersionService.delDeviceVersion(param);
-		logger.info("end delete deviceversion"+response.toString());
+		
 		
 		return response;
 	}
@@ -88,7 +88,7 @@ public class DeviceVersionController {
         }
 		
 		response=iDeviceVersionService.updateDeviceVersion(record);
-		logger.info("end update deviceversion"+response.toString());
+		
 		
 		return response;
 	}

@@ -37,7 +37,7 @@ public class SplashController {
         }
 		
 		response=iSplashService.insertSplash(record);
-		logger.info("end insert imsplash"+response.toString());
+		
 		
 		return response;
 	}
@@ -54,7 +54,7 @@ public class SplashController {
         }
 		
 		response=iSplashService.querySplash(param);
-		logger.info("end select imsplash"+response.toString());
+		
 		
 		return response;
 	}
@@ -71,7 +71,7 @@ public class SplashController {
         }
 		
 		response=iSplashService.delSplash(param);
-		logger.info("end delete imsplash"+response.toString());
+		
 		
 		return response;
 	}
@@ -88,7 +88,7 @@ public class SplashController {
         }
 			
 		response=iSplashService.updateSplash(record);
-		logger.info("end update imsplash"+response.toString());
+		
 			
 		return response;
 	}

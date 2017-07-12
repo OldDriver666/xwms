@@ -24,6 +24,7 @@ import com.fise.model.entity.DeviceControl;
 import com.fise.model.entity.DeviceControlExample;
 import com.fise.model.entity.DeviceCrontab;
 import com.fise.model.entity.DeviceCrontabExample;
+import com.fise.model.entity.ElectricFence;
 import com.fise.model.entity.ElectricFenceExample;
 import com.fise.model.entity.IMUser;
 import com.fise.model.entity.IMUserExample;
@@ -128,7 +129,7 @@ public class QueryDeviceServiceImpl implements IQueryDeviceService{
         ElectricFenceExample.Criteria fenceCrit=fenceExa.createCriteria();
         fenceCrit.andDeviceIdEqualTo(nDeviceId);
         fenceCrit.andStatusNotEqualTo(3);
-        List<DeviceControl> fence = controlDao.selectByExample(conExa);
+        List<ElectricFence> fence = fenceDao.selectByExample(fenceExa);
         data.put("electri_fence", fence);
         
         return response.success(data);

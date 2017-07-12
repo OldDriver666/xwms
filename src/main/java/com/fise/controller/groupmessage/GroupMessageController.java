@@ -31,7 +31,7 @@ public class GroupMessageController {
         
         logger.info(param.toString());
         response=iGroupMessageService.query(param);
-        logger.info("end select groupmessage"+response.toString());
+        
         
         return response;
     }
