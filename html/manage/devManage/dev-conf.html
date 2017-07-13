@@ -376,7 +376,7 @@
 	<td>${task_param}</td>
 	<td>${begin_time}</td>
 	<td>${end_time}</td>
-	<td>{{if status == 0}}关闭 {{else status == 1}}开启{{/if}}</td>
+	<td>{{if status == 1}}开启{{else status == 2}}关闭{{/if}}</td>
 	<td>${repeat_value}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
