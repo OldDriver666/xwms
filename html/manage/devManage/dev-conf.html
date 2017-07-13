@@ -27,6 +27,11 @@
             margin: 180px auto;
         }
 
+        #pageThead, #pageThead1, #pageThead2, #pageThead3{
+            background-color: #bce8f1;
+        }
+
+
     </style>
 </head>
 
@@ -233,7 +238,7 @@
 					<th>CtrlID</th>
 					<th>设备ID</th>
 					<th>权限类型</th>
-					<th>联系ID/号码</th>
+					<th>用户ID/号码</th>
 					<th>状态</th>
 					<th>名称</th>
 					<th>更新时间</th>
@@ -250,8 +255,7 @@
 					<th>任务参数</th>
 					<th>开始时间</th>
 					<th>结束时间</th>
-					<th>响铃模式</th>
-					<th>重复模式</th>
+					<th>状态</th>
 					<th>重复时间字符串</th>
 					<th>更新时间</th>
 					<th>创建时间</th>
@@ -358,7 +362,7 @@
 	<td>${deviceId}</td>
 	<td>{{if authType == 0}}管理员{{else authType == 1}}亲情号码{{else authType == 2}}白名单{{else authType == 3}}紧急号码{{/if}}</td>
 	<td>${mobile}</td>
-	<td>{{if status == 0}}关闭{{else status == 1}}开启{{/if}}</td>
+	<td>{{if status == 1}}开启{{else status == 2}}关闭{{/if}}</td>
 	<td>${name}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
@@ -374,7 +378,6 @@
 	<td>${begin_time}</td>
 	<td>${end_time}</td>
 	<td>{{if status == 0}}关闭 {{else status == 1}}开启{{/if}}</td>
-	<td>{{if repeat_mode == 0}}关闭 {{else repeat_mode == 1}}开启{{/if}}</td>
 	<td>${repeat_value}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>

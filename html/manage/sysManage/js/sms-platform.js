@@ -116,12 +116,12 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑菜单信息");
+			$("h4#addTempl-modal-label").text("编辑短信平台");
 			$("#input-platfrom_name-wrap").hide();
 			$("#input-platfrom_name-txt-wrap").show();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加菜单信息");
+			$("h4#addTempl-modal-label").text("添加短信平台");
 			$("#input-platfrom_name-wrap").show();
 			$("#input-platfrom_name-txt-wrap").hide();
 			$form.data("action", "add");
