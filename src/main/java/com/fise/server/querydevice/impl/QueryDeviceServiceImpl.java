@@ -104,6 +104,7 @@ public class QueryDeviceServiceImpl implements IQueryDeviceService{
             DeviceCrontabExample.Criteria crit2=ex2.createCriteria();
             crit2.andDeviceIdEqualTo(nDeviceId);
             crit2.andStatusNotEqualTo(3);
+            crit2.andStatusNotEqualTo(0);
             List<DeviceCrontab> crontab = crontabDao.selectByExample(ex2);
             data.put("crontab", crontab);
         }
@@ -122,6 +123,7 @@ public class QueryDeviceServiceImpl implements IQueryDeviceService{
         DeviceControlExample.Criteria conCrit=conExa.createCriteria();
         conCrit.andDeviceIdEqualTo(nDeviceId);
         conCrit.andStatusNotEqualTo(3);
+        conCrit.andStatusNotEqualTo(0);
         List<DeviceControl> control = controlDao.selectByExample(conExa);
         data.put("control", control);
         
@@ -129,6 +131,7 @@ public class QueryDeviceServiceImpl implements IQueryDeviceService{
         ElectricFenceExample.Criteria fenceCrit=fenceExa.createCriteria();
         fenceCrit.andDeviceIdEqualTo(nDeviceId);
         fenceCrit.andStatusNotEqualTo(3);
+        fenceCrit.andStatusNotEqualTo(0);
         List<ElectricFence> fence = fenceDao.selectByExample(fenceExa);
         data.put("electri_fence", fence);
         

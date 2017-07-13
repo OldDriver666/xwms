@@ -31,6 +31,7 @@ $(function() {
             //var search_departID = $("#input-search-departID").val();
 			var search_domain = $("#input-search-domain").val();
             var search_nick = $("#input-search-nick").val();
+            var search_user_id = parseInt($("#input-search-user_id").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
@@ -40,7 +41,8 @@ $(function() {
                 data.page_size = 20;
                 data.param = {
                     "domain":search_domain,
-                    "nick":search_nick
+                    "nick":search_nick,
+                    "user_id":search_user_id,
                 };
             var opt = {
                 "targetContentId" : "pageContent",
@@ -200,6 +202,11 @@ $(function() {
             $(this).next().remove();
         }
     });
+    $("#input-search-user_id").change(function () {
+        if(!isNaN($(this).val())) {
+            $(this).parent().removeClass("has-error");
+        }
+    });
     $("#btn-add-submit").on('click', function() {
         var action = $("form#form-addTempl").data("action");
         if(action == "add"){
@@ -226,6 +233,10 @@ $(function() {
     });
 
 	$("#btn-search").on('click', function() {
+        if(isNaN($("#input-search-user_id").val())) {
+            $("#input-search-user_id").parent().addClass("has-error");
+            return;
+        }
         action.loadPageData();
 	});
 	$("#input-search-domain").on('keydown', function(e) {
@@ -234,6 +245,15 @@ $(function() {
         }
     });
     $("#input-search-nick").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            action.loadPageData();
+        }
+    });
+    $("#input-search-user_id").on('keydown', function(e) {
+        if(isNaN($("#input-search-user_id").val())) {
+            $("#input-search-user_id").parent().addClass("has-error");
+            return;
+        }
         if (e.keyCode == 13) {
             action.loadPageData();
         }
@@ -477,7 +497,7 @@ Util.Page = (function() {
             if (that.resultFilter) {
                 list = that.resultFilter(result);
             } else {
-                list = result.data;
+                list = result.data.result;
             }
 
             // 把当前索引号添加进去

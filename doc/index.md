@@ -597,7 +597,7 @@ type和name都是选填，如果都不填，则查询所有信息
         "device_id":x,
         "auth_type":x //权限类型:0-管理员 1-亲情 2-白名单 3-紧急号码,
         "mobile":"",  //管理员此处是ID 其他情况是联系号码
-        "status":x,   //0-关闭 1-开启
+        "status":x,   //2-关闭 1-开启
         "name":"",    //名称
         "updated":x,
         "created":x
@@ -613,7 +613,7 @@ type和name都是选填，如果都不填，则查询所有信息
           "task_param":"",
           "begin_time":"",
           "end_time":"",
-          "status":"",     //0-关闭 1-开启
+          "status":"",     //2-关闭 1-开启
           "repeat_mode":"",
           "repeat_value":"",
           "updated":"",
