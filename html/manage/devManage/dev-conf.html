@@ -235,7 +235,7 @@
 </script>
 <script type="text/x-jquery-tmpl" id="ControlTmplThead">
 <tr>
-					<th>CtrlID</th>
+
 					<th>设备ID</th>
 					<th>权限类型</th>
 					<th>用户ID/号码</th>
@@ -358,9 +358,8 @@
 </script>
 <script type="text/x-jquery-tmpl" id="ControlTmplTbody">
 <tr>
-	<td style="">${id}</td>
-	<td>${deviceId}</td>
-	<td>{{if authType == 0}}管理员{{else authType == 1}}亲情号码{{else authType == 2}}白名单{{else authType == 3}}紧急号码{{/if}}</td>
+	<td>${device_id}</td>
+	<td>{{if auth_type == 0}}管理员{{else auth_type == 1}}亲情号码{{else auth_type == 2}}白名单{{else auth_type == 3}}紧急号码{{/if}}</td>
 	<td>${mobile}</td>
 	<td>{{if status == 1}}开启{{else status == 2}}关闭{{/if}}</td>
 	<td>${name}</td>
