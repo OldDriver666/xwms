@@ -49,7 +49,7 @@ public class DeviceControlController {
         return response;
     }
     
-    @RequestMapping(value="/update",method=RequestMethod.POST)
+/*    @RequestMapping(value="/update",method=RequestMethod.POST)
     public Response updateDeviceControl(@RequestBody @Valid DeviceControl record){
         
         Response response=new Response();
@@ -78,5 +78,5 @@ public class DeviceControlController {
         response=deviceControlService.delDeviceControl(param);
         return response;
     }
-     
+     */
 }
