@@ -18,7 +18,9 @@ $(function() {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
-                    action.loadPageData();
+					if((parseInt($("#input-depart_id  option:selected").val()) == parseInt($('#input-search-depart_id option:selected').val())) &&(parseInt($('#input-devType option:selected').val())==parseInt($('#input-search-client_type option:selected').val()))){
+						action.loadPageData();
+					}
                 }else{
 					alert(result.msg);
 				}

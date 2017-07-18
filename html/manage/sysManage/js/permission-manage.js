@@ -29,7 +29,10 @@ $(function() {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
-                    action.loadPageData();
+                    if(rold_idSel == parseInt($("#search-input-userRoles option:selected").val())){
+                        action.loadPageData();
+                    }
+
                 }else{
                     alert(result.msg);
 				}

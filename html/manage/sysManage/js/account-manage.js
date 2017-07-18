@@ -94,8 +94,15 @@ $(function() {
 			data.organ_id = parseInt(depart_id);
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
-					$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
-					$("#pageUserRoles").tmpl(result.data).appendTo('#input-search-userRoles');
+					var myrolesArray = [];
+					for(var i=0; i< result.data.length; i++){
+						if(result.data[i].id != role_id){
+							myrolesArray.push(result.data[i]);
+						}
+					}
+					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#add-search-userRoles');
+					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#input-search-userRoles');
+
 				} else {
 					alert(result.msg);
 				}
@@ -145,12 +152,18 @@ $(function() {
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					var myUserRolesArray = [];
+					var myrolesArray = [];
 					myUserRolesArray = result.data;
+					for(var i=0; i< result.data.length; i++){
+						if(result.data[i].id != role_id){
+							myrolesArray.push(result.data[i]);
+						}
+					}
 					if((selDepartId == parseInt(depart_id)) || (selDepartId == null)){
 						$('#add-search-userRoles').empty();
 						$('#input-search-userRoles').empty();
-						$("#pageUserRoles").tmpl(result.data).appendTo('#add-search-userRoles');
-						$("#pageUserRoles").tmpl(result.data).appendTo('#input-search-userRoles');
+						$("#pageUserRoles").tmpl(myrolesArray).appendTo('#add-search-userRoles');
+						$("#pageUserRoles").tmpl(myrolesArray).appendTo('#input-search-userRoles');
 					}
 					Util.cookieStorage.setCookie("myUserRolesArray",JSON.stringify(myUserRolesArray));
 				} else {

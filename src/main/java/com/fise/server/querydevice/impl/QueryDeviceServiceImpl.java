@@ -105,6 +105,7 @@ public class QueryDeviceServiceImpl implements IQueryDeviceService{
             crit2.andDeviceIdEqualTo(nDeviceId);
             crit2.andStatusNotEqualTo(3);
             crit2.andStatusNotEqualTo(0);
+            ex2.setOrderByClause("task_type desc");
             List<DeviceCrontab> crontab = crontabDao.selectByExample(ex2);
             data.put("crontab", crontab);
         }
