@@ -74,6 +74,10 @@ public class FiseDeviceServiceImpl implements IFiseDeviceService{
 			criteria.andImeEqualTo(page.getParam().getIme());
 		}
 		
+		if(page.getParam().getStatus()!=null){
+		    criteria.andStatusEqualTo(page.getParam().getStatus());
+		}
+		
 		if(!StringUtil.isEmpty(page.getParam().getAccount())){
 			criteria.andAccountEqualTo(page.getParam().getAccount());	
 		} 
