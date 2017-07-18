@@ -36,13 +36,6 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div id="dev-query-condition" class="navbar-form navbar-left">
-						<!--<div class="form-group">
-							<select id="search-type" class="form-control">
-								<option value="2" selected="selected">请选择</option>
-								<option value="0" >用户小位号</option>
-								<option value="1">用户昵称</option>
-							</select>
-						</div>-->
 						<div class="form-group">
 							<input id="input-search-user_id" type="text" class="form-control" placeholder="请输入用户ID">
 						</div>
@@ -51,6 +44,15 @@
 						</div>
 						<div class="form-group">
 							<input id="input-search-nick" type="text" class="form-control" placeholder="请输入用户昵称">
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<select name="search-online_status" id="input-search-online_status" class="form-control">
+									<option value="">请选择用户在线状态</option>
+									<option value="1">在线</option>
+									<option value="0">离线</option>
+								</select>
+							</div>
 						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-search"> </span>

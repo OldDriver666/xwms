@@ -32,6 +32,7 @@ $(function() {
 			var search_domain = $("#input-search-domain").val();
             var search_nick = $("#input-search-nick").val();
             var search_user_id = parseInt($("#input-search-user_id").val());
+            var search_online_status = parseInt($("#input-search-online_status option:selected").val());
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
@@ -43,6 +44,7 @@ $(function() {
                     "domain":search_domain,
                     "nick":search_nick,
                     "user_id":search_user_id,
+                    "online_status":search_online_status
                 };
             var opt = {
                 "targetContentId" : "pageContent",

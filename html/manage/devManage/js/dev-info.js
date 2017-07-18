@@ -31,6 +31,7 @@ $(function() {
             //var search_departID = $("#input-search-departID").val();
 			var search_IME = $("#input-search-IME").val();
             var search_XW = $("#input-search-XW").val();
+            var search_status = $("#input-search-status option:selected").val();
 
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
@@ -41,7 +42,8 @@ $(function() {
                 data.param = {
                     "ime":search_IME,
                     "account":search_XW,
-                    "depart_id":parseInt(depart_id)
+                    "depart_id":parseInt(depart_id),
+                    "status":parseInt(search_status)
                 };
 
             var opt = {
