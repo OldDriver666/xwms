@@ -42,6 +42,10 @@ public class UserServiceImpl implements IUserService{
             criteria.andIdEqualTo(param.getParam().getUserId());
         }
         
+        if(param.getParam().getOnlineStatus()!=null){
+            criteria.andOnlineStatusEqualTo(param.getParam().getOnlineStatus());
+        }
+        
         List<IMUser> list=IMUserDao.selectByPage(example,param);
               
         if(list.size()==0){

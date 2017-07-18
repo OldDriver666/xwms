@@ -5,7 +5,8 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class QueryUserParam implements Serializable{
-    private static final long serialVersionUid=1L;
+    
+    private static final long serialVersionUID=1L;
     
     private String domain;
     
@@ -14,6 +15,18 @@ public class QueryUserParam implements Serializable{
     @JsonProperty("user_id")
     private Integer userId;
     
+    @JsonProperty("online_status")
+    private Integer onlineStatus;
+    
+    
+    public Integer getOnlineStatus() {
+        return onlineStatus;
+    }
+
+    public void setOnlineStatus(Integer onlineStatus) {
+        this.onlineStatus = onlineStatus;
+    }
+
     public String getDomain() {
         return domain;
     }

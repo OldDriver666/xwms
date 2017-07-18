@@ -24,7 +24,7 @@ public class FiseDevice implements Serializable {
     /**
      * 状态 0-出厂 1-激活 2-删除
      */
-    private Boolean status;
+    private Integer status;
 
     /**
      * 小位号-账号
@@ -90,11 +90,11 @@ public class FiseDevice implements Serializable {
         this.ime = ime;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
