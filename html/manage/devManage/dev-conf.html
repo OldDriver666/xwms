@@ -179,6 +179,23 @@
 
 </tr>
 </script>
+<script type="text/x-jquery-tmpl" id="pageTmplThead21">
+<tr>
+					<th>设备ID</th>
+					<th>管理员ID</th>
+					<th>群ID</th>
+					<th>管理员号码</th>
+					<th>供电报警</th>
+					<th>用电报警</th>
+					<th>关机报警</th>
+					<th>移动报警</th>
+					<th>充电</th>
+					<th>工作模式</th>
+					<th>更新时间</th>
+					<th>创建时间</th>
+
+</tr>
+</script>
 <script type="text/x-jquery-tmpl" id="pageTmplThead23">
 <tr>
 					<th>设备ID</th>
@@ -297,6 +314,24 @@
 	<td>${bellMode}</td>
 	<td>${speed}</td>
 	<td>${speedLimit}</td>
+	<td>${Util.formatDateTime(updated)}</td>
+	<td>${Util.formatDateTime(created)}</td>
+
+</tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="pageTmplTbody21">
+<tr>
+	<td style="">${device_id}</td>
+	<td>${master_id}</td>
+	<td>${group_id}</td>
+	<td>${mobile}</td>
+	<td>${alarm_power}</td>
+	<td>${alarm_battery}</td>
+	<td>${alarm_off}</td>
+	<td>${alarm_move}</td>
+	<td>${electricize}</td>
+	<td>${mode}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
 

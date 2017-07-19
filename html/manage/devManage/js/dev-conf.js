@@ -54,8 +54,14 @@ $(function() {
                     $(pageTmplTheads).tmpl().appendTo('#pageThead');
                     $(pageTmplTbodys).tmpl(result.data.base_info).appendTo('#pageContent');
 
-                    $(FenceTmplThead).tmpl().appendTo('#pageThead1');
-                    $(FenceTmplTbody).tmpl(result.data.electri_fence).appendTo('#pageContent1');
+                    if((search_devType == 19) || (search_devType == 23) || (search_devType == 25)){
+                        $(FenceTmplThead).tmpl().appendTo('#pageThead1');
+                        $(FenceTmplTbody).tmpl(result.data.electri_fence).appendTo('#pageContent1');
+
+                        if($('#pageContent1 tr').length == 0){
+                            $('#pageContent1').append("<tr><td  colspan='" + td_len1 + "' class='t_a_c'>暂无数据</td></tr>");
+                        }
+                    }
 
                     $(ControlTmplThead).tmpl().appendTo('#pageThead2');
                     $(ControlTmplTbody).tmpl(result.data.control).appendTo('#pageContent2');
@@ -73,9 +79,7 @@ $(function() {
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
                     }
-                    if($('#pageContent1 tr').length == 0){
-                        $('#pageContent1').append("<tr><td  colspan='" + td_len1 + "' class='t_a_c'>暂无数据</td></tr>");
-                    }
+                    
                     if($('#pageContent2 tr').length == 0){
                         $('#pageContent2').append("<tr><td  colspan='" + td_len2 + "' class='t_a_c'>暂无数据</td></tr>");
                     }
