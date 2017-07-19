@@ -18,6 +18,7 @@ import com.fise.dao.DeviceCrontabMapper;
 import com.fise.dao.ElectricFenceMapper;
 import com.fise.dao.IMUserMapper;
 import com.fise.dao.WatchConfMapper;
+import com.fise.model.entity.CameraConf;
 import com.fise.model.entity.DeviceConf;
 import com.fise.model.entity.DeviceConfMotorMeter;
 import com.fise.model.entity.DeviceControl;
@@ -117,6 +118,11 @@ public class QueryDeviceServiceImpl implements IQueryDeviceService{
         
         if(param.getType()==20){
             DeviceConfMotorMeter baseInfo=DeviceConfMotorMeterDao.selectByPrimaryKey(nDeviceId);
+            data.put("base_info", baseInfo);
+        }
+        
+        if(param.getType()==21){
+            CameraConf baseInfo=CameraConfDao.selectByPrimaryKey(nDeviceId);
             data.put("base_info", baseInfo);
         }
         

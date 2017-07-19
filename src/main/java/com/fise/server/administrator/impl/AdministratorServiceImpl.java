@@ -1,6 +1,7 @@
 package com.fise.server.administrator.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -103,13 +104,15 @@ public class AdministratorServiceImpl implements IAdministratorService {
 			jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
 			
 			//把redis里value=memberId的键都删除，避免一个账号同时登录
-			Set<String> keys=jedis.keys("member:access_token:*");
-			for(String rediskey:keys){
-			    String idInRedis = jedis.get(rediskey);
-	            if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId)) {
-	                jedis.del(rediskey);
-	            }
-			}
+			Set<String> keys=jedis.keys("*");
+			Iterator<String> it=keys.iterator(); 
+			while(it.hasNext()){
+			    String key=it.next();
+			    String idInRedis = jedis.get(key);
+			    if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId+"")) {
+                    jedis.del(key);
+                }
+			}			   
 			
 			accessToken = CommonUtil.getAccessToken();
 			String key = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN + accessToken;
