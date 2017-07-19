@@ -9,6 +9,7 @@ public class WatchConf implements Serializable {
     /**
      * 设备号
      */
+    
     private Integer deviceId;
 
     /**

@@ -2,8 +2,6 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -14,7 +12,6 @@ public class CameraConf implements Serializable {
      * 设备号
      */
     @JsonProperty("device_id")
-    @NotNull
     private Integer deviceId;
 
     /**
@@ -38,35 +35,36 @@ public class CameraConf implements Serializable {
      * 供电报警
      */
     @JsonProperty("alarm_power")
-    private Boolean alarmPower;
+    private Integer alarmPower;
 
     /**
      * 用电报警开光
      */
     @JsonProperty("alarm_battery")
-    private Boolean alarmBattery;
+    private Integer alarmBattery;
 
     /**
      * 关机报警开关
      */
     @JsonProperty("alarm_off")
-    private Boolean alarmOff;
+    private Integer alarmOff;
 
     /**
      * 移动报警
      */
     @JsonProperty("alarm_move")
-    private Boolean alarmMove;
+    private Integer alarmMove;
 
     /**
      * 是否在充电，0-没充，1-充电
      */
-    private Boolean electricize;
+    
+    private Integer electricize;
 
     /**
      * 工作模式 1-普通模式 2-省电模式 3-休眠模式
      */
-    private Boolean mode;
+    private Integer mode;
 
     private Integer updated;
 
@@ -106,51 +104,51 @@ public class CameraConf implements Serializable {
         this.mobile = mobile;
     }
 
-    public Boolean getAlarmPower() {
+    public Integer getAlarmPower() {
         return alarmPower;
     }
 
-    public void setAlarmPower(Boolean alarmPower) {
+    public void setAlarmPower(Integer alarmPower) {
         this.alarmPower = alarmPower;
     }
 
-    public Boolean getAlarmBattery() {
+    public Integer getAlarmBattery() {
         return alarmBattery;
     }
 
-    public void setAlarmBattery(Boolean alarmBattery) {
+    public void setAlarmBattery(Integer alarmBattery) {
         this.alarmBattery = alarmBattery;
     }
 
-    public Boolean getAlarmOff() {
+    public Integer getAlarmOff() {
         return alarmOff;
     }
 
-    public void setAlarmOff(Boolean alarmOff) {
+    public void setAlarmOff(Integer alarmOff) {
         this.alarmOff = alarmOff;
     }
 
-    public Boolean getAlarmMove() {
+    public Integer getAlarmMove() {
         return alarmMove;
     }
 
-    public void setAlarmMove(Boolean alarmMove) {
+    public void setAlarmMove(Integer alarmMove) {
         this.alarmMove = alarmMove;
     }
 
-    public Boolean getElectricize() {
+    public Integer getElectricize() {
         return electricize;
     }
 
-    public void setElectricize(Boolean electricize) {
+    public void setElectricize(Integer electricize) {
         this.electricize = electricize;
     }
 
-    public Boolean getMode() {
+    public Integer getMode() {
         return mode;
     }
 
-    public void setMode(Boolean mode) {
+    public void setMode(Integer mode) {
         this.mode = mode;
     }
 

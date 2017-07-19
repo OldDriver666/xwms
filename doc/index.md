@@ -657,7 +657,23 @@ type和name都是选填，如果都不填，则查询所有信息
     "speed_limit",x,
     "updated":x,
     "created":x
-} 
+}
+//如果设备类型是21   返回网络摄像头
+//以下结构是base_info对应信息，其他同25但是无crontab
+{
+    "device_id":105392,
+    "master_id":105366,
+    "group_id":301,
+    "mobile":"13714738507",
+    "alarm_power":0,
+    "alarm_battery":1,
+    "alarm_off":1,
+    "alarm_move":0, 
+    "electricize":0,
+    "mode":1,
+    "updated":x,
+    "created":x
+}    
 ```
 
 ###设备统计

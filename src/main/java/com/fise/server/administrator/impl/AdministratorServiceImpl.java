@@ -1,7 +1,9 @@
 package com.fise.server.administrator.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +15,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
+import com.fise.framework.exception.AuthException;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
@@ -99,6 +102,18 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		String accessToken = null;
 		try {
 			jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+			
+			//把redis里value=memberId的键都删除，避免一个账号同时登录
+			Set<String> keys=jedis.keys("*");
+			Iterator<String> it=keys.iterator(); 
+			while(it.hasNext()){
+			    String key=it.next();
+			    String idInRedis = jedis.get(key);
+			    if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId+"")) {
+                    jedis.del(key);
+                }
+			}			   
+			
 			accessToken = CommonUtil.getAccessToken();
 			String key = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN + accessToken;
 			String value = memberId + "";
