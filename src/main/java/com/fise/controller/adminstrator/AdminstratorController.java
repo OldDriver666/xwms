@@ -1,5 +1,7 @@
 package com.fise.controller.adminstrator;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -74,6 +76,15 @@ public class AdminstratorController {
 	    Response resp = new Response();
 	    logger.info(param.toString());
 	    resp = adminSvr.queryAdmin(param);
+	    return resp;
+	}
+	
+	@IgnoreAuth
+	@RequestMapping(value="/islogin",method=RequestMethod.POST)
+	public Response isLogin(@RequestBody @Valid Map<String, String> map){
+	    Response resp = new Response();
+	    logger.info(map.toString());
+	    resp=adminSvr.isLogin(map.get("accessToken"));
 	    return resp;
 	}
 }
