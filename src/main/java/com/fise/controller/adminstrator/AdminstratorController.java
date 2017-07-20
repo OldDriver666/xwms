@@ -79,6 +79,7 @@ public class AdminstratorController {
 	    return resp;
 	}
 	
+	@IgnoreAuth
 	@RequestMapping(value="/islogin",method=RequestMethod.POST)
 	public Response isLogin(@RequestBody @Valid Map<String, String> map){
 	    Response resp = new Response();
