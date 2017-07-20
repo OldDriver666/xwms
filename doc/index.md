@@ -75,6 +75,23 @@ http://boss.fise-wi.com
 null 没有数据返回 看code是否成功
 ```
 
+####检测管理员是否异地登录
+|   接口地址    |   boss/admin/islogin         |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+#####请求
+```
+{
+    "accessToken":""     //必填-管理员的accessToken
+}
+```    
+#####回复
+```
+null 没有数据返回 看code是否成功
+```
+
 ####管理员新增
 |   接口地址    |   boss/admin/insert         |
 |   ---         |   ---                   |

@@ -3,6 +3,7 @@ package com.fise.server.administrator.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -392,4 +393,34 @@ public class AdministratorServiceImpl implements IAdministratorService {
         return resp;
     }
 
+    @Override
+    public Response isLogin(String accessToken) {
+        
+        Response response=new Response();
+        
+        Jedis jedis = null;
+        try {
+            
+            jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
+            
+            String key = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN + accessToken;
+            
+            String gymIdInRedis = jedis.get(key);
+            
+            if (!StringUtil.isEmpty(gymIdInRedis)){
+          
+            }else {
+                response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+                response.setMsg("你的账号已在别处登录！！！");
+                return response;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
+        }
+        return response.success();
+    }
+    
 }

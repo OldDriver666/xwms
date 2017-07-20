@@ -1,5 +1,7 @@
 package com.fise.server.administrator;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.fise.base.Response;
@@ -24,5 +26,8 @@ public interface IAdministratorService {
 	
 	/* 查询公司所有管理员 */
     public Response queryAdmin(AdminQuery param);
+    
+    /*判断用户是否异地登录*/
+    public Response isLogin(String accessToken);
 	
 }
