@@ -105,6 +105,7 @@ Util.Page = (function () {
         this.allNumContentId = opt.allNumContentId ? opt.allNumContentId : "";// 显示所有条数的区域
         this.resultFilter = opt.resultFilter ? opt.resultFilter : null;// 过滤要遍历的数据
         this.callback = opt.callback ? opt.callback : null;// 成功加载所有html后的回调
+        this.errorCallback = opt.errorCallback ? opt.errorCallback : null;// 失败加载所有html后的回调
         this.allNumberAreaId = opt.allNumberAreaId ? opt.allNumberAreaId : "";// 每一行的模板
         this.Page = 1;
         this.PageSize = 20;
@@ -384,7 +385,11 @@ Util.Page = (function () {
             }
         };
 
-        Util.ajaxLoadData(url, data, "POST", true, callback);
+        var errorCallback = function(errorMsg){
+            alert(errorMsg);
+        };
+
+        Util.ajaxLoadData(url, data, "POST", true, callback, errorCallback);
     };
     return Page;
 })();

@@ -93,13 +93,13 @@ Util.ajaxLoadData = function(url,data,type,async,callback,errorCallback){
                 if(typeof(errorMsg.responseText)=="string"){
                     try{
                         msg = eval('('+errorMsg.responseText+')');
-                        msg = msg.errormsg;
+                        msg = msg.msg;
                     }catch(e){
 
                     }
 
                 }else{
-                    msg = errorMsg.responseText.errormsg;
+                    msg = errorMsg.responseText.msg;
                 }
             }
             if(errorCallback){

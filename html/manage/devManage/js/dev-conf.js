@@ -79,7 +79,7 @@ $(function() {
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
                     }
-                    
+
                     if($('#pageContent2 tr').length == 0){
                         $('#pageContent2').append("<tr><td  colspan='" + td_len2 + "' class='t_a_c'>暂无数据</td></tr>");
                     }
@@ -97,12 +97,12 @@ $(function() {
                     $('#pageContent3').find("tr").remove();
                     alert(result.msg);
                 }
-            },function() {
+            },function(errorMsg) {
                 $('#pageContent').find("tr").remove();
                 $('#pageContent1').find("tr").remove();
                 $('#pageContent2').find("tr").remove();
                 $('#pageContent3').find("tr").remove();
-                alert("服务器开个小差，请稍后重试！")
+                alert(errorMsg)
             });
 
 

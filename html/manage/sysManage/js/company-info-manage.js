@@ -47,8 +47,8 @@ $(function() {
                 }else {
 					alert(result.msg);
 				}
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
+            },function(errorMsg) {
+                alert(errorMsg);
             });
 
 		},
