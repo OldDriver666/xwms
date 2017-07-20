@@ -370,7 +370,8 @@ var ReturnCode = {
     REQUSET_JSON_FIELD_ERROR : 3002,
     REQUSET_PARAM_FIELD_ERROR : 3003,
     RECORD_NOT_EXIST_ERROR : 10041,
-    DEVICE_NOT_EXIST_ERROR : 10046
+    DEVICE_NOT_EXIST_ERROR : 10046,
+    TOKEN_ERROR : 10020
 
 };
 
@@ -784,6 +785,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
+
 // cdn url
 /*cdnImg = Util.localStorage.get("cdnImg");
 
