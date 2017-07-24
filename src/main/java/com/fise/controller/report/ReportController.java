@@ -53,4 +53,22 @@ public class ReportController {
         return resp;
     }
     
+    /*日消息总数*/
+    @RequestMapping(value="/messagecount",method=RequestMethod.POST)
+    public Response queryMessageCount(@RequestBody Map<String, String> param){
+        Response response=new Response();
+        logger.info(param.toString());
+        
+        response=reportSvr.queryMessages(param.get("daytime"));
+        return response;
+    }
+    
+    /*消息类型分布*/
+    @RequestMapping(value="/messagetypecount",method=RequestMethod.POST)
+    public Response queryMessageType(){
+        Response response=new Response();
+        
+        response=reportSvr.queryMessageType();
+        return response;
+    }
 }

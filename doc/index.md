@@ -1758,6 +1758,66 @@ type和name都是选填，如果都不填，则查询所有信息
 }
 ```
 
+####统计日消息总数
+|   接口地址    |   boss/report/messagecount        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+    "daytime":""              //必填-日期字符串  例如 2017-07-20
+}    
+```
+####回复
+```
+{
+    "count":x            
+}
+```
+
+####统计消息类型分布
+|   接口地址    |   boss/report/messagetypecount        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |    
+
+####请求
+```
+{}               //不需要请求参数
+```
+####回复
+```
+{
+    "code": 0,
+    "msg": "ok",
+    "data": 
+        [
+            {
+                "keyName": 17,
+                "keyValue": 31
+            },
+            {
+         		"keyName": 1,
+         		"keyValue": 138
+            },
+            {
+         		"keyName": 23,
+         		"keyValue": 30
+            },
+            {
+         		"keyName": 24,
+         		"keyValue": 3
+      		},
+            {
+         		"keyName": 25,
+        		"keyValue": 42
+      		}    
+       ]
+}
+```
+
 ###短信模板
 ####添加短信模板
 |   接口地址    |   boss/sms/add        |
@@ -2217,4 +2277,72 @@ type和name都是选填，如果都不填，则查询所有信息
 #####回复
 ```
 无内容，直接查看返回码
+```
+
+###消息类型
+####消息类型查询
+|   接口地址    |   boss/messagetype/query        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+不填，则查询所有
+{
+    "type":x               //选填-消息类型对应ID
+}    
+```
+####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "msg_type": 1,
+         "msg_name": "文字-单"
+      },
+      {
+         "msg_type": 2,
+         "msg_name": "语音-单"
+      },
+      {
+         "msg_type": 4,
+         "msg_name": "小视频-单"
+      },
+      {
+         "msg_type": 5,
+         "msg_name": "通知-单"
+      },
+      {
+         "msg_type": 6,
+         "msg_name": "通知-群"
+      },
+      {
+         "msg_type": 7,
+         "msg_name": "抓拍-单"
+      },
+      {
+         "msg_type": 8,
+         "msg_name": "抓拍-群"
+      },
+      {
+         "msg_type": 9,
+         "msg_name": "录音-单"
+      },
+      {
+         "msg_type": 16,
+         "msg_name": "录音-群"
+      },
+      {
+         "msg_type": 17,
+         "msg_name": "文字-群"
+      },
+      {
+         "msg_type": 18,
+         "msg_name": "语音-群"
+      }
+   ]
+}
 ```

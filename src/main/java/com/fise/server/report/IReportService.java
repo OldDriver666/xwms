@@ -9,4 +9,10 @@ public interface IReportService {
 
     /*查询概述统计结果*/
     public Response queryAboutPage(Integer companyId);
+    
+    /*日消息总数*/
+    public Response queryMessages(String daytime);
+    
+    /*消息类型分布*/
+    public Response queryMessageType();
 }
