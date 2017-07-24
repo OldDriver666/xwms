@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.fise.base.KeyValueMap;
 import com.fise.model.param.ReportActivateParam;
 import com.fise.model.result.ActivateResult;
+import com.fise.model.result.MessageDayResult;
+import com.fise.model.result.MessageTypeResult;
 
 public interface ReportMapper {
     
@@ -17,4 +19,8 @@ public interface ReportMapper {
     List<KeyValueMap> queryUserTypeCount(Integer companyId);
     
     List<KeyValueMap> queryUserProviceCount(Integer companyId);
+    
+    MessageDayResult querydaymessages(@Param("tablename") String tablename,@Param("daytime") String daytime);
+    
+    List<MessageTypeResult> querytypemessages(@Param("tablename") String tablename);
 }
