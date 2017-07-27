@@ -34,8 +34,8 @@ public class UserServiceImpl implements IUserService{
             criteria.andDomainEqualTo(param.getParam().getDomain());
         }
         
-        if(!StringUtil.isEmpty(param.getParam().getNick())){
-            criteria.andNickEqualTo(param.getParam().getNick());
+        if(!StringUtil.isEmpty(param.getParam().getPhone())){
+            criteria.andPhoneEqualTo(param.getParam().getPhone());
         }
         
         if(param.getParam().getUserId() != null){

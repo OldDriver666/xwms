@@ -10,7 +10,7 @@ public class QueryUserParam implements Serializable{
     
     private String domain;
     
-    private String nick;
+    private String phone;
 
     @JsonProperty("user_id")
     private Integer userId;
@@ -35,20 +35,20 @@ public class QueryUserParam implements Serializable{
         this.domain = domain;
     }
 
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
     public Integer getUserId() {
         return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
     
     
