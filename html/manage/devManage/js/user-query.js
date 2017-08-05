@@ -30,7 +30,7 @@ $(function() {
 		loadPageData : function() {
             //var search_departID = $("#input-search-departID").val();
 			var search_domain = $("#input-search-domain").val();
-            var search_nick = $("#input-search-nick").val();
+            var search_phone = $("#input-search-phone").val();
             var search_user_id = parseInt($("#input-search-user_id").val());
             var search_online_status = parseInt($("#input-search-online_status option:selected").val());
 
@@ -42,7 +42,7 @@ $(function() {
                 data.page_size = 20;
                 data.param = {
                     "domain":search_domain,
-                    "nick":search_nick,
+                    "phone":search_phone,
                     "user_id":search_user_id,
                     "online_status":search_online_status
                 };
@@ -246,7 +246,7 @@ $(function() {
             action.loadPageData();
         }
     });
-    $("#input-search-nick").on('keydown', function(e) {
+    $("#input-search-phone").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }

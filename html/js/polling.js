@@ -31,6 +31,6 @@ $(function(){
 
     setInterval(function(){
         Index.push();
-    },3000);
+    },300000);
 });
 
