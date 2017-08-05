@@ -14,6 +14,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.param.QueryFiseDeviceParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.fisedevice.IFiseDeviceService;
 import com.fise.utils.StringUtil;
 
@@ -26,11 +27,19 @@ public class fiseDeviceController {
 	@Resource
 	IFiseDeviceService fiseDeviceService;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*添加fise设备*/
 	@RequestMapping(value="/addfisedevice",method=RequestMethod.POST)
 	public Response addFiseDevice(@RequestBody @Valid FiseDevice param){
 		
 		Response response=new Response();
+		
+		if(!authService.inserAuth(7)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(StringUtil.isEmpty(param.getIme())||StringUtil.isEmpty(param.getAccount())||param.getType()==null||param.getDepartid()==null){
@@ -48,6 +57,11 @@ public class fiseDeviceController {
 	public Response queryFiseDevice(@RequestBody @Valid Page<QueryFiseDeviceParam> page){
 		
 		Response response=new Response();
+		
+		if(!authService.queryAuth(7)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(page.toString());
 		
 		if(page.getParam().getDepartid()==null){
@@ -65,6 +79,11 @@ public class fiseDeviceController {
 	public Response delFiseDevice(@RequestBody @Valid QueryFiseDeviceParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(7)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getFiseId()==null){
@@ -82,6 +101,11 @@ public class fiseDeviceController {
 	public Response updateFiseDevice(@RequestBody @Valid FiseDevice param){
 
 		Response response=new Response();
+		
+		if(!authService.updateAuth(7)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getFiseId()==null){

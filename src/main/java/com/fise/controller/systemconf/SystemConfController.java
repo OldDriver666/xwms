@@ -13,6 +13,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSystemConf;
 import com.fise.model.param.SystemConfParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.systemconf.ISystemConfService;
 import com.fise.utils.StringUtil;
 
@@ -25,11 +26,19 @@ public class SystemConfController {
 	@Resource
 	ISystemConfService iSystemConfService;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*添加systemconf信息*/
 	@RequestMapping(value="/addsystemconf",method=RequestMethod.POST)
 	public Response addSystemConf(@RequestBody @Valid IMSystemConf record){
 		
 		Response response=new Response();
+		
+		if(!authService.inserAuth(5)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(StringUtil.isEmpty(record.getType())||StringUtil.isEmpty(record.getName())){
@@ -48,6 +57,10 @@ public class SystemConfController {
 		
 		Response response=new Response();
 		
+		if(!authService.queryAuth(5)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		response=iSystemConfService.querySystemConf(param);
 		
@@ -60,6 +73,11 @@ public class SystemConfController {
 	public Response delSystemConf(@RequestBody @Valid SystemConfParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(5)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){
@@ -77,6 +95,11 @@ public class SystemConfController {
 	public Response updateSystemConf(@RequestBody @Valid IMSystemConf record){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(5)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(record.getConfigid()==null){

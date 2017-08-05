@@ -13,6 +13,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSmsTemplate;
 import com.fise.model.param.SmsTemplateParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.smstemplate.ISmsTemplateService;
 
 @RestController
@@ -24,10 +25,18 @@ public class SmsTemplateController {
     @Resource
     ISmsTemplateService smsTemplateService;
     
+    @Resource
+    IAuthService authService;
+    
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response addSmsTemplate(@RequestBody @Valid IMSmsTemplate record){
         
         Response response=new Response();
+        
+        if(!authService.inserAuth(35)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(record.toString());
         
         if(record.getPlatfromId()==null){
@@ -42,6 +51,11 @@ public class SmsTemplateController {
     public Response querySmsTemplate(@RequestBody @Valid SmsTemplateParam param){
         
         Response response=new Response();
+        
+        if(!authService.queryAuth(35)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         
         response=smsTemplateService.querySmsTemplate(param);
@@ -53,6 +67,11 @@ public class SmsTemplateController {
     public Response updateSmsTemplate(@RequestBody @Valid IMSmsTemplate record){
         
         Response response=new Response();
+        
+        if(!authService.updateAuth(35)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(record.toString());
         
         if(record.getId()==null){
@@ -70,6 +89,11 @@ public class SmsTemplateController {
     public Response delSmsTemplate(@RequestBody @Valid IMSmsTemplate record){
         
         Response response=new Response();
+        
+        if(!authService.updateAuth(35)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(record.toString());
         
         if(record.getId()==null){

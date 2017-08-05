@@ -21,6 +21,7 @@ import com.fise.model.param.AdminUpdate;
 import com.fise.model.param.LoginParam;
 import com.fise.model.param.LogoutParam;
 import com.fise.server.administrator.IAdministratorService;
+import com.fise.server.auth.IAuthService;
 
 @RestController
 @RequestMapping("/boss/admin")
@@ -30,6 +31,9 @@ public class AdminstratorController {
 	
 	@Resource
 	private IAdministratorService adminSvr;
+	
+	@Resource
+	IAuthService authService;
 	
 	@IgnoreAuth
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -58,6 +62,11 @@ public class AdminstratorController {
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public Response adminInsert(@RequestBody @Valid AdminInsert param) {
 		Response resp = new Response();
+		
+		if(!authService.inserAuth(18)){
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		resp = adminSvr.insertAdmin(param);
 		return resp;
@@ -66,6 +75,11 @@ public class AdminstratorController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
 		Response resp = new Response();
+		
+		if(!authService.updateAuth(18)){
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		resp = adminSvr.updateAdmin(param);
 		return resp;
@@ -74,6 +88,11 @@ public class AdminstratorController {
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public Response adminQuery(@RequestBody @Valid AdminQuery param){
 	    Response resp = new Response();
+	    
+	    if(!authService.queryAuth(18)){
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+	    
 	    logger.info(param.toString());
 	    resp = adminSvr.queryAdmin(param);
 	    return resp;

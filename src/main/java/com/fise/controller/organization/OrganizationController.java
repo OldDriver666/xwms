@@ -15,6 +15,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.param.EventQueryParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.organization.IOrganizationService;
 
 
@@ -27,11 +28,19 @@ public class OrganizationController {
 	@Resource
 	IOrganizationService organtSvr;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*查询公司组织*/
 	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response queryOrgan(@RequestBody @Valid Map<String, Object> map){
 		
 		Response response=new Response();
+		
+		if(!authService.queryAuth(31)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(map.toString());
 		String name=(String) map.get("name");
 		response=organtSvr.QueryOrganization(name);
@@ -44,6 +53,11 @@ public class OrganizationController {
     public Response insertOrgan(@RequestBody @Valid WiOrganization param){
         
         Response response=new Response();
+        
+        if(!authService.inserAuth(31)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         
         if(param.getName()==null){
@@ -60,6 +74,11 @@ public class OrganizationController {
     public Response updateOrgan(@RequestBody @Valid WiOrganization param){
      
      Response response=new Response();
+     
+     if(!authService.updateAuth(31)){
+         return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+     }
+     
      logger.info(param.toString());
      
      if(param.getId()==null){
@@ -75,6 +94,11 @@ public class OrganizationController {
     public Response delOrgan(@RequestBody @Valid WiOrganization param){
         
        Response response=new Response();
+       
+       if(!authService.updateAuth(31)){
+           return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+       }
+       
        logger.info(param.toString());
        
        if(param.getId()==null){

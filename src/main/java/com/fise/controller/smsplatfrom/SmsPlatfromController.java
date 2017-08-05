@@ -13,6 +13,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSmsPlatfrom;
 import com.fise.model.param.SmsPlatfromParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.smsplatfrom.ISmsPlatfromService;
 import com.fise.utils.StringUtil;
 
@@ -25,10 +26,18 @@ public class SmsPlatfromController {
     @Resource
     ISmsPlatfromService smsPlatfromService;
     
+    @Resource
+    IAuthService authService;
+    
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response addSmsPlatfrom(@RequestBody @Valid IMSmsPlatfrom record){
         
         Response response=new Response();
+        
+        if(!authService.inserAuth(36)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(record.toString());
         
         if(StringUtil.isEmpty(record.getPlatfromName())){
@@ -43,6 +52,11 @@ public class SmsPlatfromController {
     public Response querySmsPlatfrom(@RequestBody @Valid SmsPlatfromParam param){
         
         Response response=new Response();
+        
+        if(!authService.queryAuth(36)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         response=smsPlatfromService.querySmsPlatfrom(param);
         return response;
@@ -52,6 +66,11 @@ public class SmsPlatfromController {
     public Response updateSmsPlatfrom(@RequestBody @Valid IMSmsPlatfrom record){
         
         Response response=new Response();
+        
+        if(!authService.updateAuth(36)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(record.toString());
         
         if(record.getId()==null){
@@ -70,6 +89,11 @@ public class SmsPlatfromController {
     public Response delSmsPlatfrom(@RequestBody @Valid SmsPlatfromParam param){
         
         Response response =new Response();
+        
+        if(!authService.updateAuth(36)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         
         if(param.getId()==null){

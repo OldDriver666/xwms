@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.EventQueryParam;
+import com.fise.server.auth.IAuthService;
+import com.fise.server.auth.impl.AuthServiceImpl;
 import com.fise.server.event.IEventService;
-
-
 
 @RestController
 @RequestMapping("/boss")
@@ -25,11 +26,18 @@ public class EventController {
 	@Resource
 	IEventService eventSvr;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*查询设备事件*/
 	@RequestMapping(value="/event/query",method=RequestMethod.POST)
 	public Response queryEvent(@RequestBody @Valid Page<EventQueryParam> param){
 		
 		Response response=new Response();
+		
+		if(!authService.queryAuth(8)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
 		
 		logger.info(param.toString());
 		response=eventSvr.query(param);

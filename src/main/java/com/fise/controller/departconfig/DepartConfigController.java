@@ -13,6 +13,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDepartConfig;
 import com.fise.model.param.DepartConfigParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.departconfig.IDepartConfigService;
 
 @RestController
@@ -24,11 +25,19 @@ public class DepartConfigController {
 	@Resource
 	IDepartConfigService iDepartConfigService;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*添加imdepartconfig*/
 	@RequestMapping(value="/addimdepartconfig",method=RequestMethod.POST)
 	public Response addImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 		
 		Response response=new Response();
+		
+		if(!authService.inserAuth(21)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getDepartid()==null || param.getClienttype()==null){
@@ -47,6 +56,10 @@ public class DepartConfigController {
 		
 		Response response=new Response();
 		
+		if(!authService.queryAuth(21)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		response=iDepartConfigService.queryDepartConfig(param);
 		
@@ -59,6 +72,11 @@ public class DepartConfigController {
 	public Response delImdepartConfig(@RequestBody @Valid DepartConfigParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(21)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){
@@ -76,6 +94,11 @@ public class DepartConfigController {
 	public Response updateImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 
 		Response response=new Response();
+		
+		if(!authService.updateAuth(21)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getConfigid()==null){

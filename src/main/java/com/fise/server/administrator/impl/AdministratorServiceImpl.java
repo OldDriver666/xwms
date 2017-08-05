@@ -81,7 +81,8 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		Response resp = new Response();
 		
 		Integer adminId = admin.getId();
-		String accessToken = genAccessToken(adminId);
+		Integer role_id = admin.getRoleId();
+		String accessToken = genAccessToken(adminId,role_id);
 		WiAdmin updateAdmin = new WiAdmin();
 		Integer nowTime = DateUtil.getLinuxTimeStamp();
 		updateAdmin.setAccessToken(accessToken);
@@ -98,19 +99,19 @@ public class AdministratorServiceImpl implements IAdministratorService {
 	}
 
 	// 生成access token
-	private String genAccessToken(Integer memberId) {
+	private String genAccessToken(Integer memberId,Integer role_id) {
 		Jedis jedis = null;
 		String accessToken = null;
 		try {
 			jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
 			
-			//把redis里value=memberId的键都删除，避免一个账号同时登录
+			//把redis里value=memberId的键都删除，避免一个账号同时登录    删除role_id
 			Set<String> keys=jedis.keys("*");
 			Iterator<String> it=keys.iterator(); 
 			while(it.hasNext()){
 			    String key=it.next();
 			    String idInRedis = jedis.get(key);
-			    if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId+"")) {
+			    if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId+"") || idInRedis.equals(role_id+"")) {
                     jedis.del(key);
                 }
 			}			   
@@ -119,6 +120,11 @@ public class AdministratorServiceImpl implements IAdministratorService {
 			String key = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN + accessToken;
 			String value = memberId + "";
 			jedis.setex(key, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value);
+			
+			//将登录用户的role_id保存到redis
+			String key1 = Constants.REDIS_KEY_PREFIX_MEMBER_ROLE_ID + "_" + memberId;
+			String value1 = role_id + "";
+			jedis.setex(key1, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

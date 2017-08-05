@@ -14,6 +14,7 @@ import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSuggest;
 import com.fise.model.param.SuggestParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.suggest.ISuggestService;
 import com.fise.utils.StringUtil;
 
@@ -26,11 +27,19 @@ public class SuggestController {
 	@Resource
 	ISuggestService iSuggestService;
 	
+	@Resource
+	IAuthService authService;
+	
 	//添加suggest信息
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
+		
+		if(!authService.inserAuth(15)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(record.getUserId()==null || StringUtil.isEmpty(record.getUname())){
@@ -49,6 +58,10 @@ public class SuggestController {
 		
 		Response response=new Response();
 		
+		if(!authService.queryAuth(15)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		response=iSuggestService.querySuggest(param);
 		
@@ -61,6 +74,11 @@ public class SuggestController {
 	public Response delSuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(15)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getId()==null){
@@ -78,6 +96,11 @@ public class SuggestController {
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(15)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(record.getId()==null){

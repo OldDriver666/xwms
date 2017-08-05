@@ -13,6 +13,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.param.DeviceVersionParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.deviceversion.IDeviceVersionService;
 import com.fise.utils.StringUtil;
 
@@ -25,11 +26,19 @@ public class DeviceVersionController {
 	@Resource
 	IDeviceVersionService iDeviceVersionService;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*添加设备版本信息*/
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
+		
+		if(!authService.inserAuth(12)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(record.getDepartid()==null || record.getDevType()==null || StringUtil.isEmpty(record.getDevVersion())||StringUtil.isEmpty(record.getUpdateUrl())){
@@ -47,6 +56,10 @@ public class DeviceVersionController {
 	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.queryAuth(12)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
 		logger.info(param.toString());
 		
 		if(param.getDepartid()==null){
@@ -64,6 +77,11 @@ public class DeviceVersionController {
 	public Response delDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(12)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getId()==null){
@@ -81,6 +99,11 @@ public class DeviceVersionController {
 	public Response updateDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(12)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(record.getId()==null){

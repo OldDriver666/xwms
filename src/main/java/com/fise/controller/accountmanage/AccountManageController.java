@@ -15,6 +15,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiAccountManage;
 import com.fise.server.accountmanage.IAccountManageService;
+import com.fise.server.auth.IAuthService;
 import com.fise.utils.JsonUtil;
 
 @RestController
@@ -26,10 +27,18 @@ public class AccountManageController {
     @Resource
     IAccountManageService accountManageService;
     
+    @Resource
+    IAuthService authService;
+    
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response insertAccount(@RequestBody @Valid WiAccountManage param){
         
         Response response=new Response();
+        
+        if(!authService.inserAuth(20)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         
         if(param.getDepartId()==null){
@@ -43,6 +52,11 @@ public class AccountManageController {
     public Response queryAccount(@RequestBody @Valid Map<String, Object> map){
         
         Response response=new Response();
+        
+        if(!authService.queryAuth(20)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(map.toString());
         Integer id=(Integer) map.get("depart_id");
         response=accountManageService.queryAccount(id);
@@ -53,6 +67,11 @@ public class AccountManageController {
     public Response delAccount(@RequestBody @Valid Map<String, Object> map){
         
         Response response=new Response();
+        
+        if(!authService.updateAuth(20)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(map.toString());
         Integer id=(Integer) map.get("id");
         if(id==null){
@@ -65,6 +84,11 @@ public class AccountManageController {
     @RequestMapping(value="/update",method=RequestMethod.POST)
     public Response updateAccount(@RequestBody @Valid WiAccountManage param){
         Response response=new Response();
+        
+        if(!authService.updateAuth(20)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         if(param.getId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
