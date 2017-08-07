@@ -15,6 +15,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.RolePermissionParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.role.IRoleService;
 import com.fise.utils.StringUtil;
 
@@ -24,11 +25,16 @@ public class RoleController {
 
     private Logger logger = Logger.getLogger(this.getClass());
 
-    @Resource IRoleService roleSvr;
+    @Resource 
+    IRoleService roleSvr;
+    
+    @Resource
+    IAuthService authService;
     
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response query(@RequestBody Map<String, Object> param){
         Response resp = new Response();
+        
         logger.info(param.toString());
         
         Integer amdinRole = (Integer)param.get("role_id");
@@ -45,6 +51,7 @@ public class RoleController {
     @RequestMapping(value = "/queryAuth", method = RequestMethod.POST)
     public Response queryAuth(@RequestBody Map<String, Object> param){
         Response resp = new Response();
+        
         logger.info(param.toString());
         Integer amdinRole = (Integer)param.get("role_id");
         Integer amdinOrgid = (Integer)param.get("organ_id");
@@ -60,6 +67,11 @@ public class RoleController {
     @RequestMapping(value = "/allAuth", method = RequestMethod.POST)
     public Response queryAllAuth(@RequestBody Map<String, Object> param){
         Response resp = new Response();
+        
+        if(!authService.queryAuth(19)){
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
         logger.info(param.toString());
         
         Integer amdinRole = (Integer)param.get("role_id");
@@ -76,6 +88,10 @@ public class RoleController {
     @RequestMapping(value = "/updateAuth", method = RequestMethod.POST)
     public Response update(@RequestBody @Valid RolePermissionParam param){
         Response resp = new Response();
+        
+        if(!authService.updateAuth(19)){
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
         logger.info(param.toString());
         
         if(param.getPermisList().size() > 0){
@@ -90,6 +106,10 @@ public class RoleController {
     @RequestMapping(value="/add",method=RequestMethod.POST)
     public Response add(@RequestBody @Valid WiOrganizationRole role){
         Response response=new Response();
+        
+        if(!authService.inserAuth(19)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
         logger.info(role.toString());
         
         if(role.getAuthLevel()==null || StringUtil.isEmpty(role.getName())){

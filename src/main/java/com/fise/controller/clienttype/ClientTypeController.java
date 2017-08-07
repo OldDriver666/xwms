@@ -13,6 +13,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.IMClientType;
 import com.fise.model.param.ClientTypeParam;
+import com.fise.server.auth.IAuthService;
 import com.fise.server.clienttype.IClientTypeService;
 import com.fise.utils.StringUtil;
 
@@ -25,11 +26,19 @@ public class ClientTypeController {
 	@Resource
 	IClientTypeService imClientTypeService;
 	
+	@Resource
+	IAuthService authService;
+	
 	/*添加clienttype*/
 	@RequestMapping(value="/addclienttype",method=RequestMethod.POST)
 	public Response addClientType(@RequestBody @Valid IMClientType param){
 		
 		Response response=new Response();
+		
+		if(!authService.inserAuth(22)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getClienttype()==null || StringUtil.isEmpty(param.getClientname())){
@@ -48,6 +57,10 @@ public class ClientTypeController {
 		
 		Response response=new Response();
 		
+		if(!authService.queryAuth(22)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		response=imClientTypeService.queryClientType(param);
 		
@@ -60,6 +73,11 @@ public class ClientTypeController {
 	public Response delFiseDevice(@RequestBody @Valid ClientTypeParam param){
 		
 		Response response=new Response();
+		
+		if(!authService.updateAuth(22)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(param.toString());
 		
 		if(param.getTypeid()==null){
@@ -77,6 +95,11 @@ public class ClientTypeController {
 	public Response updateFiseDevice(@RequestBody @Valid IMClientType record){
 
 		Response response=new Response();
+		
+		if(!authService.updateAuth(22)){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
 		logger.info(record.toString());
 		
 		if(record.getTypeid()==null){
