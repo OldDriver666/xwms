@@ -110,8 +110,13 @@ public class AdministratorServiceImpl implements IAdministratorService {
 			Iterator<String> it=keys.iterator(); 
 			while(it.hasNext()){
 			    String key=it.next();
+			    if(key.equals(Constants.REDIS_KEY_PREFIX_MEMBER_ROLE_ID + "_" + memberId)){
+			        jedis.del(key);
+			        continue;
+			    }
 			    String idInRedis = jedis.get(key);
-			    if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId+"") || idInRedis.equals(role_id+"")) {
+			    
+			    if (StringUtil.isEmpty(idInRedis) || idInRedis.equals(memberId+"")) {
                     jedis.del(key);
                 }
 			}			   
@@ -123,7 +128,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 			
 			//将登录用户的role_id保存到redis
 			String key1 = Constants.REDIS_KEY_PREFIX_MEMBER_ROLE_ID + "_" + memberId;
-			String value1 = role_id + "";
+			String value1 = role_id + "y";
 			jedis.setex(key1, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value1);
 		} catch (Exception e) {
 			e.printStackTrace();

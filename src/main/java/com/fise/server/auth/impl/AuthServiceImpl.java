@@ -23,13 +23,13 @@ public class AuthServiceImpl implements IAuthService{
     
     @Override
     public Boolean queryAuth(Integer module_id) {
-        Integer memberId=HttpContext.getMemberId();
+        Integer memberId=HttpContext.getMemberId();      
         String role_id=getRoleId(memberId);
-        
+              
         WiPermissionExample example =new WiPermissionExample();
         WiPermissionExample.Criteria criteria=example.createCriteria();
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
-        criteria.andModuleIdEqualTo(memberId);
+        criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
         if(list.get(0).getQueryAuth()==0){
@@ -46,7 +46,7 @@ public class AuthServiceImpl implements IAuthService{
         WiPermissionExample example =new WiPermissionExample();
         WiPermissionExample.Criteria criteria=example.createCriteria();
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
-        criteria.andModuleIdEqualTo(memberId);
+        criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
         if(list.get(0).getInsertAuth()==0){
@@ -63,7 +63,7 @@ public class AuthServiceImpl implements IAuthService{
         WiPermissionExample example =new WiPermissionExample();
         WiPermissionExample.Criteria criteria=example.createCriteria();
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
-        criteria.andModuleIdEqualTo(memberId);
+        criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
         if(list.get(0).getUpdateAuth()==0){
@@ -79,6 +79,7 @@ public class AuthServiceImpl implements IAuthService{
             jedis = RedisManager.getInstance().getResource(Constants.REDIS_POOL_NAME_MEMBER);
             String key = Constants.REDIS_KEY_PREFIX_MEMBER_ROLE_ID + "_" + memberId;
             role_id = jedis.get(key);
+            role_id=role_id.substring(0, role_id.length()-1);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
