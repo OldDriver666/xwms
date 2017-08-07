@@ -74,7 +74,7 @@
 				<tr>
 					<th>设备类型值</th>
 					<th>设备类型名称</th>
-					<th>管理</th>
+					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -106,7 +106,7 @@
 	<td style="display:none;">${type_id}</td>
 	<td>${client_type}</td>
 	<td>${client_name}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${type_id})">删除</a>
 	</td>

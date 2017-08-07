@@ -122,7 +122,7 @@
 			<ul class="layui-nav-child" style="display: none">
 			  {{each(i,item) children}}
 		        <li>
-				<a class="children-menu" href="javascript:;" data-menuid=${item.moduleId} data-url=${item.url} >
+				<a class="children-menu" href="javascript:;" data-menuid=${item.moduleId} data-url=${item.url} data-insert=${item.insertAuth} data-query=${item.queryAuth} data-update=${item.updateAuth}>
 				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
 				<cite>${item.moduleName}</cite>
 				</a>
@@ -215,6 +215,11 @@
         $('.layui-side-scroll').on('click', '.children-menu', function () {
             var $this = $(this);
             var url = $this.data('url');
+            var menuid = $this.data('menuid');
+            var insertRight = $this.data('insert');
+            var queryRight = $this.data('query');
+            var updateRight = $this.data('update');
+            url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight);
             if (url !== undefined) {
                 var iframe = '<iframe src="' + url + '"></iframe>'
                 var aHtml = $this.html();

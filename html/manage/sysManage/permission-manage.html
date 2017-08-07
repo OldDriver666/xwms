@@ -132,13 +132,46 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label">状态</label>
+										<label class="col-sm-2 control-label">状态</label>
+										<div class="col-sm-10">
+											<label class="radio-inline">
+												<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 可见
+											</label>
+											<label class="radio-inline">
+												<input type="radio" name="status" id="radio-status-disabled" value="0"> 不可见
+											</label>
+										</div>
+									</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">添加权限</label>
 											<div class="col-sm-10">
 												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-enabled" value="1" checked> 可见
+													<input type="radio" name="insert_auth" id="radio-insert-auth-enabled" value="1" checked> 启用
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="status" id="radio-status-disabled" value="0"> 不可见
+													<input type="radio" name="insert_auth" id="radio-insert-auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">修改权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update-auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="update_auth" id="radio-update-auth-disabled" value="0"> 禁用
+												</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label">查询权限</label>
+											<div class="col-sm-10">
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query-auth-enabled" value="1" checked> 启用
+												</label>
+												<label class="radio-inline">
+													<input type="radio" name="query_auth" id="radio-query-auth-disabled" value="0"> 禁用
 												</label>
 											</div>
 										</div>
@@ -200,7 +233,7 @@
 					<!--<th>查询权限</th>-->
 					<th>ParentID</th>
 					<th>状态</th>
-					<th>管理</th>
+					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -250,7 +283,7 @@
 	<td style="display:none;">{{if queryAuth == 1}}启用{{else queryAuth == 0}}禁用{{/if}}</td>
 	<td>${parent_id}</td>
 	<td>{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <!--<a href="javascript:void(0);" onclick="action.deleteItem(${permissId},'${moduleId}')">删除</a>-->
 	</td>

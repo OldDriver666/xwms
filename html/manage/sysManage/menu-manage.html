@@ -98,7 +98,7 @@
 						<th>URL</th>
 						<th>ParentID</th>
 						<th>状态</th>
-						<th>管理</th>
+						<th class="table-manage">管理</th>
 					</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -127,16 +127,16 @@
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
-	<td style="display:" class="td-moduleId">${id}</td>
+	<td class="td-moduleId">${id}</td>
 	<td class="td-moduleName">${name}</td>
 	<td class="td-priority">${priority}</td>
 	<td class="td-sn">${sn}</td>
 	<td class="td-url">${url}</td>
 	<td class="td-parent_id">${parentId}</td>
 	<td class="td-status">{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
-	    <a href="javascript:void(0);" onclick="action.deleteItem(${id})">删除</a>
+	    <a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteItem(${id})">删除</a>
 	</td>
 </tr>
 </script>

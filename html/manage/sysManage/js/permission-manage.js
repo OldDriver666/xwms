@@ -6,7 +6,31 @@ $(function() {
     var role_id = Util.cookieStorage.getCookie("userLevel");
     var depart_id = Util.cookieStorage.getCookie("departId");//所属公司id
 
+    var url=location.search;
+    var Request = new Object();
+    if(url.indexOf("?")!=-1) {
+        var str = url.substr(1)　//去掉?号
+        strs = str.split("&");
+        for(var i=0;i<strs.length;i++){
+            Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+        }
+    };
+    var insertAuth = Request["insertAuth"];
+    var queryAuth = Request["queryAuth"];
+    var updateAuth = Request["updateAuth"];
+
 	var action = {
+        init: function(){
+            if(0 == insertAuth){
+                $("#btn-add").hide();
+            }
+            if(0 == queryAuth){
+
+            }
+            if(0 == updateAuth){
+
+            }
+        },
 		//新增数据
 		add : function() {
             var url = ctx + "boss/role/updateAuth";
@@ -69,6 +93,10 @@ $(function() {
                         if (findVal == false) {
                             alert("记录不存在");
                         }
+                    }
+                    if(0 == updateAuth){
+                        $(".table-update").hide();
+                        $(".table-manage").hide();
                     }
                 } else {
                     alert(result.msg);
@@ -236,6 +264,7 @@ $(function() {
         }
 	};
 	window.action = action;
+    action.init();
     //action.loadPageData();
 	action.loadUserRolesData();
     action.loadMenuData();

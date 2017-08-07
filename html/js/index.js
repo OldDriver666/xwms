@@ -21,6 +21,7 @@ $(function(){
                 Util.cookieStorage.clearCookie("myUserRolesArray");
                 Util.cookieStorage.clearCookie("allDevTypeArray");
                 Util.cookieStorage.clearCookie("allCompanyArray");
+                Util.cookieStorage.clearCookie("menuArray");
                 window.location.href = "login.html";
             } else if(result.Status == 1){
                 alert("服务器开个小差，请稍后重试！");
@@ -67,12 +68,10 @@ $(function(){
                             parent_data.push(data[i]);
                         }
                     }
-
                     for(var i in parent_data){
                         $("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');
                     }
-
-
+                    Util.cookieStorage.setCookie("menuArray",JSON.stringify(data));
                 } else if(result.Status == 1){
                     alert("服务器开个小差，请稍后重试！");
                 } else {
@@ -89,7 +88,6 @@ $(function(){
             }else{
                 rev = (rev) ? 1 : -1;
             }
-
             return function(a,b){
                 a = a[attr];
                 b = b[attr];

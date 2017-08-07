@@ -105,7 +105,7 @@
 					<th>Action</th>
 					<th>ParentID</th>
 					<th>状态</th>
-					<th>管理</th>
+					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -141,9 +141,9 @@
 	<td>${action}</td>
 	<td>${parent_id}</td>
 	<td>{{if status == 1}}启用{{else status == 0}}弃用{{/if}}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
-	    <a href="javascript:void(0);" onclick="action.deleteConfig(${config_id})">删除</a>
+	    <a href="javascript:void(0);" class="table-del-btn" onclick="action.deleteConfig(${config_id})">删除</a>
 	</td>
 </tr>
 </script>

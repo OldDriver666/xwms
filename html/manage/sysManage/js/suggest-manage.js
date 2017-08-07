@@ -3,7 +3,31 @@ $(function() {
     var token_value = Util.cookieStorage.getCookie("accesstoken");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
 
+	var url=location.search;
+	var Request = new Object();
+	if(url.indexOf("?")!=-1) {
+		var str = url.substr(1)　//去掉?号
+		strs = str.split("&");
+		for(var i=0;i<strs.length;i++){
+			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+		}
+	};
+	var insertAuth = Request["insertAuth"];
+	var queryAuth = Request["queryAuth"];
+	var updateAuth = Request["updateAuth"];
+
 	var action = {
+		init: function(){
+			if(0 == insertAuth){
+				$("#btn-add").hide();
+			}
+			if(0 == queryAuth){
+
+			}
+			if(0 == updateAuth){
+
+			}
+		},
 		//新增数据
 		add : function() {
             var url = ctx + "boss/suggest/add";
@@ -46,6 +70,7 @@ $(function() {
 				"targetContentId" : "pageContent",
 				"url" : url,
 				"forAuth2" : true,
+				"updateAuth" : updateAuth,
 				"rowTemplateId" : "pageTmpl",
 				"contextUrl" : ctx,
 				"pageBtnsContentId" : "pagination",
@@ -217,6 +242,8 @@ Util.Page = (function() {
 		this.param = options.param;
 		this.filterParam = null;
 		this.forAuth2 = typeof (opt.forAuth2) != "undefined" ? opt.forAuth2
+			: false;
+		this.updateAuth = typeof (opt.updateAuth) != "undefined" ? opt.updateAuth
 			: false;
 		this.loadTBodyData(this.param);
 		// this.initPageBtns();
@@ -477,6 +504,11 @@ Util.Page = (function() {
 					target.append("<div class='no_data_div'>暂无数据</div>");
 				}
 			}
+			if(0 == that.updateAuth){
+				$(".table-update").hide();
+				$(".table-manage").hide();
+			}
+
 			if (that.callback) {
 				that.callback();
 			}

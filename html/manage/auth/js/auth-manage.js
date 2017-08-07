@@ -50,7 +50,6 @@ $(function() {
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
-
 		},
         //获取角色列表数据
         loadRoleData : function() {
@@ -68,7 +67,6 @@ $(function() {
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
-
         },
 
 		//编辑数据

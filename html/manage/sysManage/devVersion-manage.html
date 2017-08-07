@@ -145,7 +145,7 @@
 					<th>状态</th>
 					<th>版本信息</th>
 					<th>升级URL</th>
-					<th>管理</th>
+					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -184,7 +184,7 @@
 	<td>${update_url}</td>
 	<td style="display:none;">${dev_type}</td>
 	<td style="display:none;">${depart_id}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${version_id})">删除</a>
 	</td>

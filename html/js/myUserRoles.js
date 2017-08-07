@@ -24,7 +24,6 @@ $(function(){
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
-
         }
 	};
     Index.myUserRoles();

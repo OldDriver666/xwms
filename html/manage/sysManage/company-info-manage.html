@@ -107,7 +107,7 @@
 					<th>状态</th>
 					<th>更新时间</th>
 					<th>创建时间</th>
-					<th>管理</th>
+					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -145,7 +145,7 @@
 	<td>{{if status == 0}}删除{{else status == 1}}正常{{/if}}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
 	</td>

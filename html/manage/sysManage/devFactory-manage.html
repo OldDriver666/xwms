@@ -117,7 +117,7 @@
 					<th>公司名称</th>
 					<th>开始小位号</th>
 					<th>结束小位号</th>
-					<th>管理</th>
+					<th class="table-manage">管理</th>
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
@@ -154,7 +154,7 @@
 	<td >${begin_account}</td>
 	<td >${end_account}</td>
 	<td style="display:none;">${depart_id}</td>
-	<td>
+	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${id})">删除</a>
 	</td>
