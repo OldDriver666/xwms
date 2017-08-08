@@ -164,7 +164,7 @@
     <option value=${id}>${name}</option>
 </script>
 <script type="text/javascript">
-	var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens = allCompanyArray.length;
 	function companyNameQuery(type){
 		for(var i=0; i< Lens; i++){

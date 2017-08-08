@@ -109,7 +109,7 @@ $(function() {
 		},
         //获取设备类型列表数据
         loadDevTypeData : function() {
-            var myDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("myDevTypeArray"));
+            var myDevTypeArray = JSON.parse(localStorage.getItem("myDevTypeArray"));
             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#search-input-devType');
         }
 

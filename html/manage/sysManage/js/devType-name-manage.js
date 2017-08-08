@@ -87,7 +87,7 @@ $(function() {
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					allDevTypeArray = result.data;
-					Util.cookieStorage.setCookie("allDevTypeArray",JSON.stringify(allDevTypeArray));
+					localStorage.setItem("allDevTypeArray",JSON.stringify(allDevTypeArray));
 				} else {
 					alert(result.msg);
 				}

@@ -197,7 +197,7 @@
     <option value=${id}>${name}</option>
 </script>
 <script type="text/javascript">
-	var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
+	var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
 	var Lens1 = allDevTypeArray.length;
 	function typeNameQuery(type){
 		for(var i=0; i< Lens1; i++){
@@ -206,7 +206,7 @@
 			}
 		}
 	}
-	var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 	var Lens2 = allCompanyArray.length;
 	function companyNameQuery(type){
 		for(var i=0; i< Lens2; i++){

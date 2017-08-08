@@ -40,8 +40,8 @@ $(function(){
                                     }
                                 }
                             }
-                            Util.cookieStorage.setCookie("myDevTypeArray",JSON.stringify(myDevTypeArray));
-                            Util.cookieStorage.setCookie("allDevTypeArray",JSON.stringify(dataArray1));
+                            localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
+                            localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
                             alert(result_query.msg);
                         }

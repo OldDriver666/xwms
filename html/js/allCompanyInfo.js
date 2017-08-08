@@ -17,7 +17,7 @@ $(function(){
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     allCompanyArray = result.data;
-                    Util.cookieStorage.setCookie("allCompanyArray",JSON.stringify(allCompanyArray));
+                    localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
                 } else {
                     alert(result.msg);
                 }

@@ -17,11 +17,10 @@ $(function(){
                 Util.cookieStorage.clearCookie("adminId");
                 Util.cookieStorage.clearCookie("departId");
                 Util.cookieStorage.clearCookie("userLevel");
-                Util.cookieStorage.clearCookie("myDevTypeArray");
-                Util.cookieStorage.clearCookie("myUserRolesArray");
-                Util.cookieStorage.clearCookie("allDevTypeArray");
-                Util.cookieStorage.clearCookie("allCompanyArray");
-
+                localStorage.removeItem("myDevTypeArray");
+                localStorage.removeItem("myUserRolesArray");
+                localStorage.removeItem("allDevTypeArray");
+                localStorage.removeItem("allCompanyArray");
                 window.location.href = "login.html";
             } else if(result.Status == 1){
                 alert("服务器开个小差，请稍后重试！");

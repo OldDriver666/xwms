@@ -82,7 +82,7 @@ $(function() {
 		},
 		//获取全部公司团体数据
 		loadCompanyInfoData: function(){
-			var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+			var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-name ');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id ');
 		},

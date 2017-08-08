@@ -84,13 +84,13 @@ $(function() {
 		},
 		//获取设备类型列表数据
 		loadDevTypeData : function() {
-			var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
+			var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
 			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-search-client_type');
 			$("#pageDevType").tmpl(allDevTypeArray).appendTo('#input-devType');
 		},
 		//获取全部公司团体数据
 		loadCompanyInfoData: function(){
-			var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+			var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-depart_id');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-depart_id');
 		},

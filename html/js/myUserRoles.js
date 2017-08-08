@@ -17,7 +17,7 @@ $(function(){
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     myUserRolesArray = result.data;
-                    Util.cookieStorage.setCookie("myUserRolesArray",JSON.stringify(myUserRolesArray));
+                    localStorage.setItem("myUserRolesArray",JSON.stringify(myUserRolesArray));
                 } else {
                     alert(result.msg);
                 }

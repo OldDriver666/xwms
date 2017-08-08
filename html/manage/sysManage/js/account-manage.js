@@ -193,7 +193,7 @@ $(function() {
 						$("#pageUserRoles").tmpl(myrolesArray).appendTo('#add-search-userRoles');
 						$("#pageUserRoles").tmpl(myrolesArray).appendTo('#input-search-userRoles');
 					}
-					Util.cookieStorage.setCookie("myUserRolesArray",JSON.stringify(myUserRolesArray));
+					localStorage.setItem("myUserRolesArray",JSON.stringify(myUserRolesArray));
 				} else {
 					alert(result.msg);
 				}
@@ -203,7 +203,7 @@ $(function() {
 		},
 		//获取全部公司团体数据
 		loadCompanyInfoData: function(){
-			var allCompanyArray = JSON.parse(Util.cookieStorage.getCookie("allCompanyArray"));
+			var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company_id');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#add-companyId');
 			$("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#role-companyId');
