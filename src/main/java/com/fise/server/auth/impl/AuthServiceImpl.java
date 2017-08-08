@@ -32,6 +32,10 @@ public class AuthServiceImpl implements IAuthService{
         criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
+        if(list==null){
+            return true;
+        }
+        
         if(list.get(0).getQueryAuth()==0){
             return false;
         }
@@ -49,6 +53,10 @@ public class AuthServiceImpl implements IAuthService{
         criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
+        if(list==null){
+            return true;
+        }
+        
         if(list.get(0).getInsertAuth()==0){
             return false;
         }
@@ -65,6 +73,10 @@ public class AuthServiceImpl implements IAuthService{
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
         criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
+        
+        if(list==null){
+            return true;
+        }
         
         if(list.get(0).getUpdateAuth()==0){
             return false;
