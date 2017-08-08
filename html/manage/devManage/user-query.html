@@ -269,7 +269,7 @@
 </script>
 
 <script type="text/javascript">
-	var allDevTypeArray = JSON.parse(Util.cookieStorage.getCookie("allDevTypeArray"));
+	var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
 	var Lens = allDevTypeArray.length;
 	function typeNameQuery(type){
 		 for(var i=0; i< Lens; i++){
