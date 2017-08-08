@@ -32,7 +32,7 @@ public class AuthServiceImpl implements IAuthService{
         criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
-        if(list==null){
+        if(list.size()==0){
             return true;
         }
         
@@ -53,7 +53,7 @@ public class AuthServiceImpl implements IAuthService{
         criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
-        if(list==null){
+        if(list.size()==0){
             return true;
         }
         
@@ -74,7 +74,7 @@ public class AuthServiceImpl implements IAuthService{
         criteria.andModuleIdEqualTo(module_id);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
-        if(list==null){
+        if(list.size()==0){
             return true;
         }
         
