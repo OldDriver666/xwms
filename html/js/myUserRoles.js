@@ -19,10 +19,10 @@ $(function(){
                     myUserRolesArray = result.data;
                     localStorage.setItem("myUserRolesArray",JSON.stringify(myUserRolesArray));
                 } else {
-                    alert(result.msg);
+                    /*alert(result.msg);*/
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                /*alert("服务器开个小差，请稍后重试！")*/
             });
         }
 	};

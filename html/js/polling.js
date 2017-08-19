@@ -20,7 +20,7 @@ $(function(){
                     window.location.href = "login.html";
                 }
             },function(errorMsg) {
-                alert(errorMsg);
+                /*alert(errorMsg);*/
             });
 
         }

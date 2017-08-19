@@ -19,10 +19,10 @@ $(function(){
                     allCompanyArray = result.data;
                     localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
                 } else {
-                    alert(result.msg);
+                    /*alert(result.msg);*/
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                /*alert("服务器开个小差，请稍后重试！")*/
             });
 
         },

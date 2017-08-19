@@ -23,10 +23,10 @@ $(function() {
                     $("#pageDevOnline").tmpl(result.data).appendTo('#devUserOnlineInfo');
                     $("#pageDevActive").tmpl(result.data).appendTo('#devUserActiveInfo');
                 } else {
-                    alert("请求出错！");
+                    /*alert("请求出错！");*/
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！");
+               /* alert("服务器开个小差，请稍后重试！");*/
             });
 		},
 
@@ -163,10 +163,10 @@ $(function() {
                     }
 
                 } else {
-                    alert(result.msg);
+                   /* alert(result.msg);*/
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                /*alert("服务器开个小差，请稍后重试！")*/
             });
 
         },
@@ -287,10 +287,10 @@ $(function() {
                     userSexChart.setOption(option2);
 
                 } else {
-                    alert(result.msg);
+                   /* alert(result.msg);*/
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                /*alert("服务器开个小差，请稍后重试！")*/
             });
         },
         myDevTypeQuery: function(nameParamArray){
@@ -364,10 +364,10 @@ $(function() {
                     userClientChart.setOption(option);
 
                 } else {
-                    alert(result.msg);
+                    /*alert(result.msg);*/
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！")
+                /*alert("服务器开个小差，请稍后重试！")*/
             });
         }
 	};
