@@ -15,6 +15,7 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
+    var moduleId = Request["moduleId"];
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
@@ -49,7 +50,7 @@ $(function() {
                 permis_list: param_arr
             };
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -71,7 +72,7 @@ $(function() {
             data.role_id = parseInt(role_id);
             data.organ_id = parseInt(depart_id);
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != "") {
                     $('#pageContent').empty();
                     var userRoleSel = parseInt($("#search-input-userRoles option:selected").val());
@@ -111,7 +112,7 @@ $(function() {
             var data = new Object();
             data.role_id = parseInt(role_id);
             data.organ_id = parseInt(depart_id);
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $("#pageUserRoles").tmpl(result.data).appendTo('#search-input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-userRoles');
@@ -130,7 +131,7 @@ $(function() {
             data.admin_id = parseInt(admin_id);
             data.role_id = parseInt(role_id);
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
                 } else {
@@ -160,7 +161,7 @@ $(function() {
                 permis_list: param_arr
             };
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -178,7 +179,7 @@ $(function() {
                 data.UserName = userName;
                 data.AuthenticCode = token_value;
                 data.DeviceId = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();

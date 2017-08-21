@@ -14,6 +14,7 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
+    var moduleId = Request["moduleId"];
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
@@ -40,7 +41,7 @@ $(function() {
             data.type = parseInt($('#input-devType option:selected').val());
             data.mobile = $("#input-phoneNo").val();
             data.mark = $("#input-Mark").val();
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -75,6 +76,7 @@ $(function() {
                 "url" : url,
                 "forAuth2" : true,
                 "updateAuth" : updateAuth,
+                "moduleId" : moduleId,
                 "rowTemplateId" : "pageTmpl",
                 "contextUrl" : ctx,
                 "pageBtnsContentId" : "pagination",
@@ -111,7 +113,7 @@ $(function() {
             data.type = parseInt($("#input-devTypeNo").val());
             data.mobile = $("#input-phoneNo").val();
             data.mark = $("#input-Mark").val();
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -127,7 +129,7 @@ $(function() {
 				var url = ctx + "boss/fisedevice//delfisedevice";
 				var data = new Object();
                 data.fise_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();
@@ -143,7 +145,7 @@ $(function() {
             var data = new Object();
             data.depart_id = parseInt(depart_id);
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
 
                     $('#dev_online_count').empty();
@@ -333,6 +335,8 @@ Util.Page = (function() {
         this.forAuth2 = typeof (opt.forAuth2) != "undefined" ? opt.forAuth2
             : false;
         this.updateAuth = typeof (opt.updateAuth) != "undefined" ? opt.updateAuth
+            : false;
+        this.moduleId = typeof (opt.moduleId) != "undefined" ? opt.moduleId
             : false;
         this.loadTBodyData(this.param);
         // this.initPageBtns();
@@ -530,6 +534,7 @@ Util.Page = (function() {
         }
         var that = this;
         var url = this.url;
+        var moduleId = this.moduleId;
         var data = sendData;
         var callback = function(result) {
             /*if(result.Status !=0){
@@ -606,7 +611,7 @@ Util.Page = (function() {
             }
         };
 
-        Util.ajaxLoadData(url,data,"POST",true,callback);
+        Util.ajaxLoadData(url,data,moduleId,"POST",true,callback);
     };
     return Page;
 })();

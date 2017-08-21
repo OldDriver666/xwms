@@ -149,12 +149,13 @@ $(function() {
 		}else if(pwd1 == pwd2){
 			var pwd =  $.md5(pwd2);
 			var url = ctx + "boss/admin/update";
+			var moduleId = 0;
 			var data = new Object();
 			data.login_id = parseInt(admin_id);
 			data.admin_id = parseInt(admin_id);
 			data.password = pwd;
 
-			Util.ajaxLoadData(url, data, "POST", true, function (result) {
+			Util.ajaxLoadData(url, data,moduleId,"POST", true, function (result) {
 				if (result.code == ReturnCode.SUCCESS) {
 					$("#editPW-modal").modal('hide');
 					alert("修改完成！");
@@ -179,12 +180,13 @@ $(function() {
 		}else {
 			var newNickName = $("#ipt_nickname").val();
 			var url = ctx + "boss/admin/update";
+			var moduleId = 0;
 			var data = new Object();
 			data.login_id = parseInt(admin_id);
 			data.admin_id = parseInt(admin_id);
 			data.nick_name = newNickName;
 
-			Util.ajaxLoadData(url, data, "POST", true, function (result) {
+			Util.ajaxLoadData(url, data,moduleId, "POST", true, function (result) {
 				if (result.code == ReturnCode.SUCCESS) {
 					Util.cookieStorage.setCookie("nickname", newNickName);
 					$(".nickName_txt").text(newNickName);

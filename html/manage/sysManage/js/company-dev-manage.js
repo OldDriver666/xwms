@@ -12,6 +12,7 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
+    var moduleId = Request["moduleId"];
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
@@ -36,7 +37,7 @@ $(function() {
             data.client_type = parseInt($('#input-devType option:selected').val());
             data.avatar = $("#input-avatar").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -61,7 +62,7 @@ $(function() {
             data.depart_id = search_depart_id;
             data.client_type = search_client_type;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -96,7 +97,7 @@ $(function() {
             var data = new Object();
             data.client_type = null;
             data.client_name = "";
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     dataArray1 = result.data;
 
@@ -104,7 +105,7 @@ $(function() {
                     var data_query = new Object();
                     data_query.depart_id = parseInt(depart_id);
                     data_query.client_type = null;
-                    Util.ajaxLoadData(url_query,data_query,"POST",true,function(result_query) {
+                    Util.ajaxLoadData(url_query,data_query,0,"POST",true,function(result_query) {
                         if(result_query.code == ReturnCode.SUCCESS && result_query.data != ""){
                             dataArray2 = result_query.data;
                             var Len1 = dataArray1.length;
@@ -152,7 +153,7 @@ $(function() {
             data.client_type = parseInt($("#input-devTypeNo").val());
             data.avatar = $("#input-avatar").val();
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -171,7 +172,7 @@ $(function() {
 				var url = ctx + "boss/departconf/delimdepartconfig";
 				var data = new Object();
                 data.config_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         $("#input-search-depart_id").val("");

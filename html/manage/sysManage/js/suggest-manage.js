@@ -12,6 +12,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -37,7 +38,7 @@ $(function() {
 			data.suggestion = $("#input-suggestion").val();
 			data.contact = $("#input-contact").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -69,6 +70,7 @@ $(function() {
 			var opt = {
 				"targetContentId" : "pageContent",
 				"url" : url,
+				"moduleId" : moduleId,
 				"forAuth2" : true,
 				"updateAuth" : updateAuth,
 				"rowTemplateId" : "pageTmpl",
@@ -102,7 +104,7 @@ $(function() {
 			data.suggestion = $("#input-suggestion-txt").val();
 			data.contact = $("#input-contact").val();
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -118,7 +120,7 @@ $(function() {
 				var url = ctx + "boss/suggest/del";
 				var data = new Object();
                 data.suggest_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
 						$("#input-search-uname").val("");
@@ -244,6 +246,8 @@ Util.Page = (function() {
 		this.forAuth2 = typeof (opt.forAuth2) != "undefined" ? opt.forAuth2
 			: false;
 		this.updateAuth = typeof (opt.updateAuth) != "undefined" ? opt.updateAuth
+			: false;
+		this.moduleId = typeof (opt.moduleId) != "undefined" ? opt.moduleId
 			: false;
 		this.loadTBodyData(this.param);
 		// this.initPageBtns();
@@ -441,6 +445,7 @@ Util.Page = (function() {
 		}
 		var that = this;
 		var url = this.url;
+		var moduleId = this.moduleId;
 		var data = sendData;
 		var callback = function(result) {
 			/*if(result.Status !=0){
@@ -521,7 +526,7 @@ Util.Page = (function() {
 			alert(errorMsg);
 		};
 
-		Util.ajaxLoadData(url,data,"POST",true,callback, errorCallback);
+		Util.ajaxLoadData(url,data,moduleId,"POST",true,callback, errorCallback);
 	};
 	return Page;
 })();

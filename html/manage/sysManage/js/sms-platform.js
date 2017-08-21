@@ -15,6 +15,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -39,7 +40,7 @@ $(function() {
 			data.status = parseInt($("input[name=status]:checked").val());
 			data.config = $("#input-config").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -61,7 +62,7 @@ $(function() {
 				data.platfrom_name = search_uname;
 			}
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -93,7 +94,7 @@ $(function() {
 			data.status = parseInt($("input[name=status]:checked").val());
 			data.config = $("#input-config").val();
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -109,7 +110,7 @@ $(function() {
 				var url = ctx + "boss/smsplatfrom/del";
 				var data = new Object();
                 data.smsplatfrom_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();

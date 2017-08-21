@@ -9,7 +9,7 @@ $(function(){
     $("#header-safeExit").on('click', function(){
         var url = ctx + "boss/admin/logout";
         var data = {"admin_id":parseInt(admin_id)};
-        Util.ajaxLoadData(url,data,"POST",true,function(result) {
+        Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
                 Util.cookieStorage.clearCookie("username");
                 Util.cookieStorage.clearCookie("accesstoken");
@@ -40,11 +40,12 @@ $(function(){
 		},
 		loadMenu : function(){
             var url = ctx + "boss/module/query";
+            var moduleId= 0;
             var data = {
                 "admin_id":parseInt(admin_id),
                 "role_id":parseInt(role_level)
             };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     var rdata = result.data;
                     var data = rdata.sort(Index.sortBy('priority',false))

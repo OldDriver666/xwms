@@ -219,7 +219,7 @@
             var insertRight = $this.data('insert');
             var queryRight = $this.data('query');
             var updateRight = $this.data('update');
-            url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight);
+            url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid);
             if (url !== undefined) {
                 var iframe = '<iframe src="' + url + '"></iframe>'
                 var aHtml = $this.html();

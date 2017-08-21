@@ -4,6 +4,20 @@ $(function() {
     var depart_id = Util.cookieStorage.getCookie("departId");
     var role_level = Util.cookieStorage.getCookie("userLevel");
 
+    var url=location.search;
+    var Request = new Object();
+    if(url.indexOf("?")!=-1) {
+        var str = url.substr(1)　//去掉?号
+        strs = str.split("&");
+        for(var i=0;i<strs.length;i++){
+            Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+        }
+    };
+    var moduleId = Request["moduleId"];
+    var insertAuth = Request["insertAuth"];
+    var queryAuth = Request["queryAuth"];
+    var updateAuth = Request["updateAuth"];
+
 	var action = {
 		//获取用户和设备在线及注册人数的数据
 		getUserDevData : function() {
@@ -11,7 +25,7 @@ $(function() {
             var data = new Object();
             data.depart_id = parseInt(depart_id);
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     $('#devUserOnlineInfo').empty();
                     $('#devUserActiveInfo').empty();
@@ -43,7 +57,7 @@ $(function() {
                 "begin_date":begin_date,
                 "end_date":end_date
             };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     var data_arr = [];
                     var data_arr1 = [];
@@ -177,7 +191,7 @@ $(function() {
             var data = {
                 "organ_id":parseInt(depart_id)
             };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     //客户端类型信息
                     action.myDevTypeQuery(JSON.stringify(result.data.type));
@@ -308,7 +322,7 @@ $(function() {
             var data = new Object();
             data.client_type = null;
             data.client_name = "";
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     var allDevTypeArray = result.data;
                     var Lens1 = nameArray.length;

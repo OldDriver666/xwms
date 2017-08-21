@@ -12,6 +12,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -38,7 +39,7 @@ $(function() {
 			data.version_info = $("#input-version_info").val();
 			data.update_url = $("#input-update_url").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -61,7 +62,7 @@ $(function() {
 			data.depart_id = search_depart_id;
 			data.dev_type = search_dev_type;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -106,7 +107,7 @@ $(function() {
 			data.version_info = $("#input-version_info").val();
 			data.update_url = $("#input-update_url").val();
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -122,7 +123,7 @@ $(function() {
 				var url = ctx + "boss/deviceversion/del";
 				var data = new Object();
                 data.version_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
                         action.loadPageData();

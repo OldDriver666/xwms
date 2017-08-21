@@ -50,11 +50,11 @@ Util.ajaxLoginData = function(url,data,type,async,callback,errorCallback){
     });
 };
 
-Util.ajaxLoadData = function(url,data,type,async,callback,errorCallback){
+Util.ajaxLoadData = function(url,data,moduleId,type,async,callback,errorCallback){
     async = typeof(async)!="undefined" ? async : true;
     type = typeof(type)!="undefined" ? type : "get";
     var userid = Util.cookieStorage.getCookie("adminId");
-    var str =  "5|5|5|" + userid + "|5";
+    var str =  "5|5|5|" + userid + "|" + moduleId;
     /*var str =  "platform|system|udid|" + usr_id + "|version";*/
     var access_Token = Util.cookieStorage.getCookie("accesstoken");
     $.ajax({

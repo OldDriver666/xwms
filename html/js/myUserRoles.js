@@ -11,10 +11,11 @@ $(function(){
         myUserRoles: function(){
             var myUserRolesArray = [];
             var url = ctx + "boss/role/query";
+            var moduleId = 0;
             var data = new Object();
             data.role_id = parseInt(role_level);
             data.organ_id = parseInt(depart_id);
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     myUserRolesArray = result.data;
                     localStorage.setItem("myUserRolesArray",JSON.stringify(myUserRolesArray));

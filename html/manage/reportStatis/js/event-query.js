@@ -5,6 +5,20 @@ $(function () {
     var url_param_id = Util.getParameter("id");
     var admin_id = Util.cookieStorage.getCookie("adminId");
 
+    var url=location.search;
+    var Request = new Object();
+    if(url.indexOf("?")!=-1) {
+        var str = url.substr(1)　//去掉?号
+        strs = str.split("&");
+        for(var i=0;i<strs.length;i++){
+            Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+        }
+    };
+    var moduleId = Request["moduleId"];
+    var insertAuth = Request["insertAuth"];
+    var queryAuth = Request["queryAuth"];
+    var updateAuth = Request["updateAuth"];
+
     var action = {
         //获取所有数据
         loadPageData: function () {
@@ -25,6 +39,7 @@ $(function () {
             var opt = {
                 "targetContentId": "pageContent",
                 "url": url,
+                "moduleId": moduleId,
                 "forAuth2": true,
                 "rowTemplateId": "pageTmpl",
                 "contextUrl": ctx,
@@ -114,6 +129,8 @@ Util.Page = (function () {
         this.param = options.param;
         this.filterParam = null;
         this.forAuth2 = typeof (opt.forAuth2) != "undefined" ? opt.forAuth2
+            : false;
+        this.moduleId = typeof (opt.moduleId) != "undefined" ? opt.moduleId
             : false;
         this.loadTBodyData(this.param);
         // this.initPageBtns();
@@ -309,6 +326,7 @@ Util.Page = (function () {
         }
         var that = this;
         var url = this.url;
+        var moduleId = this.moduleId;
         var data = sendData;
         var callback = function (result) {
             /*if(result.Status !=0){
@@ -389,7 +407,7 @@ Util.Page = (function () {
             alert(errorMsg);
         };
 
-        Util.ajaxLoadData(url, data, "POST", true, callback, errorCallback);
+        Util.ajaxLoadData(url, data,moduleId, "POST", true, callback, errorCallback);
     };
     return Page;
 })();

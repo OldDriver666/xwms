@@ -11,8 +11,9 @@ $(function(){
         push: function(){
             var url = ctx + "boss/admin/islogin";
             var data = new Object();
+            var moduleId = 0;
             data.accessToken = token_value;
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
 
                 }else if(result.code == ReturnCode.TOKEN_ERROR){
