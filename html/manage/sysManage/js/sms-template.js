@@ -12,6 +12,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -37,7 +38,7 @@ $(function() {
 			data.action_name = $("#input-action_name").val();
 			data.template_name = $("#input-template_name").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -60,7 +61,7 @@ $(function() {
 				data.action = search_uname;
 			}
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
 					action.loadSMSData(JSON.stringify(result.data));
@@ -80,7 +81,7 @@ $(function() {
 			var url = ctx + "boss/smsplatfrom/query";
 			var data = new Object();
 			data.platfrom_name = "";
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					$("#pageSMSTmpl").tmpl(result.data).appendTo('#input-platfrom_name');
 					var platformArray = result.data;
@@ -115,7 +116,7 @@ $(function() {
 			data.action_name = $("#input-action_name").val();
 			data.template_name = $("#input-template_name").val();
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -131,7 +132,7 @@ $(function() {
 				var url = ctx + "boss/sms/del";
 				var data = new Object();
                 data.id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
 						$("#input-search-uname").val("");

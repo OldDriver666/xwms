@@ -10,6 +10,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -37,7 +38,7 @@ $(function() {
 			data.email = $("#input-email").val();
 			data.describtion = $("#input-describtion").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -57,7 +58,7 @@ $(function() {
             var data = new Object();
             data.name = search_name;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -85,7 +86,7 @@ $(function() {
 			var url = ctx + "boss/organization/query";
 			var data = new Object();
 			data.name = "";
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					allCompanyArray = result.data;
 					localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
@@ -109,7 +110,7 @@ $(function() {
 			data.describtion = $("#input-describtion").val();
 			data.status = parseInt($("input[name=status]:checked").val());
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -126,7 +127,7 @@ $(function() {
 				var url = ctx + "boss/organization/del";
 				var data = new Object();
                 data.id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
 						$("#input-search-name").val("");

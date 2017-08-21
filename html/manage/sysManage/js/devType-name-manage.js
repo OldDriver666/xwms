@@ -11,6 +11,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -35,7 +36,7 @@ $(function() {
             data.client_type = $("#input-client_type").val();
             data.client_name = $("#input-client_name").val();
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -57,7 +58,7 @@ $(function() {
             data.client_type = parseInt(search_client_type);
             data.client_name = search_client_name;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -84,7 +85,7 @@ $(function() {
 			var data = new Object();
 			data.client_type = null;
 			data.client_name = "";
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					allDevTypeArray = result.data;
 					localStorage.setItem("allDevTypeArray",JSON.stringify(allDevTypeArray));
@@ -104,7 +105,7 @@ $(function() {
             data.client_type = $("#input-client_type").val();
             data.client_name = $("#input-client_name").val();
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -121,7 +122,7 @@ $(function() {
 				var url = ctx + "boss/clienttype/delclienttype";
 				var data = new Object();
                 data.type_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
 						$("#input-search-client_type").val("");

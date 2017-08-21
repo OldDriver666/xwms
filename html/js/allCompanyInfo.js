@@ -12,9 +12,10 @@ $(function(){
         allCompanyQuery: function(){
             var allCompanyArray = [];
             var url = ctx + "boss/organization/query";
+            var moduleId = 0;
             var data = new Object();
             data.name = "";
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     allCompanyArray = result.data;
                     localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));

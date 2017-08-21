@@ -13,18 +13,20 @@ $(function(){
             var dataArray2 = [];
             var myDevTypeArray = [];
             var url = ctx + "boss/clienttype/queryclienttype";
+            var moduleId = 0;
             var data = new Object();
             data.client_type = null;
             data.client_name = "";
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     dataArray1 = result.data;
 
                     var url_query = ctx + "boss/departconf/queryimdepartconfig";
+                    var moduleId_query = 0;
                     var data_query = new Object();
                     data_query.depart_id = parseInt(depart_id);
                     data_query.client_type = null;
-                    Util.ajaxLoadData(url_query,data_query,"POST",true,function(result_query) {
+                    Util.ajaxLoadData(url_query,data_query,moduleId_query,"POST",true,function(result_query) {
                         if(result_query.code == ReturnCode.SUCCESS && result_query.data != ""){
                             dataArray2 = result_query.data;
                             var Len1 = dataArray1.length;

@@ -5,6 +5,20 @@ $(function() {
     var url_param_id = Util.getParameter("id");
     var admin_id = Util.cookieStorage.getCookie("adminId");
 
+    var url=location.search;
+    var Request = new Object();
+    if(url.indexOf("?")!=-1) {
+        var str = url.substr(1)　//去掉?号
+        strs = str.split("&");
+        for(var i=0;i<strs.length;i++){
+            Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+        }
+    };
+    var moduleId = Request["moduleId"];
+    var insertAuth = Request["insertAuth"];
+    var queryAuth = Request["queryAuth"];
+    var updateAuth = Request["updateAuth"];
+
 	var action = {
 		//新增数据
 		add : function() {
@@ -22,7 +36,7 @@ $(function() {
                 DeviceNo:1,//每次插入几条数据
                 DeviceInfo:param_arr
             };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.Status == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");

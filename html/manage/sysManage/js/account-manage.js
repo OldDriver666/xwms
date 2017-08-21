@@ -14,6 +14,7 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
+	var moduleId = Request["moduleId"];
 	var insertAuth = Request["insertAuth"];
 	var queryAuth = Request["queryAuth"];
 	var updateAuth = Request["updateAuth"];
@@ -50,7 +51,7 @@ $(function() {
 			data.email = $("#input-email").val();
 			data.organization_id = add_company_id;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
@@ -92,7 +93,7 @@ $(function() {
             data.role_id = search_role_id;
 			data.company_id = search_company_id;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
@@ -120,7 +121,7 @@ $(function() {
 			var data = new Object();
 			data.role_id = parseInt(role_id);
 			data.organ_id = parseInt(depart_id);
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					var myrolesArray = [];
 					for(var i=0; i< result.data.length; i++){
@@ -159,7 +160,7 @@ $(function() {
 			data.description = $("#input-description").val();
 			data.organizationId = add_company_id;
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS){
 					$("#addTempl2-modal").modal('hide');
 					toastr.success("添加成功!");
@@ -177,7 +178,7 @@ $(function() {
 			var data = new Object();
 			data.role_id = parseInt(role_id);
 			data.organ_id = parseInt(depart_id);
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					var myUserRolesArray = [];
 					var myrolesArray = [];
@@ -231,7 +232,7 @@ $(function() {
 			data.email = $("#input-email").val();
 			data.status = parseInt($("input[name=status]:checked").val());
 
-			Util.ajaxLoadData(url,data,"POST",true,function(result) {
+			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
@@ -250,7 +251,7 @@ $(function() {
 				var url = ctx + "boss/clienttype/delclienttype";
 				var data = new Object();
                 data.type_id = id;
-				Util.ajaxLoadData(url,data,"POST",true,function(result) {
+				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
 						/*$("#input-search-client_type").val("");

@@ -12,6 +12,7 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
+    var moduleId = Request["moduleId"];
     var insertAuth = Request["insertAuth"];
     var queryAuth = Request["queryAuth"];
     var updateAuth = Request["updateAuth"];
@@ -35,7 +36,7 @@ $(function() {
             var data = new Object();
             data.daytime = search_date;
 
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     $('#xwUserOnlineInfo').empty();
                     $("#pageUserOnline").tmpl(result).appendTo('#xwUserOnlineInfo');
@@ -52,7 +53,7 @@ $(function() {
         getMsgTypeData : function() {
             var url = ctx + "boss/report/messagetypecount";
             var data = {};
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     //客户端类型信息
                     action.myMsgTypeQuery(JSON.stringify(result.data));
@@ -77,7 +78,7 @@ $(function() {
             var url = ctx + "boss/messagetype/query";
             var data = new Object();
             data.type = null;
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     var allMsgTypeArray = result.data;
                     var Lens1 = nameArray.length;
