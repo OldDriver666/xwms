@@ -54,6 +54,7 @@ public class AuthAspect {
         String system = uaField[1];
         String udid = uaField[2];
         String id = uaField[3];
+        //特别启用该字段为菜单module_id
         String versionName = uaField[4];
         
         logger.debug("UA=" + fitUA + " URI=" + uri);

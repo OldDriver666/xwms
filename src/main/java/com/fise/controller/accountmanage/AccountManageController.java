@@ -16,7 +16,6 @@ import com.fise.base.Response;
 import com.fise.model.entity.WiAccountManage;
 import com.fise.server.accountmanage.IAccountManageService;
 import com.fise.server.auth.IAuthService;
-import com.fise.utils.JsonUtil;
 
 @RestController
 @RequestMapping("/boss/accountmanage")
@@ -35,7 +34,7 @@ public class AccountManageController {
         
         Response response=new Response();
         
-        if(!authService.inserAuth(20)){
+        if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -52,11 +51,6 @@ public class AccountManageController {
     public Response queryAccount(@RequestBody @Valid Map<String, Object> map){
         
         Response response=new Response();
-        
-        if(!authService.queryAuth(20)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-        
         logger.info(map.toString());
         Integer id=(Integer) map.get("depart_id");
         response=accountManageService.queryAccount(id);
@@ -68,7 +62,7 @@ public class AccountManageController {
         
         Response response=new Response();
         
-        if(!authService.updateAuth(20)){
+        if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -85,7 +79,7 @@ public class AccountManageController {
     public Response updateAccount(@RequestBody @Valid WiAccountManage param){
         Response response=new Response();
         
-        if(!authService.updateAuth(20)){
+        if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         

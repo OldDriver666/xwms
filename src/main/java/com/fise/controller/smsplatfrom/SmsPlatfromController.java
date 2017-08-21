@@ -34,7 +34,7 @@ public class SmsPlatfromController {
         
         Response response=new Response();
         
-        if(!authService.inserAuth(36)){
+        if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -52,11 +52,6 @@ public class SmsPlatfromController {
     public Response querySmsPlatfrom(@RequestBody @Valid SmsPlatfromParam param){
         
         Response response=new Response();
-        
-        if(!authService.queryAuth(36)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-        
         logger.info(param.toString());
         response=smsPlatfromService.querySmsPlatfrom(param);
         return response;
@@ -67,7 +62,7 @@ public class SmsPlatfromController {
         
         Response response=new Response();
         
-        if(!authService.updateAuth(36)){
+        if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -90,7 +85,7 @@ public class SmsPlatfromController {
         
         Response response =new Response();
         
-        if(!authService.updateAuth(36)){
+        if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         

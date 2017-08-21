@@ -3,7 +3,6 @@ package com.fise.server.administrator.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
-import com.fise.framework.exception.AuthException;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
@@ -269,7 +267,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 		record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
 		record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
 		record.setSalt(nNow.toString().substring(5, 9));
-		record.setStatus(param.getStatus());
+		record.setStatus(0);
 		record.setAccessToken("");
 		record.setLastLogin(0);
 		adminDao.insert(record);

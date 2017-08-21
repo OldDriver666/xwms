@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganization;
-import com.fise.model.param.EventQueryParam;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.organization.IOrganizationService;
 
@@ -36,11 +35,6 @@ public class OrganizationController {
 	public Response queryOrgan(@RequestBody @Valid Map<String, Object> map){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(31)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(map.toString());
 		String name=(String) map.get("name");
 		response=organtSvr.QueryOrganization(name);
@@ -54,7 +48,7 @@ public class OrganizationController {
         
         Response response=new Response();
         
-        if(!authService.inserAuth(31)){
+        if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -75,7 +69,7 @@ public class OrganizationController {
      
      Response response=new Response();
      
-     if(!authService.updateAuth(31)){
+     if(!authService.updateAuth()){
          return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
      }
      
@@ -95,7 +89,7 @@ public class OrganizationController {
         
        Response response=new Response();
        
-       if(!authService.updateAuth(31)){
+       if(!authService.updateAuth()){
            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
        }
        

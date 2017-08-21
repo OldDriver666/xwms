@@ -63,7 +63,7 @@ public class AdminstratorController {
 	public Response adminInsert(@RequestBody @Valid AdminInsert param) {
 		Response resp = new Response();
 		
-		if(!authService.inserAuth(18)){
+		if(!authService.inserAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -76,7 +76,7 @@ public class AdminstratorController {
 	public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
 		Response resp = new Response();
 		
-		if(!authService.updateAuth(18)){
+		if(!authService.updateAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -88,11 +88,6 @@ public class AdminstratorController {
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public Response adminQuery(@RequestBody @Valid AdminQuery param){
 	    Response resp = new Response();
-	    
-	    if(!authService.queryAuth(18)){
-            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-	    
 	    logger.info(param.toString());
 	    resp = adminSvr.queryAdmin(param);
 	    return resp;

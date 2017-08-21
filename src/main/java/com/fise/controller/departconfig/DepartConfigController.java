@@ -34,7 +34,7 @@ public class DepartConfigController {
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth(21)){
+		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -55,11 +55,6 @@ public class DepartConfigController {
 	public Response queryImdepartConfig(@RequestBody @Valid DepartConfigParam param){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(21)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(param.toString());
 		response=iDepartConfigService.queryDepartConfig(param);
 		
@@ -73,7 +68,7 @@ public class DepartConfigController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(21)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -95,7 +90,7 @@ public class DepartConfigController {
 
 		Response response=new Response();
 		
-		if(!authService.updateAuth(21)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		

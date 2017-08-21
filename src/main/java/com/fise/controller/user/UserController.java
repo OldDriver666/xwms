@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.QueryUserParam;
@@ -32,11 +31,6 @@ public class UserController {
     public Response queryUserInfo(@RequestBody @Valid Page<QueryUserParam> param){
         
         Response response=new Response();
-        
-        if(!authService.queryAuth(30)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-
         logger.info(param.toString());
         response=IQueryUserService.queryUser(param);
        

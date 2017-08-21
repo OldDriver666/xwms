@@ -67,11 +67,6 @@ public class RoleController {
     @RequestMapping(value = "/allAuth", method = RequestMethod.POST)
     public Response queryAllAuth(@RequestBody Map<String, Object> param){
         Response resp = new Response();
-        
-        if(!authService.queryAuth(19)){
-            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-        
         logger.info(param.toString());
         
         Integer amdinRole = (Integer)param.get("role_id");
@@ -89,7 +84,7 @@ public class RoleController {
     public Response update(@RequestBody @Valid RolePermissionParam param){
         Response resp = new Response();
         
-        if(!authService.updateAuth(19)){
+        if(!authService.updateAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         logger.info(param.toString());
@@ -107,7 +102,7 @@ public class RoleController {
     public Response add(@RequestBody @Valid WiOrganizationRole role){
         Response response=new Response();
         
-        if(!authService.inserAuth(19)){
+        if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         logger.info(role.toString());

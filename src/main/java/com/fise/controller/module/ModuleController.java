@@ -34,11 +34,6 @@ public class ModuleController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response query(@RequestBody @Valid ModuleQueryParam param){
         Response resp = new Response();
-        
-        if(!authService.queryAuth(6)){
-            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-        
         logger.info(param);
         resp = moduleSvr.QueryModule(param);
         return resp;
@@ -47,10 +42,6 @@ public class ModuleController {
     @RequestMapping(value = "/queryall", method = RequestMethod.POST)
     public Response queryAll(@RequestBody @Valid ModuleQueryParam param){
         Response resp = new Response();
-        
-        if(!authService.queryAuth(6)){
-            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
         logger.info(param);
         resp = moduleSvr.QueryModuleAll(param);
         return resp;
@@ -60,7 +51,7 @@ public class ModuleController {
     public Response insert(@RequestBody @Valid ModuleInsertParam param){
         Response resp = new Response();
         
-        if(!authService.inserAuth(6)){
+        if(!authService.inserAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -73,7 +64,7 @@ public class ModuleController {
     public Response update(@RequestBody @Valid ModuleUpdateParam param){
         Response resp = new Response();
         
-        if(!authService.updateAuth(6)){
+        if(!authService.updateAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -86,7 +77,7 @@ public class ModuleController {
     public Response update(@RequestBody @Valid Map<String,String> param){
         Response resp = new Response();
         
-        if(!authService.queryAuth(6)){
+        if(!authService.updateAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
