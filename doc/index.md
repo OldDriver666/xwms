@@ -28,78 +28,63 @@ http://boss.fise-wi.com
 ####管理员登录
 |   接口地址    |   boss/admin/login         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON  				  |
 
-#####请求
+09-07 新增home字段为该管理员登录成功后默认打开的主页
+
 ```
+//请求
 {
     "account":"#userphone#",
     "password":"#md5#"
 }
-```
-#####回复
-```
+//回复
 {
-    "id": 1,
-    "account": "18601735176",
-    "salt": "",
-    "password": "",
-    "nickName": "廖国顺",
-    "roleId": 3,
-    "companyId": 1,
-    "phone": "",
-    "email": "",
-    "accessToken": "6d2c021da6524976a8d037cd2b66a891",
-    "status": 1,
-    "lastLogin": 1496891165,
-    "created": 1225404661,
-    "updated": 1496806101
+      "accessToken": "5282b69acfdf495aa07db874473a6659",
+      "account": "Administrator",
+      "companyId": 1,
+      "departId": 0,
+      "id": 2,
+      "nickName": "Administrator",
+      "phone": "",
+      "home": "index.html"
 }
 ```
 
 ####管理员退出
 |   接口地址    |   boss/admin/logout         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
 
-#####请求
 ```
+//请求
 {
     "admin_id":x    // 这个值是登陆中返回的id获字段值
 }
-```
-#####回复
-```
-null 没有数据返回 看code是否成功
+
+//回复
+看code是否成功
 ```
 
-####检测管理员是否异地登录
+####实现单点登录
 |   接口地址    |   boss/admin/islogin         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
 
-#####请求
+
 ```
+//请求
 {
     "accessToken":""     //必填-管理员的accessToken
 }
-```    
-#####回复
-```
-null 没有数据返回 看code是否成功
+  
+//回复
+看code是否成功
 ```
 
-####管理员新增
+####新增管理员
 |   接口地址    |   boss/admin/insert         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
 
-#####请求
 ```
+//请求
 {
     "admin_id":X,       //必填-这个值是登陆中返回的id获字段值-调用者id
     "account":"",       //必填-新增管理员账号
@@ -109,33 +94,28 @@ null 没有数据返回 看code是否成功
     "role_id":x,        //必填-角色
     "phone":"",
     "email":"",
-    "organization_id":x //必填-组织id
+    "company_id":x      //必填-组织id
+    "depart_id":x       //部门ID
 }
-```
 
-#####回复
-```
+//回复
 null 没有数据返回 看code是否成功
 ```
 
 ####管理员查询
 |   接口地址    |   boss/admin/query         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
 
-#####请求
 ```
+//请求
 {
     "admin_id":X,       //必填-这个值是登陆中返回的id获字段值-调用者id
     "account":"",       //管理员账号
     "role_id":x,        //角色
     "company_id":x,     //公司组织id
 }
-```
 
-#####回复
-```
+//回复
 [
     {
         "id": 1,
@@ -145,6 +125,7 @@ null 没有数据返回 看code是否成功
         "nickName": "廖国顺",
         "roleId": 3,
         "companyId": 1,
+        "departId":x,
         "phone": "",
         "email": "",
         "accessToken": "",
@@ -160,6 +141,7 @@ null 没有数据返回 看code是否成功
         "password": "",
         "nickName": "陈钟超",
         "roleId": 3,
+        "departId":x,
         "companyId": 1,
         "phone": "",
         "email": "",
@@ -175,8 +157,6 @@ null 没有数据返回 看code是否成功
 ####管理员修改
 |   接口地址    |   boss/admin/update         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
 
 #####请求
 ```
@@ -211,47 +191,45 @@ null 没有数据返回 看code是否成功
 ```
 {
     "admin_id":x,
-    "role_id":
+    "role_id":x,
+    "company_id":x
 }
-以上两个值从登陆中获取
+以上值从登陆中获取
 ```
 #####回复
 ```
 返回一个json数组
 [
-    {
-        "moduleId": 1,
-        "moduleName": "整体概述",
-        "priority": 2000,
-        "sn": "zhengtigaisu",
-        "url": "",
-        "insertAuth": 1,
-        "updateAuth": 1,
-        "queryAuth": 1,
-        "parent_id": 0
-    },
-    {
-        "moduleId": 2,
-        "moduleName": "设备管理",
-        "priority": 1900,
-        "sn": "shebeiguanli",
-        "url": "",
-        "insertAuth": 1,
-        "updateAuth": 1,
-        "queryAuth": 1,
-        "parent_id": 0
-    },
-    {
-        "moduleId": 3,
-        "moduleName": "报表统计",
-        "priority": 1800,
-        "sn": "baobiaotongji",
-        "url": "",
-        "insertAuth": 1,
-        "updateAuth": 1,
-        "queryAuth": 1,
-        "parent_id": 0
-    }
+      {
+        "permissId": 1,
+         "moduleId": 1,
+         "moduleName": "Broadcast",
+         "moduleType": 0,  //0-管理栏  1-查询栏
+         "priority": 2300,
+         "sn": "zhengtigaisu",
+         "url": "https://www.baidu.com",
+         "status": 1,
+         "parentId": 0,
+         "insertAuth": 1,
+         "updateAuth": 1,
+         "queryAuth": 1,
+         "parent_id": 0
+      },
+      {
+         "permissId": 2,
+         "moduleId": 2,
+         "moduleName": "设备管理",
+         "moduleType": 0,
+         "priority": 1900,
+         "sn": "shebeiguanli",
+         "url": "",
+         "status": 1,
+         "parentId": 0,
+         "insertAuth": 1,
+         "updateAuth": 1,
+         "queryAuth": 1,
+         "parent_id": 0
+      }
 ]
 ```
 
@@ -2345,4 +2323,28 @@ type和name都是选填，如果都不填，则查询所有信息
       }
    ]
 }
+```
+
+### 公司部门管理
+####部门查询/新增/修改
+|   查询接口    |   boss/boss/depart/query        |
+|   新增接口    |   boss/boss/depart/insert        |
+|   修改接口    |   boss/boss/depart/update       |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        |
+
+####请求
+```
+{
+    "company_id":1,
+    "depart_id":x,  
+    "depart_name":"应急指挥中心",
+    "parent_id":1, //0-顶级部门 x-上级部门ID
+    "status":x
+}   
+```
+####回复
+```
+通用回复格式，主要看返回处理的结果
 ```

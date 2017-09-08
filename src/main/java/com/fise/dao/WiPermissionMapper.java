@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.fise.model.entity.WiPermission;
 import com.fise.model.entity.WiPermissionExample;
+import com.fise.model.param.ModuleQueryParam;
 import com.fise.model.param.ModuleQueryResult;
 
 public interface WiPermissionMapper {
@@ -31,5 +32,5 @@ public interface WiPermissionMapper {
 
     int updateByPrimaryKey(WiPermission record);
     
-    List<ModuleQueryResult> selectPermissionByRole(Integer roleId);
+    List<ModuleQueryResult> selectPermissionByParam(ModuleQueryParam param);
 }

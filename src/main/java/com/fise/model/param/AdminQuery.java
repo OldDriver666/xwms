@@ -8,20 +8,31 @@ import com.fise.utils.JsonUtil;
 
 public class AdminQuery {
 
-	@NotNull
-	@JsonProperty("admin_id")
-	private Integer adminId;
-	
-	@JsonProperty("company_id")
-	private Integer companyId;
-	
-	@MaxLength(value = 40)
-	private String account;
-	
+    @NotNull
+    @JsonProperty("admin_id")
+    private Integer adminId;
+
+    @JsonProperty("company_id")
+    private Integer companyId;
+
+    @MaxLength(value = 40)
+    private String account;
+
     @JsonProperty("role_id")
     private Integer roleId;
 
-	public Integer getAdminId() {
+    @JsonProperty("depart_id")
+    private Integer departId;
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
+    }
+
+    public Integer getAdminId() {
         return adminId;
     }
 
@@ -54,6 +65,6 @@ public class AdminQuery {
     }
 
     public String toString() {
-		return JsonUtil.toJson(this);
-	}
+        return JsonUtil.toJson(this);
+    }
 }

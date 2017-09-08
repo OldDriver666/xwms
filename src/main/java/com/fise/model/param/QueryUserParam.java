@@ -15,6 +15,39 @@ public class QueryUserParam implements Serializable{
     @JsonProperty("user_id")
     private Integer userId;
     
+    @JsonProperty("depart_id")
+    private Integer departId;
+    
+    @JsonProperty("company_id")
+    private Integer companyId;
+    
+    @JsonProperty("query_date")
+    private String queryDate;
+    
+    public String getQueryDate() {
+        return queryDate;
+    }
+
+    public void setQueryDate(String queryDate) {
+        this.queryDate = queryDate;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
+    }
+
     @JsonProperty("online_status")
     private Integer onlineStatus;
     

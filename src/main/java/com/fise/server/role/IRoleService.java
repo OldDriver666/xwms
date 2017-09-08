@@ -6,7 +6,7 @@ import com.fise.model.param.RolePermissionParam;
 
 public interface IRoleService {
 	/*查询所有的角色记录*/
-	public Response queryAll(Integer adminRole ,Integer orgId);
+	public Response queryAll(Integer adminRole ,Integer orgId, Integer departId);
 	
 	/*查询角色并返回对应权限-不包括不可见的*/
 	public Response queryRoleAuth(Integer adminRole ,Integer orgId);
@@ -19,4 +19,8 @@ public interface IRoleService {
 	
 	/*新增角色*/
 	public Response addRole(WiOrganizationRole role);
+	
+	public Response updRole(WiOrganizationRole role);
+	
+	public Response delRole(WiOrganizationRole role);
 }

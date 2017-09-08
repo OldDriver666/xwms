@@ -38,11 +38,12 @@ public class RoleController {
         logger.info(param.toString());
         
         Integer amdinRole = (Integer)param.get("role_id");
-        Integer amdinOrgid = (Integer)param.get("organ_id");
-        if(amdinRole == null || amdinOrgid == null){
+        Integer amdinOrgid = (Integer)param.get("company_id");
+        Integer departId = (Integer)param.get("depart_id");
+        if(amdinRole == null || amdinOrgid == null || departId == null){
             resp.failure(ErrorCode.ERROR_PRRAM_NOT_COMPLETE_EXCEPTION);
         } else {
-            resp = roleSvr.queryAll(amdinRole, amdinOrgid);
+            resp = roleSvr.queryAll(amdinRole, amdinOrgid, departId);
         }
 
         return resp;
@@ -113,6 +114,22 @@ public class RoleController {
         
         response=roleSvr.addRole(role);
         
+        return response;
+    }
+    
+    @RequestMapping(value="/delete",method=RequestMethod.POST)
+    public Response delete(@RequestBody @Valid WiOrganizationRole role){
+        Response response=new Response();
+        
+        if(!authService.inserAuth()){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        logger.info(role.toString());
+        
+        if(role.getId() ==null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+        response=roleSvr.delRole(role);
         return response;
     }
 }

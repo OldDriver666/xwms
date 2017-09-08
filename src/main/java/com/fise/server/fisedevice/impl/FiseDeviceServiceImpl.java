@@ -3,7 +3,6 @@ package com.fise.server.fisedevice.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,6 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.FiseDeviceMapper;
-
 import com.fise.model.entity.FiseDevice;
 import com.fise.model.entity.FiseDeviceExample;
 import com.fise.model.entity.FiseDeviceExample.Criteria;
@@ -21,8 +19,6 @@ import com.fise.utils.StringUtil;
 
 @Service
 public class FiseDeviceServiceImpl implements IFiseDeviceService{
-	
-	private Logger logger=Logger.getLogger(getClass());
 	
 	@Autowired
 	FiseDeviceMapper fiseDevicedao;

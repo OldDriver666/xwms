@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiModuleMapper;
 import com.fise.dao.WiPermissionMapper;
@@ -33,7 +32,7 @@ public class ModuleServiceImpl implements IModuleService {
         Response resp = new Response();
         /*TODO 默认认为请求者传的roleId有效可用，不做检测 根据情况定是否检测值有效性*/
         List<ModuleQueryResult> returnData = new ArrayList<ModuleQueryResult>();
-        List<ModuleQueryResult> data = permissionDao.selectPermissionByRole(param.getRoleId());
+        List<ModuleQueryResult> data = permissionDao.selectPermissionByParam(param);
         for(ModuleQueryResult tmpData : data){
             if(tmpData.getStatus() != 0){
                 returnData.add(tmpData);
@@ -71,16 +70,6 @@ public class ModuleServiceImpl implements IModuleService {
         WiModule module = new WiModule();
         module.setId(param.getModuleId());
         
-        if(StringUtil.isEmpty(param.getName())){
-            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        if(param.getPriority()==null){
-            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        if(StringUtil.isEmpty(param.getSn())){
-            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        
         if(!StringUtil.isEmpty(param.getName())){
             module.setName(param.getName());
         }
@@ -90,16 +79,16 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getPriority() != null){
             module.setPriority(param.getPriority());
         }
-        if(!StringUtil.isEmpty(param.getDescription())){
+        if(param.getDescription() != null){
             module.setDescription(param.getDescription());
         }
-        if(!StringUtil.isEmpty(param.getSn())){
+        if(param.getSn() != null){
             module.setSn(param.getSn());
         }
         if(param.getStatus() != null){
             module.setStatus(param.getStatus());
         }
-        if(!StringUtil.isEmpty(param.getUrl())){
+        if(param.getUrl() != null){
             module.setUrl(param.getUrl());
         }
         moduleDao.updateByPrimaryKeySelective(module);

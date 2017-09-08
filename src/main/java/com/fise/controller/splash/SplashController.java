@@ -17,7 +17,7 @@ import com.fise.server.splash.ISplashService;
 import com.fise.utils.StringUtil;
 
 @RestController
-@RequestMapping("/boss/splash")
+@RequestMapping("/boss/store/splash")
 public class SplashController {
 	
 	private Logger logger=Logger.getLogger(getClass());
@@ -53,7 +53,7 @@ public class SplashController {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		
-		response=iSplashService.querySplash(param);
+		response=iSplashService.querySplash();
 		
 		
 		return response;

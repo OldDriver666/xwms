@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.fise.model.entity.WiModule">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="module_type" jdbcType="INTEGER" property="moduleType" />
+    <result column="belong_company" jdbcType="INTEGER" property="belongCompany" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="priority" jdbcType="INTEGER" property="priority" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, description, priority, status, sn, url, parent_id
+    id, name, module_type, belong_company, description, priority, status, sn, url, parent_id
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiModuleExample" resultMap="BaseResultMap">
     select
@@ -111,12 +113,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiModule">
-    insert into wi_module (id, name, description, 
-      priority, status, sn, 
-      url, parent_id)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{priority,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER})
+    insert into wi_module (id, name, module_type, 
+      belong_company, description, priority, 
+      status, sn, url, parent_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{moduleType,jdbcType=INTEGER}, 
+      #{belongCompany,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiModule">
     insert into wi_module
@@ -126,6 +130,12 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="moduleType != null">
+        module_type,
+      </if>
+      <if test="belongCompany != null">
+        belong_company,
       </if>
       <if test="description != null">
         description,
@@ -152,6 +162,12 @@
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleType != null">
+        #{moduleType,jdbcType=INTEGER},
+      </if>
+      <if test="belongCompany != null">
+        #{belongCompany,jdbcType=INTEGER},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -188,6 +204,12 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.moduleType != null">
+        module_type = #{record.moduleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.belongCompany != null">
+        belong_company = #{record.belongCompany,jdbcType=INTEGER},
+      </if>
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
       </if>
@@ -215,6 +237,8 @@
     update wi_module
     set id = #{record.id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
+      module_type = #{record.moduleType,jdbcType=INTEGER},
+      belong_company = #{record.belongCompany,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR},
       priority = #{record.priority,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
@@ -230,6 +254,12 @@
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleType != null">
+        module_type = #{moduleType,jdbcType=INTEGER},
+      </if>
+      <if test="belongCompany != null">
+        belong_company = #{belongCompany,jdbcType=INTEGER},
       </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
@@ -255,6 +285,8 @@
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.WiModule">
     update wi_module
     set name = #{name,jdbcType=VARCHAR},
+      module_type = #{moduleType,jdbcType=INTEGER},
+      belong_company = #{belongCompany,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       priority = #{priority,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},

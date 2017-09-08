@@ -24,6 +24,18 @@ public class ModuleQueryParam implements Serializable {
 	@NotNull
     @JsonProperty("role_id")
     private Integer roleId;
+	
+	@NotNull
+	@JsonProperty("company_id")
+	private Integer companyId;
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
 
     public Integer getAdminId() {
         return adminId;

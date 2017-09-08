@@ -31,10 +31,29 @@ public class AdminInsert {
 	private Integer roleId;
 	
 	@NotNull
-	@JsonProperty("organization_id")
-	private Integer organizationId;
+	@JsonProperty("compay_id")
+	private Integer compayId;
 	
-	private String phone;
+	@JsonProperty("depart_id")
+	private Integer departId;
+	
+	public Integer getCompayId() {
+        return compayId;
+    }
+
+    public void setCompayId(Integer compayId) {
+        this.compayId = compayId;
+    }
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
+    }
+
+    private String phone;
 	
 	private String email;
 
@@ -76,14 +95,6 @@ public class AdminInsert {
 
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
-	}
-
-	public Integer getOrganizationId() {
-		return organizationId;
-	}
-
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
 	}
 
 	public String getPhone() {

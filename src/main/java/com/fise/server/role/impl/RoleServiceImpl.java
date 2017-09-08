@@ -4,7 +4,8 @@ package com.fise.server.role.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +21,13 @@ import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
 import com.fise.model.entity.WiPermission;
 import com.fise.model.entity.WiPermissionExample;
+import com.fise.model.param.ModuleQueryParam;
 import com.fise.model.param.ModuleQueryResult;
 import com.fise.model.param.RolePermissionParam;
 import com.fise.model.result.RoleAuthResult;
+import com.fise.server.depart.IDepartmentService;
 import com.fise.server.role.IRoleService;
 import com.fise.utils.DateUtil;
-import com.fise.utils.StringUtil;
 
 @Service
 public class RoleServiceImpl implements IRoleService {
@@ -39,8 +41,11 @@ public class RoleServiceImpl implements IRoleService {
     @Autowired
     private WiAdminMapper adminDao;
     
+    @Resource
+    IDepartmentService departSvr;
+    
     @Override
-    public Response queryAll(Integer adminRole, Integer orgId) {
+    public Response queryAll(Integer adminRole, Integer orgId, Integer departId) {
         /*TODO 根据组织ID查询角色*/
         Response resp = new Response();
         //预先查询管理者权限
@@ -48,7 +53,11 @@ public class RoleServiceImpl implements IRoleService {
         WiOrganizationRoleExample example = new WiOrganizationRoleExample();
         WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
         criterion.andAuthLevelLessThanOrEqualTo(admin.getAuthLevel());
-        //目前只有一个公司角色记录,所以默认返回所有公用
+        criterion.andOrganizationIdEqualTo(orgId);
+        
+        if(departId != 0){
+            criterion.andDepartIdIn(departSvr.getChildDepatId(departId));
+        }
         List<WiOrganizationRole> roleList = roleDao.selectByExample(example);
         resp.success(roleList);
         return resp;
@@ -70,7 +79,11 @@ public class RoleServiceImpl implements IRoleService {
             //查询子角色权限
             List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
             List<ModuleQueryResult> tmpResult2 = new ArrayList<ModuleQueryResult>();
-            tmpResult = permissionDao.selectPermissionByRole(role.getId());
+            ModuleQueryParam param = new ModuleQueryParam();
+            param.setAdminId(0);
+            param.setCompanyId(orgId);
+            param.setRoleId(adminRole);
+            tmpResult = permissionDao.selectPermissionByParam(param);
             for(ModuleQueryResult tmpAuth : tmpResult){
                 if(tmpAuth.getStatus() == 1){
                     tmpResult2.add(tmpAuth);
@@ -148,7 +161,11 @@ public class RoleServiceImpl implements IRoleService {
         for(WiOrganizationRole role : roleList){
             //查询子角色权限
             List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
-            tmpResult = permissionDao.selectPermissionByRole(role.getId());
+            ModuleQueryParam param = new ModuleQueryParam();
+            param.setAdminId(0);
+            param.setCompanyId(orgId);
+            param.setRoleId(adminRole);
+            tmpResult = permissionDao.selectPermissionByParam(param);
             //赋值对应角色权限
             RoleAuthResult tmpData = new RoleAuthResult();
             tmpData.setRoleId(role.getId());
@@ -168,7 +185,7 @@ public class RoleServiceImpl implements IRoleService {
         //判断用户权限
         WiAdminExample example1=new WiAdminExample();
         WiAdminExample.Criteria criteria1=example1.createCriteria();
-        criteria1.andIdEqualTo(role.getAdminid());
+        criteria1.andIdEqualTo(role.getId());
         List<WiAdmin> list1=adminDao.selectByExample(example1);
         Integer roleid=list1.get(0).getRoleId();
         
@@ -197,6 +214,20 @@ public class RoleServiceImpl implements IRoleService {
         roleDao.insertSelective(role);
         
         return response.success();
+    }
+
+    @Override
+    public Response updRole(WiOrganizationRole role) {
+        Response resp=new Response();
+        roleDao.updateByPrimaryKeySelective(role);
+        return resp.success();
+    }
+
+    @Override
+    public Response delRole(WiOrganizationRole role) {
+        Response resp=new Response();
+        roleDao.deleteByPrimaryKey(role.getId());
+        return resp.success();
     }
 
 }
