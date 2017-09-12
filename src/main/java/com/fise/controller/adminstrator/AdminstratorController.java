@@ -66,8 +66,8 @@ public class AdminstratorController {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 
-        logger.info(param.toString());
         resp = adminSvr.insertAdmin(param);
+        logger.info("新增管理员:"+param.toString());
         return resp;
     }
 
@@ -80,10 +80,23 @@ public class AdminstratorController {
         }
 
         logger.info(param.toString());
-        resp = adminSvr.updateAdmin(param);
+        resp = adminSvr.deleteAdmin(param);
         return resp;
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Response adminDelete(@RequestBody @Valid AdminUpdate param) {
+        Response resp = new Response();
+
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info(param.toString());
+        resp = adminSvr.updateAdmin(param);
+        return resp;
+    }
+    
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response adminQuery(@RequestBody @Valid AdminQuery param) {
         Response resp = new Response();

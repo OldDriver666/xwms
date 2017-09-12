@@ -208,7 +208,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
     private boolean hasModifyAuth(Integer requestRule, Integer targetRule) {
 
         if (requestRule.equals(targetRule)) {
-            return true;
+            return false;
         }
 
         // 为了避免多次查询和计算，查询条件按照auth_level排序
@@ -252,8 +252,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         WiAdmin admin = adminList.get(0);
         // 除了Administrator用户检测 新增用户公司是否合法
-        if (!admin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME)
-                && !param.getCompayId().equals(admin.getCompanyId())) {
+        if (!admin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME) && !param.getCompanyId().equals(admin.getCompanyId())) {
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
             resp.setMsg("禁止新建非本公司人员");
             return resp;
@@ -261,7 +260,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         if (!hasModifyAuth(admin.getRoleId(), param.getRoleId())) {
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-            resp.setMsg("无权创建更高级的用户");
+            resp.setMsg("权限错误");
             return resp;
         }
         // 查看新增用户是否合法
@@ -276,7 +275,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiAdmin record = new WiAdmin();
         record.setAccount(param.getAccount());
         record.setPassword(param.getPassword());
-        record.setCompanyId(param.getCompayId());
+        record.setCompanyId(param.getCompanyId());
         record.setRoleId(param.getRoleId());
         Integer nNow = DateUtil.getLinuxTimeStamp();
 
@@ -417,6 +416,8 @@ public class AdministratorServiceImpl implements IAdministratorService {
         } else {
             queryWhere.andRoleIdGreaterThan(loginAdmin.getRoleId());
         }
+        //标记为被删除的不返回
+        queryWhere.andStatusNotEqualTo((byte) 2);
         adminList.clear();
         adminList = adminDao.selectByExample(example);
         for (int index = 0; index < adminList.size(); index++) {
@@ -454,6 +455,23 @@ public class AdministratorServiceImpl implements IAdministratorService {
             RedisManager.getInstance().returnResource(Constants.REDIS_POOL_NAME_MEMBER, jedis);
         }
         return response.success();
+    }
+
+    @Override
+    public Response deleteAdmin(AdminUpdate param) {
+        Response resp = new Response();
+        // 查询目标管理员是否有效
+        WiAdminExample example = new WiAdminExample();
+        Criteria updWhere = example.createCriteria();
+        updWhere.andIdEqualTo(param.getAdminId());
+        List<WiAdmin> adminList = adminDao.selectByExample(example);
+        if (adminList.size() == 0) {
+            resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
+            return resp;
+        }
+        
+        adminDao.deleteByPrimaryKey(param.getAdminId());
+        return resp;
     }
 
 }

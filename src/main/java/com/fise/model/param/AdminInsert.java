@@ -8,41 +8,41 @@ import com.fise.framework.annotation.NotEmpty;
 import com.fise.utils.JsonUtil;
 
 public class AdminInsert {
-	
-	@NotNull
-	@JsonProperty("admin_id")
-	private Integer adminId;
-	
-	@NotEmpty
-	@MaxLength(value = 40)
-	private String account;
-	
-	@NotEmpty
-	@MaxLength(value = 50)
-	private String password;
-	
-	private Integer status;
-	
-	@JsonProperty("nick_name")
-	private String nickName;
-	
-	@NotNull
-	@JsonProperty("role_id")
-	private Integer roleId;
-	
-	@NotNull
-	@JsonProperty("compay_id")
-	private Integer compayId;
-	
-	@JsonProperty("depart_id")
-	private Integer departId;
-	
-	public Integer getCompayId() {
-        return compayId;
+
+    @NotNull
+    @JsonProperty("admin_id")
+    private Integer adminId;
+
+    @NotEmpty
+    @MaxLength(value = 40)
+    private String account;
+
+    @NotEmpty
+    @MaxLength(value = 50)
+    private String password;
+
+    private Integer status;
+
+    @JsonProperty("nick_name")
+    private String nickName;
+
+    @NotNull
+    @JsonProperty("role_id")
+    private Integer roleId;
+
+    @NotNull
+    @JsonProperty("company_id")
+    private Integer companyId;
+
+    @JsonProperty("depart_id")
+    private Integer departId;
+
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setCompayId(Integer compayId) {
-        this.compayId = compayId;
+    public void setCompanyId(Integer compayId) {
+        this.companyId = compayId;
     }
 
     public Integer getDepartId() {
@@ -54,22 +54,22 @@ public class AdminInsert {
     }
 
     private String phone;
-	
-	private String email;
 
-	public String getAccount() {
-		return account;
-	}
+    private String email;
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public String getAccount() {
+        return account;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	public Integer getStatus() {
+    public String getPassword() {
+        return password;
+    }
+
+    public Integer getStatus() {
         return status;
     }
 
@@ -78,51 +78,51 @@ public class AdminInsert {
     }
 
     public void setPassword(String password) {
-		this.password = password;
-	}
+        this.password = password;
+    }
 
-	public String getNickName() {
-		return nickName;
-	}
+    public String getNickName() {
+        return nickName;
+    }
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-	public Integer getRoleId() {
-		return roleId;
-	}
+    public Integer getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Integer getAdminId() {
-		return adminId;
-	}
+    public Integer getAdminId() {
+        return adminId;
+    }
 
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
-	}
-	
-	public String toString() {
-		return JsonUtil.toJson(this);
-	}
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
+    }
+
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 
 }

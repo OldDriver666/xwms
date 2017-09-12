@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.param.ModuleInsertParam;
-import com.fise.model.param.ModuleQueryParam;
-import com.fise.model.param.ModuleUpdateParam;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.module.IModuleService;
+import com.fise.utils.JsonUtil;
 
 @RestController
 @RequestMapping("/boss/module")
@@ -32,18 +31,18 @@ public class ModuleController {
     IAuthService authService;
     
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public Response query(@RequestBody @Valid ModuleQueryParam param){
+    public Response query(@RequestBody Map<String,Object> param){
+
         Response resp = new Response();
-        logger.info(param);
-        resp = moduleSvr.QueryModule(param);
-        return resp;
-    }
-    
-    @RequestMapping(value = "/queryall", method = RequestMethod.POST)
-    public Response queryAll(@RequestBody @Valid ModuleQueryParam param){
-        Response resp = new Response();
-        logger.info(param);
-        resp = moduleSvr.QueryModuleAll(param);
+        Integer companyId = (Integer)param.get("company_id");
+        if(companyId == null){
+            resp.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+            resp.setMsg("查询公司为空");
+        } else {
+            resp.success(moduleSvr.QueryModule(companyId));
+        }
+
+        logger.info("获取菜单:"+JsonUtil.toJson(param));
         return resp;
     }
     
@@ -55,21 +54,26 @@ public class ModuleController {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
-        logger.info(param);
         resp = moduleSvr.InsertModule(param);
+        logger.info("新增菜单:"+JsonUtil.toJson(param)+"结果:" + resp.getMsg());
         return resp;
     }
     
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public Response update(@RequestBody @Valid ModuleUpdateParam param){
+    public Response update(@RequestBody @Valid ModuleInsertParam param){
         Response resp = new Response();
         
         if(!authService.updateAuth()){
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
+        if(param.getModule_id() == null){
+            resp.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+            resp.setMsg("修改菜单ID为空");
+        } else {
+            resp = moduleSvr.UpdateModule(param);
+        }
         
-        logger.info(param);
-        resp = moduleSvr.UpdateModule(param);
+        logger.info("修改菜单:"+param.toString()+" 结果:"+resp.getMsg());
         return resp;
     }
     

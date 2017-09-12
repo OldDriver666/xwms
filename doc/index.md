@@ -15,7 +15,7 @@ FISE-AccessToken:dfdd2a47b176443ba7d062307248e25a
 数据传输采用json协议。回包通用格式如下,后续接口说明仅提供默认正常处理情况下返回的数据格式
 {
     "code":INTEGER,      //错误码
-    "code_msg":"STRING", //错误提示
+    "msg":"STRING", //错误提示
     "data":JsonObject,   //返回的数据,一下所有接口回复说明里面就是该data字段内容,其他code 和code_msg未列出
 }
 ```
@@ -68,7 +68,6 @@ http://boss.fise-wi.com
 |   接口地址    |   boss/admin/islogin         |
 |   ---         |   ---                   |
 
-
 ```
 //请求
 {
@@ -90,12 +89,11 @@ http://boss.fise-wi.com
     "account":"",       //必填-新增管理员账号
     "password":"",      //必填-密码
     "nick_name":"",     //昵称
-    "status":1,         //0-不可用，1-可用   默认为1
     "role_id":x,        //必填-角色
     "phone":"",
     "email":"",
     "company_id":x      //必填-组织id
-    "depart_id":x       //部门ID
+    "depart_id":x       //选填-部门ID
 }
 
 //回复
@@ -158,77 +156,205 @@ null 没有数据返回 看code是否成功
 |   接口地址    |   boss/admin/update         |
 |   ---         |   ---                   |
 
-#####请求
 ```
+//请求
 {
     "login_id":x,       //必填-登录者id
     "admin_id":X,       //必填-需要修改者id
     "account":"",       //增管理员账号
     "password":"",      //密码
     "nick_name":"",     //昵称
-    "status":1,         //0-不可用，1-可用   
+    "status":1,         //0-不可用，1-可用  2-删除 
     "role_id":x,        //角色
     "organization_id":x,//公司组织id
     "phone":"",
     "email":""
 }
-```
-#####回复
-```
+
+//回复
 null 没有数据返回 看code是否成功
 ```
 
 
-###菜单管理
-####获取菜单权限
-|   接口地址    |   boss/module/query         |
-|   ---         |   ---                   |
-|   管理获取    |   boss/module/queryall         |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
+//回复
+null 没有数据返回 看code是否成功
+```
 
-#####请求
+
+###角色权限管理
+####新增角色
+|   接口地址    |   boss/role/insert        |
+|   ---         |   ---                   |
+
 ```
+//请求
 {
-    "admin_id":x,
-    "role_id":x,
-    "company_id":x
+ "role_level":x,                        //必填-角色权值
+ "role_name":"",                        //必填-角色名称
+ "company_id":x                         //必填-公司id
+ "desc":"",                             //选填-角色描述
+ "depart_id":X                          //选填-角色部门
 }
-以上值从登陆中获取
+
+//回复
+无内容，直接查看返回码
+``` 
+
+####查询角色
+|   接口地址    |   boss/role/query        |
+|   ---         |   ---                   |
+
 ```
-#####回复
-```
-返回一个json数组
+//请求
+{
+ "role_id":x,                 //必填-自己角色
+ "company_id":x               //必填-自己公司
+}
+
+//回复
 [
       {
-        "permissId": 1,
-         "moduleId": 1,
-         "moduleName": "Broadcast",
-         "moduleType": 0,  //0-管理栏  1-查询栏
-         "priority": 2300,
-         "sn": "zhengtigaisu",
-         "url": "https://www.baidu.com",
-         "status": 1,
-         "parentId": 0,
-         "insertAuth": 1,
-         "updateAuth": 1,
-         "queryAuth": 1,
-         "parent_id": 0
+         "id": 1,
+         "authLevel": 999,
+         "name": "BOSS",
+         "description": "沸石智能管理员账号",
+         "organizationId": 1
       },
       {
-         "permissId": 2,
-         "moduleId": 2,
-         "moduleName": "设备管理",
-         "moduleType": 0,
+         "id": 2,
+         "authLevel": 800,
+         "name": "超级管理员",
+         "description": "合作公司管理员账号",
+         "organizationId": 1
+      },
+      {
+         "id": 3,
+         "authLevel": 700,
+         "name": "管理员",
+         "description": "管理员账号",
+         "organizationId": 1
+      }
+]
+``` 
+
+####修改角色
+|   接口地址    |   boss/role/update        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+ "id":x                                 //必填-从role/query返回数据中的id字段值
+ "role_level":x,                        //选填-角色权值
+ "role_name":"",                        //选填-角色名称
+ "company_id":x                         //选填-公司id
+ "desc":"",                             //选填-角色描述
+ "depart_id":X                          //选填-角色部门
+}
+
+//回复
+无内容，直接查看返回码
+``` 
+
+
+####查询角色权限
+|   接口地址    |   boss/role/queryAuth        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+ "role_id":x,       //必填-自己角色
+ "company_id":x     //必填-自己公司
+ "include_all":x    //选填-0或者不传:自己的权限 1:所有权限/用于上级查询管理下级权限
+}
+
+//回复
+[
+      {
+         "module_id": 2,
+         "module_name": "Broadcast",
+         "url": "manage/main/main.html",
+         "module_type": 0,
+         "priority": 2300,
+         "parent_id": 0,
+         "status": 0,
+         "permiss_id": 16,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      },
+      {
+         "module_id": 3,
+         "module_name": "设备管理",
+         "url": "",
+         "module_type": 0,
          "priority": 1900,
+         "parent_id": 0,
+         "status": 1,
+         "permiss_id": 88,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      }
+]
+``` 
+
+####修改角色权限
+|   接口地址    |   boss/role/updateAuth        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "key_id":x,                    //必填 角色权限ID 从接口queryAuth返回中的permiss_id字段值
+    "status":x,                    //选填-1-可见 0-不可见
+    "insert_auth":x,               //选填-新增权限
+    "update_auth":x,               //选填-更新权限
+    "query_auth":x                 //选填-查询可见权限
+}
+
+//回复
+无回复 看结果
+```
+
+###菜单管理
+####获取菜单列表
+|   接口地址    |   boss/module/query         |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "company_id":x -必填
+}
+以上值从登陆中获取
+
+//回复
+ [
+      {
+         "id": 2,
+         "name": "设备管理",
+         "moduleType": 0,
+         "belongCompany": 1,
+         "description": "",
+         "priority": 1900,
+         "status": 1,
          "sn": "shebeiguanli",
          "url": "",
+         "parentId": 0
+      },
+      {
+         "id": 4,
+         "name": "系统管理",
+         "moduleType": 0,
+         "belongCompany": 1,
+         "description": "",
+         "priority": 1700,
          "status": 1,
-         "parentId": 0,
-         "insertAuth": 1,
-         "updateAuth": 1,
-         "queryAuth": 1,
-         "parent_id": 0
+         "sn": "xitongguanli",
+         "url": "",
+         "parentId": 0
       }
 ]
 ```
@@ -236,18 +362,15 @@ null 没有数据返回 看code是否成功
 ####新增菜单
 |   接口地址    |   boss/module/insert         |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        |
 
-#####请求
+
 ```
+//请求
 {
-    "admin_id":x,          //必填-登陆管理员ID 
     "name":"title",        //必填-菜单名称
     "description":"",      //选填-菜单描述说明
     "priority":x,          //必填-菜单权限决定排序位置
     "sn":"desc",           //必填-菜单名称的全拼字符串
-    "status":x,            //必填-0或者1,1表示新增后可可见 0-不可见
     "url":"",              //选填-是否需要配置跳转的url
     "parent_id":x          //必填-菜单父节点，如果是顶级菜单填写0
 }
@@ -872,153 +995,6 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ``` 
 
-###权限管理
-####新增用户角色
-|   接口地址    |   boss/role/add        |
-|   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
-
-#####请求
-```
-{
- "admin_id":x,                       //必填-这个值是登陆中返回的id获字段值-调用者id
- "authLevel":x,                      //必填-角色权值
- "name":"",                          //必填-角色名称
- "description":"",                   //选填-角色描述
- "organizationId":x                  //选填-角色的公司id
-}
-```
-#####回复
-```
-无内容，直接查看返回码
-``` 
-
-####查询用户角色
-|   接口地址    |   boss/role/query        |
-|   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
-
-#####请求
-```
-{
- "role_id":x,                 //必填-自己角色
- "organ_id":x                 //必填-自己公司
-}
-```
-#####回复
-```
-[
-      {
-         "id": 1,
-         "authLevel": 999,
-         "name": "BOSS",
-         "description": "沸石智能管理员账号",
-         "organizationId": 1
-      },
-      {
-         "id": 2,
-         "authLevel": 800,
-         "name": "超级管理员",
-         "description": "合作公司管理员账号",
-         "organizationId": 1
-      },
-      {
-         "id": 3,
-         "authLevel": 700,
-         "name": "管理员",
-         "description": "管理员账号",
-         "organizationId": 1
-      }
-]
-``` 
-
-####查询角色权限
-|   接口地址    |   boss/role/queryAuth        |
-|   ---         |   ---                   |
-|   包括不可见  |   boss/role/allAuth           |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
-
-#####请求
-```
-{
- "role_id":x,                 //必填-自己角色
- "organ_id":x                 //必填-自己公司
-}
-```
-#####回复
-```
-[
-      {
-         "role_id": 3,
-         "role_name": "管理员",
-         "auth_list": [
-            {
-               "permissId":1,
-               "moduleId": 1,
-               "moduleName": "整体概述",
-               "priority": 2300,
-               "sn": "zhengtigaisu",
-               "url": "https://www.baidu.com",
-               "insertAuth": 1,
-               "updateAuth": 1,
-               "queryAuth": 1,
-               "parent_id": 0
-            },
-            {
-               "permissId":2,
-               "moduleId": 3,
-               "moduleName": "报表统计",
-               "priority": 1800,
-               "sn": "baobiaotongji",
-               "url": "",
-               "insertAuth": 1,
-               "updateAuth": 1,
-               "queryAuth": 1,
-               "parent_id": 0
-            }
-         ]
-      }
-]
-``` 
-
-####修改角色权限
-|   接口地址    |   boss/role/updateAuth        |
-|   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
-
-#####请求
-```
-{
-    "role_id":x,
-    "permis_list":
-    [
-        {
-        "permission_id":x,             //如果是修改必填，如果是新增不用填-权限id 从上面查询中获取id
-        "module_id":x,                 //选填-自己菜单id
-        "status":x,                    //选填-1-可见 0-不可见
-        "insert_auth":x,               //选填-新增权限
-        "update_auth":x,               //选填-更新权限
-        "query_auth":x                 //选填-查询可见权限
-        },
-        {
-        "module_id":x,                 //选填-自己菜单id
-        "status":1,                    //选填-1-可见 0-不可见
-        "insert_auth":1,               //选填-新增权限
-        "update_auth":1,               //选填-更新权限
-        "query_auth":1                 //选填-查询可见权限
-        },
-    ]
-}
-```
-#####回复
-```
-无回复 看结果
-```
-
 ###报表统计
 ####设备事件查询(分页查询)
 |   接口地址    |   boss/event/query        |
@@ -1469,44 +1445,37 @@ type和name都是选填，如果都不填，则查询所有信息
 }
 
 ``` 
-
-###公司管理
-####新增公司
+###组织/公司管理
+####公司新增
 |   接口地址    |   boss/organization/insert        |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
 
-#####请求
 ```
+//请求
 {
  "name":"",                    //必填-公司名称
  "address":"",                 //选填-公司地址
  "contact":"",                 //选填-公司联系方式
  "email":"",                   //选填-公司email
- "describtion":""              //选填-公司简介                   
+ "describtion":"",             //选填-公司简介   
+ "home":""                     //选填-公司主页 默认为index.html        
 }
-```
-#####回复
-```
+
+//回复
 无内容，直接查看返回码
 ```
 
 ####公司查询
 |   接口地址    |   boss/organization/query        |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
 
-#####请求
 ```
-不填，则查询所有
+//请求
 {
-    "name":""                    //选填-公司名称
+    "name":""                    //选填-不填，则查询所有[名称支持模糊查询]
 }
-```
-#####回复
-```
+
+//回复
 [
     {
         "id": 1,
@@ -1525,29 +1494,24 @@ type和name都是选填，如果都不填，则查询所有信息
 ####公司删除
 |   接口地址    |   boss/organization/del        |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
 
-#####请求
+
 ```
-不填，则查询所有
+//请求
 {
     "id":x                        //必填-公司id
 }
-```
-#####回复
-```
+
+//回复
 无内容，直接查看返回码
 ```
 
 ####公司修改
 |   接口地址    |   boss/organization/update        |
 |   ---         |   ---                   |
-|   请求方式    |   HTTP POST             |
-|   参数格式    |   JSON                        | 
 
-#####请求
 ```
+//请求
 {
  "id":x,                       //必填-公司id
  "name":"",                    //选填-公司名称
@@ -1555,11 +1519,10 @@ type和name都是选填，如果都不填，则查询所有信息
  "contact":"",                 //选填-公司联系方式
  "email":"",                   //选填-公司email
  "describtion":"",             //选填-公司简介 
- "status":x                    //选填-0-删除，1-正常
+ "home":"",                    //选填-公司主页
 }
-```
-#####回复
-```
+
+//回复
 无内容，直接查看返回码
 ```
 
