@@ -1,9 +1,11 @@
 $(function() {
-	var userName = Util.cookieStorage.getCookie("username");
+    var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
-    var depart_id = Util.cookieStorage.getCookie("departId");//所属公司id
-    var url_param_id = Util.getParameter("id");
+    var depart_id = Util.cookieStorage.getCookie("departId");
+    var company_id = Util.cookieStorage.getCookie("companyId");
+    var role_level = Util.cookieStorage.getCookie("userLevel");
     var admin_id = Util.cookieStorage.getCookie("adminId");
+    var nick_name = Util.cookieStorage.getCookie("nickname");
 
     var url=location.search;
     var Request = new Object();
@@ -14,10 +16,10 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var moduleId = Request["moduleId"];
-    var insertAuth = Request["insertAuth"];
-    var queryAuth = Request["queryAuth"];
-    var updateAuth = Request["updateAuth"];
+    var moduleId = parseInt(Request["moduleId"]);
+    var insertAuth = parseInt(Request["insertAuth"]);
+    var queryAuth = parseInt(Request["queryAuth"]);
+    var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
         init: function(){
@@ -37,10 +39,12 @@ $(function() {
             var data = new Object();
             data.ime = $("#input-devIME").val();
             data.account = $("#input-devXW").val();
-            data.depart_id = parseInt(depart_id);
             data.type = parseInt($('#input-devType option:selected').val());
             data.mobile = $("#input-phoneNo").val();
             data.mark = $("#input-Mark").val();
+            data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
+
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
@@ -67,8 +71,9 @@ $(function() {
                 data.param = {
                     "ime":search_IME,
                     "account":search_XW,
-                    "depart_id":parseInt(depart_id),
-                    "status":parseInt(search_status)
+                    "status":parseInt(search_status),
+                    "depart_id": parseInt(depart_id),
+                    "company_id": parseInt(company_id)
                 };
 
             var opt = {
@@ -109,10 +114,11 @@ $(function() {
             data.ime = $("#input-devIME").val();
             data.status = parseInt($("input[name=status]:checked").val());
             data.account = $("#input-devXW").val();
-            data.depart_id = parseInt(depart_id);
             data.type = parseInt($("#input-devTypeNo").val());
             data.mobile = $("#input-phoneNo").val();
             data.mark = $("#input-Mark").val();
+            data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
@@ -129,6 +135,8 @@ $(function() {
 				var url = ctx + "boss/fisedevice//delfisedevice";
 				var data = new Object();
                 data.fise_id = id;
+                data.depart_id = parseInt(depart_id);
+                data.company_id = parseInt(company_id);
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
@@ -144,6 +152,7 @@ $(function() {
             var url = ctx + "boss/devicecount";
             var data = new Object();
             data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){

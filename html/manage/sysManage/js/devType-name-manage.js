@@ -1,6 +1,11 @@
 $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
-    var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var depart_id = Util.cookieStorage.getCookie("departId");
+	var company_id = Util.cookieStorage.getCookie("companyId");
+	var role_level = Util.cookieStorage.getCookie("userLevel");
+	var admin_id = Util.cookieStorage.getCookie("adminId");
+	var nick_name = Util.cookieStorage.getCookie("nickname");
 
 	var url=location.search;
 	var Request = new Object();
@@ -11,10 +16,10 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
-	var moduleId = Request["moduleId"];
-	var insertAuth = Request["insertAuth"];
-	var queryAuth = Request["queryAuth"];
-	var updateAuth = Request["updateAuth"];
+	var moduleId = parseInt(Request["moduleId"]);
+	var insertAuth = parseInt(Request["insertAuth"]);
+	var queryAuth = parseInt(Request["queryAuth"]);
+	var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
 		init: function(){
@@ -32,9 +37,10 @@ $(function() {
 		add : function() {
             var url = ctx + "boss/clienttype/addclienttype";
             var data = new Object();
-
             data.client_type = $("#input-client_type").val();
             data.client_name = $("#input-client_name").val();
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -57,6 +63,8 @@ $(function() {
             var data = new Object();
             data.client_type = parseInt(search_client_type);
             data.client_name = search_client_name;
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -85,6 +93,9 @@ $(function() {
 			var data = new Object();
 			data.client_type = null;
 			data.client_name = "";
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
+
 			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					allDevTypeArray = result.data;
@@ -104,6 +115,8 @@ $(function() {
             data.type_id = parseInt($("#input-type_id").val());
             data.client_type = $("#input-client_type").val();
             data.client_name = $("#input-client_name").val();
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -122,6 +135,9 @@ $(function() {
 				var url = ctx + "boss/clienttype/delclienttype";
 				var data = new Object();
                 data.type_id = id;
+				data.depart_id = parseInt(depart_id);
+				data.company_id = parseInt(company_id);
+
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");

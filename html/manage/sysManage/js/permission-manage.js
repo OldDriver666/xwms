@@ -1,10 +1,11 @@
 $(function() {
-	var userName = Util.cookieStorage.getCookie("username");
+    var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
-    var url_param_id = Util.getParameter("id");
+    var depart_id = Util.cookieStorage.getCookie("departId");
+    var company_id = Util.cookieStorage.getCookie("companyId");
+    var role_level = Util.cookieStorage.getCookie("userLevel");
     var admin_id = Util.cookieStorage.getCookie("adminId");
-    var role_id = Util.cookieStorage.getCookie("userLevel");
-    var depart_id = Util.cookieStorage.getCookie("departId");//所属公司id
+    var nick_name = Util.cookieStorage.getCookie("nickname");
 
     var url=location.search;
     var Request = new Object();
@@ -15,10 +16,10 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var moduleId = Request["moduleId"];
-    var insertAuth = Request["insertAuth"];
-    var queryAuth = Request["queryAuth"];
-    var updateAuth = Request["updateAuth"];
+    var moduleId = parseInt(Request["moduleId"]);
+    var insertAuth = parseInt(Request["insertAuth"]);
+    var queryAuth = parseInt(Request["queryAuth"]);
+    var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
         init: function(){
@@ -34,21 +35,16 @@ $(function() {
         },
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/role/updateAuth";
-            var param_arr = [];
-            var param = new Object();
-            param.module_id = parseInt($("#input-moduleName").val());
-            param.status =  parseInt($("input[name=status]:checked").val());
-            param.insert_auth =  parseInt($("input[name=insert_auth]:checked").val());
-            param.update_auth =  parseInt($("input[name=update_auth]:checked").val());
-            param.query_auth =  parseInt($("input[name=query_auth]:checked").val());
-
-            param_arr.push(param);
+            var url = ctx + "boss/role/insertAuth";
             var rold_idSel = parseInt($("#input-userRoles").val());
-            var data = {
-                role_id: rold_idSel,
-                permis_list: param_arr
-            };
+            var data = new Object();
+            data.role_id = parseInt($("#input-userRoles").val());
+            data.module_id = parseInt($("#input-moduleName").val());
+            data.company_id = parseInt(company_id);
+            data.status =  parseInt($("input[name=status]:checked").val());
+            data.insert_auth =  parseInt($("input[name=insert_auth]:checked").val());
+            data.update_auth =  parseInt($("input[name=update_auth]:checked").val());
+            data.query_auth =  parseInt($("input[name=query_auth]:checked").val());
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -57,7 +53,6 @@ $(function() {
                     if(rold_idSel == parseInt($("#search-input-userRoles option:selected").val())){
                         action.loadPageData();
                     }
-
                 }else{
                     alert(result.msg);
 				}
@@ -67,38 +62,30 @@ $(function() {
 		loadPageData : function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
-            var url = ctx + "boss/role/allAuth";
+
+            if ($("#search-input-userRoles option:selected").val() == "") {
+                alert("请选择角色类型");
+                return false;
+            }
+            var url = ctx + "boss/role/queryAuth";
             var data = new Object();
-            data.role_id = parseInt(role_id);
-            data.organ_id = parseInt(depart_id);
+            data.role_id = parseInt($("#search-input-userRoles option:selected").val());
+            data.company_id = parseInt(company_id);
+            data.include_all = 1;
+
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != "") {
                     $('#pageContent').empty();
-                    var userRoleSel = parseInt($("#search-input-userRoles option:selected").val());
-                    if ($("#search-input-userRoles option:selected").val() == "") {
-                        alert("请选择角色类型");
-                    } else {
-                        var Len_Parent = result.data.length;
-                        var findVal = false;
-                        for (var i = 0; i < Len_Parent; i++) {
-                            if (userRoleSel == result.data[i].role_id) {
-                                var Len_Child = result.data[i].auth_list.length;
-                                var parentData = result.data[i].auth_list;
-                                for (var j = 0; j < Len_Child; j++) {
-                                    $("#pageTmpl").tmpl(parentData[j]).appendTo('#pageContent');
-                                    findVal = true;
-                                }
-                            }
-                        }
-                        if (findVal == false) {
-                            alert("记录不存在");
-                        }
-                    }
+                    $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
+
                     if(0 == updateAuth){
                         $(".table-update").hide();
                         $(".table-manage").hide();
                     }
+                } else if(result.code == ReturnCode.SUCCESS && result.data == "") {
+                    $('#pageContent').empty();
+                    alert(result.msg);
                 } else {
                     alert(result.msg);
                 }
@@ -110,8 +97,9 @@ $(function() {
         loadUserRolesData : function() {
             var url = ctx + "boss/role/query";
             var data = new Object();
-            data.role_id = parseInt(role_id);
-            data.organ_id = parseInt(depart_id);
+            data.role_id = parseInt(role_level);
+            data.company_id = parseInt(company_id);
+
             Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $("#pageUserRoles").tmpl(result.data).appendTo('#search-input-userRoles');
@@ -126,10 +114,11 @@ $(function() {
         },
         //获取所有菜单数据
         loadMenuData : function() {
-            var url = ctx + "boss/module/queryall";
-            var data = new Object();
-            data.admin_id = parseInt(admin_id);
-            data.role_id = parseInt(role_id);
+            var url = ctx + "boss/role/queryAuth";
+            var data = {
+                "role_id":parseInt(role_level),
+                "company_id":parseInt(company_id)
+            };
 
             Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -141,25 +130,29 @@ $(function() {
                 alert("服务器开个小差，请稍后重试！")
             });
 
-        },
+            /*var url = ctx + "boss/module/query";
+            var data = new Object();
+            data.company_id = parseInt(company_id);
 
+            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
+                } else {
+                    alert(result.msg);
+                }
+            },function() {
+                alert("服务器开个小差，请稍后重试！")
+            });*/
+        },
 		//编辑数据
 		edit : function() {
             var url = ctx + "boss/role/updateAuth";
-            var param_arr = [];
-            var param = new Object();
-            param.permission_id = parseInt($("#input-permissId").val());
-            param.module_id = parseInt($("#input-moduleId").val());
-            param.status = parseInt($("input[name=status]:checked").val());
-            param.insert_auth = parseInt($("input[name=insert_auth]:checked").val());
-            param.update_auth = parseInt($("input[name=update_auth]:checked").val());
-            param.query_auth = parseInt($("input[name=query_auth]:checked").val());
-            param_arr.push(param);
-            var rold_idSel = parseInt($('#search-input-userRoles option:selected').val());
-            var data = {
-                role_id: rold_idSel,
-                permis_list: param_arr
-            };
+            var data = new Object();
+            data.key_id = parseInt($("#input-permissId").val());
+            data.status = parseInt($("input[name=status]:checked").val());
+            data.insert_auth = parseInt($("input[name=insert_auth]:checked").val());
+            data.update_auth = parseInt($("input[name=update_auth]:checked").val());
+            data.query_auth = parseInt($("input[name=query_auth]:checked").val());
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -170,107 +163,13 @@ $(function() {
                     alert(result.msg);
                 }
             });
-		},
-		//删除数据
-        deleteItem : function(id, name) {
-			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "FiseDeviceManage/DelDeviceInfo";
-				var data = new Object();
-                data.UserName = userName;
-                data.AuthenticCode = token_value;
-                data.DeviceId = id;
-				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-					if (result.code == ReturnCode.SUCCESS) {
-                        toastr.success("删除成功!");
-                        action.loadPageData();
-					}else{
-                        alert(result.msg);
-                    }
-				});
-			}
-		},
-        //获取并处理批量插入的数据
-        getDevTxtInfo : function () {
-            var addCount = 10;
-            var txtDevInfoList = $(".fileContentTxt").text();
-            var txtDevType = $("#input-devType2").val();
-            var txtDevInfo_arr = txtDevInfoList.split(/\s+/);//文件里一共有多少条数据
-            var txt_IME_arr = [];
-            var txt_XW_arr = [];
-            for(i=0; i<txtDevInfo_arr.length; i++){
-                var txt_dev_item_arr = txtDevInfo_arr[i].split(",");
-                txt_IME_arr.push(txt_dev_item_arr[1]);//得到所有IME参数值的数组
-                txt_XW_arr.push(txt_dev_item_arr[3]);//得到所有XW参数值的数组
-            };
-            var add_data_count = Math.ceil(txtDevInfo_arr.length/addCount);//计算得到要通过执行几次插入
-            var add_data_last =  txtDevInfo_arr.length % addCount;//计算得到最后一次插入时，还剩几条数据
-
-            //每隔一定时间调用一次插入
-            var s = null;
-            var k = -1;
-           s = setInterval(function(){
-                k++;
-                var flag = null;
-                var n = k * addCount;
-                var num = 10;//每次插入几条数据的参数
-                if(k == add_data_count-1){
-                    var m = n + add_data_last;
-                    flag = 1;
-                    num = add_data_last;//如果执行到最后一次调用，最后一次剩下的数据条数赋给num,作为对应的参数值
-                    clearInterval(s);//执行完最后一次调用后关闭计时器
-                }else{
-                    var m = n + addCount;
-                }
-                var param_arr = [];
-                param_arr.splice(0, param_arr.length);//每执行完一次后清空下该数组
-               //遍历分批次插入时，每一次要插入的数据
-                for (l = n; l < m; l++) {
-                    var param = new Object();
-                    param.DeviceIME = txt_IME_arr[l];
-                    param.DeviceXW = txt_XW_arr[l];
-                    param.DepartId = parseInt(depart_id);
-                    param.ProductType = parseInt(txtDevType);
-                    param_arr.push(param);
-                }
-                action.addDevFile(param_arr,flag,num)
-            },1000);
-
-        },
-        //批量添加设备信息
-        addDevFile : function (param_arr,flag,num) {
-            var url = ctx + "FiseDeviceManage/InsertInfo";
-            var data = {
-                UserName: userName,
-                AuthenticCode: token_value,
-                DeviceNo: num,//每次插入几条数据
-                DeviceInfo: param_arr
-            };
-            Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                if (result.Status == ReturnCode.SUCCESS) {
-                    //通过函数传参得到flag,如果值为1时说明已经执行到最后一次调用，然后关闭弹窗，提示添加完成，获取最新数据
-                     if(parseInt(flag) == 1){
-                         $("#modal-loading").modal('hide');
-                         toastr.success("添加完成!");
-                         action.loadPageData();
-                         action.getDevStatusData();
-                     }
-                }else if(result.Status == 1){
-                    toastr.error(result.ErrorInfo);
-                    $("#modal-loading").modal('hide');
-                }else{
-                    alert("添加失败！");
-                    $("#modal-loading").modal('hide');
-                }
-            })
-        }
+		}
 	};
 	window.action = action;
     action.init();
-    //action.loadPageData();
 	action.loadUserRolesData();
+    //action.loadPageData();
     action.loadMenuData();
-    //action.getDevStatusData();
-   // action.loadPrivateAuthData();
 
     //编辑获取数据数据
     $("#pageContent").on("click",".table-edit-btn",function(){

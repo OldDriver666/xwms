@@ -1,8 +1,11 @@
 $(function() {
-	var userName = Util.cookieStorage.getCookie("username");
+    var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
     var depart_id = Util.cookieStorage.getCookie("departId");
+    var company_id = Util.cookieStorage.getCookie("companyId");
     var role_level = Util.cookieStorage.getCookie("userLevel");
+    var admin_id = Util.cookieStorage.getCookie("adminId");
+    var nick_name = Util.cookieStorage.getCookie("nickname");
 
     var url=location.search;
     var Request = new Object();
@@ -13,10 +16,10 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var moduleId = Request["moduleId"];
-    var insertAuth = Request["insertAuth"];
-    var queryAuth = Request["queryAuth"];
-    var updateAuth = Request["updateAuth"];
+    var moduleId = parseInt(Request["moduleId"]);
+    var insertAuth = parseInt(Request["insertAuth"]);
+    var queryAuth = parseInt(Request["queryAuth"]);
+    var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
 		//获取用户和设备在线及注册人数的数据
@@ -24,6 +27,7 @@ $(function() {
             var url = ctx + "boss/devicecount";
             var data = new Object();
             data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
@@ -53,9 +57,11 @@ $(function() {
             var v_d = startTime.substr(8,2);
             var url = ctx + "boss/report/activate";
             var data = {
-                "organ_id":parseInt(depart_id),
+                "organ_id":parseInt(company_id),
                 "begin_date":begin_date,
-                "end_date":end_date
+                "end_date":end_date,
+                "depart_id":parseInt(depart_id),
+                "company_id":parseInt(company_id)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -189,7 +195,9 @@ $(function() {
         getClientTypeData : function() {
             var url = ctx + "boss/report/dashboard";
             var data = {
-                "organ_id":parseInt(depart_id)
+                "organ_id":parseInt(company_id),
+                "depart_id":parseInt(depart_id),
+                "company_id":parseInt(company_id)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -322,6 +330,8 @@ $(function() {
             var data = new Object();
             data.client_type = null;
             data.client_name = "";
+            data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     var allDevTypeArray = result.data;

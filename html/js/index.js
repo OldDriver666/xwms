@@ -2,13 +2,16 @@ $(function(){
     var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
     var depart_id = Util.cookieStorage.getCookie("departId");
+    var company_id = Util.cookieStorage.getCookie("companyId");
     var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
     //安全退出
     $("#header-safeExit").on('click', function(){
         var url = ctx + "boss/admin/logout";
-        var data = {"admin_id":parseInt(admin_id)};
+        var data = {
+            "admin_id":parseInt(admin_id)
+        };
         Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
                 Util.cookieStorage.clearCookie("username");
@@ -16,7 +19,11 @@ $(function(){
                 Util.cookieStorage.clearCookie("nickname");
                 Util.cookieStorage.clearCookie("adminId");
                 Util.cookieStorage.clearCookie("departId");
+                Util.cookieStorage.clearCookie("companyId");
                 Util.cookieStorage.clearCookie("userLevel");
+                Util.cookieStorage.clearCookie("phone");
+                Util.cookieStorage.clearCookie("home");
+
                 localStorage.removeItem("myDevTypeArray");
                 localStorage.removeItem("myUserRolesArray");
                 localStorage.removeItem("allDevTypeArray");
@@ -39,11 +46,11 @@ $(function(){
             $("#admin-header-nick").text(nick_name);
 		},
 		loadMenu : function(){
-            var url = ctx + "boss/module/query";
+            var url = ctx + "boss/role/queryAuth";
             var moduleId= 0;
             var data = {
-                "admin_id":parseInt(admin_id),
-                "role_id":parseInt(role_level)
+                "role_id":parseInt(role_level),
+                "company_id":parseInt(company_id)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
@@ -53,7 +60,7 @@ $(function(){
                     var parent_data = new Array;
 
                     for(var i=0; i<Len; i++){
-                        var mid = data[i].moduleId;
+                        var mid = data[i].module_id	;
                         var pid = data[i].parent_id;
 
                         if(0 == pid){
@@ -68,9 +75,10 @@ $(function(){
                             parent_data.push(data[i]);
                         }
                     }
-                    for(var i in parent_data){
+                    $("#pageMenu").tmpl(parent_data).appendTo('#menuContent');
+                   /* for(var i in parent_data){
                         $("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');
-                    }
+                    }*/
 
                 } else if(result.Status == 1){
                     alert("服务器开个小差，请稍后重试！");
