@@ -29,7 +29,7 @@ public class OrganizationServiceImpl implements IOrganizationService {
         Criteria criteria=example.createCriteria();
         
         if(!StringUtil.isEmpty(name)){
-            criteria.andNameEqualTo(name);
+            criteria.andNameLike(name);
         }
   
         List<WiOrganization> organList = organDao.selectByExample(example);

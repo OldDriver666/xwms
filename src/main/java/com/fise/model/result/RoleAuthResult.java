@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fise.model.param.ModuleQueryResult;
+import com.fise.model.entity.WiPermission;
 import com.fise.utils.JsonUtil;
 
 /** 
@@ -24,7 +24,7 @@ public class RoleAuthResult implements Serializable {
 	private String roleName;
 
 	@JsonProperty("auth_list")
-	private List<ModuleQueryResult> authList;
+	private List<WiPermission> authList;
 	
 	public Integer getRoleId() {
         return roleId;
@@ -42,11 +42,11 @@ public class RoleAuthResult implements Serializable {
         this.roleName = roleName;
     }
 
-    public List<ModuleQueryResult> getAuthList() {
+    public List<WiPermission> getAuthList() {
         return authList;
     }
 
-    public void setAuthList(List<ModuleQueryResult> authList) {
+    public void setAuthList(List<WiPermission> authList) {
         this.authList = authList;
     }
 

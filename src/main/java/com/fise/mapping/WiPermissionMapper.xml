@@ -3,6 +3,7 @@
 <mapper namespace="com.fise.dao.WiPermissionMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.WiPermission">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="module_id" jdbcType="INTEGER" property="moduleId" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, role_id, module_id, status, insert_auth, update_auth, query_auth, updated, created
+    id, company_id, role_id, module_id, status, insert_auth, update_auth, query_auth, 
+    updated, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiPermissionExample" resultMap="BaseResultMap">
     select
@@ -112,20 +114,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiPermission">
-    insert into wi_permission (id, role_id, module_id, 
-      status, insert_auth, update_auth, 
-      query_auth, updated, created
-      )
-    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{insertAuth,jdbcType=INTEGER}, #{updateAuth,jdbcType=INTEGER}, 
-      #{queryAuth,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}
-      )
+    insert into wi_permission (id, company_id, role_id, 
+      module_id, status, insert_auth, 
+      update_auth, query_auth, updated, 
+      created)
+    values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
+      #{moduleId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{insertAuth,jdbcType=INTEGER}, 
+      #{updateAuth,jdbcType=INTEGER}, #{queryAuth,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, 
+      #{created,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiPermission">
     insert into wi_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="companyId != null">
+        company_id,
       </if>
       <if test="roleId != null">
         role_id,
@@ -155,6 +160,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
       </if>
       <if test="roleId != null">
         #{roleId,jdbcType=INTEGER},
@@ -194,6 +202,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
       <if test="record.roleId != null">
         role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
@@ -226,6 +237,7 @@
   <update id="updateByExample" parameterType="map">
     update wi_permission
     set id = #{record.id,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
       role_id = #{record.roleId,jdbcType=INTEGER},
       module_id = #{record.moduleId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
@@ -241,6 +253,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.WiPermission">
     update wi_permission
     <set>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
@@ -270,7 +285,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.WiPermission">
     update wi_permission
-    set role_id = #{roleId,jdbcType=INTEGER},
+    set company_id = #{companyId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
       module_id = #{moduleId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       insert_auth = #{insertAuth,jdbcType=INTEGER},
@@ -280,25 +296,31 @@
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!-- 为了减少查询 直接完成关联查询函数  -->
-  <resultMap id="moduleQueryResult" type="com.fise.model.param.ModuleQueryResult">
-    <result column="id" jdbcType="INTEGER" property="permissId" />
-    <result column="module_id" jdbcType="INTEGER" property="moduleId" />
-    <result column="name" jdbcType="VARCHAR" property="moduleName" />
-    <result column="priority" jdbcType="INTEGER" property="priority" />
-    <result column="sn" jdbcType="VARCHAR" property="sn" />
+  
+  <resultMap id="AuthResultMap" type="com.fise.model.result.ModulePermissResult">
+    <id column="id" jdbcType="INTEGER" property="permiss_id" />
+    <result column="module_id" jdbcType="VARCHAR" property="module_id" />
+    <result column="name" jdbcType="VARCHAR" property="module_name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="module_type" jdbcType="INTEGER" property="module_type" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="insert_auth" jdbcType="INTEGER" property="insert_auth" />
+    <result column="update_auth" jdbcType="INTEGER" property="update_auth" />
+    <result column="query_auth" jdbcType="INTEGER" property="query_auth" />
+    <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="insert_auth" jdbcType="INTEGER" property="insertAuth" />
-    <result column="update_auth" jdbcType="INTEGER" property="updateAuth" />
-    <result column="query_auth" jdbcType="INTEGER" property="queryAuth" />
   </resultMap>
-  <select id="selectPermissionByRole" parameterType="java.lang.Integer"  resultMap="moduleQueryResult">
-    select p.id,p.module_id,p.status,m.name,m.priority,m.sn,m.url,m.parent_id,p.insert_auth,p.update_auth,p.query_auth
-        from wi_permission p 
-        left join wi_module m 
-        on p.module_id=m.id
-        where m.status = 1 and p.role_id=#{roleId,jdbcType=INTEGER};
+
+  <select id="selectAuthByRole" parameterType="map" resultMap="AuthResultMap">
+    select p.id,m.name,m.url,m.module_type,m.id as module_id,m.priority,m.parent_id,
+           p.status,insert_auth,p.update_auth,p.query_auth
+    from wi_permission p left JOIN wi_module m
+         on p.module_id=m.id and p.company_id=m.belong_company
+    where p.company_id=#{company,jdbcType=INTEGER} 
+          and p.role_id=#{role,jdbcType=INTEGER}
+          and m.parent_id=#{parent,jdbcType=INTEGER}
+          <if test="needall != 1">
+            and p.status = 1 and m.status=1
+          </if>
   </select>
 </mapper>

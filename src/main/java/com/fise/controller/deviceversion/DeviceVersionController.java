@@ -35,7 +35,7 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth(12)){
+		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -56,10 +56,6 @@ public class DeviceVersionController {
 	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(12)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
 		logger.info(param.toString());
 		
 		if(param.getDepartid()==null){
@@ -78,7 +74,7 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(12)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -100,7 +96,7 @@ public class DeviceVersionController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(12)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		

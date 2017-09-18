@@ -27,83 +27,90 @@ import com.fise.server.auth.IAuthService;
 @RequestMapping("/boss/admin")
 public class AdminstratorController {
 
-	private Logger logger = Logger.getLogger(this.getClass());
-	
-	@Resource
-	private IAdministratorService adminSvr;
-	
-	@Resource
-	IAuthService authService;
-	
-	@IgnoreAuth
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Response adminLogin(@RequestBody @Valid LoginParam param)
-	{
-		Response resp = new Response();
-		try {
-			logger.info(param.toString());
-			resp = adminSvr.login(param);
-		} catch (Exception e) {
-			e.printStackTrace();
-			resp.failure(ErrorCode.ERROR_SYSTEM);
-		}
-		return resp;
-	}
-	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public Response logout(@RequestBody @Valid LogoutParam param, HttpServletRequest request) {
-		Response resp = new Response();
-		logger.info(param.toString());
-		resp = adminSvr.logout(param, request);
-		
-		return resp;
-	}
+    private Logger logger = Logger.getLogger(this.getClass());
 
-	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public Response adminInsert(@RequestBody @Valid AdminInsert param) {
-		Response resp = new Response();
-		
-		if(!authService.inserAuth(18)){
-            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
-		logger.info(param.toString());
-		resp = adminSvr.insertAdmin(param);
-		return resp;
-	}
-	
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
-		Response resp = new Response();
-		
-		if(!authService.updateAuth(18)){
-            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
-		logger.info(param.toString());
-		resp = adminSvr.updateAdmin(param);
-		return resp;
-	}
+    @Resource
+    private IAdministratorService adminSvr;
 
-	@RequestMapping(value = "/query", method = RequestMethod.POST)
-	public Response adminQuery(@RequestBody @Valid AdminQuery param){
-	    Response resp = new Response();
-	    
-	    if(!authService.queryAuth(18)){
+    @Resource
+    IAuthService authService;
+
+    @IgnoreAuth
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Response adminLogin(@RequestBody @Valid LoginParam param) {
+        Response resp = new Response();
+        try {
+            logger.info(param.toString());
+            resp = adminSvr.login(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.failure(ErrorCode.ERROR_SYSTEM);
+        }
+        return resp;
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public Response logout(@RequestBody @Valid LogoutParam param, HttpServletRequest request) {
+        Response resp = new Response();
+        logger.info(param.toString());
+        resp = adminSvr.logout(param, request);
+
+        return resp;
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public Response adminInsert(@RequestBody @Valid AdminInsert param) {
+        Response resp = new Response();
+
+        if (!authService.inserAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-	    
-	    logger.info(param.toString());
-	    resp = adminSvr.queryAdmin(param);
-	    return resp;
-	}
-	
-	@IgnoreAuth
-	@RequestMapping(value="/islogin",method=RequestMethod.POST)
-	public Response isLogin(@RequestBody @Valid Map<String, String> map){
-	    Response resp = new Response();
-	    logger.info(map.toString());
-	    resp=adminSvr.isLogin(map.get("accessToken"));
-	    return resp;
-	}
+
+        resp = adminSvr.insertAdmin(param);
+        logger.info("新增管理员:"+param.toString());
+        return resp;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
+        Response resp = new Response();
+
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info(param.toString());
+        resp = adminSvr.deleteAdmin(param);
+        return resp;
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Response adminDelete(@RequestBody @Valid AdminUpdate param) {
+        Response resp = new Response();
+
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info(param.toString());
+        resp = adminSvr.updateAdmin(param);
+        return resp;
+    }
+    
+    @RequestMapping(value = "/query", method = RequestMethod.POST)
+    public Response adminQuery(@RequestBody @Valid AdminQuery param) {
+        Response resp = new Response();
+        logger.info(param.toString());
+        resp = adminSvr.queryAdmin(param);
+        return resp;
+    }
+
+    @IgnoreAuth
+    @RequestMapping(value = "/islogin", method = RequestMethod.POST)
+    public Response isLogin(@RequestBody @Valid Map<String, String> map) {
+        Response resp = new Response();
+        logger.info(map.toString());
+        resp = adminSvr.isLogin(map.get("accessToken"));
+        return resp;
+    }
 }

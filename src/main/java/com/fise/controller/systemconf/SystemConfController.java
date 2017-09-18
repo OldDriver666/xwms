@@ -35,7 +35,7 @@ public class SystemConfController {
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth(5)){
+		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -56,15 +56,9 @@ public class SystemConfController {
 	public Response querySystemConf(@RequestBody @Valid SystemConfParam param){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(5)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(param.toString());
 		response=iSystemConfService.querySystemConf(param);
-		
-		
+
 		return response;
 	}
 	
@@ -74,7 +68,7 @@ public class SystemConfController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(5)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -96,7 +90,7 @@ public class SystemConfController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(5)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		

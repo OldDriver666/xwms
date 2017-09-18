@@ -36,7 +36,7 @@ public class SuggestController {
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth(15)){
+		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -57,11 +57,6 @@ public class SuggestController {
 	public Response querySuggest(@RequestBody @Valid Page<SuggestParam> param){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(15)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(param.toString());
 		response=iSuggestService.querySuggest(param);
 		
@@ -75,7 +70,7 @@ public class SuggestController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(15)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -97,7 +92,7 @@ public class SuggestController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(15)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		

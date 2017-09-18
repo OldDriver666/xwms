@@ -20,6 +20,16 @@ public class ModuleQueryResult implements Serializable {
     
     private String moduleName;
     
+    private Integer moduleType;
+    
+    public Integer getModuleType() {
+        return moduleType;
+    }
+
+    public void setModuleType(Integer moduleType) {
+        this.moduleType = moduleType;
+    }
+
     private Integer priority;
     
     private String sn;

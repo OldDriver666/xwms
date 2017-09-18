@@ -33,7 +33,7 @@ public class SmsTemplateController {
         
         Response response=new Response();
         
-        if(!authService.inserAuth(35)){
+        if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -51,11 +51,6 @@ public class SmsTemplateController {
     public Response querySmsTemplate(@RequestBody @Valid SmsTemplateParam param){
         
         Response response=new Response();
-        
-        if(!authService.queryAuth(35)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-        
         logger.info(param.toString());
         
         response=smsTemplateService.querySmsTemplate(param);
@@ -68,7 +63,7 @@ public class SmsTemplateController {
         
         Response response=new Response();
         
-        if(!authService.updateAuth(35)){
+        if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
@@ -90,7 +85,7 @@ public class SmsTemplateController {
         
         Response response=new Response();
         
-        if(!authService.updateAuth(35)){
+        if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         

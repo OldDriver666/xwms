@@ -35,7 +35,7 @@ public class ClientTypeController {
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth(22)){
+		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -56,11 +56,6 @@ public class ClientTypeController {
 	public Response queryclienttype(@RequestBody @Valid ClientTypeParam param){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(22)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(param.toString());
 		response=imClientTypeService.queryClientType(param);
 		
@@ -74,7 +69,7 @@ public class ClientTypeController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(22)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -96,7 +91,7 @@ public class ClientTypeController {
 
 		Response response=new Response();
 		
-		if(!authService.updateAuth(22)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		

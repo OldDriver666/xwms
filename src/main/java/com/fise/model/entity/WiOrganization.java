@@ -2,8 +2,6 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
-import com.fise.utils.JsonUtil;
-
 /**
  * @author 
  */
@@ -26,6 +24,8 @@ public class WiOrganization implements Serializable {
     private String contact;
 
     private String email;
+
+    private String home;
 
     /**
      * 公司简介
@@ -89,6 +89,14 @@ public class WiOrganization implements Serializable {
         this.email = email;
     }
 
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
     public String getDescribtion() {
         return describtion;
     }
@@ -120,10 +128,4 @@ public class WiOrganization implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
-
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
-    
 }

@@ -51,6 +51,8 @@ public class IMUser implements Serializable {
      */
     private String city;
 
+    private String address;
+
     /**
      * 国家
      */
@@ -90,6 +92,8 @@ public class IMUser implements Serializable {
      * 用户类型:1-win 2-mac 17-IOS 18-android 19-fiseDev
      */
     private Integer type;
+
+    private Integer companyid;
 
     /**
      * 所属部门Id
@@ -228,6 +232,14 @@ public class IMUser implements Serializable {
         this.city = city;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -290,6 +302,14 @@ public class IMUser implements Serializable {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getCompanyid() {
+        return companyid;
+    }
+
+    public void setCompanyid(Integer companyid) {
+        this.companyid = companyid;
     }
 
     public Integer getDepartid() {

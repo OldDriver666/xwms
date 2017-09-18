@@ -36,7 +36,7 @@ public class fiseDeviceController {
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth(7)){
+		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -57,11 +57,6 @@ public class fiseDeviceController {
 	public Response queryFiseDevice(@RequestBody @Valid Page<QueryFiseDeviceParam> page){
 		
 		Response response=new Response();
-		
-		if(!authService.queryAuth(7)){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(page.toString());
 		
 		if(page.getParam().getDepartid()==null){
@@ -80,7 +75,7 @@ public class fiseDeviceController {
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth(7)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		
@@ -102,7 +97,7 @@ public class fiseDeviceController {
 
 		Response response=new Response();
 		
-		if(!authService.updateAuth(7)){
+		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 		

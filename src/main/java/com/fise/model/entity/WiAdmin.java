@@ -38,6 +38,8 @@ public class WiAdmin implements Serializable {
      */
     private Integer companyId;
 
+    private Integer departId;
+
     /**
      * 联系人电话
      */
@@ -129,6 +131,14 @@ public class WiAdmin implements Serializable {
 
     public void setCompanyId(Integer companyId) {
         this.companyId = companyId;
+    }
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
     }
 
     public String getPhone() {

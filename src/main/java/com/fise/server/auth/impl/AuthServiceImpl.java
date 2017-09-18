@@ -22,14 +22,14 @@ public class AuthServiceImpl implements IAuthService{
     WiPermissionMapper WiPermissionDao;
     
     @Override
-    public Boolean queryAuth(Integer module_id) {
+    public Boolean queryAuth() {
         Integer memberId=HttpContext.getMemberId();      
         String role_id=getRoleId(memberId);
-              
+        Integer moduleId = Integer.valueOf(HttpContext.getVersionName());
         WiPermissionExample example =new WiPermissionExample();
         WiPermissionExample.Criteria criteria=example.createCriteria();
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
-        criteria.andModuleIdEqualTo(module_id);
+        criteria.andModuleIdEqualTo(moduleId);
         List<WiPermission> list=WiPermissionDao.selectByExample(example);
         
         if(list.size()==0){
@@ -43,10 +43,10 @@ public class AuthServiceImpl implements IAuthService{
     }
 
     @Override
-    public Boolean inserAuth(Integer module_id) {
+    public Boolean inserAuth() {
         Integer memberId=HttpContext.getMemberId();
         String role_id=getRoleId(memberId);
-        
+        Integer module_id = Integer.valueOf(HttpContext.getVersionName());
         WiPermissionExample example =new WiPermissionExample();
         WiPermissionExample.Criteria criteria=example.createCriteria();
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
@@ -64,10 +64,10 @@ public class AuthServiceImpl implements IAuthService{
     }
 
     @Override
-    public Boolean updateAuth(Integer module_id) {
+    public Boolean updateAuth() {
         Integer memberId=HttpContext.getMemberId();
         String role_id=getRoleId(memberId);
-        
+        Integer module_id = Integer.valueOf(HttpContext.getVersionName());
         WiPermissionExample example =new WiPermissionExample();
         WiPermissionExample.Criteria criteria=example.createCriteria();
         criteria.andRoleIdEqualTo(Integer.parseInt(role_id));
