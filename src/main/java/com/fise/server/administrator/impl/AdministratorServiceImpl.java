@@ -67,14 +67,15 @@ public class AdministratorServiceImpl implements IAdministratorService {
         }
 
         WiAdmin admin = adminList.get(0);
-        if (!param.getPassword().equals(admin.getPassword())) {
-            resp.failure(ErrorCode.ERROR_PASSWORD_INCORRECT);
-            return resp;
-        }
         if (admin.getStatus() == 0) {
             resp.failure(ErrorCode.ERROR_ACCOUNT_LOCK);
             return resp;
         }
+        if (!param.getPassword().equals(admin.getPassword())) {
+            resp.failure(ErrorCode.ERROR_PASSWORD_INCORRECT);
+            return resp;
+        }
+
         resp = login(admin);
         return resp;
 
@@ -107,7 +108,12 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiOrganizationExample.Criteria con = example.createCriteria();
         con.andIdEqualTo(admin.getCompanyId());
         List<WiOrganization> companyList = companyDao.selectByExample(example);
-        data.setHome(companyList.get(0).getHome());
+        if(companyList.isEmpty()){
+            data.setHome("index.html");
+        } else {
+            data.setHome(companyList.get(0).getHome());
+        }
+
         resp.success(data);
         return resp;
     }

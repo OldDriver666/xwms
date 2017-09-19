@@ -54,7 +54,8 @@ public class ModuleController {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
-        resp = moduleSvr.InsertModule(param);
+        Integer roleId = authService.getRoleId();
+        resp = moduleSvr.InsertModule(param, roleId);
         logger.info("新增菜单:"+JsonUtil.toJson(param)+"结果:" + resp.getMsg());
         return resp;
     }

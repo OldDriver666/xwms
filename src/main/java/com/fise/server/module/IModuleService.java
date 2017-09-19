@@ -15,7 +15,7 @@ public interface IModuleService {
     Response QueryModuleAll(ModuleQueryParam param);
 
     /*新增用户可见模块*/
-    Response InsertModule(ModuleInsertParam param);
+    Response InsertModule(ModuleInsertParam param, Integer roleId);
     
     /*修改用户可见模块*/
     Response UpdateModule(ModuleInsertParam param);

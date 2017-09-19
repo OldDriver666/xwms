@@ -112,7 +112,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fise.model.entity.WiModule">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.fise.model.entity.WiModule">
     insert into wi_module (id, name, module_type, 
       belong_company, description, priority, 
       status, sn, url, parent_id
@@ -122,7 +122,7 @@
       #{status,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fise.model.entity.WiModule">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.fise.model.entity.WiModule">
     insert into wi_module
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

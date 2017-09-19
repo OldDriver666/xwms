@@ -6,16 +6,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 
 /**
- * @author 
+ * @author
  */
 public class IMDepartConfig implements Serializable {
-	@JsonProperty("config_id")
+    @JsonProperty("config_id")
     private Integer configid;
 
     /**
      * 所属团体
      */
-    @JsonProperty("depart_id")
+    @JsonProperty("company_id")
     private Integer departid;
 
     /**
@@ -33,16 +33,15 @@ public class IMDepartConfig implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     public Integer getConfigid() {
-		return configid;
-	}
+        return configid;
+    }
 
-	public void setConfigid(Integer configid) {
-		this.configid = configid;
-	}
+    public void setConfigid(Integer configid) {
+        this.configid = configid;
+    }
 
-	public Integer getDepartid() {
+    public Integer getDepartid() {
         return departid;
     }
 
@@ -78,5 +77,5 @@ public class IMDepartConfig implements Serializable {
     public String toString() {
         return JsonUtil.toJson(this);
     }
-    
+
 }

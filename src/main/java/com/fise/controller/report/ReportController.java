@@ -44,11 +44,11 @@ public class ReportController {
         Response resp = new Response();
         logger.info(param.toString());
         
-        if( param.get("organ_id") == null ){
+        if( param.get("company_id") == null ){
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
             resp.setMsg("公司不能为空");
         } else {
-            resp = reportSvr.queryAboutPage((Integer)param.get("organ_id"));
+            resp = reportSvr.queryAboutPage((Integer)param.get("company_id"));
         }
         return resp;
     }

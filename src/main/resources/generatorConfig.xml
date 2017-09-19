@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-    <classPathEntry
-        location="C:\Users\bensionliao\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
-    <context id="context1" targetRuntime="MyBatis3">
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-            connectionURL="jdbc:mysql://192.168.2.196:3306/manage?useUnicode=true&amp;characterEncoding=UTF-8"
-            userId="root" password="fise2016" />
-        <javaModelGenerator targetPackage="com.fise.model.entity"
-            targetProject="E:\work\workspace\managesvr\src\main\java" />
-        <sqlMapGenerator targetPackage="com.fise.mapping"
-            targetProject="E:\work\workspace\managesvr\src\main\java" />
-        <javaClientGenerator targetPackage="com.fise.dao"
-            targetProject="E:\work\workspace\managesvr\src\main\java" type="XMLMAPPER" />
-        <table tableName="TBAdminstrator" />
-    </context>
+	<classPathEntry
+		location="C:\Users\bensionliao\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+	<context id="context1" targetRuntime="MyBatis3">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.2.196:3306/manage?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="root" password="fise2016" />
+		<javaModelGenerator targetPackage="com.fise.model.entity"
+			targetProject="E:\work\workspace\managesvr\src\main\java" />
+		<sqlMapGenerator targetPackage="com.fise.mapping"
+			targetProject="E:\work\workspace\managesvr\src\main\java" />
+		<javaClientGenerator targetPackage="com.fise.dao"
+			targetProject="E:\work\workspace\managesvr\src\main\java" type="XMLMAPPER" />
+	</context>
 </generatorConfiguration>

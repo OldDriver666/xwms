@@ -13,7 +13,7 @@ public class ReportActivateParam implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @NotNull
-    @JsonProperty("organ_id")
+    @JsonProperty("company_id")
     private Integer organId;
     
     @NotEmpty

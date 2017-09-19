@@ -2,20 +2,28 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author 
  */
 public class WiOrganizationRole implements Serializable {
+    
     private Integer id;
 
+    @JsonProperty("auth_level")
     private Integer authLevel;
 
+    @JsonProperty("auth_name")
     private String name;
 
+    @JsonProperty("desc")
     private String description;
 
+    @JsonProperty("company_id")
     private Integer organizationId;
 
+    @JsonProperty("depart_id")
     private Integer departId;
 
     private static final long serialVersionUID = 1L;

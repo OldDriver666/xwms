@@ -19,90 +19,84 @@ import com.fise.server.depart.IDepartConfigService;
 @RestController
 @RequestMapping("/boss/departconf")
 public class DepartConfigController {
-	
-	private Logger logger=Logger.getLogger(getClass());
-	
-	@Resource
-	IDepartConfigService iDepartConfigService;
-	
-	@Resource
-	IAuthService authService;
-	
-	/*添加imdepartconfig*/
-	@RequestMapping(value="/addimdepartconfig",method=RequestMethod.POST)
-	public Response addImdepartConfig(@RequestBody @Valid IMDepartConfig param){
-		
-		Response response=new Response();
-		
-		if(!authService.inserAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
-		logger.info(param.toString());
-		
-		if(param.getDepartid()==null || param.getClienttype()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-	
-		response=iDepartConfigService.insertDepartConfig(param);
-		
-		
-		return response;
-	}
-	
-	/*查询imdepartconfig*/
-	@RequestMapping(value="/queryimdepartconfig",method=RequestMethod.POST)
-	public Response queryImdepartConfig(@RequestBody @Valid DepartConfigParam param){
-		
-		Response response=new Response();
-		logger.info(param.toString());
-		response=iDepartConfigService.queryDepartConfig(param);
-		
-		
-		return response;
-	}
-	
-	/*删除imdepartconfig*/
-	@RequestMapping(value="/delimdepartconfig",method=RequestMethod.POST)
-	public Response delImdepartConfig(@RequestBody @Valid DepartConfigParam param){
-		
-		Response response=new Response();
-		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
-		logger.info(param.toString());
-		
-		if(param.getConfigid()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-		
-		response=iDepartConfigService.delDepartConfig(param);
-		
-		
-		return response;
-	}
-	
-	/*修改imdepartconfig信息*/
-	@RequestMapping(value="/updateimdepartconfig",method=RequestMethod.POST)
-	public Response updateImdepartConfig(@RequestBody @Valid IMDepartConfig param){
 
-		Response response=new Response();
-		
-		if(!authService.updateAuth()){
+    private Logger logger = Logger.getLogger(getClass());
+
+    @Resource
+    IDepartConfigService iDepartConfigService;
+
+    @Resource
+    IAuthService authService;
+
+    /* 添加imdepartconfig */
+    @RequestMapping(value = "/addimdepartconfig", method = RequestMethod.POST)
+    public Response addImdepartConfig(@RequestBody @Valid IMDepartConfig param) {
+
+        Response response = new Response();
+
+        if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-		
-		logger.info(param.toString());
-		
-		if(param.getConfigid()==null){
+
+        if (param.getDepartid() == null || param.getClienttype() == null) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		response=iDepartConfigService.updateDepartConfig(param);
-		
-		
-		return response;
-	}
+
+        logger.info("新增设备配置:" + param.toString());
+        response = iDepartConfigService.insertDepartConfig(param);
+        return response;
+    }
+
+    /* 查询imdepartconfig */
+    @RequestMapping(value = "/queryimdepartconfig", method = RequestMethod.POST)
+    public Response queryImdepartConfig(@RequestBody @Valid DepartConfigParam param) {
+
+        Response response = new Response();
+        logger.info(param.toString());
+        response = iDepartConfigService.queryDepartConfig(param);
+
+        return response;
+    }
+
+    /* 删除imdepartconfig */
+    @RequestMapping(value = "/delimdepartconfig", method = RequestMethod.POST)
+    public Response delImdepartConfig(@RequestBody @Valid DepartConfigParam param) {
+
+        Response response = new Response();
+
+        if (!authService.updateAuth()) {
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info(param.toString());
+
+        if (param.getConfigid() == null) {
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+
+        response = iDepartConfigService.delDepartConfig(param);
+
+        return response;
+    }
+
+    /* 修改imdepartconfig信息 */
+    @RequestMapping(value = "/updateimdepartconfig", method = RequestMethod.POST)
+    public Response updateImdepartConfig(@RequestBody @Valid IMDepartConfig param) {
+
+        Response response = new Response();
+
+        if (!authService.updateAuth()) {
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info(param.toString());
+
+        if (param.getConfigid() == null) {
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+
+        response = iDepartConfigService.updateDepartConfig(param);
+
+        return response;
+    }
 }

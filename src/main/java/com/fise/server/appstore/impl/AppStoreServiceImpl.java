@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.dao.AppInformationMapper;
 import com.fise.dao.AppStoreMapper;
+import com.fise.model.entity.AppInformation;
+import com.fise.model.entity.AppInformationExample;
 import com.fise.model.entity.AppStore;
-import com.fise.model.entity.AppStoreExample;
 import com.fise.server.appstore.IAppStoreService;
 import com.fise.utils.StringUtil;
 
@@ -19,6 +20,9 @@ public class AppStoreServiceImpl implements IAppStoreService{
     @Autowired
     AppStoreMapper appDao;
 
+    @Autowired
+    AppInformationMapper appInfoDao;
+    
     @Override
     public Response insert(AppStore param) {
         Response resp = new Response();
@@ -29,34 +33,26 @@ public class AppStoreServiceImpl implements IAppStoreService{
     }
 
     @Override
-    public Response query() {
-        Response resp = new Response();
-        
-        AppStoreExample example = new AppStoreExample();
-        List<AppStore> data = appDao.selectByExample(example);
-        resp.setData(data);
-        return resp;
+    public List<AppInformation> queryByIdList(List<Integer> idList) {
+        AppInformationExample example = new AppInformationExample();
+        AppInformationExample.Criteria con = example.createCriteria();
+        con.andIdIn(idList);
+        List<AppInformation> data = appInfoDao.selectByExample(example);
+        return data;
     }
 
     @Override
-    public Response queryDownload(Integer userId, String appId) {
-        Response resp = new Response();
-        AppStoreExample example = new AppStoreExample();
-        AppStoreExample.Criteria con = example.createCriteria();
-        con.andAppIdEqualTo(appId);
-        List<AppStore> data = appDao.selectByExample(example);
-        if(data.size() > 0)
-        {
-            resp.setData(data.get(0));
-        }
+    public AppInformation queryByAppIndex(String param) {
+        AppInformationExample example = new AppInformationExample();
+        AppInformationExample.Criteria con = example.createCriteria();
+        con.andAppIndexEqualTo(param);
+        List<AppInformation> data = appInfoDao.selectByExample(example);
+        if(data.isEmpty())
+            return null;
         else
-        {
-            resp.setErrorCode(ErrorCode.ERROR_DATABASE);
-            resp.setMsg("没有对应的APP");
-        }
-
-        return resp;
+            return data.get(0);
     }
+
 
 
 }

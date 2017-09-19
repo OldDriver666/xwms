@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 
-/** 
+/**
  * @author 大表哥
  * @email xingyuanzuo@gmail.com
  * @date 2016-7-25
@@ -15,22 +15,22 @@ import com.fise.utils.JsonUtil;
  */
 
 public class LogoutParam implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@JsonProperty("admin_id")
-	@NotNull
-	private Integer adminId;
+    @JsonProperty("user_id")
+    @NotNull
+    private Integer adminId;
 
-	public Integer getAdminId() {
-		return adminId;
-	}
+    public Integer getAdminId() {
+        return adminId;
+    }
 
-	public void setAdminId(Integer adminId) {
-		this.adminId = adminId;
-	}
-	
-	@Override
-	public String toString() {
-		return JsonUtil.toJson(this);
-	}
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
+    }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 }

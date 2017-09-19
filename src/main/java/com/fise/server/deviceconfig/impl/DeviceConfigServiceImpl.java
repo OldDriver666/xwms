@@ -75,9 +75,12 @@ public class DeviceConfigServiceImpl implements IDeviceConfigService{
         if( param.getDeviceId() == null ){
             IMUserExample example=new IMUserExample();
             Criteria criteria=example.createCriteria();
-            criteria.andDepartidEqualTo(param.getDepartid());
+            criteria.andCompanyidEqualTo(param.getCompanyId());
             criteria.andTypeEqualTo(param.getType());
             
+            if(param.getDepartid() != null && param.getDepartid() != 0){
+                criteria.andDepartidEqualTo(param.getDepartid());
+            }
             if(!StringUtil.isEmpty(param.getAccount())){
                 criteria.andNameEqualTo(param.getAccount());
             }

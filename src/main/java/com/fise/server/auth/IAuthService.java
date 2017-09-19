@@ -9,4 +9,8 @@ public interface IAuthService {
     
     //查询用户是否有该功能模块的更新权限
     public Boolean updateAuth();
+    
+    public Integer getMemberId();
+    
+    public Integer getRoleId();
 }

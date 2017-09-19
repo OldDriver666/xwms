@@ -22,9 +22,20 @@ public class QueryDeviceParam implements Serializable{
     private String phone;
     
     @JsonProperty("depart_id")
-    @NotNull
     private Integer departid;
     
+    @JsonProperty("company_id")
+    @NotNull
+    private Integer companyId;
+    
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
     public Integer getDepartid() {
         return departid;
     }

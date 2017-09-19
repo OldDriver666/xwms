@@ -30,7 +30,9 @@ public class QueryDeviceController {
         
         Response response=new Response();
         logger.info(param.toString());
-        if(StringUtil.isEmpty(param.getAccount()) && StringUtil.isEmpty(param.getPhone()) && param.getDepartid() == null){
+        if(StringUtil.isEmpty(param.getAccount()) 
+                && StringUtil.isEmpty(param.getPhone())
+                && param.getDeviceId() == null){
             response.setErrorCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION);
             response.setMsg("请输入查询条件");
         } else {

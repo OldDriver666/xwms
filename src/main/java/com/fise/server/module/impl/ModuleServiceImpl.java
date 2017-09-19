@@ -10,9 +10,11 @@ import com.fise.dao.WiModuleMapper;
 import com.fise.dao.WiPermissionMapper;
 import com.fise.model.entity.WiModule;
 import com.fise.model.entity.WiModuleExample;
+import com.fise.model.entity.WiPermission;
 import com.fise.model.param.ModuleInsertParam;
 import com.fise.model.param.ModuleQueryParam;
 import com.fise.server.module.IModuleService;
+import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
 @Service
@@ -22,7 +24,7 @@ public class ModuleServiceImpl implements IModuleService {
     private WiModuleMapper moduleDao;
     
     @Autowired
-    private WiPermissionMapper permissionDao;
+    private WiPermissionMapper authDao;
     
     @Override
     public List<WiModule> QueryModule(Integer companyId) {
@@ -34,7 +36,7 @@ public class ModuleServiceImpl implements IModuleService {
     }
 
     @Override
-    public Response InsertModule(ModuleInsertParam param) {
+    public Response InsertModule(ModuleInsertParam param, Integer roleId) {
         Response resp = new Response();
         //TODO 测试由数据库报错情况
         if(param.getModule_type() == null){
@@ -43,17 +45,7 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getStatus() == null){
             param.setStatus(1);
         }
-        
-//        //检测是否可以添加
-//        WiModuleExample exm = new WiModuleExample();
-//        WiModuleExample.Criteria con = exm.createCriteria();
-//        con.andBelongCompanyEqualTo(param.getCompany_id());
-//        con.andModuleTypeEqualTo(param.getModule_type());
-//        con.andNameEqualTo(param.getName());
-//        if(moduleDao.selectByExample(exm).isEmpty()){
-//            
-//        }
-        
+
         WiModule module = new WiModule();
         module.setName(param.getName());
         module.setParentId(param.getParentId());
@@ -64,10 +56,26 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getUrl() != null){
             module.setUrl(param.getUrl());
         }
+        module.setBelongCompany(param.getCompany_id());
         module.setModuleType(param.getModule_type());
         module.setSn(param.getSn());
         module.setStatus(param.getStatus());
         moduleDao.insert(module);
+        
+        //菜单的创建者默认增加菜单权限
+        Integer nNow = DateUtil.getLinuxTimeStamp();
+        WiPermission auth = new WiPermission();
+        auth.setCompanyId(param.getCompany_id());
+        auth.setCreated(nNow);
+        auth.setUpdated(nNow);
+        auth.setInsertAuth(1);
+        auth.setQueryAuth(1);
+        auth.setUpdateAuth(1);
+        auth.setModuleId(module.getId());
+        auth.setRoleId(roleId);
+        auth.setStatus(1);
+        authDao.insert(auth);
+        
         resp.success();
         return resp;
     }
