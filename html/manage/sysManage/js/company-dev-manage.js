@@ -1,7 +1,11 @@
 $(function() {
-	var userName = Util.cookieStorage.getCookie("username");
+    var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
     var depart_id = Util.cookieStorage.getCookie("departId");
+    var company_id = Util.cookieStorage.getCookie("companyId");
+    var role_level = Util.cookieStorage.getCookie("userLevel");
+    var admin_id = Util.cookieStorage.getCookie("adminId");
+    var nick_name = Util.cookieStorage.getCookie("nickname");
 
     var url=location.search;
     var Request = new Object();
@@ -12,10 +16,10 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var moduleId = Request["moduleId"];
-    var insertAuth = Request["insertAuth"];
-    var queryAuth = Request["queryAuth"];
-    var updateAuth = Request["updateAuth"];
+    var moduleId = parseInt(Request["moduleId"]);
+    var insertAuth = parseInt(Request["insertAuth"]);
+    var queryAuth = parseInt(Request["queryAuth"]);
+    var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
         init: function(){
@@ -36,13 +40,15 @@ $(function() {
             data.depart_id = parseInt($('#input-depart_id option:selected').val());
             data.client_type = parseInt($('#input-devType option:selected').val());
             data.avatar = $("#input-avatar").val();
+            /*data.depart_id = parseInt(depart_id);*/
+            data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
-                    if(parseInt($("#input-depart_id").val()) == parseInt(depart_id)){
+                    if(parseInt($("#input-depart_id").val()) == parseInt(company_id)){
                         action.myDevTypeQuery();
                     }
                 }
@@ -53,14 +59,17 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_depart_id = parseInt($('#input-search-name option:selected').val());
+            var search_company_id = parseInt($('#input-search-name option:selected').val());
             var search_client_type = parseInt($('#input-search-client_type option:selected').val());
             var td_len = $("#table thead tr th").length;//表格字段数量
 
             var url = ctx + "boss/departconf/queryimdepartconfig";
             var data = new Object();
-            data.depart_id = search_depart_id;
+            data.depart_id = search_company_id;
             data.client_type = search_client_type;
+           /* data.depart_id = parseInt(depart_id);*/
+            data.company_id = parseInt(company_id);
+
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -97,6 +106,9 @@ $(function() {
             var data = new Object();
             data.client_type = null;
             data.client_name = "";
+            data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
+
             Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     dataArray1 = result.data;
@@ -105,6 +117,9 @@ $(function() {
                     var data_query = new Object();
                     data_query.depart_id = parseInt(depart_id);
                     data_query.client_type = null;
+                    /*data_query.depart_id = parseInt(depart_id);*/
+                    data_query.company_id = parseInt(company_id);
+
                     Util.ajaxLoadData(url_query,data_query,0,"POST",true,function(result_query) {
                         if(result_query.code == ReturnCode.SUCCESS && result_query.data != ""){
                             dataArray2 = result_query.data;
@@ -152,13 +167,15 @@ $(function() {
             data.depart_id = parseInt($('#input-depart_idNo').val());
             data.client_type = parseInt($("#input-devTypeNo").val());
             data.avatar = $("#input-avatar").val();
+            /*data.depart_id = parseInt(depart_id);*/
+            data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
-                    if(parseInt($("#input-depart_idNo").val()) == parseInt(depart_id)){
+                    if(parseInt($("#input-depart_idNo").val()) == parseInt(company_id)){
                         action.myDevTypeQuery();
                     }
 				}else{
@@ -172,6 +189,9 @@ $(function() {
 				var url = ctx + "boss/departconf/delimdepartconfig";
 				var data = new Object();
                 data.config_id = id;
+                data.depart_id = parseInt(depart_id);
+                data.company_id = parseInt(company_id);
+
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");

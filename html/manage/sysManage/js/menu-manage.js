@@ -2,6 +2,7 @@ $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
 	var token_value = Util.cookieStorage.getCookie("accesstoken");
 	var depart_id = Util.cookieStorage.getCookie("departId");
+	var company_id = Util.cookieStorage.getCookie("companyId");
 	var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
 	var nick_name = Util.cookieStorage.getCookie("nickname");
@@ -15,10 +16,10 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
-	var moduleId = Request["moduleId"];
-	var insertAuth = Request["insertAuth"];
-	var queryAuth = Request["queryAuth"];
-	var updateAuth = Request["updateAuth"];
+	var moduleId = parseInt(Request["moduleId"]);
+	var insertAuth = parseInt(Request["insertAuth"]);
+	var queryAuth = parseInt(Request["queryAuth"]);
+	var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
 		init: function(){
@@ -36,14 +37,16 @@ $(function() {
 		add : function() {
             var url = ctx + "boss/module/insert";
 			var data = new Object();
-			data.admin_id = parseInt(admin_id),
+			/*data.admin_id = parseInt(admin_id),*/
 			data.name = $("#input-moduleName").val();
 			data.description = $("#input-description").val();
 			data.priority = parseInt($("#input-priority").val());
 			data.sn = $("#input-sn").val();
-			data.status = parseInt($("input[name=status]:checked").val());
+			/*data.status = parseInt($("input[name=status]:checked").val());*/
 			data.url = $("#input-url").val();
 			data.parent_id = parseInt($("#input-parent_id").val());
+			/*data.depart_id = parseInt(depart_id);*/
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -58,10 +61,9 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
-			var url = ctx + "boss/module/queryall";
+			var url = ctx + "boss/module/query";
 			var data = {
-				"admin_id":parseInt(admin_id),
-				"role_id":parseInt(role_level)
+				"company_id":parseInt(company_id)
 			};
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -87,7 +89,7 @@ $(function() {
 		edit : function() {
 			var url = ctx + "boss/module/update";
 			var data = new Object();
-            data.admin_id = parseInt(admin_id),
+            /*data.admin_id = parseInt(admin_id),*/
 			data.module_id = parseInt($("#input-moduleId").val());
 			data.name = $("#input-moduleName").val();
             data.description = $("#input-description").val();
@@ -96,6 +98,8 @@ $(function() {
 			data.status = parseInt($("input[name=status]:checked").val());
 			data.url = $("#input-url").val();
 			data.parent_id = parseInt($("#input-parent_id").val());
+			/*data.depart_id = parseInt(depart_id);*/
+			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -113,6 +117,7 @@ $(function() {
 				var url = ctx + "boss/module/delete";
 				var data = new Object();
                 data.module_id = id;
+
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");

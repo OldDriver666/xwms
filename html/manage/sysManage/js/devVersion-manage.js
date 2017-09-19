@@ -1,7 +1,11 @@
 $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
-    var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var depart_id = Util.cookieStorage.getCookie("departId");
+	var company_id = Util.cookieStorage.getCookie("companyId");
+	var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
+	var nick_name = Util.cookieStorage.getCookie("nickname");
 
 	var url=location.search;
 	var Request = new Object();
@@ -12,10 +16,10 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
-	var moduleId = Request["moduleId"];
-	var insertAuth = Request["insertAuth"];
-	var queryAuth = Request["queryAuth"];
-	var updateAuth = Request["updateAuth"];
+	var moduleId = parseInt(Request["moduleId"]);
+	var insertAuth = parseInt(Request["insertAuth"]);
+	var queryAuth = parseInt(Request["queryAuth"]);
+	var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
 		init: function(){
@@ -38,6 +42,8 @@ $(function() {
 			data.dev_version = $("#input-dev_version").val();
 			data.version_info = $("#input-version_info").val();
 			data.update_url = $("#input-update_url").val();
+			/*data.depart_id = parseInt(depart_id);*/
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -61,6 +67,8 @@ $(function() {
             var data = new Object();
 			data.depart_id = search_depart_id;
 			data.dev_type = search_dev_type;
+			/*data.depart_id = parseInt(depart_id);*/
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -106,6 +114,8 @@ $(function() {
 			data.status = parseInt($("input[name=status]:checked").val());
 			data.version_info = $("#input-version_info").val();
 			data.update_url = $("#input-update_url").val();
+			/*data.depart_id = parseInt(depart_id);*/
+			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -123,6 +133,9 @@ $(function() {
 				var url = ctx + "boss/deviceversion/del";
 				var data = new Object();
                 data.version_id = id;
+				data.depart_id = parseInt(depart_id);
+				data.company_id = parseInt(company_id);
+
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
