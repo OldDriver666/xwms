@@ -26,10 +26,22 @@ public class InsertRoleParam implements Serializable {
 
     @JsonProperty("depart_id")
     private Integer departId;
+    
+    @JsonProperty("creator_id")
+    private Integer creatorId;
 
     private String desc;
 
-    public Integer getDepartId() {
+    
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Integer getDepartId() {
         return departId;
     }
 

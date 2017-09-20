@@ -25,10 +25,21 @@ public class WiOrganizationRole implements Serializable {
 
     @JsonProperty("depart_id")
     private Integer departId;
+    
+    @JsonProperty("creator_id")
+    private Integer creatorId;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Integer getId() {
         return id;
     }
 

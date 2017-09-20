@@ -21,10 +21,21 @@ public class QueryRoleParam implements Serializable {
 
     @NotNull
     private Integer role_id;
+    
+    @NotNull
+    private Integer creator_id;
 
     private Integer include_all;
     
-    public Integer getInclude_all() {
+    public Integer getCreator_id() {
+		return creator_id;
+	}
+
+	public void setCreator_id(Integer creator_id) {
+		this.creator_id = creator_id;
+	}
+
+	public Integer getInclude_all() {
         return include_all;
     }
 

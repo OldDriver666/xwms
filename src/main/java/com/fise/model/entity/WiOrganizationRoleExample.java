@@ -183,6 +183,11 @@ public class WiOrganizationRoleExample {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
+        
+        public Criteria andCreatorIdEqualTo(Integer value) {
+            addCriterion("creator_id =", value, "creatorId");
+            return (Criteria) this;
+        }
 
         public Criteria andAuthLevelIsNull() {
             addCriterion("auth_level is null");

@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
+import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.dao.WiPermissionMapper;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
@@ -36,6 +39,9 @@ public class RoleServiceImpl implements IRoleService {
     @Autowired
     private WiPermissionMapper permissionDao;
 
+    @Autowired
+    private WiAdminMapper adminDao;
+    
     @Resource
     IDepartmentService departSvr;
 
@@ -54,7 +60,7 @@ public class RoleServiceImpl implements IRoleService {
         WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
         criterion.andAuthLevelLessThan(admin.getAuthLevel());
         criterion.andOrganizationIdEqualTo(param.getCompany_id());
-
+        criterion.andCreatorIdEqualTo(param.getCreator_id());
         return roleDao.selectByExample(example);
     }
 
@@ -109,35 +115,37 @@ public class RoleServiceImpl implements IRoleService {
     public Response insertRole(InsertRoleParam role) {
 
         Response response = new Response();
-//
-//        // 判断用户权限
-//        WiAdminExample example1 = new WiAdminExample();
-//        WiAdminExample.Criteria criteria1 = example1.createCriteria();
-//        criteria1.andIdEqualTo(role.getAdminId());
-//        List<WiAdmin> list1 = adminDao.selectByExample(example1);
-//        if (list1.isEmpty()) {
-//            response.failure(ErrorCode.ERROR_DATABASE);
-//            response.setMsg("用户不存在");
-//            return response;
-//        }
-//
-//        Integer roleid = list1.get(0).getRoleId();
-//        
-//        Criteria criteria = example.createCriteria();
-//        criteria.andIdEqualTo(roleid);
-//        List<WiOrganizationRole> list2 = roleDao.selectByExample(example);
-//        if (list2.isEmpty() || list2.get(0).getAuthLevel() <= role.getRoleLevel()) {
-//            response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-//            response.setMsg("角色权限值错误");
-//            return response;
-//        }
+
+        // 判断用户权限
+        WiAdminExample example = new WiAdminExample();
+        WiAdminExample.Criteria criteria1 = example.createCriteria();
+        //根据创建的的ID去wi_admin表中查询是否存在该用户。
+        criteria1.andIdEqualTo(role.getCreatorId());
+        List<WiAdmin> list1 = adminDao.selectByExample(example);
+        if (list1.isEmpty()) {
+            response.failure(ErrorCode.ERROR_DATABASE);
+            response.setMsg("用户不存在");
+            return response;
+        }
+
+        Integer roleid = list1.get(0).getRoleId();
+        
+        WiOrganizationRoleExample example1 = new WiOrganizationRoleExample();
+        Criteria criteria = example1.createCriteria();
+        criteria.andIdEqualTo(roleid);
+        List<WiOrganizationRole> list2 = roleDao.selectByExample(example1);
+        if (list2.isEmpty() || list2.get(0).getAuthLevel() <= role.getRoleLevel()) {
+            response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+            response.setMsg("角色权限值错误");
+            return response;
+        }
 
         // 判断角色name是否已经存在
-        WiOrganizationRoleExample example = new WiOrganizationRoleExample();
-        Criteria criteri = example.createCriteria();
+        WiOrganizationRoleExample example2 = new WiOrganizationRoleExample();
+        Criteria criteri = example2.createCriteria();
         criteri.andNameEqualTo(role.getRoleName());
         criteri.andOrganizationIdEqualTo(role.getCompanyId());
-        List<WiOrganizationRole> list = roleDao.selectByExample(example);
+        List<WiOrganizationRole> list = roleDao.selectByExample(example2);
 
         if (list.size() != 0) {
             response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
@@ -151,6 +159,7 @@ public class RoleServiceImpl implements IRoleService {
         data.setDepartId(role.getDepartId() == null ? 0 : role.getDepartId());
         data.setName(role.getRoleName());
         data.setOrganizationId(role.getCompanyId());
+        data.setCreatorId(role.getCreatorId());
         roleDao.insertSelective(data);
 
         return response.success();
