@@ -22,7 +22,6 @@ public class QueryRoleParam implements Serializable {
     @NotNull
     private Integer role_id;
     
-    @NotNull
     private Integer creator_id;
 
     private Integer include_all;
