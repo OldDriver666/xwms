@@ -78,7 +78,6 @@
 	</div>
 </div>
 <script src="js/jquery.min.js"></script>
-<!--<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.4.4.js"></script>-->
 <script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
 <script src="js/Util.js"></script>
 <script src="resource/lib/jquery.md5.js"></script>
@@ -99,16 +98,12 @@
                 Util.cookieStorage.setCookie("companyId",result.data.companyId);
 				Util.cookieStorage.setCookie("departId",result.data.departId);
                 Util.cookieStorage.setCookie("adminId",result.data.id);
-<<<<<<< HEAD
                 Util.cookieStorage.setCookie("companyId",result.data.companyId);
                 Util.cookieStorage.setCookie("departId",result.data.departId);
-                window.location.href = result.data.home;
-=======
 				Util.cookieStorage.setCookie("phone",result.data.phone);
 				Util.cookieStorage.setCookie("home",result.data.home);
 
-                window.location.href = "index.html";
->>>>>>> b6e7a60175f5115e93bad86b97e8aa8497f23072
+                window.location.href = result.data.home;
             }  else {
                 alert(result.msg);
             }
