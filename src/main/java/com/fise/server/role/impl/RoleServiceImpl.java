@@ -66,22 +66,22 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public List<ModulePermissResult> queryRoleAuth(QueryRoleParam param) {
-        // 需要返回的真实JSON格式数据
-        List<ModulePermissResult> data = new ArrayList<ModulePermissResult>();
-        List<ModulePermissResult> tmpData = new ArrayList<ModulePermissResult>();
-        List<ModulePermissResult> result = new ArrayList<ModulePermissResult>();
-        //先查询顶级目录权限 查出来的结果需要遍历一次
-        Integer needAll = 1;
-        if (param.getInclude_all() == null || param.getInclude_all() == 0)
-            needAll = 0;
-        data = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),0,needAll);
-        for (ModulePermissResult tmp : data) {
-            result.add(tmp);
-            tmpData.clear();
-            tmpData = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),tmp.getModule_id(),needAll);
-            result.addAll(tmpData);
-        }
-
+//        // 需要返回的真实JSON格式数据
+//        List<ModulePermissResult> data = new ArrayList<ModulePermissResult>();
+//        List<ModulePermissResult> tmpData = new ArrayList<ModulePermissResult>();
+//        List<ModulePermissResult> result = new ArrayList<ModulePermissResult>();
+//        //先查询顶级目录权限 查出来的结果需要遍历一次
+//        Integer needAll = 1;
+//        if (param.getInclude_all() == null || param.getInclude_all() == 0)
+//            needAll = 0;
+//        data = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),0,needAll);
+//        for (ModulePermissResult tmp : data) {
+//            result.add(tmp);
+//            tmpData.clear();
+//            tmpData = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),tmp.getModule_id(),needAll);
+//            result.addAll(tmpData);
+//        }
+    	List<ModulePermissResult> result = permissionDao.selectAuthByRole(null, param.getRole_id(),null,null);
         return result;
     }
 
