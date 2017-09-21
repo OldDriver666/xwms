@@ -192,6 +192,7 @@ null 没有数据返回 看code是否成功
  "company_id":x                         //必填-公司id
  "desc":"",                             //选填-角色描述
  "depart_id":X                          //选填-角色部门
+ "creator_id":X                         //必填-创建者id
 }
 
 //回复
@@ -207,6 +208,7 @@ null 没有数据返回 看code是否成功
 {
  "role_id":x,                 //必填-自己角色
  "company_id":x               //必填-自己公司
+ "creator_id":x               //必填-创建者id
 }
 
 //回复

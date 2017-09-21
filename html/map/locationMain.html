@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../css/global.css"/>
+	<link rel="stylesheet" href="../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../resource/plugin/toastr/toastr.css"/>
+	<script src="http://webapi.amap.com/maps?v=1.3&key=c5a05248e534bb18c39ae266093088d3&plugin=AMap.Geocoder"></script>
+	<style>
+		html,body{height:100%;}
+		#table, #table th{
+			text-align: center;
+		}
+		#table td img {
+			width:auto;
+			height:22px;
+		}
+		.tab-tit-num{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 40px;
+			line-height: 40px;
+			white-space: nowrap;
+			font-size: 14px;
+			/*border-bottom: 1px solid #e2e2e2;*/
+			transition: all .2s;
+			-webkit-transition: all .2s;
+			background-color: #e3eae9;
+			z-index: 10;
+		}
+		.tab-tit-num span{
+			margin-left:30px;
+		}
+		.infoWindow-wrap{
+			font-size:12px;
+			position: relative;
+			padding-bottom: 20px;
+		}
+		.infoWindow-item{
+			width:100px;
+			display: inline-block;
+			text-align: right;
+		}
+		.infoWindow-wrap a{
+			color:#2B7AE3;
+			font-size:12px;
+			text-decoration:underline;
+		}
+		.infoWindow-updata{
+			position: absolute;right: -5px;bottom: -5px;
+		}
+		#msgWarp{
+			position: absolute;
+		    left: 100px;
+		    bottom: 120px;
+        }
+		.infoWindow-item-wrap{
+			display: flex;
+		}
+	</style>
+</head>
+<body>
+<div class="container-fluid" style="height:100%;padding:0;">
+	<div class="tab-tit-num">
+		<span>总人数：<em id="allPeopleNum">0</em></span>
+		<span>在线人数：<em id="onlineNum">0</em></span>
+	</div>
+	<div id="map-container" style="height:100%;"></div>
+	<div id="msgWarp" style="display: none;">
+		<div style="background-color: #fff;border-radius: 5px;">
+			<div style="background-color: #ddd;color:blue;padding:10px;"><img src="../images/0.jpg" style="margin-right:10px;width: 40px;height:40px;border-radius: 50%;"/> 张三监护群</div>
+			<div style="padding:10px 20px;">
+				<div style="margin-bottom: 10px;"><input type="checkbox" style="margin-right:5px;vertical-align: -2px;">短信1：张三离开了深圳</div>
+				<div style="margin-bottom: 10px;"><input type="checkbox" style="margin-right:5px;vertical-align: -2px;">短信2：张三情况异常</div>
+				<div style="margin-bottom: 10px;"><input type="checkbox" style="margin-right:5px;vertical-align: -2px;">短信3：张三今日运动多</div>
+			</div>
+			<div style="border-top:1px solid #ddd;padding:10px;"><button type="button" class="btn btn-danger quxiao">取消</button><button style="float:right;" type="button" class="btn btn-primary fasong">发送</button></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/Util.js"></script>
+<script type="text/javascript" src="js/locationMain.js"></script>
+<!--卫星地图，路况地图等需要ui/main.js-->
+<script src="http://webapi.amap.com/ui/1.0/main.js?v=1.0.10"></script>
+<script>
+	$("#map-container").on('click','.sendMsg',function () {
+		$("#msgWarp").show();
+    })
+	$(".quxiao").click(function () {
+        $("#msgWarp").hide();
+    })
+	$(".fasong").click(function () {
+		alert('发送成功')
+        $("#msgWarp").hide();
+    })
+    $("#map-container").on('click','.infoWindow-updata',function () {
+        alert('更新成功')
+    })
+</script>
+</body>
+</html>

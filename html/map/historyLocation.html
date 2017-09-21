@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../css/global.css"/>
+	<link rel="stylesheet" href="../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../resource/plugin/toastr/toastr.css"/>
+	<script src="http://webapi.amap.com/maps?v=1.3&key=c5a05248e534bb18c39ae266093088d3&plugin=AMap.Geocoder"></script>
+	<style>
+		html,body{height:100%;}
+		#table, #table th{
+			text-align: center;
+		}
+		#table td img {
+			width:auto;
+			height:22px;
+		}
+
+	</style>
+</head>
+<body>
+<div class="container-fluid" style="height:100%;padding:0;">
+	<div id="map-container" style="height:100%;"></div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/Util.js"></script>
+<script type="text/javascript" src="js/historyLocation.js"></script>
+<!--卫星地图，路况地图等需要ui/main.js-->
+<script src="http://webapi.amap.com/ui/1.0/main.js?v=1.0.10"></script>
+
+<script>
+    $("#map-container").on('click','.sendMsg',function () {
+        $("#msgWarp").show();
+    })
+    $(".quxiao").click(function () {
+        $("#msgWarp").hide();
+    })
+    $(".fasong").click(function () {
+        alert('发送成功')
+        $("#msgWarp").hide();
+    })
+    $("#map-container").on('click','.infoWindow-updata',function () {
+        alert('更新成功')
+    })
+</script>
+</body>
+</html>
