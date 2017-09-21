@@ -9,17 +9,25 @@
 	<link rel="stylesheet" href="css/bootstrap.css"/>
 
 <style type="text/css">
-.beg-login-bg {
-	background: url(images/login-bg-1.jpg) no-repeat center center fixed;
-	background-color: #393D49;
+.beg-login-bg{width:100%; height:340px; background: url(images/headerBgImg.png) 0 0 repeat-y;background-size: 100% auto;}
+.beg-login-container{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+.beg-login-container .tit{
+	font-size: 50px;
+	color: #fff;
+	text-align: center;
+	height: 340px;
+	line-height: 340px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.8);
 }
 .beg-login-box {
 	width: 450px;
-	height: 330px;
-	margin: 10% auto;
-	background-color: rgba(255, 255, 255, 0.407843);
-	border-radius: 10px;
-	color: aliceblue;
+	margin: 5% auto;
 }
 .beg-login-box header {
 	padding: 10px;
@@ -37,36 +45,38 @@
 .input-group .form-control, .input-group .input-group-addon{
 	border-radius:0;
 }
+.beg-login-box .login-btn{
+	background: url(images/login-btn-bg.png) 0 0 repeat-x;
+	background-size: auto 100%;
+	color:#fff;
+}
 </style>
 </head>
 
-<body class="beg-login-bg">
-<div class="beg-login-box">
-	<header>
-		<h1>后台登录</h1>
-	</header>
-	<div class="beg-login-main">
-		<form id="form_login">
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					<input id="ipt_username" class="form-control" placeholder="用户名/邮箱" type="text">
+<body>
+<div class="beg-login-bg"></div>
+<div class="beg-login-container">
+	<div class="tit">沸石智能物联网云端管理系统</div>
+	<div class="beg-login-box">
+		<div class="beg-login-main">
+			<form id="form_login">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input id="ipt_username" class="form-control" placeholder="用户名/邮箱" type="text">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					<input id="ipt_password" class="form-control" placeholder="密码" type="password">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input id="ipt_password" class="form-control" placeholder="密码" type="password">
+					</div>
 				</div>
-			</div>
-			<input type="submit" id="btn_submit" class="btn btn-lg btn-primary btn-block" value="登录">
-		</form>
+				<input type="submit" id="btn_submit" class="btn btn-lg btn-block login-btn" value="登录">
+			</form>
+		</div>
 	</div>
-	<footer>
-		<p></p>
-	</footer>
 </div>
-
 <script src="js/jquery.min.js"></script>
 <!--<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.4.4.js"></script>-->
 <script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
@@ -88,7 +98,9 @@
                 Util.cookieStorage.setCookie("userLevel",result.data.roleId);
                 Util.cookieStorage.setCookie("departId",result.data.companyId);
                 Util.cookieStorage.setCookie("adminId",result.data.id);
-                window.location.href = "index.html";
+                Util.cookieStorage.setCookie("companyId",result.data.companyId);
+                Util.cookieStorage.setCookie("departId",result.data.departId);
+                window.location.href = result.data.home;
             }  else {
                 alert(result.msg);
             }
