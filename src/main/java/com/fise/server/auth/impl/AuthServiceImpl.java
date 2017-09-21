@@ -100,4 +100,16 @@ public class AuthServiceImpl implements IAuthService{
         return role_id;
     }
 
+    @Override
+    public Integer getMemberId() {
+        return HttpContext.getMemberId();
+    }
+
+    @Override
+    public Integer getRoleId() {
+        Integer memberId=HttpContext.getMemberId();
+        String role_id=getRoleId(memberId);
+        return Integer.parseInt(role_id);
+    }
+
 }

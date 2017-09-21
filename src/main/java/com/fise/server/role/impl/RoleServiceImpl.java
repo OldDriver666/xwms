@@ -1,10 +1,10 @@
 package com.fise.server.role.impl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +19,13 @@ import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
 import com.fise.model.entity.WiPermission;
-import com.fise.model.entity.WiPermissionExample;
-import com.fise.model.param.ModuleQueryResult;
+import com.fise.model.param.InsertAuthParam;
+import com.fise.model.param.InsertRoleParam;
+import com.fise.model.param.QueryRoleParam;
 import com.fise.model.param.RolePermissionParam;
-import com.fise.model.result.RoleAuthResult;
+import com.fise.model.result.ModulePermissResult;
+import com.fise.server.depart.IDepartmentService;
+import com.fise.server.module.IModuleService;
 import com.fise.server.role.IRoleService;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
@@ -32,171 +35,167 @@ public class RoleServiceImpl implements IRoleService {
 
     @Autowired
     WiOrganizationRoleMapper roleDao;
-    
+
     @Autowired
     private WiPermissionMapper permissionDao;
-    
+
     @Autowired
     private WiAdminMapper adminDao;
     
+    @Resource
+    IDepartmentService departSvr;
+
+    @Resource
+    IModuleService moduleSvr;
+
     @Override
-    public Response queryAll(Integer adminRole, Integer orgId) {
-        /*TODO 根据组织ID查询角色*/
-        Response resp = new Response();
-        //预先查询管理者权限
-        WiOrganizationRole admin = roleDao.selectByPrimaryKey(adminRole);
+    public List<WiOrganizationRole> queryRole(QueryRoleParam param) {
+
+        // 预先查询管理者权限
+        WiOrganizationRole admin = roleDao.selectByPrimaryKey(param.getRole_id());
+        if (admin == null) {
+            return null;
+        }
         WiOrganizationRoleExample example = new WiOrganizationRoleExample();
         WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
-        criterion.andAuthLevelLessThanOrEqualTo(admin.getAuthLevel());
-        //目前只有一个公司角色记录,所以默认返回所有公用
-        List<WiOrganizationRole> roleList = roleDao.selectByExample(example);
-        resp.success(roleList);
-        return resp;
+        criterion.andAuthLevelLessThan(admin.getAuthLevel());
+        criterion.andOrganizationIdEqualTo(param.getCompany_id());
+        criterion.andCreatorIdEqualTo(param.getCreator_id());
+        return roleDao.selectByExample(example);
     }
 
     @Override
-    public Response queryRoleAuth(Integer adminRole ,Integer orgId) {
-        /*TODO 根据组织ID查询角色*/
-        Response resp = new Response();
-        //需要返回的真实JSON格式数据
-        List<RoleAuthResult> data = new ArrayList<RoleAuthResult>();
-        
-        WiOrganizationRole admin = roleDao.selectByPrimaryKey(adminRole);
-        WiOrganizationRoleExample example = new WiOrganizationRoleExample();
-        WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
-        criterion.andAuthLevelLessThanOrEqualTo(admin.getAuthLevel());
-        List<WiOrganizationRole> roleList = roleDao.selectByExample(example);
-        for(WiOrganizationRole role : roleList){
-            //查询子角色权限
-            List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
-            List<ModuleQueryResult> tmpResult2 = new ArrayList<ModuleQueryResult>();
-            tmpResult = permissionDao.selectPermissionByRole(role.getId());
-            for(ModuleQueryResult tmpAuth : tmpResult){
-                if(tmpAuth.getStatus() == 1){
-                    tmpResult2.add(tmpAuth);
-                }
-            }
-            //赋值对应角色权限
-            RoleAuthResult tmpData = new RoleAuthResult();
-            tmpData.setRoleId(role.getId());
-            tmpData.setRoleName(role.getName());
-            tmpData.setAuthList(tmpResult2);
-            data.add(tmpData);
+    public List<ModulePermissResult> queryRoleAuth(QueryRoleParam param) {
+        // 需要返回的真实JSON格式数据
+        List<ModulePermissResult> data = new ArrayList<ModulePermissResult>();
+        List<ModulePermissResult> tmpData = new ArrayList<ModulePermissResult>();
+        List<ModulePermissResult> result = new ArrayList<ModulePermissResult>();
+        //先查询顶级目录权限 查出来的结果需要遍历一次
+        Integer needAll = 1;
+        if (param.getInclude_all() == null || param.getInclude_all() == 0)
+            needAll = 0;
+        data = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),0,needAll);
+        for (ModulePermissResult tmp : data) {
+            result.add(tmp);
+            tmpData.clear();
+            tmpData = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),tmp.getModule_id(),needAll);
+            result.addAll(tmpData);
         }
-        resp.success(data);
-        return resp;
+
+        return result;
     }
 
     @Override
     public Response updateRoleAuth(RolePermissionParam param) {
+
         Response resp = new Response();
-        WiPermissionExample example = new WiPermissionExample();
-        List<RolePermissionParam.Permission> updBox =  param.getPermisList();
-        for(RolePermissionParam.Permission tmp : updBox){
-            example.clear();
-            WiPermission dbValue = new WiPermission();
-            if(tmp.getInsertAuth() != null){
-                dbValue.setInsertAuth(tmp.getInsertAuth());
-            }
-            if(tmp.getQueryAuth() != null){
-                dbValue.setQueryAuth(tmp.getQueryAuth());
-            }
-            if(tmp.getUpdateAuth() != null){
-                dbValue.setUpdateAuth(tmp.getUpdateAuth());
-            }
-            
-            if(tmp.getId() == null){
-                //for insert
-                if(param.getRoleId()==null){
-                    return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-                }
-                if(tmp.getModuleId()==null){
-                    return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-                }
-                dbValue.setRoleId(param.getRoleId());
-                dbValue.setCreated(DateUtil.getLinuxTimeStamp());
-                dbValue.setUpdated(DateUtil.getLinuxTimeStamp());
-                dbValue.setStatus(tmp.getStatus());
-                dbValue.setModuleId(tmp.getModuleId());
-                permissionDao.insertSelective(dbValue);
-            } else {
-                //for update
-                dbValue.setId(tmp.getId());
-                dbValue.setUpdated(DateUtil.getLinuxTimeStamp());
-                if(tmp.getStatus() != null){
-                    dbValue.setStatus(tmp.getStatus());
-                }
-                permissionDao.updateByPrimaryKeySelective(dbValue);
-            }
+
+        WiPermission dbValue = new WiPermission();
+        dbValue.setId(param.getPermissionId());
+        if (param.getInsertAuth() != null) {
+            dbValue.setInsertAuth(param.getInsertAuth());
         }
+        if (param.getQueryAuth() != null) {
+            dbValue.setQueryAuth(param.getQueryAuth());
+        }
+        if (param.getUpdateAuth() != null) {
+            dbValue.setUpdateAuth(param.getUpdateAuth());
+        }
+        if (param.getStatus() != null) {
+            dbValue.setStatus(param.getStatus());
+        }
+        dbValue.setUpdated(DateUtil.getLinuxTimeStamp());
+        permissionDao.updateByPrimaryKeySelective(dbValue);
+
         resp.success();
         return resp;
     }
 
     @Override
-    public Response queryRoleAuthForUpdate(Integer adminRole, Integer orgId) {
-        /*TODO 根据组织ID查询角色*/
-        Response resp = new Response();
-        //需要返回的真实JSON格式数据
-        List<RoleAuthResult> data = new ArrayList<RoleAuthResult>();
-        
-        WiOrganizationRole admin = roleDao.selectByPrimaryKey(adminRole);
-        WiOrganizationRoleExample example = new WiOrganizationRoleExample();
-        WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
-        criterion.andAuthLevelLessThanOrEqualTo(admin.getAuthLevel());
-        List<WiOrganizationRole> roleList = roleDao.selectByExample(example);
-        for(WiOrganizationRole role : roleList){
-            //查询子角色权限
-            List<ModuleQueryResult> tmpResult = new ArrayList<ModuleQueryResult>();
-            tmpResult = permissionDao.selectPermissionByRole(role.getId());
-            //赋值对应角色权限
-            RoleAuthResult tmpData = new RoleAuthResult();
-            tmpData.setRoleId(role.getId());
-            tmpData.setRoleName(role.getName());
-            tmpData.setAuthList(tmpResult);
-            data.add(tmpData);
-        }
-        resp.success(data);
-        return resp;
-    }
+    public Response insertRole(InsertRoleParam role) {
 
-    @Override
-    public Response addRole(WiOrganizationRole role) {
-        
-        Response response=new Response();
-        
-        //判断用户权限
-        WiAdminExample example1=new WiAdminExample();
-        WiAdminExample.Criteria criteria1=example1.createCriteria();
-        criteria1.andIdEqualTo(role.getAdminid());
-        List<WiAdmin> list1=adminDao.selectByExample(example1);
-        Integer roleid=list1.get(0).getRoleId();
-        
-        WiOrganizationRoleExample example = new WiOrganizationRoleExample();
-        Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(roleid);
-        List<WiOrganizationRole> list2=roleDao.selectByExample(example);
-        if(list2.get(0).getAuthLevel()<role.getAuthLevel()){
-            response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-            response.setMsg("无权创建更高级的用户");
+        Response response = new Response();
+
+        // 判断用户权限
+        WiAdminExample example = new WiAdminExample();
+        WiAdminExample.Criteria criteria1 = example.createCriteria();
+        //根据创建的的ID去wi_admin表中查询是否存在该用户。
+        criteria1.andIdEqualTo(role.getCreatorId());
+        List<WiAdmin> list1 = adminDao.selectByExample(example);
+        if (list1.isEmpty()) {
+            response.failure(ErrorCode.ERROR_DATABASE);
+            response.setMsg("用户不存在");
             return response;
         }
+
+        Integer roleid = list1.get(0).getRoleId();
         
-        //判断角色name是否已经存在
-        example.clear();
-        Criteria criteri = example.createCriteria();
-        criteri.andNameEqualTo(role.getName());
-        List<WiOrganizationRole> list=roleDao.selectByExample(example);
-        
-        if(list.size()!=0){
+        WiOrganizationRoleExample example1 = new WiOrganizationRoleExample();
+        Criteria criteria = example1.createCriteria();
+        criteria.andIdEqualTo(roleid);
+        List<WiOrganizationRole> list2 = roleDao.selectByExample(example1);
+        if (list2.isEmpty() || list2.get(0).getAuthLevel() <= role.getRoleLevel()) {
+            response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+            response.setMsg("角色权限值错误");
+            return response;
+        }
+
+        // 判断角色name是否已经存在
+        WiOrganizationRoleExample example2 = new WiOrganizationRoleExample();
+        Criteria criteri = example2.createCriteria();
+        criteri.andNameEqualTo(role.getRoleName());
+        criteri.andOrganizationIdEqualTo(role.getCompanyId());
+        List<WiOrganizationRole> list = roleDao.selectByExample(example2);
+
+        if (list.size() != 0) {
             response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
             response.setMsg("新增的角色已经存在！！！");
             return response;
         }
-        
-        roleDao.insertSelective(role);
-        
+
+        WiOrganizationRole data = new WiOrganizationRole();
+        data.setAuthLevel(role.getRoleLevel());
+        data.setDescription(StringUtil.isEmpty(role.getDesc()) ? "" : role.getDesc());
+        data.setDepartId(role.getDepartId() == null ? 0 : role.getDepartId());
+        data.setName(role.getRoleName());
+        data.setOrganizationId(role.getCompanyId());
+        data.setCreatorId(role.getCreatorId());
+        roleDao.insertSelective(data);
+
         return response.success();
+    }
+
+    @Override
+    public Response delRole(WiOrganizationRole role) {
+        Response resp = new Response();
+        roleDao.deleteByPrimaryKey(role.getId());
+        return resp.success();
+    }
+
+    @Override
+    public Response updateRole(WiOrganizationRole param) {
+        Response resp = new Response();
+        roleDao.updateByPrimaryKeySelective(param);
+        return resp;
+    }
+
+    @Override
+    public Response insertAuth(InsertAuthParam param) {
+        Response resp = new Response();
+        WiPermission data = new WiPermission();
+        data.setCompanyId(param.getCompanyId());
+        data.setModuleId(param.getModuleId());
+        data.setRoleId(param.getRoleId());
+        data.setInsertAuth(param.getInsertAuth());
+        data.setUpdateAuth(param.getUpdateAuth());
+        data.setQueryAuth(param.getQueryAuth());
+        data.setStatus(param.getStatus());
+        Integer tNow = DateUtil.getLinuxTimeStamp();
+        data.setUpdated(tNow);
+        data.setCreated(tNow);
+        
+        permissionDao.insert(data);
+        return resp;
     }
 
 }

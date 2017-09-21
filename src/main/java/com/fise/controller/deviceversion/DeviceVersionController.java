@@ -20,95 +20,93 @@ import com.fise.utils.StringUtil;
 @RestController
 @RequestMapping("/boss/deviceversion")
 public class DeviceVersionController {
-	
-	private Logger logger=Logger.getLogger(getClass());
-	
-	@Resource
-	IDeviceVersionService iDeviceVersionService;
-	
-	@Resource
-	IAuthService authService;
-	
-	/*添加设备版本信息*/
-	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public Response addDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
-		
-		Response response=new Response();
-		
-		if(!authService.inserAuth()){
+
+    private Logger logger = Logger.getLogger(getClass());
+
+    @Resource
+    IDeviceVersionService iDeviceVersionService;
+
+    @Resource
+    IAuthService authService;
+
+    /* 添加设备版本信息 */
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public Response addDeviceVersion(@RequestBody @Valid IMDeviceVersion record) {
+
+        Response response = new Response();
+
+        if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-		
-		logger.info(record.toString());
-		
-		if(record.getDepartid()==null || record.getDevType()==null || StringUtil.isEmpty(record.getDevVersion())||StringUtil.isEmpty(record.getUpdateUrl())){
+
+        logger.info(record.toString());
+
+        if (record.getDepartid() == null 
+                || record.getDevType() == null 
+                || StringUtil.isEmpty(record.getDevVersion())) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		response=iDeviceVersionService.insertDeviceVersion(record);
-		
-		
-		return response;
-	}
-	
-	/*查询设备版本信息*/
-	@RequestMapping(value="/query",method=RequestMethod.POST)
-	public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
-		
-		Response response=new Response();
-		logger.info(param.toString());
-		
-		if(param.getDepartid()==null){
+
+        response = iDeviceVersionService.insertDeviceVersion(record);
+
+        return response;
+    }
+
+    /* 查询设备版本信息 */
+    @RequestMapping(value = "/query", method = RequestMethod.POST)
+    public Response queryDeviceVersion(@RequestBody @Valid DeviceVersionParam param) {
+
+        Response response = new Response();
+        logger.info(param.toString());
+
+        if (param.getDepartid() == null) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		response=iDeviceVersionService.queryDeviceVersion(param);
-		
-		
-		return response;
-	}
-	
-	/*删除设备版本信息*/
-	@RequestMapping(value="/del",method=RequestMethod.POST)
-	public Response delDeviceVersion(@RequestBody @Valid DeviceVersionParam param){
-		
-		Response response=new Response();
-		
-		if(!authService.updateAuth()){
+
+        response = iDeviceVersionService.queryDeviceVersion(param);
+
+        return response;
+    }
+
+    /* 删除设备版本信息 */
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public Response delDeviceVersion(@RequestBody @Valid DeviceVersionParam param) {
+
+        Response response = new Response();
+
+        if (!authService.updateAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-		
-		logger.info(param.toString());
-		
-		if(param.getId()==null){
+
+        logger.info(param.toString());
+
+        if (param.getId() == null) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		response=iDeviceVersionService.delDeviceVersion(param);
-		
-		
-		return response;
-	}
-	
-	/*修改设备版本信息*/
-	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public Response updateDeviceVersion(@RequestBody @Valid IMDeviceVersion record){
-		
-		Response response=new Response();
-		
-		if(!authService.updateAuth()){
+
+        response = iDeviceVersionService.delDeviceVersion(param);
+
+        return response;
+    }
+
+    /* 修改设备版本信息 */
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Response updateDeviceVersion(@RequestBody @Valid IMDeviceVersion record) {
+
+        Response response = new Response();
+
+        if (!authService.updateAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-		
-		logger.info(record.toString());
-		
-		if(record.getId()==null){
+
+        logger.info(record.toString());
+
+        if (record.getId() == null) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-		
-		response=iDeviceVersionService.updateDeviceVersion(record);
-		
-		
-		return response;
-	}
+
+        response = iDeviceVersionService.updateDeviceVersion(record);
+
+        return response;
+    }
 }

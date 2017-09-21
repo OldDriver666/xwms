@@ -1,7 +1,5 @@
 package com.fise.controller.organization;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -16,91 +14,93 @@ import com.fise.base.Response;
 import com.fise.model.entity.WiOrganization;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.organization.IOrganizationService;
-
+import com.fise.utils.JsonUtil;
+import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/organization")
 public class OrganizationController {
-	
-	private Logger logger=Logger.getLogger(getClass());
-	
-	@Resource
-	IOrganizationService organtSvr;
-	
-	@Resource
-	IAuthService authService;
-	
-	/*查询公司组织*/
-	@RequestMapping(value="/query",method=RequestMethod.POST)
-	public Response queryOrgan(@RequestBody @Valid Map<String, Object> map){
-		
-		Response response=new Response();
-		logger.info(map.toString());
-		String name=(String) map.get("name");
-		response=organtSvr.QueryOrganization(name);
-		
-		return response;
-	}
 
-	/*插入公司组织*/
-    @RequestMapping(value="/insert",method=RequestMethod.POST)
-    public Response insertOrgan(@RequestBody @Valid WiOrganization param){
-        
-        Response response=new Response();
-        
-        if(!authService.inserAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-        
-        logger.info(param.toString());
-        
-        if(param.getName()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        
-        response=organtSvr.InsertOrganization(param);
-        
+    private Logger logger = Logger.getLogger(getClass());
+
+    @Resource
+    IOrganizationService organtSvr;
+
+    @Resource
+    IAuthService authService;
+
+    /* 查询公司组织 */
+    @RequestMapping(value = "/query", method = RequestMethod.POST)
+    public Response queryOrgan(@RequestBody @Valid WiOrganization param) {
+
+        Response response = new Response();
+        response = organtSvr.QueryOrganization(param.getName());
+        logger.info("查询公司:"+JsonUtil.toJson(param)+" 结果:"+response.getMsg());
         return response;
     }
 
-    /*修改公司组织*/
-    @RequestMapping(value="/update",method=RequestMethod.POST)
-    public Response updateOrgan(@RequestBody @Valid WiOrganization param){
-     
-     Response response=new Response();
-     
-     if(!authService.updateAuth()){
-         return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-     }
-     
-     logger.info(param.toString());
-     
-     if(param.getId()==null){
-         return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-     }
-     
-     response=organtSvr.UpdateOrganization(param);
-     
-     return response;
- }
-    /*删除公司组织*/
-    @RequestMapping(value="/del",method=RequestMethod.POST)
-    public Response delOrgan(@RequestBody @Valid WiOrganization param){
-        
-       Response response=new Response();
-       
-       if(!authService.updateAuth()){
-           return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-       }
-       
-       logger.info(param.toString());
-       
-       if(param.getId()==null){
-           return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-       }
-       
-       response=organtSvr.delOrganization(param);
-       
-       return response;
+    /* 插入公司组织 */
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public Response insertOrgan(@RequestBody @Valid WiOrganization param) {
+
+        Response response = new Response();
+
+        if (authService.inserAuth()) {
+            if (!StringUtil.isEmpty(param.getName())) {
+                response = organtSvr.InsertOrganization(param);
+            } 
+            else {
+                response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            }
+        } 
+        else {
+            response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info("新增公司:"+JsonUtil.toJson(param) + "结果:" + response.getMsg());
+        return response;
+    }
+
+    /* 修改公司组织 */
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Response updateOrgan(@RequestBody @Valid WiOrganization param) {
+
+        Response response = new Response();
+
+        if (authService.updateAuth()) {
+            if(param.getId() != null){
+                response = organtSvr.UpdateOrganization(param);
+            }
+            else{
+                response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+            }
+        }
+        else{
+            response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        logger.info("更新公司:"+JsonUtil.toJson(param)+" 结果:"+response.getMsg());
+        return response;
+    }
+
+    /* 删除公司组织 */
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public Response delOrgan(@RequestBody @Valid WiOrganization param) {
+
+        Response response = new Response();
+
+        if (!authService.updateAuth()) {
+            response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        if (param.getId() != null){
+            response = organtSvr.delOrganization(param);
+        }
+        else{
+            response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+
+        logger.info("删除公司:"+JsonUtil.toJson(param)+" 结果:"+response.getMsg());
+        return response;
     }
 }

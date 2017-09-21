@@ -6,5 +6,11 @@ import com.fise.model.param.QueryUserParam;
 
 public interface IUserService {
     //查询User
-    public Response queryUser(Page<QueryUserParam> param);
+    public Response queryUserByPage(Page<QueryUserParam> param);
+    
+    //用户位置信息
+    public Response queryUserLocation(QueryUserParam param);
+    
+  //用户详细信息
+    public Response queryUserDetail(QueryUserParam param);
 }

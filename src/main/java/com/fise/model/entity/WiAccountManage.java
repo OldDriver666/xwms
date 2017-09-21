@@ -11,7 +11,7 @@ import com.fise.utils.JsonUtil;
 public class WiAccountManage implements Serializable {
     private Integer id;
     
-    @JsonProperty("depart_id")
+    @JsonProperty("company_id")
     private Integer departId;
 
     private String description;

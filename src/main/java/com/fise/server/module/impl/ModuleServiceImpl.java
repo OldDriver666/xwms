@@ -1,22 +1,20 @@
 package com.fise.server.module.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.WiModuleMapper;
 import com.fise.dao.WiPermissionMapper;
 import com.fise.model.entity.WiModule;
 import com.fise.model.entity.WiModuleExample;
+import com.fise.model.entity.WiPermission;
 import com.fise.model.param.ModuleInsertParam;
 import com.fise.model.param.ModuleQueryParam;
-import com.fise.model.param.ModuleQueryResult;
-import com.fise.model.param.ModuleUpdateParam;
 import com.fise.server.module.IModuleService;
+import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
 @Service
@@ -26,27 +24,28 @@ public class ModuleServiceImpl implements IModuleService {
     private WiModuleMapper moduleDao;
     
     @Autowired
-    private WiPermissionMapper permissionDao;
+    private WiPermissionMapper authDao;
     
     @Override
-    public Response QueryModule(ModuleQueryParam param) {
-        Response resp = new Response();
-        /*TODO 默认认为请求者传的roleId有效可用，不做检测 根据情况定是否检测值有效性*/
-        List<ModuleQueryResult> returnData = new ArrayList<ModuleQueryResult>();
-        List<ModuleQueryResult> data = permissionDao.selectPermissionByRole(param.getRoleId());
-        for(ModuleQueryResult tmpData : data){
-            if(tmpData.getStatus() != 0){
-                returnData.add(tmpData);
-            }
-        }
-        resp.success(returnData);
-        return resp;
+    public List<WiModule> QueryModule(Integer companyId) {
+
+        WiModuleExample example = new WiModuleExample();
+        WiModuleExample.Criteria con = example.createCriteria();
+        con.andBelongCompanyEqualTo(companyId);
+        return moduleDao.selectByExample(example);
     }
 
     @Override
-    public Response InsertModule(ModuleInsertParam param) {
+    public Response InsertModule(ModuleInsertParam param, Integer roleId) {
         Response resp = new Response();
-        /*TODO 做角色权限判断*/
+        //TODO 测试由数据库报错情况
+        if(param.getModule_type() == null){
+            param.setModule_type(0);
+        }
+        if(param.getStatus() == null){
+            param.setStatus(1);
+        }
+
         WiModule module = new WiModule();
         module.setName(param.getName());
         module.setParentId(param.getParentId());
@@ -57,29 +56,36 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getUrl() != null){
             module.setUrl(param.getUrl());
         }
+        module.setBelongCompany(param.getCompany_id());
+        module.setModuleType(param.getModule_type());
         module.setSn(param.getSn());
         module.setStatus(param.getStatus());
         moduleDao.insert(module);
+        
+        //菜单的创建者默认增加菜单权限
+        Integer nNow = DateUtil.getLinuxTimeStamp();
+        WiPermission auth = new WiPermission();
+        auth.setCompanyId(param.getCompany_id());
+        auth.setCreated(nNow);
+        auth.setUpdated(nNow);
+        auth.setInsertAuth(1);
+        auth.setQueryAuth(1);
+        auth.setUpdateAuth(1);
+        auth.setModuleId(module.getId());
+        auth.setRoleId(roleId);
+        auth.setStatus(1);
+        authDao.insert(auth);
+        
         resp.success();
         return resp;
     }
 
     @Override
-    public Response UpdateModule(ModuleUpdateParam param) {
+    public Response UpdateModule(ModuleInsertParam param) {
         /*TODO 做角色权限判断*/
         Response resp = new Response();
         WiModule module = new WiModule();
-        module.setId(param.getModuleId());
-        
-        if(StringUtil.isEmpty(param.getName())){
-            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        if(param.getPriority()==null){
-            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-        if(StringUtil.isEmpty(param.getSn())){
-            return resp.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
+        module.setId(param.getModule_id());
         
         if(!StringUtil.isEmpty(param.getName())){
             module.setName(param.getName());
@@ -90,16 +96,16 @@ public class ModuleServiceImpl implements IModuleService {
         if(param.getPriority() != null){
             module.setPriority(param.getPriority());
         }
-        if(!StringUtil.isEmpty(param.getDescription())){
+        if(param.getDescription() != null){
             module.setDescription(param.getDescription());
         }
-        if(!StringUtil.isEmpty(param.getSn())){
+        if(param.getSn() != null){
             module.setSn(param.getSn());
         }
         if(param.getStatus() != null){
             module.setStatus(param.getStatus());
         }
-        if(!StringUtil.isEmpty(param.getUrl())){
+        if(param.getUrl() != null){
             module.setUrl(param.getUrl());
         }
         moduleDao.updateByPrimaryKeySelective(module);

@@ -1,6 +1,12 @@
 $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
-    var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var depart_id = Util.cookieStorage.getCookie("departId");
+	var company_id = Util.cookieStorage.getCookie("companyId");
+	var role_level = Util.cookieStorage.getCookie("userLevel");
+	var admin_id = Util.cookieStorage.getCookie("adminId");
+	var nick_name = Util.cookieStorage.getCookie("nickname");
+
 	var url=location.search;
 	var Request = new Object();
 	if(url.indexOf("?")!=-1) {
@@ -10,10 +16,10 @@ $(function() {
 			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
 		}
 	};
-	var moduleId = Request["moduleId"];
-	var insertAuth = Request["insertAuth"];
-	var queryAuth = Request["queryAuth"];
-	var updateAuth = Request["updateAuth"];
+	var moduleId = parseInt(Request["moduleId"]);
+	var insertAuth = parseInt(Request["insertAuth"]);
+	var queryAuth = parseInt(Request["queryAuth"]);
+	var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
 		init: function(){
@@ -37,6 +43,8 @@ $(function() {
 			data.contact = $("#input-contact").val();
 			data.email = $("#input-email").val();
 			data.describtion = $("#input-describtion").val();
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -57,6 +65,8 @@ $(function() {
             var url = ctx + "boss/organization/query";
             var data = new Object();
             data.name = search_name;
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -86,6 +96,8 @@ $(function() {
 			var url = ctx + "boss/organization/query";
 			var data = new Object();
 			data.name = "";
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
 					allCompanyArray = result.data;
@@ -109,6 +121,8 @@ $(function() {
 			data.email = $("#input-email").val();
 			data.describtion = $("#input-describtion").val();
 			data.status = parseInt($("input[name=status]:checked").val());
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -127,6 +141,8 @@ $(function() {
 				var url = ctx + "boss/organization/del";
 				var data = new Object();
                 data.id = id;
+				data.depart_id = parseInt(depart_id);
+				data.company_id = parseInt(company_id);
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");

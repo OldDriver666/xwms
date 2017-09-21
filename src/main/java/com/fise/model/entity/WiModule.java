@@ -10,6 +10,16 @@ public class WiModule implements Serializable {
 
     private String name;
 
+    /**
+     * 0-管理 1-查询
+     */
+    private Integer moduleType;
+
+    /**
+     * 所属公司0为公有菜单
+     */
+    private Integer belongCompany;
+
     private String description;
 
     private Integer priority;
@@ -41,6 +51,22 @@ public class WiModule implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getModuleType() {
+        return moduleType;
+    }
+
+    public void setModuleType(Integer moduleType) {
+        this.moduleType = moduleType;
+    }
+
+    public Integer getBelongCompany() {
+        return belongCompany;
+    }
+
+    public void setBelongCompany(Integer belongCompany) {
+        this.belongCompany = belongCompany;
     }
 
     public String getDescription() {

@@ -1,5 +1,6 @@
 package com.fise.utils;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -326,7 +327,10 @@ public class DateUtil {
     }  
 	
 	public static void main(String[] args) throws ParseException {
-		System.out.println("当天零点：" + getTodayBeginDate());
+	    Date today = getTodayBeginDate();
+	    Timestamp ts = new Timestamp(today.getTime());
+	    
+		System.out.println("当天零点：" + today + " linux=" + ts.getTime()/1000);
 		System.out.println("本周零点: " + getWeekBeginDate());
 		System.out.println("本月零点: " + getMonthBeginDate());
 	}

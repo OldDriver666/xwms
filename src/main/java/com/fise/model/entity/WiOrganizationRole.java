@@ -3,37 +3,44 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fise.utils.JsonUtil;
 
 /**
  * @author 
  */
 public class WiOrganizationRole implements Serializable {
+    
     private Integer id;
-    
-    @JsonProperty("admin_id")
-    private Integer adminid;
-    
+
+    @JsonProperty("auth_level")
     private Integer authLevel;
 
+    @JsonProperty("auth_name")
     private String name;
 
+    @JsonProperty("desc")
     private String description;
 
+    @JsonProperty("company_id")
     private Integer organizationId;
+
+    @JsonProperty("depart_id")
+    private Integer departId;
+    
+    @JsonProperty("creator_id")
+    private Integer creatorId;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
-    }
-    
-    public Integer getAdminid() {
-        return adminid;
-    }
+    public Integer getCreatorId() {
+		return creatorId;
+	}
 
-    public void setAdminid(Integer adminid) {
-        this.adminid = adminid;
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
@@ -72,9 +79,11 @@ public class WiOrganizationRole implements Serializable {
         this.organizationId = organizationId;
     }
 
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
+    public Integer getDepartId() {
+        return departId;
     }
-    
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
+    }
 }

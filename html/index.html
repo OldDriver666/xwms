@@ -81,16 +81,15 @@
     <div class="layui-body">
         <div class="layui-tab admin-nav-card" lay-filter="admin-tab">
             <ul class="layui-tab-title" id="admin-tab">
-                <li class="layui-this">
+                <!--<li class="layui-this">
                     <i class="layui-icon" style="top: 2px; font-size: 16px;">&#xe63c;</i>
                     <cite>整体概述</cite>
-                </li>
+                </li>-->
             </ul>
             <div class="layui-tab-content" id="admin-tab-container">
-                <div class="layui-tab-item layui-show">
-                   <!-- <iframe src="http://www.baidu.com"></iframe>-->
-                    <iframe src="manage/main/main.html"></iframe>
-                </div>
+               <!-- <div class="layui-tab-item layui-show">
+                    &lt;!&ndash;<iframe src="manage/main/main.html"></iframe>&ndash;&gt;
+                </div>-->
             </div>
         </div>
     </div>
@@ -115,16 +114,16 @@
 <li class="layui-nav-item layui-nav-itemed">
 	<dl class=" layui-nav-child">
 		<dd>
-			<a class="layui-nav-child-a" href="javascript:;" data-menuid=${moduleId} data-url=${url}>
+			<a class="layui-nav-child-a" href="javascript:;" data-menuid=${module_id} data-url=${url}>
 				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
-				<cite>${moduleName}</cite>
+				<cite>${module_name}</cite>
 			</a>
 			<ul class="layui-nav-child" style="display: none">
 			  {{each(i,item) children}}
 		        <li>
-				<a class="children-menu" href="javascript:;" data-menuid=${item.moduleId} data-url=${item.url} data-insert=${item.insertAuth} data-query=${item.queryAuth} data-update=${item.updateAuth}>
+				<a class="children-menu" href="javascript:;" data-menuid=${item.module_id} data-url=${item.url} data-insert=${item.insert_auth} data-query=${item.query_auth} data-update=${item.update_auth}>
 				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
-				<cite>${item.moduleName}</cite>
+				<cite>${item.module_name}</cite>
 				</a>
 				</li>
 				{{/each}}
@@ -219,6 +218,7 @@
             var insertRight = $this.data('insert');
             var queryRight = $this.data('query');
             var updateRight = $this.data('update');
+
             url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid);
             if (url !== undefined) {
                 var iframe = '<iframe src="' + url + '"></iframe>'

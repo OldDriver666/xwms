@@ -9,7 +9,7 @@ public interface ISplashService {
 	public Response insertSplash(IMSplash record);
 	
 	/*查询闪屏信息*/
-	public Response querySplash(SplashParam param);
+	public Response querySplash();
 	
 	/*删除闪屏信息*/
 	public Response delSplash(SplashParam param);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.param.QueryDeviceParam;
-import com.fise.server.querydevice.IQueryDeviceService;
+import com.fise.server.deviceconfig.IDeviceConfigService;
 import com.qq.jutil.string.StringUtil;
 
 @RestController
@@ -22,7 +22,7 @@ public class QueryDeviceController {
     private Logger logger=Logger.getLogger(getClass());
     
     @Resource
-    IQueryDeviceService iQueryDeviceService;
+    IDeviceConfigService iQueryDeviceService;
     
     //通过设备账号查询
     @RequestMapping(value="/querydevice",method=RequestMethod.POST)
@@ -30,7 +30,9 @@ public class QueryDeviceController {
         
         Response response=new Response();
         logger.info(param.toString());
-        if(StringUtil.isEmpty(param.getAccount()) && StringUtil.isEmpty(param.getPhone()) && param.getDepartid() == null){
+        if(StringUtil.isEmpty(param.getAccount()) 
+                && StringUtil.isEmpty(param.getPhone())
+                && param.getDeviceId() == null){
             response.setErrorCode(ErrorCode.ERROR_PARAM_VALIDATION_EXCEPTION);
             response.setMsg("请输入查询条件");
         } else {

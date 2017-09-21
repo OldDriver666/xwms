@@ -57,12 +57,14 @@ Util.ajaxLoadData = function(url,data,moduleId,type,async,callback,errorCallback
     var str =  "5|5|5|" + userid + "|" + moduleId;
     /*var str =  "platform|system|udid|" + usr_id + "|version";*/
     var access_Token = Util.cookieStorage.getCookie("accesstoken");
+
     $.ajax({
         headers: {
             "Accept": "application/json",
             "FISE-UA": str,
             "FISE-AccessToken": access_Token,
             "Content-Type":"application/json;charset=UTF-8"
+            /*"Transfer-Encoding": "chunked"*/
         },
         url:url,
         data:JSON.stringify(data),
@@ -735,8 +737,13 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
+<<<<<<< HEAD
     ctx = "http://192.168.2.202:8080/";
 	//ctx = "http://192.168.2.196:8484/";        //test version
+=======
+	ctx = "http://192.168.2.202:8080/";        //test version
+    /*ctx = "http://192.168.2.196:8484/";*/        //test version
+>>>>>>> b6e7a60175f5115e93bad86b97e8aa8497f23072
    /* ctx = "http://192.168.2.196:8585/";  */      //non-stop server version
      /*ctx = "http://192.168.2.196:8610/";*/
     /*ctx = "http://bossdev.wn517.com/";*/

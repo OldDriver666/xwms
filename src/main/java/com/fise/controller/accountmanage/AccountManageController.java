@@ -52,7 +52,11 @@ public class AccountManageController {
         
         Response response=new Response();
         logger.info(map.toString());
-        Integer id=(Integer) map.get("depart_id");
+        if(map.get("company_id") == null){
+            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+        }
+
+        Integer id=(Integer) map.get("company_id");
         response=accountManageService.queryAccount(id);
         return response;
     }

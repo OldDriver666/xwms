@@ -9,6 +9,7 @@
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="depart_id" jdbcType="INTEGER" property="departId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
@@ -76,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, salt, password, nick_name, role_id, company_id, phone, email, access_token, 
-    status, last_login, created, updated
+    id, account, salt, password, nick_name, role_id, company_id, depart_id, phone, email, 
+    access_token, status, last_login, created, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiAdminExample" resultMap="BaseResultMap">
     select
@@ -120,14 +121,16 @@
   <insert id="insert" parameterType="com.fise.model.entity.WiAdmin">
     insert into wi_admin (id, account, salt, 
       password, nick_name, role_id, 
-      company_id, phone, email, 
-      access_token, status, last_login, 
-      created, updated)
+      company_id, depart_id, phone, 
+      email, access_token, status, 
+      last_login, created, updated
+      )
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{password,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
-      #{companyId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{accessToken,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{lastLogin,jdbcType=INTEGER}, 
-      #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER})
+      #{companyId,jdbcType=INTEGER}, #{departId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{lastLogin,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiAdmin">
     insert into wi_admin
@@ -152,6 +155,9 @@
       </if>
       <if test="companyId != null">
         company_id,
+      </if>
+      <if test="departId != null">
+        depart_id,
       </if>
       <if test="phone != null">
         phone,
@@ -196,6 +202,9 @@
       </if>
       <if test="companyId != null">
         #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null">
+        #{departId,jdbcType=INTEGER},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
@@ -250,6 +259,9 @@
       <if test="record.companyId != null">
         company_id = #{record.companyId,jdbcType=INTEGER},
       </if>
+      <if test="record.departId != null">
+        depart_id = #{record.departId,jdbcType=INTEGER},
+      </if>
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
@@ -285,6 +297,7 @@
       nick_name = #{record.nickName,jdbcType=VARCHAR},
       role_id = #{record.roleId,jdbcType=INTEGER},
       company_id = #{record.companyId,jdbcType=INTEGER},
+      depart_id = #{record.departId,jdbcType=INTEGER},
       phone = #{record.phone,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       access_token = #{record.accessToken,jdbcType=VARCHAR},
@@ -316,6 +329,9 @@
       </if>
       <if test="companyId != null">
         company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null">
+        depart_id = #{departId,jdbcType=INTEGER},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
@@ -349,6 +365,7 @@
       nick_name = #{nickName,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=INTEGER},
       company_id = #{companyId,jdbcType=INTEGER},
+      depart_id = #{departId,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       access_token = #{accessToken,jdbcType=VARCHAR},

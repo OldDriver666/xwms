@@ -9,7 +9,7 @@ public interface IFiseDeviceService {
 	/*添加新的fisedevice*/
 	public Response insertFiseDevice(FiseDevice record);
 	
-	/*查询设备信息*/
+	/*查询设备信息 分页*/
 	public Response queryFiseDevice(Page<QueryFiseDeviceParam> page);
 	
 	/*删除fise设备*/

@@ -10,9 +10,20 @@ import com.fise.utils.JsonUtil;
 public class DeviceCountParam implements Serializable{
     private static final long serialVersionUid=1L;
     
-    @JsonProperty("depart_id")
     @NotNull
+    @JsonProperty("company_id")
+    private Integer companyId;
+    
+    @JsonProperty("depart_id")
     private Integer departid;
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
 
     public Integer getDepartid() {
         return departid;

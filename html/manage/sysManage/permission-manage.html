@@ -226,7 +226,6 @@
 					<th>菜单ID</th>
 					<th>菜单名称</th>
 					<th>Priority</th>
-					<th>SN</th>
 					<th>URL</th>
 					<!--<th>新增权限</th>-->
 					<!--<th>修改权限</th>-->
@@ -272,15 +271,14 @@
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
-	<td style="display:none;">${permissId}</td>
-	<td >${moduleId}</td>
-	<td>${moduleName}</td>
+	<td style="display:none;">${permiss_id}</td>
+	<td >${module_id}</td>
+	<td>${module_name}</td>
 	<td>${priority}</td>
-	<td>${sn}</td>
 	<td>${url}</td>
-	<td style="display:none;">{{if insertAuth == 1}}启用{{else insertAuth == 0}}禁用{{/if}}</td>
-	<td style="display:none;">{{if updateAuth == 1}}启用{{else updateAuth == 0}}禁用{{/if}}</td>
-	<td style="display:none;">{{if queryAuth == 1}}启用{{else queryAuth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if insert_auth == 1}}启用{{else insert_auth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if update_auth == 1}}启用{{else update_auth == 0}}禁用{{/if}}</td>
+	<td style="display:none;">{{if query_auth == 1}}启用{{else query_auth == 0}}禁用{{/if}}</td>
 	<td>${parent_id}</td>
 	<td>{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
 	<td class="table-update">
@@ -293,7 +291,7 @@
     <option value=${id}>${name}</option>
 </script>
 <script type="text/x-jquery-tmpl" id="pageMenu">
-    <option value=${id}>${name}</option>
+    <option value=${module_id}>${module_name}</option>
 </script>
 <script type="text/x-jquery-tmpl" id="page_dev_active_count">
  ${ActiveDevice}

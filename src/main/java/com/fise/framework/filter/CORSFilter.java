@@ -26,7 +26,7 @@ public class CORSFilter extends OncePerRequestFilter {
 		logger.info(request.getContextPath() + request.getRequestURI() + " method=" + request.getMethod());
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.addHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE, PATCH, OPTIONS");
-		response.addHeader("Access-Control-Allow-Headers","FISE-AccessToken,FISE-UA,FISE-GymAccessToken,FISE-ManagerAccessToken,UUID,GUID,Content-Type,Accept");
+		response.addHeader("Access-Control-Allow-Headers","FISE-AccessToken,FISE-UA,UUID,GUID,Content-Type,Accept");
 		response.addHeader("Access-Control-Max-Age", "1800");
 		response.addHeader("Cache-Control","no-cache");
 

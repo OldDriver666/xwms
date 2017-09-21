@@ -1,6 +1,25 @@
 $(function() {
 	var userName = Util.cookieStorage.getCookie("username");
-    var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var token_value = Util.cookieStorage.getCookie("accesstoken");
+	var depart_id = Util.cookieStorage.getCookie("departId");
+	var company_id = Util.cookieStorage.getCookie("companyId");
+	var role_level = Util.cookieStorage.getCookie("userLevel");
+	var admin_id = Util.cookieStorage.getCookie("adminId");
+	var nick_name = Util.cookieStorage.getCookie("nickname");
+
+	var url=location.search;
+	var Request = new Object();
+	if(url.indexOf("?")!=-1) {
+		var str = url.substr(1)　//去掉?号
+		strs = str.split("&");
+		for(var i=0;i<strs.length;i++){
+			Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+		}
+	};
+	var moduleId = parseInt(Request["moduleId"]);
+	var insertAuth = parseInt(Request["insertAuth"]);
+	var queryAuth = parseInt(Request["queryAuth"]);
+	var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
 		//新增数据
@@ -10,7 +29,9 @@ $(function() {
 				platfrom_id : token_value,
 				action : $("#input-smsConfName").val(),
 				action_name : JSON.parse($("#input-smsConfInfo").val()),
-				template_name : parseInt($("input[name=status]:checked").val())
+				template_name : parseInt($("input[name=status]:checked").val()),
+				depart_id:parseInt(depart_id),
+				company_id:parseInt(company_id)
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -27,7 +48,9 @@ $(function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
             var url = ctx + "boss/sms/query";
             var data = {
-                "action":null
+                "action":null,
+				"depart_id":parseInt(depart_id),
+				"company_id":parseInt(company_id)
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -50,7 +73,9 @@ $(function() {
 			var url = ctx + "SmsPlatfrom/GetSmsInfo";
 			var data = {
                 AuthenticCode : token_value,
-                UserName : userName
+                UserName : userName,
+				depart_id:parseInt(depart_id),
+				company_id:parseInt(company_id)
 			};
 			Util.ajaxLoadData(url,data,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -79,6 +104,8 @@ $(function() {
 			data.action = parseInt($("#input-id").val());
 			data.action_name = parseInt($("#input-id").val());
 			data.template_name = parseInt($("#input-id").val());
+			data.depart_id = parseInt(depart_id);
+			data.company_id = parseInt(company_id);
 
 
 			data.SmsPlatFromName = $("#input-smsConfName").val();
@@ -100,6 +127,8 @@ $(function() {
 				var url = ctx + "boss/sms/del";
 				var data = new Object();
                 data.id = id;
+				data.depart_id = parseInt(depart_id);
+				data.company_id = parseInt(company_id);
 				Util.ajaxLoadData(url,data,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");

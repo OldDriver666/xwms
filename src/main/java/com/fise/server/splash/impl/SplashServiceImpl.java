@@ -14,7 +14,6 @@ import com.fise.model.entity.IMSplashExample;
 import com.fise.model.entity.IMSplashExample.Criteria;
 import com.fise.model.param.SplashParam;
 import com.fise.server.splash.ISplashService;
-import com.fise.utils.StringUtil;
 
 @Service
 public class SplashServiceImpl implements ISplashService{
@@ -39,13 +38,13 @@ public class SplashServiceImpl implements ISplashService{
 	}
 
 	@Override
-	public Response querySplash(SplashParam param) {
+	public Response querySplash() {
 		
 		Response response=new Response();
 		
 		IMSplashExample example=new IMSplashExample();
 		Criteria criteria=example.createCriteria();
-		criteria.andNameEqualTo(param.getName());
+		criteria.andStatusEqualTo(true);
 		List<IMSplash> list=splashDao.selectByExample(example);
 		
 		if(list.size()==0){

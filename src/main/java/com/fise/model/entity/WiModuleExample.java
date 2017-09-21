@@ -254,6 +254,126 @@ public class WiModuleExample {
             return (Criteria) this;
         }
 
+        public Criteria andModuleTypeIsNull() {
+            addCriterion("module_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeIsNotNull() {
+            addCriterion("module_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeEqualTo(Integer value) {
+            addCriterion("module_type =", value, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeNotEqualTo(Integer value) {
+            addCriterion("module_type <>", value, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeGreaterThan(Integer value) {
+            addCriterion("module_type >", value, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("module_type >=", value, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeLessThan(Integer value) {
+            addCriterion("module_type <", value, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("module_type <=", value, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeIn(List<Integer> values) {
+            addCriterion("module_type in", values, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeNotIn(List<Integer> values) {
+            addCriterion("module_type not in", values, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeBetween(Integer value1, Integer value2) {
+            addCriterion("module_type between", value1, value2, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andModuleTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("module_type not between", value1, value2, "moduleType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyIsNull() {
+            addCriterion("belong_company is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyIsNotNull() {
+            addCriterion("belong_company is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyEqualTo(Integer value) {
+            addCriterion("belong_company =", value, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyNotEqualTo(Integer value) {
+            addCriterion("belong_company <>", value, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyGreaterThan(Integer value) {
+            addCriterion("belong_company >", value, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("belong_company >=", value, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyLessThan(Integer value) {
+            addCriterion("belong_company <", value, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyLessThanOrEqualTo(Integer value) {
+            addCriterion("belong_company <=", value, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyIn(List<Integer> values) {
+            addCriterion("belong_company in", values, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyNotIn(List<Integer> values) {
+            addCriterion("belong_company not in", values, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyBetween(Integer value1, Integer value2) {
+            addCriterion("belong_company between", value1, value2, "belongCompany");
+            return (Criteria) this;
+        }
+
+        public Criteria andBelongCompanyNotBetween(Integer value1, Integer value2) {
+            addCriterion("belong_company not between", value1, value2, "belongCompany");
+            return (Criteria) this;
+        }
+
         public Criteria andDescriptionIsNull() {
             addCriterion("description is null");
             return (Criteria) this;

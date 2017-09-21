@@ -3,26 +3,30 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fise.utils.JsonUtil;
 
 /**
  * @author 
  */
 public class FiseDevice implements Serializable {
-	@JsonProperty("fise_id")
-    private Integer fiseId;
+    private Integer id;
 
     /**
      * 设备IME号
      */
     private String ime;
-    
+
+    /**
+     * 设备蓝牙地址
+     */
     private String mac;
-    
+
+    /**
+     * 设备暗码
+     */
     private String code;
 
     /**
-     * 状态 0-出厂 1-激活 2-删除
+     * 状态 0-出厂 1-激活
      */
     private Integer status;
 
@@ -30,6 +34,9 @@ public class FiseDevice implements Serializable {
      * 小位号-账号
      */
     private String account;
+
+    @JsonProperty("company_id")
+    private Integer companyid;
 
     /**
      * 公司/团体ID
@@ -58,6 +65,22 @@ public class FiseDevice implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getIme() {
+        return ime;
+    }
+
+    public void setIme(String ime) {
+        this.ime = ime;
+    }
+
     public String getMac() {
         return mac;
     }
@@ -74,22 +97,6 @@ public class FiseDevice implements Serializable {
         this.code = code;
     }
 
-    public Integer getFiseId() {
-		return fiseId;
-	}
-
-	public void setFiseId(Integer fiseId) {
-		this.fiseId = fiseId;
-	}
-
-	public String getIme() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -104,6 +111,14 @@ public class FiseDevice implements Serializable {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public Integer getCompanyid() {
+        return companyid;
+    }
+
+    public void setCompanyid(Integer companyid) {
+        this.companyid = companyid;
     }
 
     public Integer getDepartid() {
@@ -153,10 +168,4 @@ public class FiseDevice implements Serializable {
     public void setCreated(Integer created) {
         this.created = created;
     }
-
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
-    
 }

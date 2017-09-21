@@ -96,11 +96,19 @@
                 Util.cookieStorage.setCookie("username",result.data.account);
                 Util.cookieStorage.setCookie("nickname",result.data.nickName);
                 Util.cookieStorage.setCookie("userLevel",result.data.roleId);
-                Util.cookieStorage.setCookie("departId",result.data.companyId);
+                Util.cookieStorage.setCookie("companyId",result.data.companyId);
+				Util.cookieStorage.setCookie("departId",result.data.departId);
                 Util.cookieStorage.setCookie("adminId",result.data.id);
+<<<<<<< HEAD
                 Util.cookieStorage.setCookie("companyId",result.data.companyId);
                 Util.cookieStorage.setCookie("departId",result.data.departId);
                 window.location.href = result.data.home;
+=======
+				Util.cookieStorage.setCookie("phone",result.data.phone);
+				Util.cookieStorage.setCookie("home",result.data.home);
+
+                window.location.href = "index.html";
+>>>>>>> b6e7a60175f5115e93bad86b97e8aa8497f23072
             }  else {
                 alert(result.msg);
             }

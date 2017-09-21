@@ -6,7 +6,7 @@ import com.fise.framework.annotation.MaxLength;
 import com.fise.framework.annotation.NotEmpty;
 import com.fise.utils.JsonUtil;
 
-/** 
+/**
  * @author 大表哥
  * @email xingyuanzuo@gmail.com
  * @date 2016-7-25
@@ -14,35 +14,35 @@ import com.fise.utils.JsonUtil;
  */
 
 public class LoginParam implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@MaxLength(value = 40)
-	private String account;
-	
-	@NotEmpty
-	@MaxLength(value = 50)
-	private String password;
+    @NotEmpty
+    @MaxLength(value = 40)
+    private String account;
 
-	public String getAccount() {
-		return account;
-	}
+    @NotEmpty
+    @MaxLength(value = 50)
+    private String password;
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public String getAccount() {
+        return account;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	@Override
-	public String toString() {
-		return JsonUtil.toJson(this);
-	}
-	
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+
 }

@@ -8,6 +8,11 @@ import java.io.Serializable;
 public class WiPermission implements Serializable {
     private Integer id;
 
+    /**
+     * 0-公有角色 x-指定公司角色
+     */
+    private Integer companyId;
+
     private Integer roleId;
 
     private Integer moduleId;
@@ -35,6 +40,14 @@ public class WiPermission implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public Integer getRoleId() {
