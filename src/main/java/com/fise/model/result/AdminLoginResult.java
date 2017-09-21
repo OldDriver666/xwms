@@ -1,31 +1,24 @@
 package com.fise.model.result;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AdminLoginResult {
 
-    @JsonProperty("access_token")
     private String accessToken;
 
     private String account;
 
-    @JsonProperty("company_id")
     private Integer companyId;
 
-    @JsonProperty("depart_id")
     private Integer departId;
 
-    @JsonProperty("user_id")
     private Integer id;
 
-    @JsonProperty("nick_name")
     private String nickName;
 
     private String phone;
 
     private String home;
 
-    @JsonProperty("role_id")
     private Integer roleId;
 
     public String getAccessToken() {
