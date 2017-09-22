@@ -11,7 +11,6 @@ public class WiOrganizationRole implements Serializable {
     
     private Integer id;
 
-    @JsonProperty("auth_level")
     private Integer authLevel;
 
     private String name;
@@ -19,13 +18,11 @@ public class WiOrganizationRole implements Serializable {
     @JsonProperty("desc")
     private String description;
 
-    @JsonProperty("company_id")
+    @JsonProperty("companyId")
     private Integer organizationId;
 
-    @JsonProperty("depart_id")
     private Integer departId;
     
-    @JsonProperty("creator_id")
     private Integer creatorId;
 
     private static final long serialVersionUID = 1L;

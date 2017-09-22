@@ -17,7 +17,6 @@ import com.fise.utils.JsonUtil;
 public class LogoutParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @JsonProperty("user_id")
     @NotNull
     private Integer adminId;
 

@@ -30,8 +30,6 @@ public class ModuleServiceImpl implements IModuleService {
     public List<WiModule> QueryModule(Integer companyId) {
 
         WiModuleExample example = new WiModuleExample();
-        WiModuleExample.Criteria con = example.createCriteria();
-        con.andBelongCompanyEqualTo(companyId);
         return moduleDao.selectByExample(example);
     }
 
