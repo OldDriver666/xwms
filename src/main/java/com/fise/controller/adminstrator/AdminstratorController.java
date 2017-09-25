@@ -80,7 +80,7 @@ public class AdminstratorController {
         }
 
         logger.info(param.toString());
-        resp = adminSvr.deleteAdmin(param);
+        resp = adminSvr.updateAdmin(param);
         return resp;
     }
 
@@ -93,7 +93,7 @@ public class AdminstratorController {
         }
 
         logger.info(param.toString());
-        resp = adminSvr.updateAdmin(param);
+        resp = adminSvr.deleteAdmin(param);
         return resp;
     }
     

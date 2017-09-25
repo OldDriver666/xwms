@@ -9,7 +9,6 @@ import com.fise.utils.JsonUtil;
 
 public class AdminInsert {
 
-    @NotNull
     @JsonProperty("admin_id")
     private Integer adminId;
 
@@ -36,8 +35,20 @@ public class AdminInsert {
 
     @JsonProperty("depart_id")
     private Integer departId;
+    
+    @JsonProperty("creator_id")
+    private Integer creatorId;
 
-    public Integer getCompanyId() {
+
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Integer getCompanyId() {
         return companyId;
     }
 

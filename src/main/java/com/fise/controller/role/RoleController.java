@@ -37,7 +37,7 @@ public class RoleController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response queryRole(@RequestBody @Valid QueryRoleParam param) {
         Response resp = new Response();
-
+        System.out.println("oo");
         List<WiOrganizationRole> data = roleSvr.queryRole(param);
         if (data == null || data.isEmpty()) {
             resp.failure(ErrorCode.ERROR_DATABASE);
