@@ -123,13 +123,15 @@
       password, nick_name, role_id, 
       company_id, depart_id, phone, 
       email, access_token, status, 
-      last_login, created, updated
+      last_login, created, updated,
+      creator_id
       )
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{password,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
       #{companyId,jdbcType=INTEGER}, #{departId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{lastLogin,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}
+      #{lastLogin,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER},
+      #{creatorId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiAdmin">
@@ -180,6 +182,9 @@
       <if test="updated != null">
         updated,
       </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -226,6 +231,9 @@
       </if>
       <if test="updated != null">
         #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

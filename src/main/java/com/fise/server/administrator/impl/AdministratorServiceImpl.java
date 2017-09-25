@@ -249,7 +249,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         // 操作管理员是否合法
         WiAdminExample example = new WiAdminExample();
         Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(param.getAdminId());
+        criteria.andIdEqualTo(param.getCreatorId());
         List<WiAdmin> adminList = adminDao.selectByExample(example);
         if (adminList.size() == 0) {
             resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
@@ -283,6 +283,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         record.setPassword(param.getPassword());
         record.setCompanyId(param.getCompanyId());
         record.setRoleId(param.getRoleId());
+        record.setCreatorId(param.getCreatorId());
         Integer nNow = DateUtil.getLinuxTimeStamp();
 
         record.setCreated(nNow);
@@ -384,51 +385,52 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiAdmin loginAdmin = new WiAdmin();
         WiAdminExample example = new WiAdminExample();
         Criteria loginWhere = example.createCriteria();
-        loginWhere.andIdEqualTo(param.getAdminId());
+        loginWhere.andCreatorIdEqualTo(param.getAdminId());
+        loginWhere.andStatusNotEqualTo((byte) 2);
         List<WiAdmin> adminList = adminDao.selectByExample(example);
-        if (adminList.size() == 0) {
-            resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
-            return resp;
-        }
-        loginAdmin = adminList.get(0);
-        // 非超级管理员 仅允许查询本公司信息
-        if (!loginAdmin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME)) {
-            if (param.getCompanyId() != null && param.getCompanyId() != loginAdmin.getCompanyId()) {
-                resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-                resp.setMsg("权限错误,仅允许查询本公司数据");
-                return resp;
-            }
-        }
-
-        example.clear();
-        Criteria queryWhere = example.createCriteria();
-        if (StringUtil.isNotEmpty(param.getAccount())) {
-            queryWhere.andAccountEqualTo(param.getAccount());
-        }
-        if (param.getCompanyId() != null) {
-            queryWhere.andCompanyIdEqualTo(param.getCompanyId());
-        }
-        if (param.getDepartId() != null) {
-            queryWhere.andDepartIdEqualTo(param.getDepartId());
-        }
-        if (param.getRoleId() != null) {
-            if (param.getRoleId() > loginAdmin.getRoleId()) {
-                queryWhere.andRoleIdEqualTo(param.getRoleId());
-            } else {
-                resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
-                resp.setMsg("权限错误,不能查询比自己等级高的用户");
-                return resp;
-            }
-        } else {
-            queryWhere.andRoleIdGreaterThan(loginAdmin.getRoleId());
-        }
-        //标记为被删除的不返回
-        queryWhere.andStatusNotEqualTo((byte) 2);
-        adminList.clear();
-        adminList = adminDao.selectByExample(example);
-        for (int index = 0; index < adminList.size(); index++) {
-            adminList.get(index).setPassword("");
-        }
+//        if (adminList.size() == 0) {
+//            resp.failure(ErrorCode.ERROR_MEMBER_INDB_IS_NULL);
+//            return resp;
+//        }
+//        loginAdmin = adminList.get(0);
+//        // 非超级管理员 仅允许查询本公司信息
+//        if (!loginAdmin.getAccount().equals(Constants.FISE_SUPPER_ACCOUNT_NAME)) {
+//            if (param.getCompanyId() != null && param.getCompanyId() != loginAdmin.getCompanyId()) {
+//                resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+//                resp.setMsg("权限错误,仅允许查询本公司数据");
+//                return resp;
+//            }
+//        }
+//
+//        example.clear();
+//        Criteria queryWhere = example.createCriteria();
+//        if (StringUtil.isNotEmpty(param.getAccount())) {
+//            queryWhere.andAccountEqualTo(param.getAccount());
+//        }
+//        if (param.getCompanyId() != null) {
+//            queryWhere.andCompanyIdEqualTo(param.getCompanyId());
+//        }
+//        if (param.getDepartId() != null) {
+//            queryWhere.andDepartIdEqualTo(param.getDepartId());
+//        }
+//        if (param.getRoleId() != null) {
+//            if (param.getRoleId() > loginAdmin.getRoleId()) {
+//                queryWhere.andRoleIdEqualTo(param.getRoleId());
+//            } else {
+//                resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+//                resp.setMsg("权限错误,不能查询比自己等级高的用户");
+//                return resp;
+//            }
+//        } else {
+//            queryWhere.andRoleIdGreaterThan(loginAdmin.getRoleId());
+//        }
+//        //标记为被删除的不返回
+//        queryWhere.andStatusNotEqualTo((byte) 2);
+//        adminList.clear();
+//        adminList = adminDao.selectByExample(example);
+//        for (int index = 0; index < adminList.size(); index++) {
+//            adminList.get(index).setPassword("");
+//        }
         resp.success(adminList);
         return resp;
     }

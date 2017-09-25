@@ -74,8 +74,20 @@ public class WiAdmin implements Serializable {
      * 更新时间´
      */
     private Integer updated;
+    
+    private Integer creatorId;
+    
+    
 
-    private static final long serialVersionUID = 1L;
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
