@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
@@ -35,6 +36,7 @@ import com.fise.utils.CommonUtil;
 import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
+
 
 import redis.clients.jedis.Jedis;
 
@@ -274,7 +276,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         Criteria con2 = example.createCriteria();
         con2.andAccountEqualTo(param.getAccount());
         if (adminDao.countByExample(example) > 0l) {
-            resp.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
+            resp.failure(ErrorCode.ERROR_ADMIN_CONF_ACCOUNT_EXISTED);
             return resp;
         }
 
@@ -386,6 +388,13 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiAdminExample example = new WiAdminExample();
         Criteria loginWhere = example.createCriteria();
         loginWhere.andCreatorIdEqualTo(param.getAdminId());
+        
+        if(null != param.getRoleId()){
+        	loginWhere.andRoleIdEqualTo(param.getRoleId());
+        }
+        if(StringUtil.isNotEmpty(param.getAccount())){
+        	loginWhere.andAccountEqualTo(param.getAccount());
+        }
         loginWhere.andStatusNotEqualTo((byte) 2);
         List<WiAdmin> adminList = adminDao.selectByExample(example);
 //        if (adminList.size() == 0) {
