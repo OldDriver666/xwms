@@ -90,6 +90,7 @@ http://boss.fise-wi.com
 //请求
 {
     "admin_id":X,       //必填-这个值是登陆中返回的id获字段值-调用者id
+    "creator_id":X,       //必填-创建者id
     "account":"",       //必填-新增管理员账号
     "password":"",      //必填-密码
     "nick_name":"",     //昵称
