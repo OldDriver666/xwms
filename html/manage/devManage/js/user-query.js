@@ -522,8 +522,10 @@ Util.Page = (function() {
             }*/
             if(!result.data){
                 result.data = null;
-                alert(result.msg);
+                //alert(result.msg);
             }
+            var total_count = result.data.total_count = undefined ? 0 : result.data.total_count
+            console.log(total_count)
             that.allPageSize = Math.ceil(result.data.total_count/that.pageSize);
             var list = null;
             if (that.resultFilter) {
@@ -565,7 +567,7 @@ Util.Page = (function() {
             that.initPageBtns(result.data.total_count,that.allPageSize);
             target.find(".load_icon").remove();
             //如果查询到的数据长度为0；
-            if (list.length == 0) {
+            /*if (list.length == 0) {
                 var dom = target.get(0);
                 var nodeName = dom.nodeName;
                 nodeName = nodeName.toLowerCase();
@@ -577,7 +579,7 @@ Util.Page = (function() {
                 } else {
                     target.append("<div class='no_data_div'>暂无数据</div>");
                 }
-            }
+            }*/
             if (that.callback) {
                 that.callback();
             }

@@ -6,11 +6,12 @@ $(function(){
     var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
+
     //安全退出
     $("#header-safeExit").on('click', function(){
         var url = ctx + "boss/admin/logout";
         var data = {
-            "admin_id":parseInt(admin_id)
+            "adminId":parseInt(admin_id)
         };
         Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
@@ -29,13 +30,10 @@ $(function(){
                 localStorage.removeItem("allDevTypeArray");
                 localStorage.removeItem("allCompanyArray");
                 window.location.href = "login.html";
-            } else if(result.Status == 1){
-                alert("服务器开个小差，请稍后重试！");
             } else {
-                alert("账户名、密码或错误！");
             }
         },function() {
-            alert("服务器开个小差，请稍后重试！");
+            alert("服务器异常，请稍后重试！");
         });
     });
 
@@ -50,7 +48,8 @@ $(function(){
             var moduleId= 0;
             var data = {
                 "role_id":parseInt(role_level),
-                "company_id":parseInt(company_id)
+                "company_id":parseInt(company_id),
+                "creator_id": parseInt(admin_id)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
@@ -76,17 +75,10 @@ $(function(){
                         }
                     }
                     $("#pageMenu").tmpl(parent_data).appendTo('#menuContent');
-                   /* for(var i in parent_data){
-                        $("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');
-                    }*/
-
-                } else if(result.Status == 1){
-                    alert("服务器开个小差，请稍后重试！");
                 } else {
-                    alert("账户名、密码或错误！");
                 }
             },function() {
-                alert("服务器开个小差，请稍后重试！");
+                alert("服务器异常，请稍后重试！");
             });
 		},
         sortBy: function(attr,rev){

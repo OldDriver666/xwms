@@ -20,7 +20,7 @@
 
 /* 头部 */
 .header{height: 65px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
-.logo{position: absolute; left: 0; top: 18px;}
+#sysWebTitle {position: absolute; left: 0; top: 18px;}
 .logo img{width: 82px; height: 31px;}
 
 .header .layui-nav{position: absolute; right: 0; top: 0; padding: 0; background: none;}
@@ -36,7 +36,7 @@
 .header-index{background-color: #080018; border: none;}
 
 .layui-layout-admin .header-demo{border-bottom-color: #1AA094; background-color: #fff;}
-.header-demo .logo{left: 40px;}
+.header-demo .logo{left: 40px; display: block;}
 .header-demo .layui-nav{top: 0;}
 .header-demo .layui-nav .layui-nav-item{margin: 0 10px; line-height: 70px;}
 .header-demo .layui-nav .layui-nav-item a{color: #999;}
@@ -368,3 +368,9 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 #table, #table th {
   text-align: center !important;
 }*/
+#table tfoot tr td {
+  border-top: 0 solid #ddd;
+}
+#table tfoot{
+  border-top: 1px solid #ddd;
+}

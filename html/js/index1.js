@@ -10,7 +10,7 @@ $(function(){
     //安全退出
     $("#header-safeExit").on('click', function(){
         var url = ctx + "boss/admin/logout";
-        var data = {"admin_id":parseInt(admin_id)};
+        var data = {"adminId":parseInt(admin_id)};
         Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
                 Util.cookieStorage.clearCookie("username");

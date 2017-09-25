@@ -44,7 +44,6 @@ $(function() {
 
             var url = ctx + "boss/admin/insert";
             var data = new Object();
-			data.admin_id = parseInt(admin_id);
 			data.account = $("#input-account").val();
 			data.password = $.md5($("#input-password").val());
 			data.nick_name = $("#input-nickName").val();
@@ -53,6 +52,7 @@ $(function() {
 			data.email = $("#input-email").val();
 			data.company_id = add_company_id;
 			data.depart_id = parseInt(depart_id);
+            data.creator_id = parseInt(admin_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -108,9 +108,9 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					alert("记录不存在");
+					//alert("记录不存在");
                 }else {
-					alert(result.msg);
+					//alert(result.msg);
 				}
             },function(errorMsg) {
 				alert(errorMsg);
@@ -122,6 +122,7 @@ $(function() {
 			var data = new Object();
 			data.role_id = parseInt(role_level);
 			data.company_id = parseInt(company_id);
+			data.creator_id = parseInt(admin_id);
 
 			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS && result.data != ""){
@@ -384,12 +385,12 @@ $(function() {
 				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
 				$("#add-search-userRoles").parent().append(err_html);
 				return;
-			}else if($("#add-companyId").val() == "") {
+			}/*else if($("#add-companyId").val() == "") {
 				$("#add-companyId").parent().parent().addClass("has-error");
 				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
 				$("#add-companyId").parent().append(err_html);
 				return;
-			}else {
+			}*/else {
 				window.action.add();
 			}
 		}else if(action == "edit"){

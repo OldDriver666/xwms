@@ -737,7 +737,8 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-	ctx = "http://192.168.2.250:8484/";        //test version
+    ctx = "http://192.168.2.54:8080/managesvr/";
+	//ctx = "http://192.168.2.250:8888/";        //test version
     Util.localStorage.add("ctx",ctx);
 };
 

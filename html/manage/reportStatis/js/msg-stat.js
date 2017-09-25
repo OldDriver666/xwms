@@ -164,7 +164,7 @@ $(function() {
     });
 
 
-    var nowTime = getNowFormatDate();//当前日期
+    /*var nowTime = getNowFormatDate();//当前日期
     var init_days = 3;//初始时的天数
     var init_starDate = changeDate(nowTime, init_days);//初始时的开始日期
     action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
@@ -212,4 +212,5 @@ $(function() {
         var currentdate = b[0] + b[1] +b[2]; //日期字符串
         return currentdate;
     }
+    */
 });

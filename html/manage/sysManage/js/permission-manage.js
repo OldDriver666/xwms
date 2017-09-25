@@ -99,6 +99,7 @@ $(function() {
             var data = new Object();
             data.role_id = parseInt(role_level);
             data.company_id = parseInt(company_id);
+            data.creator_id = parseInt(admin_id);
 
             Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){

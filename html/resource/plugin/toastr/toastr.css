@@ -65,7 +65,7 @@ button.toast-close-button {
 .toast-center-center {
   top: 50%;
   left: 50%;
-  margin-top: -25px;
+  margin-top: -120px;
   margin-left: -150px;
 }
 .toast-bottom-center {
@@ -111,7 +111,7 @@ button.toast-close-button {
   box-sizing: border-box;
 }
 #toast-container > div {
-  position: relative;
+  position: absolute;
   pointer-events: auto;
   overflow: hidden;
   margin: 0 0 6px;
