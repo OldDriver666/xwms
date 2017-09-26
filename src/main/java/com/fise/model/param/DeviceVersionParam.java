@@ -10,7 +10,7 @@ public class DeviceVersionParam {
     /**
      * 公司ID
      */
-	@JsonProperty("depart_id")
+	@JsonProperty("company_id")
     private Integer departid;
 
     /**
