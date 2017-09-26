@@ -37,11 +37,9 @@ $(function() {
 		add : function() {
             var url = ctx + "boss/departconf/addimdepartconfig";
             var data = new Object();
-            data.depart_id = parseInt($('#input-depart_id option:selected').val());
+            data.company_id = parseInt($('#input-depart_id option:selected').val());
             data.client_type = parseInt($('#input-devType option:selected').val());
             data.avatar = $("#input-avatar").val();
-            /*data.depart_id = parseInt(depart_id);*/
-            data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -65,14 +63,12 @@ $(function() {
 
             var url = ctx + "boss/departconf/queryimdepartconfig";
             var data = new Object();
-            data.depart_id = search_company_id;
             data.client_type = search_client_type;
-           /* data.depart_id = parseInt(depart_id);*/
             data.company_id = parseInt(company_id);
 
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
@@ -84,7 +80,7 @@ $(function() {
                         $(".table-manage").hide();
                     }
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
                 alert(errorMsg);

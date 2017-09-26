@@ -246,19 +246,6 @@ $(function() {
         }
     });
 
-    //批量添加表单窗口
-    $("#btn-add-submit2").click(function(){
-        if($("#filepath").val() != '' && $("#input-devType2").val() != ''){
-            $("#addTempl-modal2").modal('hide');
-            $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
-            action.getDevTxtInfo();
-        }else if($("#filepath").val() == ''){
-            toastr.error("请选择文件！");
-        }else if($("#input-devType2").val() == ''){
-            toastr.error("请选择设备类型！");
-        }
-    });
-
     //点击搜索按钮根据条件查询筛选
 	$("#btn-search").on('click', function() {
         action.loadPageData();

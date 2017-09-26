@@ -132,16 +132,16 @@
 <li class="layui-nav-item layui-nav-itemed">
 	<dl class=" layui-nav-child">
 		<dd>
-			<a class="layui-nav-child-a" href="javascript:;" data-menuid=${moduleId} data-url=${url}>
+			<a class="layui-nav-child-a" href="javascript:;" data-menuid=${id} data-url=${url}>
 				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe602;</i>
-				<cite>${moduleName}</cite>
+				<cite>${name}</cite>
 			</a>
 			<ul class="layui-nav-child" style="display: none">
 			  {{each(i,item) children}}
 		        <li>
-				<a class="children-menu" href="javascript:;" data-menuid=${item.moduleId} data-url=${item.url} data-insert=${item.insertAuth} data-query=${item.queryAuth} data-update=${item.updateAuth}>
+				<a class="children-menu" href="javascript:;" data-menuid=${item.id} data-url=${item.url}>
 				<i class="layui-icon" style="top:2px; font-size:16px;"></i>
-				<cite>${item.moduleName}</cite>
+				<cite>${item.name}</cite>
 				</a>
 				</li>
 				{{/each}}
@@ -156,14 +156,14 @@
             <dd>
                 <a class="layui-nav-child-a" href="javascript:;">
                     <i class="layui-icon" style="top:2px; font-size:16px;">&#xe602;</i>
-                    <cite>${departName}</cite>
+                    <cite>${depart_name}</cite>
                 </a>
                 <ul class="layui-nav-child" style="display: none">
                   {{each(i,item) children}}
                     <li>
-                        <a class="children-menu" href="javascript:;" data-url="map/locationMain.html?id=${id}">
+                        <a class="children-menu" href="javascript:;" data-url="map/locationMain.html?id=${depart_id}">
                             <i class="layui-icon" style="top:2px; font-size:16px;"></i>
-                            <cite>${item.departName}</cite>
+                            <cite>${item.depart_name}</cite>
                         </a>
                     </li>
                   {{/each}}

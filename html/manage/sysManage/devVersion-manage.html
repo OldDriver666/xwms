@@ -176,14 +176,14 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td style="display:none;">${version_id}</td>
-	<td>${companyNameQuery(depart_id)}</td>
+	<td>${companyNameQuery(company_id)}</td>
 	<td>${typeNameQuery(dev_type)}</td>
 	<td>${dev_version}</td>
 	<td>{{if status == 0}}不可用{{else status == 1}}可用{{/if}}</td>
 	<td>${version_info}</td>
 	<td>${update_url}</td>
 	<td style="display:none;">${dev_type}</td>
-	<td style="display:none;">${depart_id}</td>
+	<td style="display:none;">${company_id}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
 	    <a href="javascript:void(0);" onclick="action.deleteConfig(${version_id})">删除</a>

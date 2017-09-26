@@ -57,13 +57,13 @@ $(function(){
                     var parent_data = new Array;
 
                     for(var i=0; i<Len; i++){
-                        var mid = data[i].moduleId;
-                        var pid = data[i].parent_id;
+                        var mid = data[i].id;
+                        var pid = data[i].parentId;
 
                         if(0 == pid){
                             var children_menu = new Array;
                             for(var j=0; j<Len; j++){
-                                if(mid == data[j].parent_id){
+                                if(mid == data[j].parentId){
                                     var str = data[j];
                                     children_menu.push(str);
                                 }
@@ -89,8 +89,8 @@ $(function(){
             var url = ctx + "boss/depart/query";
             var moduleId= 0;
             var data = {
-                "company_id": parseInt(company_id),
-                "depart_id": parseInt(depart_id)
+                "creator_id": parseInt(company_id),
+                "depart_name": parseInt(depart_id)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == 0) {
@@ -98,10 +98,10 @@ $(function(){
                     var checkMenuList = [];
 
                     for(var i=0; i<data.length; i++){
-                        if(data[i].parentId == 0){
+                        if(data[i].parent_id == 0){
                             var children_menu = [];
                             for(var j=0; j<data.length; j++){
-                                if(data[i].id == data[j].parentId){
+                                if(data[i].depart_id == data[j].parent_id){
                                     children_menu.push(data[j]);
                                 }
                             }

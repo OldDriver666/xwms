@@ -298,23 +298,25 @@
 </script>
 <script type="text/javascript">
 	var myUserRolesArray = JSON.parse(localStorage.getItem("myUserRolesArray"));
-	var Lens1 = myUserRolesArray.length;
-	function roleNameQuery(id){
-		for(var i=0; i< Lens1; i++){
-			if(myUserRolesArray[i].id == id){
-				return myUserRolesArray[i].name;
-			}
-		}
-	}
+	if (myUserRolesArray != null){
+        var Lens1 = myUserRolesArray.length;
+        function roleNameQuery(id){
+            for(var i=0; i< Lens1; i++){
+                if(myUserRolesArray[i].id == id){
+                    return myUserRolesArray[i].name;
+                }
+            }
+        }
 
-	var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
-	var Lens2 = allCompanyArray.length;
-	function companyNameQuery(type){
-		for(var i=0; i< Lens2; i++){
-			if(allCompanyArray[i].id == type){
-				return allCompanyArray[i].name;
-			}
-		}
+        var allCompanyArray = JSON.parse(localStorage.getItem("allCompanyArray"));
+        var Lens2 = allCompanyArray.length;
+        function companyNameQuery(type){
+            for(var i=0; i< Lens2; i++){
+                if(allCompanyArray[i].id == type){
+                    return allCompanyArray[i].name;
+                }
+            }
+        }
 	}
 
 	toastr.options={

@@ -63,10 +63,6 @@ $(function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
             $("#pagination").hide();
 
-            if ($("#search-input-userRoles option:selected").val() == "") {
-                alert("请选择角色类型");
-                return false;
-            }
             var url = ctx + "boss/role/queryAuth";
             var data = new Object();
             data.role_id = parseInt($("#search-input-userRoles option:selected").val());
@@ -75,7 +71,7 @@ $(function() {
 
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != "") {
+                if(result.code == ReturnCode.SUCCESS) {
                     $('#pageContent').empty();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
@@ -83,11 +79,11 @@ $(function() {
                         $(".table-update").hide();
                         $(".table-manage").hide();
                     }
-                } else if(result.code == ReturnCode.SUCCESS && result.data == "") {
-                    $('#pageContent').empty();
-                    alert(result.msg);
+                    if($('#pageContent tr').length == 0){
+                        $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
+                    }
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
                 alert(errorMsg);
@@ -102,15 +98,13 @@ $(function() {
             data.creator_id = parseInt(admin_id);
 
             Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $("#pageUserRoles").tmpl(result.data).appendTo('#search-input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-userRoles');
                     $("#pageUserRoles").tmpl(result.data).appendTo('#input-devType2');
-                } else {
-                    alert(result.msg);
                 }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
+            },function(errorMsg) {
+                alert(errorMsg)
             });
         },
         //获取所有菜单数据
@@ -130,20 +124,6 @@ $(function() {
             },function() {
                 alert("服务器开个小差，请稍后重试！")
             });
-
-            /*var url = ctx + "boss/module/query";
-            var data = new Object();
-            data.company_id = parseInt(company_id);
-
-            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
-                    $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
-                } else {
-                    alert(result.msg);
-                }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
-            });*/
         },
 		//编辑数据
 		edit : function() {
@@ -169,7 +149,7 @@ $(function() {
 	window.action = action;
     action.init();
 	action.loadUserRolesData();
-    //action.loadPageData();
+    action.loadPageData();
     action.loadMenuData();
 
     //编辑获取数据数据
@@ -298,26 +278,13 @@ $(function() {
         }
     });
 
-    $("#btn-add-submit2").click(function(){
-        if($("#filepath").val() != '' && $("#input-devType2").val() != ''){
-            $("#addTempl-modal2").modal('hide');
-            $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
-            action.getDevTxtInfo();
-        }else if($("#filepath").val() == ''){
-            alert("请选择文件！");
-        }else if($("#input-devType2").val() == ''){
-            alert("请选择设备类型！");
-        }
-    });
 
 	$("#btn-search").on('click', function() {
-        action.loadPageData();
-	});
-	$("#input-search-txt").on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            action.loadPageData();
+        if ($("#search-input-userRoles option:selected").val() == "") {
+            toastr.error("请选择角色类型");
+            return;
         }
-
+        action.loadPageData();
 	});
 });
 

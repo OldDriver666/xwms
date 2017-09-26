@@ -134,8 +134,8 @@ $(function() {
 		}
 	};
 	window.action = action;
-	/*action.init();
-    action.loadPageData();*/
+	/*action.init();*/
+    action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置

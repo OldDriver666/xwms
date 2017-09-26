@@ -69,15 +69,6 @@ $(function () {
     window.action = action;
 
 
-
-    $("#dev-query-condition").validate({
-        rules: {
-            account : {
-             required : true
-             }
-        }
-    });
-
     $("#input-search-account").change(function () {
         if (($("#input-search-account").val() != "") &&( $.trim($("#input-search-account").val()) != "")){
             $(this).parent().removeClass("has-error");

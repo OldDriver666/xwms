@@ -44,7 +44,7 @@ $(function() {
             data.creator_id = parseInt(admin_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
 					$("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 					localStorage.setItem("myUserRolesArray",JSON.stringify(result.data));
@@ -56,10 +56,8 @@ $(function() {
 						$(".table-update").hide();
 						$(".table-manage").hide();
 					}
-                } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					alert("记录不存在");
-                }else {
-					alert(result.msg);
+                } else {
+                    toastr.error(result.msg);
 				}
             },function(errorMsg) {
 				alert(errorMsg);

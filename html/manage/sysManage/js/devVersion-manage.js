@@ -65,13 +65,11 @@ $(function() {
 
             var url = ctx + "boss/deviceversion/query";
             var data = new Object();
-			data.depart_id = search_depart_id;
 			data.dev_type = search_dev_type;
-			/*data.depart_id = parseInt(depart_id);*/
 			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 

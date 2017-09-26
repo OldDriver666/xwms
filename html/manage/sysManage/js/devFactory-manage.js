@@ -67,7 +67,7 @@ $(function() {
 			data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
@@ -78,12 +78,8 @@ $(function() {
 						$(".table-update").hide();
 						$(".table-manage").hide();
 					}
-                } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					$('#pageContent').find("tr").remove();
-					alert("记录不存在");
                 }else {
-					$('#pageContent').find("tr").remove();
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
             },function(errorMsg) {
                 alert(errorMsg)

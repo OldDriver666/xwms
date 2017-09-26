@@ -96,7 +96,7 @@ $(function() {
 			data.company_id = search_company_id;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
 					$("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
@@ -107,10 +107,8 @@ $(function() {
 						$(".table-update").hide();
 						$(".table-manage").hide();
 					}
-                } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					//alert("记录不存在");
                 }else {
-					//alert(result.msg);
+                    toastr.error(result.msg);
 				}
             },function(errorMsg) {
 				alert(errorMsg);
@@ -125,7 +123,7 @@ $(function() {
 			data.creator_id = parseInt(admin_id);
 
 			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
-				if(result.code == ReturnCode.SUCCESS && result.data != ""){
+				if(result.code == ReturnCode.SUCCESS){
 					var myrolesArray = [];
 					for(var i=0; i< result.data.length; i++){
 						if(result.data[i].id != role_level){
@@ -134,8 +132,6 @@ $(function() {
 					}
 					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#add-search-userRoles');
 					$("#pageUserRoles").tmpl(myrolesArray).appendTo('#input-search-userRoles');
-				} else {
-					alert(result.msg);
 				}
 			},function(errorMsg) {
 				alert(errorMsg);

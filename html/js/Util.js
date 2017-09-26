@@ -740,6 +740,7 @@ Util.pathName = function(){
     ctx = "http://192.168.2.54:8080/managesvr/";
 	//ctx = "http://192.168.2.250:8888/";        //test version
     Util.localStorage.add("ctx",ctx);
+    Util.localStorage.add("fileServUrl", "http://192.168.2.250:8700/")
 };
 
 //获取资源文件

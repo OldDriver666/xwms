@@ -35,25 +35,23 @@ $(function() {
 		},
 		//新增数据
 		add : function() {
-            var url = ctx + "boss/organization/insert";
+            var url = ctx + "boss/depart/insert";
             var data = new Object();
 
-			data.name = $("#input-name").val();
-			data.address = $("#input-address").val();
-			data.contact = $("#input-contact").val();
-			data.email = $("#input-email").val();
-			data.describtion = $("#input-describtion").val();
+			data.depart_name = $("#input-name").val();
+			data.parent_id = parseInt($("#input-parentId").val());
 			data.depart_id = parseInt(depart_id);
 			data.company_id = parseInt(company_id);
+			data.creator_id = parseInt(admin_id);
+            data.status = null;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $("#addTempl-modal").modal('hide');
                     toastr.success("添加成功!");
                     action.loadPageData();
-					action.allCompanyQuery();
                 }else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
             });
 		},
@@ -62,97 +60,68 @@ $(function() {
             var search_name = $("#input-search-name").val();
             var td_len = $("#table thead tr th").length;//表格字段数量
 
-            var url = ctx + "boss/organization/query";
+            var url = ctx + "boss/depart/query";
             var data = new Object();
-            data.name = search_name;
-			data.depart_id = parseInt(depart_id);
-			data.company_id = parseInt(company_id);
+            data.depart_name = search_name;
+            data.creator_id = parseInt(admin_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
                     $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
 					}
-					if(0 == updateAuth){
+					if(updateAuth == 0){
 						$(".table-update").hide();
 						$(".table-manage").hide();
 					}
-                } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
-					alert("记录不存在");
                 }else {
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
             },function(errorMsg) {
                 alert(errorMsg);
             });
 
 		},
-		//获取全部公司团体数据
-		allCompanyQuery: function(){
-			var allCompanyArray = [];
-			var url = ctx + "boss/organization/query";
-			var data = new Object();
-			data.name = "";
-			data.depart_id = parseInt(depart_id);
-			data.company_id = parseInt(company_id);
-			Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
-				if(result.code == ReturnCode.SUCCESS && result.data != ""){
-					allCompanyArray = result.data;
-					localStorage.setItem("allCompanyArray",JSON.stringify(allCompanyArray));
-				} else {
-					alert(result.msg);
-				}
-			},function() {
-				alert("服务器开个小差，请稍后重试！")
-			});
-
-		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/organization/update";
+			var url = ctx + "boss/depart/update";
 			var data = new Object();
-            data.id = parseInt($("#input-id").val());
-            data.name = $("#input-name").val();
-            data.address = $("#input-address").val();
-			data.contact = $("#input-contact").val();
-			data.email = $("#input-email").val();
-			data.describtion = $("#input-describtion").val();
+            data.depart_id = parseInt($("#input-id").val());
+            data.depart_name = $("#input-name").val();
 			data.status = parseInt($("input[name=status]:checked").val());
-			data.depart_id = parseInt(depart_id);
-			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
-					action.allCompanyQuery();
 				}else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			});
+			},function(errorMsg) {
+                alert(errorMsg);
+            });
 		},
 		//删除数据
-		deleteConfig : function(id) {
+		deleteConfig : function(id, name) {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "boss/organization/del";
+				var url = ctx + "boss/depart/delete";
 				var data = new Object();
-                data.id = id;
-				data.depart_id = parseInt(depart_id);
-				data.company_id = parseInt(company_id);
+                data.depart_id = id;
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 					if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("删除成功!");
 						$("#input-search-name").val("");
                         action.loadPageData();
-						action.allCompanyQuery();
 					}else{
-						alert(result.msg);
+                        toastr.error(result.msg);
 					}
-				});
+				},function(errorMsg) {
+                    alert(errorMsg);
+                });
 			}
 		}
 	};
@@ -164,13 +133,12 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑公司团体信息");
-			$("#input-status-wrap").show();
+			$("h4#addTempl-modal-label").text("编辑部门信息");
+			$("#parentDepartment-ipt").hide();
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加公司团体信息");
+			$("h4#addTempl-modal-label").text("添加部门信息");
 			$form.data("action", "add");
-			$("#input-status-wrap").hide();
 			$form[0].reset();
 		}
 	});
@@ -178,21 +146,8 @@ $(function() {
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-		var check_status = $.trim(that.find("td").eq(6).text());
-		var status_val = null;
-		if(check_status === "删除"){
-			status_val = 0;
-		}else if(check_status === "正常"){
-			status_val = 1;
-		}
-
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-name").val(that.find("td").eq(1).text());
-        $("#input-address").val(that.find("td").eq(2).text());
-		$("#input-contact").val(that.find("td").eq(3).text());
-		$("#input-email").val(that.find("td").eq(4).text());
-		$("#input-describtion").val(that.find("td").eq(5).text());
-		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
     });
 
