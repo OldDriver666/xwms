@@ -57,8 +57,8 @@ $(function() {
 		},
 		//获取所有数据
 		loadPageData : function() {
-            var search_id = parseInt($('#input-search-name option:selected').val());
-            if(search_id = 'NaN') {
+            var search_id = $('#input-search-name option:selected').val();
+            if(search_id == '') {
                 toastr.error("请选择要查询的公司！");
                 return;
 			}
