@@ -16,10 +16,8 @@ import com.fise.utils.JsonUtil;
 public class QueryRoleParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     private Integer company_id;
 
-    @NotNull
     private Integer role_id;
     
     private Integer creator_id;

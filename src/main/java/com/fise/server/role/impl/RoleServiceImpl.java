@@ -51,14 +51,14 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public List<WiOrganizationRole> queryRole(QueryRoleParam param) {
 
-        // 预先查询管理者权限
-        WiOrganizationRole admin = roleDao.selectByPrimaryKey(param.getRole_id());
-        if (admin == null) {
-            return null;
-        }
+//        // 预先查询管理者权限
+//        WiOrganizationRole admin = roleDao.selectByPrimaryKey(param.getRole_id());
+//        if (admin == null) {
+//            return null;
+//        }
         WiOrganizationRoleExample example = new WiOrganizationRoleExample();
         WiOrganizationRoleExample.Criteria criterion = example.createCriteria();
-        criterion.andAuthLevelLessThan(admin.getAuthLevel());
+//        criterion.andAuthLevelLessThan(admin.getAuthLevel());
         criterion.andOrganizationIdEqualTo(param.getCompany_id());
         criterion.andCreatorIdEqualTo(param.getCreator_id());
         return roleDao.selectByExample(example);
