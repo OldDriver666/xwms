@@ -32,5 +32,5 @@ public interface IMUserMapper {
 
     int updateByPrimaryKey(IMUser record);
     
-    List<IMUser> selectByPage(@Param("example") IMUserExample example,@Param("page") Page<QueryUserParam> page);
+    List<IMUser> selectByExamplebypage(@Param("example") IMUserExample example,@Param("page") Page<QueryUserParam> page);
 }

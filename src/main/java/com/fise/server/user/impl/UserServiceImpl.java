@@ -55,7 +55,7 @@ public class UserServiceImpl implements IUserService {
             criteria.andOnlineStatusEqualTo(param.getParam().getOnlineStatus());
         }
 
-        List<IMUser> list = IMUserDao.selectByPage(example, param);
+        List<IMUser> list = IMUserDao.selectByExamplebypage(example, param);
 
         if (list.size() == 0) {
             return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
