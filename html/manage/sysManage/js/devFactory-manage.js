@@ -58,13 +58,15 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var search_id = parseInt($('#input-search-name option:selected').val());
-            var td_len = $("#table thead tr th").length;//表格字段数量
+            if(search_id = 'NaN') {
+                toastr.error("请选择要查询的公司！");
+                return;
+			}
+			var td_len = $("#table thead tr th").length;//表格字段数量
 
             var url = ctx + "boss/accountmanage/query";
             var data = new Object();
-            data.depart_id = search_id;
-			/*data.depart_id = parseInt(depart_id);*/
-			data.company_id = parseInt(company_id);
+			data.company_id = parseInt(search_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
@@ -137,7 +139,7 @@ $(function() {
 	window.action = action;
 	action.init();
 	action.loadCompanyInfoData();
-	action.loadPageData();
+	//action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
@@ -210,12 +212,5 @@ $(function() {
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
-	});
-
-	$("#input-search-name").on('keydown', function(e) {
-		if (e.keyCode == 13) {
-			action.loadPageData();
-		}
-
 	});
 });
