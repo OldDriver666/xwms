@@ -2155,22 +2155,78 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 
 ### 公司部门管理
-####部门查询/新增/修改
-|   查询接口    |   boss/boss/depart/query        |
-|   新增接口    |   boss/boss/depart/insert        |
-|   修改接口    |   boss/boss/depart/update       |
+####查询部门
+|   接口地址    |   boss/depart/query        |
 |   ---         |   ---                   |
 
 ```
 //请求
 {
-    "company_id":1,
-    "depart_id":x,  
-    "depart_name":"应急指挥中心",
-    "parent_id":1, //0-顶级部门 x-上级部门ID
-    "status":x
+    "creator_id":x,   //当前用户Id
+    "depart_name":"应急指挥中心", //部门名称
 }   
 
 //回复
-通用回复格式，主要看返回处理的结果
+[
+    {
+        "depart_id": 3,  //部门Id
+        "company_id":1,  //所属公司Id
+	    "depart_name":"应急指挥中心", //部门名称
+	    "parent_id":1,    //0-顶级部门 x-上级部门ID
+	    "status":x,       //状态
+	    "created": 0,     //创建时间
+        "updated": 0      //修改时间
+    }
+]
+```
+
+####新增部门
+|   接口地址    |   boss/depart/insert        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+        "creator_id": 3,  //创建者Id
+ 		"depart_id": 3,  //部门Id
+        "company_id":1,  //所属公司Id
+	    "depart_name":"应急指挥中心", //部门名称
+	    "parent_id":1,    //0-顶级部门 x-上级部门ID
+	    "status":x,       //状态
+}
+
+//回复
+无内容，直接查看返回码
+``` 
+
+
+####修改部门
+|   接口地址    |   boss/depart/update        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+ 		"depart_id": 3,  //部门Id
+	    "depart_name":"应急指挥中心", //部门名称
+	    "status":x,       //状态
+}
+
+//回复
+无内容，直接查看返回码
+``` 
+
+
+####删除部门
+|   接口地址    |   boss/depart/delete         |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "depart_id":x       //部门id
+}
+
+//回复
+null 没有数据返回 看code是否成功
 ```
