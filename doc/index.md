@@ -2188,7 +2188,6 @@ type和name都是选填，如果都不填，则查询所有信息
 //请求
 {
         "creator_id": 3,  //创建者Id
- 		"depart_id": 3,  //部门Id
         "company_id":1,  //所属公司Id
 	    "depart_name":"应急指挥中心", //部门名称
 	    "parent_id":1,    //0-顶级部门 x-上级部门ID
