@@ -13,5 +13,7 @@ public interface IDepartmentService {
 	
 	public Response update(DepartmentParam record);
 	
+	public Response delete(DepartmentParam record);
+	
 	List<Integer> getChildDepatId(Integer parentId);
 }

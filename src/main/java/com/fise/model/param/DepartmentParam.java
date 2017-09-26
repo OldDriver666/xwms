@@ -1,13 +1,11 @@
 package com.fise.model.param;
 
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 
 public class DepartmentParam {
     
-    @NotNull
     @JsonProperty("company_id")
     private Integer companyId;
     
@@ -19,11 +17,22 @@ public class DepartmentParam {
     
     @JsonProperty("parent_id")
     private Integer parentId;
+    
+    @JsonProperty("creator_id")
+    private Integer creatorId;
 
     @JsonProperty("status")
     private Integer status;
     
-    public Integer getStatus() {
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Integer getStatus() {
         return status;
     }
 

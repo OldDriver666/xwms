@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.dao.DBFunctionMapper;
 import com.fise.dao.WiDepartmentMapper;
@@ -30,14 +31,24 @@ public class DepartmentServiceImpl implements IDepartmentService{
     @Override
     public Response insertOne(DepartmentParam record) {
         Response resp = new Response();
+        //检查部门名字是否重复
+        WiDepartmentExample example = new WiDepartmentExample();
+        Criteria criteria =  example.createCriteria();
+        criteria.andDepartNameEqualTo(record.getDepartName());
+        criteria.andCompanyIdEqualTo(record.getCompanyId());
+        List<WiDepartment> list = departDao.selectByExample(example);
+        if (list.size() > 0) {
+        	return resp.failure(ErrorCode.ERROR_DEPART_CONF_ACCOUNT_EXISTED);
+		}
         
         WiDepartment data = new WiDepartment();
         data.setCompanyId(record.getCompanyId());
         data.setDepartName(record.getDepartName());
         data.setParentId(record.getParentId());
+        data.setCreatorId(record.getCreatorId());
         data.setStatus(1);
         data.setUpdated(DateUtil.getLinuxTimeStamp());
-        departDao.insert(data);
+        departDao.insertSelective(data);
         resp.success(record);
         return resp;
     }
@@ -47,9 +58,9 @@ public class DepartmentServiceImpl implements IDepartmentService{
         Response resp = new Response();
         WiDepartmentExample example = new WiDepartmentExample();
         Criteria con =  example.createCriteria();
-        con.andCompanyIdEqualTo(param.getCompanyId());
-        if(param.getDepartId() != null && param.getDepartId() != 0){
-            con.andIdIn(getChildDepatId(param.getDepartId()));
+        con.andCreatorIdEqualTo(param.getCreatorId());
+        if(StringUtil.isNotEmpty(param.getDepartName())){
+        	con.andDepartNameLike(param.getDepartName());
         }
         con.andStatusEqualTo(1);
         List<WiDepartment> data = departDao.selectByExample(example);
@@ -75,6 +86,15 @@ public class DepartmentServiceImpl implements IDepartmentService{
         departDao.updateByPrimaryKeySelective(record);
         resp.success(record);
         return resp;
+    }
+    
+    
+    @Override
+    public Response delete(DepartmentParam param) {
+    	Response resp = new Response();
+    	departDao.deleteByPrimaryKey(param.getDepartId());
+    	resp.success(param);
+    	return resp;
     }
 
     @Override

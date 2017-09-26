@@ -110,10 +110,10 @@
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.WiDepartment">
     insert into wi_department (id, company_id, depart_name, 
-      status, parent_id, updated
+      status, parent_id, updated,creator_id
       )
     values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{departName,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}
+      #{status,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER},#{creatorId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.WiDepartment">
@@ -137,6 +137,9 @@
       <if test="updated != null">
         updated,
       </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -156,6 +159,9 @@
       </if>
       <if test="updated != null">
         #{updated,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

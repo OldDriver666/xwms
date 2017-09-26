@@ -3,6 +3,8 @@ package com.fise.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
+
 public class WiDepartmentExample {
     protected String orderByClause;
 
@@ -196,6 +198,11 @@ public class WiDepartmentExample {
 
         public Criteria andCompanyIdEqualTo(Integer value) {
             addCriterion("company_id =", value, "companyId");
+            return (Criteria) this;
+        }
+        
+        public Criteria andCreatorIdEqualTo(Integer value) {
+            addCriterion("creator_id =", value, "creatorId");
             return (Criteria) this;
         }
 

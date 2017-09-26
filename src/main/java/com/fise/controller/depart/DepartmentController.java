@@ -55,7 +55,7 @@ public class DepartmentController {
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public Response delImdepartConfig(@RequestBody @Valid DepartmentParam param){
+	public Response updateDepartment(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
 		
@@ -65,6 +65,20 @@ public class DepartmentController {
 		
 		logger.info(param.toString());
 		response=iDepartmentSvr.update(param);
+		return response;
+	}
+	
+	@RequestMapping(value="/delete",method=RequestMethod.POST)
+	public Response deleteDepartment(@RequestBody @Valid DepartmentParam param){
+		
+		Response response=new Response();
+		
+		if(!authService.updateAuth()){
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+		
+		logger.info(param.toString());
+		response=iDepartmentSvr.delete(param);
 		return response;
 	}
 
