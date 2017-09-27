@@ -387,8 +387,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiAdmin loginAdmin = new WiAdmin();
         WiAdminExample example = new WiAdminExample();
         Criteria loginWhere = example.createCriteria();
-        loginWhere.andCreatorIdEqualTo(param.getAdminId());
-        
+        if(null != param.getRoleId()){
+        	loginWhere.andCreatorIdEqualTo(param.getAdminId());
+        }
         if(null != param.getRoleId()){
         	loginWhere.andRoleIdEqualTo(param.getRoleId());
         }

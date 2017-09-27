@@ -8,7 +8,6 @@ import com.fise.utils.JsonUtil;
 
 public class AdminQuery {
 
-    @NotNull
     @JsonProperty("admin_id")
     private Integer adminId;
 
