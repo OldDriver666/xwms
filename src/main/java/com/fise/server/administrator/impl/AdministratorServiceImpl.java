@@ -384,10 +384,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
     public Response queryAdmin(AdminQuery param) {
         Response resp = new Response();
         // 检测发起请求的用户
-        WiAdmin loginAdmin = new WiAdmin();
         WiAdminExample example = new WiAdminExample();
         Criteria loginWhere = example.createCriteria();
-        if(null != param.getRoleId()){
+        if(null != param.getAdminId()){
         	loginWhere.andCreatorIdEqualTo(param.getAdminId());
         }
         if(null != param.getRoleId()){
