@@ -7,7 +7,7 @@ import com.fise.utils.JsonUtil;
 public class AppBaseResult {
 	private Integer appId;
 	private String appName;
-	private String downLoad;
+	private String download;
 	private String description;
 	private String version;
 	private String versionCode;
@@ -16,7 +16,24 @@ public class AppBaseResult {
 	private String icon;
 	private Integer iconType;
 	private String size;
+	private Integer orientation;
 	
+	public String getDownload() {
+		return download;
+	}
+
+	public void setDownload(String download) {
+		this.download = download;
+	}
+
+	public Integer getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(Integer orientation) {
+		this.orientation = orientation;
+	}
+
 	public Integer getAppId() {
 		return appId;
 	}
@@ -34,11 +51,11 @@ public class AppBaseResult {
 	}
 
 	public String getDownLoad() {
-		return downLoad;
+		return download;
 	}
 
-	public void setDownLoad(String downLoad) {
-		this.downLoad = downLoad;
+	public void setDownLoad(String download) {
+		this.download = download;
 	}
 
 	public String getDescription() {
@@ -108,7 +125,7 @@ public class AppBaseResult {
 	public void init(AppInformation data) {
 		this.appId = data.getId();
 		this.appName = data.getAppName();
-		this.downLoad = data.getDownload();
+		this.download = data.getDownload();
 		this.description = data.getDescription();
 		this.version = data.getVersion();
 		this.versionCode = data.getVersioncode();
@@ -117,6 +134,7 @@ public class AppBaseResult {
 		this.icon = data.getIcon();
 		this.iconType = data.getIconType();
 		this.size = data.getSize();
+		this.orientation=data.getOrientation();
 	}
 
 	@Override

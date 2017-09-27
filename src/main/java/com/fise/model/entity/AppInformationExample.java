@@ -1593,6 +1593,66 @@ public class AppInformationExample {
             addCriterion("start not between", value1, value2, "start");
             return (Criteria) this;
         }
+
+        public Criteria andOrientationIsNull() {
+            addCriterion("orientation is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationIsNotNull() {
+            addCriterion("orientation is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationEqualTo(Integer value) {
+            addCriterion("orientation =", value, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationNotEqualTo(Integer value) {
+            addCriterion("orientation <>", value, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationGreaterThan(Integer value) {
+            addCriterion("orientation >", value, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationGreaterThanOrEqualTo(Integer value) {
+            addCriterion("orientation >=", value, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationLessThan(Integer value) {
+            addCriterion("orientation <", value, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationLessThanOrEqualTo(Integer value) {
+            addCriterion("orientation <=", value, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationIn(List<Integer> values) {
+            addCriterion("orientation in", values, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationNotIn(List<Integer> values) {
+            addCriterion("orientation not in", values, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationBetween(Integer value1, Integer value2) {
+            addCriterion("orientation between", value1, value2, "orientation");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrientationNotBetween(Integer value1, Integer value2) {
+            addCriterion("orientation not between", value1, value2, "orientation");
+            return (Criteria) this;
+        }
     }
 
     /**

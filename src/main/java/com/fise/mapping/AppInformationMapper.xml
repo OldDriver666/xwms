@@ -24,6 +24,7 @@
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="label" jdbcType="VARCHAR" property="label" />
     <result column="start" jdbcType="VARCHAR" property="start" />
+    <result column="orientation" jdbcType="INTEGER" property="orientation" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -86,7 +87,7 @@
   <sql id="Base_Column_List">
     id, app_index, app_name, dev_id, dev_name, top_category, category, status, description, 
     version, versioncode, icon, icon_type, images, download, size, updated, created, 
-    prority, remarks, label, start
+    prority, remarks, label, start, orientation
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppInformationExample" resultMap="BaseResultMap">
     select
@@ -134,7 +135,7 @@
       icon_type, images, download, 
       size, updated, created, 
       prority, remarks, label, 
-      start)
+      start, orientation)
     values (#{id,jdbcType=INTEGER}, #{appIndex,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
       #{devId,jdbcType=INTEGER}, #{devName,jdbcType=VARCHAR}, #{topCategory,jdbcType=VARCHAR}, 
       #{category,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
@@ -142,7 +143,7 @@
       #{iconType,jdbcType=INTEGER}, #{images,jdbcType=VARCHAR}, #{download,jdbcType=VARCHAR}, 
       #{size,jdbcType=VARCHAR}, #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, 
       #{prority,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, 
-      #{start,jdbcType=VARCHAR})
+      #{start,jdbcType=VARCHAR}, #{orientation,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information
@@ -213,6 +214,9 @@
       <if test="start != null">
         start,
       </if>
+      <if test="orientation != null">
+        orientation,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -280,6 +284,9 @@
       </if>
       <if test="start != null">
         #{start,jdbcType=VARCHAR},
+      </if>
+      <if test="orientation != null">
+        #{orientation,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -358,6 +365,9 @@
       <if test="record.start != null">
         start = #{record.start,jdbcType=VARCHAR},
       </if>
+      <if test="record.orientation != null">
+        orientation = #{record.orientation,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -386,7 +396,8 @@
       prority = #{record.prority,jdbcType=INTEGER},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       label = #{record.label,jdbcType=VARCHAR},
-      start = #{record.start,jdbcType=VARCHAR}
+      start = #{record.start,jdbcType=VARCHAR},
+      orientation = #{record.orientation,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -457,6 +468,9 @@
       <if test="start != null">
         start = #{start,jdbcType=VARCHAR},
       </if>
+      <if test="orientation != null">
+        orientation = #{orientation,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -482,10 +496,11 @@
       prority = #{prority,jdbcType=INTEGER},
       remarks = #{remarks,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR},
-      start = #{start,jdbcType=VARCHAR}
+      start = #{start,jdbcType=VARCHAR},
+      orientation = #{orientation,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
      select
     <include refid="Base_Column_List" />
     from app_information

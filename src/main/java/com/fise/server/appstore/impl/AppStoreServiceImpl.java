@@ -86,9 +86,9 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		page.setTotalPageCount(param.getTotalPageCount());
 		int haveMore = (int) (param.getTotalCount() - param.getPageNo());
 		if (haveMore > 0) {
-			page.setHaveMore(true);
+			page.setHasMore(true);
 		} else {
-			page.setHaveMore(false);
+			page.setHasMore(false);
 		}
 		page.setResult(appData);
 		response.success(page);
@@ -144,9 +144,9 @@ public class AppStoreServiceImpl implements IAppStoreService {
 				page.setTotalPageCount(param.getTotalPageCount());
 				int haveMore = (int) (param.getTotalCount() - param.getPageNo());
 				if (haveMore > 0) {
-					page.setHaveMore(true);
+					page.setHasMore(true);
 				} else {
-					page.setHaveMore(false);
+					page.setHasMore(false);
 				}
 				page.setResult(appData);
 				response.success(page);

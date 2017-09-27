@@ -53,14 +53,24 @@ public class AppDetailResult {
 
     private String star;
     
-    private List<String> iamges;
+    private Integer orientation;
     
-	public List<String> getIamges() {
-		return iamges;
+    private List<String> images;
+    
+	public Integer getOrientation() {
+		return orientation;
 	}
 
-	public void setIamges(List<String> iamges) {
-		this.iamges = iamges;
+	public void setOrientation(Integer orientation) {
+		this.orientation = orientation;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
+	public void setImages(List<String> images) {
+		this.images = images;
 	}
 
 	public String getVersionCode() {
@@ -237,14 +247,14 @@ public class AppDetailResult {
         this.versionCode=data.getVersioncode();
         this.iconType=data.getIconType();
         this.star=data.getStart();
-        
+        this.orientation=data.getOrientation();
         String imageStr= data.getImages();
         String[] listStr=imageStr.split(";");
         List<String> imageList=new ArrayList<String>();
         for(int i=0;i<listStr.length;i++){
         	imageList.add(listStr[i]);
         }
-       this.iamges=imageList;
+       this.images=imageList;
         
     }
     

@@ -13,9 +13,17 @@ public class AdvertBaseResult {
 
 	private Integer typeId;
 
-	private String url;
+	private String image;
 
 	private Integer delayTime;
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public Integer getId() {
 		return id;
@@ -49,14 +57,6 @@ public class AdvertBaseResult {
 		this.typeId = typeId;
 	}
 
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	public Integer getDelayTime() {
 		return delayTime;
 	}
@@ -71,7 +71,7 @@ public class AdvertBaseResult {
 	    this.type= appAdvert.getType();
 	    this.typeId=appAdvert.getTypeId();
 		this.delayTime = appAdvert.getDelayTime();
-		this.url = appAdvert.getAdvUrl();
+		this.image = appAdvert.getAdvUrl();
 	}
 
 	@Override

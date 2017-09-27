@@ -103,13 +103,18 @@ public class AppInformation implements Serializable {
     private String label;
 
     private String start;
+
+    /**
+     * 0-竖 1-横着
+     */
+    private Integer orientation;
     
     @JsonProperty("autoApp")
     private String autoApp;
 
     private static final long serialVersionUID = 1L;
     
-	public String getAutoApp() {
+    public String getAutoApp() {
 		return autoApp;
 	}
 
@@ -291,5 +296,13 @@ public class AppInformation implements Serializable {
 
     public void setStart(String start) {
         this.start = start;
+    }
+
+    public Integer getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(Integer orientation) {
+        this.orientation = orientation;
     }
 }

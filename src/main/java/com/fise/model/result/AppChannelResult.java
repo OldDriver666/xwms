@@ -9,11 +9,19 @@ import com.fise.utils.JsonUtil;
 public class AppChannelResult {
 	private String name;
 	private String textColor;
-	private String backgroundColor;
+	private String color;
 	private String image;
 	@JsonProperty("app_list")
 	private List<AppBaseResult> appList;
 	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	public List<AppBaseResult> getAppList() {
 		return appList;
 	}
@@ -38,13 +46,7 @@ public class AppChannelResult {
 		this.textColor = textColor;
 	}
 
-	public String getBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public void setBackgroundColor(String backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
+	
 
 	public String getImage() {
 		return image;
@@ -57,7 +59,7 @@ public class AppChannelResult {
 	public void init(AppChannel data) {
 		this.name = data.getChannelName();
 	    this.textColor = data.getTextcolor();
-	    this.backgroundColor =data.getBackground();
+	    this.color =data.getBackground();
 	    this.image =data.getImage();
 	}
 
