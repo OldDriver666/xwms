@@ -42,15 +42,16 @@ public class Page<T> implements Pagination,Serializable {
     @JsonProperty("result")
     private List<T> result; // 当前页记录List形式
     
-    @JsonProperty("haveMore")
-    private boolean haveMore;
+    @JsonProperty("hasMore")
+    private boolean hasMore;
     
-    public boolean isHaveMore() {
-		return haveMore;
+  
+	public boolean isHasMore() {
+		return hasMore;
 	}
 
-	public void setHaveMore(boolean haveMore) {
-		this.haveMore = haveMore;
+	public void setHasMore(boolean hasMore) {
+		this.hasMore = hasMore;
 	}
 
 	public Page() {
