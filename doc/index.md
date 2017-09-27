@@ -2227,4 +2227,366 @@ type和name都是选填，如果都不填，则查询所有信息
 
 //回复
 null 没有数据返回 看code是否成功
+
+
+
+
+
+
+
+
+
+###我的应用
+  ++++++++++++++++++++我的应用的主页++++++++++++++++++++
+  1.加载APP栏
+
+   |   接口地址    |   boss/store/appAll        |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                        |
+
+   ####请求
+    {
+     "page_no":x
+    } 
+  
+  ####返回   
+      
+   {
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 1,
+      "total_count": 5,
+      "total_page_count": 5,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "appId": 1,
+            "appName": "安卓商店",
+            "download": "http://shouji.360tpcdn.com/170809/b1db53b15738fa3b400745049d2015c1/com.juying.androidmarket_20000001.apk",
+            "description": "安卓市场",
+            "version": "1.2.3",
+            "versionCode": "123",
+            "category": "系统工具",
+			"orientation": 0,
+            "star": "4",
+            "icon": "http://p17.qhimg.com/t0128b0b333e05c2db2.png",
+            "iconType": 1,
+            "size": "2.07M"
+         }
+      ],
+      "hasMore": true
+   }
+}
+
+2.加载广告栏
+   |   接口地址    |   boss/store/advertAll        |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                        |
+####请求
+{
+
+}
+####返回 
+
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 1,
+         "name": "天天秀秀",
+         "type": "app",
+         "typeId": 1,
+         "image": "http://ww.baidu.com?asdja=wwwhj",
+         "delayTime": 11
+      },
+      {
+         "id": 2,
+         "name": "王尼玛",
+         "type": "app",
+         "typeId": 1,
+         "image": "http://www.wagnniamm.com?dajshf=wangnima ",
+         "delayTime": 11
+      }
+   ]
+}
+
+
+
+3.加载频道栏
+   |   接口地址    |   boss/store/channelAll      |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                        |
+####请求
+{
+
+}
+
+####返回 
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "name": "精品推荐",
+         "textColor": "#ffffff",
+         "color": "image:http://pic.58pic.com/5",
+         "image": "http://192.168.2.120:8080/c1.png",
+         "app_list": null
+      },
+      {
+         "name": "学习教育",
+         "textColor": "#ffffff",
+         "color": "color:06090b",
+         "image": "http://192.168.2.120:8080/c1.png",
+         "app_list": null
+      },
+      {
+         "name": "女生频道",
+         "textColor": "#ffffff",
+         "color": "color:f758c1",
+         "image": "http://192.168.2.120:8080/c1.png",
+         "app_list": null
+      },
+      {
+         "name": "男生频道",
+         "textColor": "#ffffff",
+         "color": "color:09c9b5",
+         "image": "http://192.168.2.120:8080/c1.png",
+         "app_list": null
+      },
+      {
+         "name": "建议安装",
+         "textColor": "#ffffff",
+         "color": "#ffffff",
+         "image": "http://192.168.2.120:8080/c1.png",
+         "app_list": null
+      }
+   ]
+}
+
+4.搜索App
+   （1）加载两条数据（不分页）
+
+   |   接口地址    |   boss/store/searchApp    |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                        |
+####请求
+{
+  "param":{
+             "app_name":"超",
+             "autoApp":"true"
+           }
+ }
+
+####返回 
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "appId": 3,
+         "appName": "超级课程表",
+         "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+         "description": "课程学习",
+         "version": "9.1.2",
+         "versionCode": "111",
+         "category": "日常工具",
+         "star": "4",
+         "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+         "iconType": 1,
+         "size": "19.32M"
+      },
+      {
+         "appId": 4,
+         "appName": "超级课程",
+         "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+         "description": "课程学习",
+         "version": "9.1.2",
+         "versionCode": "321",
+         "category": "日常工具",
+         "star": "4",
+         "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+         "iconType": 2,
+         "size": "19.32M"
+      }
+   ]
+}
+
+（2）点击进去，加载多条数据（分页）
+
+  ####请求
+{
+  "page_no":1,
+  "param":{
+             "app_name":"超",
+             "autoApp":"false"
+           }
+ }
+
+####返回 
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 1,
+      "total_count": 3,
+      "total_page_count": 3,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "appId": 3,
+            "appName": "超级课程表",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "description": "课程学习",
+            "version": "9.1.2",
+            "versionCode": "111",
+            "category": "日常工具",
+            "star": "4",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "iconType": 1,
+            "size": "19.32M"
+         }
+      ],
+      "hasMore": true
+   }
+}
+
+
+
+++++++++++++++热门搜索++++++++
+
+  ####请求
+{
+ 
+}
+
+####返回 
+
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      "自拍神器",
+      "超级课程表",
+      "超级课程",
+      "超级"
+   ]
+}
+
+
+
+
++++++++++++++++在频道的分类页面+++++++++++++++++++
+1.加载该频道下的app列表
+  
+   |   接口地址    |   boss/store/channel    |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                        |
+####请求
+{
+"channel_id":X
+}
+####返回 
+
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "name": "建议安装",
+      "textColor": "#ffffff",
+      "color": "#ffffff",
+      "image": "http://192.168.2.120:8080/c1.png",
+      "app_list": [
+         {
+            "appId": 2,
+            "appName": "自拍神器",
+            "download": "http://shouji.360tpcdn.com/170726/0a4b5a3e1e9eec332b7bffd9b2064404/com.thundersoft.hz.selfportrait_61.apk",
+            "description": "自拍美颜",
+            "version": "2.3.4",
+            "versionCode": "223",
+            "category": "自拍",
+			"orientation": 0,
+            "star": "4",
+            "icon": "http://p19.qhimg.com/t01ef636aaf1b0e4cbd.png",
+            "iconType": 2,
+            "size": "13.50M"
+         },
+         {
+            "appId": 3,
+            "appName": "超级课程表",
+            "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+            "description": "课程学习",
+            "version": "9.1.2",
+            "versionCode": "111",
+            "category": "日常工具",
+			"orientation": 0,
+            "star": "4",
+            "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+            "iconType": 1,
+            "size": "19.32M"
+         }
+      ]
+   }
+}
+
+
+
+++++++++++++++++++应用简介+++++++++++++++++++++
+
+   |   接口地址    |   boss/store/appinfo    |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                        |
+####请求
+{
+"app_index":"X"
+}
+####返回
+
+
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "category": "日常工具",
+      "description": "课程学习",
+      "version": "9.1.2",
+      "versionCode": "853",
+      "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
+      "iconType": 1,
+      "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
+      "size": "19.32M",
+      "updated": 0,
+      "created": 0,
+      "remarks": "你是",
+      "label": "asdas",
+      "star": "4",
+	  "orientation": 0,
+      "iamges": [
+         "http://p17.qhimg.com/dm/180_300_/t0175b5305e91387007.jpg",
+         "http://p16.qhimg.com/dm/180_300_/t01b32d85a47074f32a.jpg",
+         "http://p16.qhimg.com/dm/180_300_/t018ec0d9633156b02b.jpg"
+      ],
+      "app_id": 5,
+      "app_index": "chaoji",
+      "app_name": "超级",
+      "dev_id": 0,
+      "dev_name": "广州超级周末科技有限公司",
+      "top_category": "软件"
+   }
+}
+
+
+
 ```
