@@ -20,7 +20,7 @@ public class Page<T> implements Pagination,Serializable {
     
     @JsonProperty("page_no")
     @NotNull
-    private int pageNo = 1; // 当前页, 默认为第1页
+    private int pageNo ; // 当前页, 默认为第1页
     
     @JsonProperty("page_size")
     @NotNull
@@ -42,7 +42,18 @@ public class Page<T> implements Pagination,Serializable {
     @JsonProperty("result")
     private List<T> result; // 当前页记录List形式
     
-    public Page() {
+    @JsonProperty("haveMore")
+    private boolean haveMore;
+    
+    public boolean isHaveMore() {
+		return haveMore;
+	}
+
+	public void setHaveMore(boolean haveMore) {
+		this.haveMore = haveMore;
+	}
+
+	public Page() {
         super();
     }
     

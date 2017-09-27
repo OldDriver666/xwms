@@ -1,67 +1,126 @@
 package com.fise.model.result;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fise.model.entity.AppInformation;
 import com.fise.utils.JsonUtil;
 
 public class AppBaseResult {
-    @JsonProperty("app_index")
-    private String appIndex;
-    private String name;
-    private String type;
-    private String size;
-    private String icon;
+	private Integer appId;
+	private String appName;
+	private String downLoad;
+	private String description;
+	private String version;
+	private String versionCode;
+	private String category;
+	private String star;
+	private String icon;
+	private Integer iconType;
+	private String size;
+	
+	public Integer getAppId() {
+		return appId;
+	}
 
-    public String getAppIndex() {
-        return appIndex;
-    }
+	public void setAppId(Integer appId) {
+		this.appId = appId;
+	}
 
-    public void setAppIndex(String appIndex) {
-        this.appIndex = appIndex;
-    }
+	public String getAppName() {
+		return appName;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getDownLoad() {
+		return downLoad;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setDownLoad(String downLoad) {
+		this.downLoad = downLoad;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getSize() {
-        return size;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+	public String getVersion() {
+		return version;
+	}
 
-    public String getIcon() {
-        return icon;
-    }
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+	public String getVersionCode() {
+		return versionCode;
+	}
 
-    public void init(AppInformation data){
-        this.appIndex = data.getAppIndex();
-        this.name = data.getAppName();
-        this.type = data.getCategory();
-        this.size = data.getSize();
-        this.icon = data.getIcon();
-    }
-    
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
+	public void setVersionCode(String versionCode) {
+		this.versionCode = versionCode;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getStar() {
+		return star;
+	}
+
+	public void setStar(String star) {
+		this.star = star;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public Integer getIconType() {
+		return iconType;
+	}
+
+	public void setIconType(Integer iconType) {
+		this.iconType = iconType;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public void init(AppInformation data) {
+		this.appId = data.getId();
+		this.appName = data.getAppName();
+		this.downLoad = data.getDownload();
+		this.description = data.getDescription();
+		this.version = data.getVersion();
+		this.versionCode = data.getVersioncode();
+		this.category = data.getCategory();
+		this.star = data.getStart();
+		this.icon = data.getIcon();
+		this.iconType = data.getIconType();
+		this.size = data.getSize();
+	}
+
+	@Override
+	public String toString() {
+		return JsonUtil.toJson(this);
+	}
 }

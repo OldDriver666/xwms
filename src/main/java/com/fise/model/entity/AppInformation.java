@@ -2,6 +2,8 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author 
  */
@@ -16,6 +18,7 @@ public class AppInformation implements Serializable {
     /**
      * 应用名称
      */
+    @JsonProperty("app_name")
     private String appName;
 
     /**
@@ -28,8 +31,14 @@ public class AppInformation implements Serializable {
      */
     private String devName;
 
+    /**
+     * 应用大类型
+     */
     private String topCategory;
 
+    /**
+     * 应用小类型
+     */
     private String category;
 
     /**
@@ -40,15 +49,25 @@ public class AppInformation implements Serializable {
     /**
      * 应用简介
      */
-    private String desc;
+    private String description;
 
+    /**
+     * 版本号
+     */
     private String version;
+
+    private String versioncode;
 
     /**
      * 应用图标
      */
     private String icon;
 
+    private Integer iconType;
+
+    /**
+     * 截图
+     */
     private String images;
 
     /**
@@ -56,15 +75,49 @@ public class AppInformation implements Serializable {
      */
     private String download;
 
+    /**
+     * 应用大小
+     */
     private String size;
 
+    /**
+     * 更新时间
+     */
     private Integer updated;
 
+    /**
+     * 创建时间
+     */
     private Integer created;
 
-    private static final long serialVersionUID = 1L;
+    private Integer prority;
 
-    public Integer getId() {
+    /**
+     * 备注信息
+     */
+    private String remarks;
+
+    /**
+     * 标签
+     */
+    private String label;
+
+    private String start;
+    
+    @JsonProperty("autoApp")
+    private String autoApp;
+
+    private static final long serialVersionUID = 1L;
+    
+	public String getAutoApp() {
+		return autoApp;
+	}
+
+	public void setAutoApp(String autoApp) {
+		this.autoApp = autoApp;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -128,12 +181,12 @@ public class AppInformation implements Serializable {
         this.status = status;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getVersion() {
@@ -144,12 +197,28 @@ public class AppInformation implements Serializable {
         this.version = version;
     }
 
+    public String getVersioncode() {
+        return versioncode;
+    }
+
+    public void setVersioncode(String versioncode) {
+        this.versioncode = versioncode;
+    }
+
     public String getIcon() {
         return icon;
     }
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public Integer getIconType() {
+        return iconType;
+    }
+
+    public void setIconType(Integer iconType) {
+        this.iconType = iconType;
     }
 
     public String getImages() {
@@ -190,5 +259,37 @@ public class AppInformation implements Serializable {
 
     public void setCreated(Integer created) {
         this.created = created;
+    }
+
+    public Integer getPrority() {
+        return prority;
+    }
+
+    public void setPrority(Integer prority) {
+        this.prority = prority;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
     }
 }

@@ -1,5 +1,6 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface AppInformationMapper {
     int updateByPrimaryKeySelective(AppInformation record);
 
     int updateByPrimaryKey(AppInformation record);
+    
+    List<AppInformation> selectByPage(@Param("example")AppInformationExample example,@Param("page") Page<?> page);
 }

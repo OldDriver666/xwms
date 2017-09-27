@@ -1,5 +1,8 @@
 package com.fise.model.result;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.model.entity.AppInformation;
 import com.fise.utils.JsonUtil;
@@ -26,23 +29,89 @@ public class AppDetailResult {
 
     private String category;
 
-    private Integer status;
-
-    private String desc;
+    private String description;
 
     private String version;
+    
+    private String versionCode;
 
     private String icon;
 
-    private String images;
-
+    private Integer iconType;
+    
     private String download;
 
     private String size;
 
     private Integer updated;
+    
+    private Integer created;
+    
+    private String remarks;
+    
+    private String label;
 
-    public Integer getId() {
+    private String star;
+    
+    private List<String> iamges;
+    
+	public List<String> getIamges() {
+		return iamges;
+	}
+
+	public void setIamges(List<String> iamges) {
+		this.iamges = iamges;
+	}
+
+	public String getVersionCode() {
+		return versionCode;
+	}
+
+	public void setVersionCode(String versionCode) {
+		this.versionCode = versionCode;
+	}
+
+	public Integer getIconType() {
+		return iconType;
+	}
+
+	public void setIconType(Integer iconType) {
+		this.iconType = iconType;
+	}
+
+	public String getStar() {
+		return star;
+	}
+
+	public void setStar(String star) {
+		this.star = star;
+	}
+
+	public Integer getCreated() {
+		return created;
+	}
+
+	public void setCreated(Integer created) {
+		this.created = created;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -98,23 +167,15 @@ public class AppDetailResult {
         this.category = category;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
+    public String getDescription() {
+		return description;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getVersion() {
+	public String getVersion() {
         return version;
     }
 
@@ -130,13 +191,7 @@ public class AppDetailResult {
         this.icon = icon;
     }
 
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
+   
 
     public String getDownload() {
         return download;
@@ -170,14 +225,27 @@ public class AppDetailResult {
         this.devName = data.getDevName();
         this.topCategory = data.getTopCategory();
         this.category = data.getCategory();
-        this.status = data.getStatus();
-        this.desc = data.getDesc();
+        this.description = data.getDescription();
         this.version = data.getVersion();
         this.icon = data.getIcon();
-        this.images = data.getImages();
         this.download = data.getDownload();
         this.size = data.getSize();
         this.updated = data.getUpdated();
+        this.created=data.getCreated();
+        this.remarks=data.getRemarks();
+        this.label=data.getLabel();
+        this.versionCode=data.getVersioncode();
+        this.iconType=data.getIconType();
+        this.star=data.getStart();
+        
+        String imageStr= data.getImages();
+        String[] listStr=imageStr.split(";");
+        List<String> imageList=new ArrayList<String>();
+        for(int i=0;i<listStr.length;i++){
+        	imageList.add(listStr[i]);
+        }
+       this.iamges=imageList;
+        
     }
     
     @Override

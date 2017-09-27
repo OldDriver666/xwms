@@ -10,14 +10,9 @@ public class AppChannel implements Serializable {
 
     private String channelName;
 
-    /**
-     * 0-使用背景 1-使用列表
-     */
-    private Integer channelType;
-
     private String background;
 
-    private String desc;
+    private String description;
 
     /**
      * 0-关闭 1-正常
@@ -25,6 +20,17 @@ public class AppChannel implements Serializable {
     private Integer status;
 
     private Integer updated;
+
+    private Integer created;
+
+    /**
+     * 权重
+     */
+    private Integer prority;
+
+    private String textcolor;
+
+    private String image;
 
     private static final long serialVersionUID = 1L;
 
@@ -44,14 +50,6 @@ public class AppChannel implements Serializable {
         this.channelName = channelName;
     }
 
-    public Integer getChannelType() {
-        return channelType;
-    }
-
-    public void setChannelType(Integer channelType) {
-        this.channelType = channelType;
-    }
-
     public String getBackground() {
         return background;
     }
@@ -60,12 +58,12 @@ public class AppChannel implements Serializable {
         this.background = background;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getStatus() {
@@ -82,5 +80,37 @@ public class AppChannel implements Serializable {
 
     public void setUpdated(Integer updated) {
         this.updated = updated;
+    }
+
+    public Integer getCreated() {
+        return created;
+    }
+
+    public void setCreated(Integer created) {
+        this.created = created;
+    }
+
+    public Integer getPrority() {
+        return prority;
+    }
+
+    public void setPrority(Integer prority) {
+        this.prority = prority;
+    }
+
+    public String getTextcolor() {
+        return textcolor;
+    }
+
+    public void setTextcolor(String textcolor) {
+        this.textcolor = textcolor;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

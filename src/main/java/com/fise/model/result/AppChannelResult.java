@@ -7,73 +7,63 @@ import com.fise.model.entity.AppChannel;
 import com.fise.utils.JsonUtil;
 
 public class AppChannelResult {
-    @JsonProperty("channel_id")
-    private Integer channelId;
-    private String name;
-    private Integer type;
-    private String background;
-    private String desc;
-    @JsonProperty("app_list")
-    private List<AppBaseResult> appList;
+	private String name;
+	private String textColor;
+	private String backgroundColor;
+	private String image;
+	@JsonProperty("app_list")
+	private List<AppBaseResult> appList;
+	
+	public List<AppBaseResult> getAppList() {
+		return appList;
+	}
 
-    public Integer getChannelId() {
-        return channelId;
-    }
+	public void setAppList(List<AppBaseResult> appList) {
+		this.appList = appList;
+	}
 
-    public void setChannelId(Integer channelId) {
-        this.channelId = channelId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getTextColor() {
+		return textColor;
+	}
 
-    public Integer getType() {
-        return type;
-    }
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
 
-    public String getBackground() {
-        return background;
-    }
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
 
-    public void setBackground(String background) {
-        this.background = background;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public void setImage(String image) {
+		this.image = image;
+	}
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+	public void init(AppChannel data) {
+		this.name = data.getChannelName();
+	    this.textColor = data.getTextcolor();
+	    this.backgroundColor =data.getBackground();
+	    this.image =data.getImage();
+	}
 
-    public List<AppBaseResult> getAppList() {
-        return appList;
-    }
-
-    public void setAppList(List<AppBaseResult> appList) {
-        this.appList = appList;
-    }
-    
-    public void init(AppChannel data){
-        this.channelId = data.getId();
-        this.name = data.getChannelName();
-        this.type = data.getChannelType();
-        this.background = data.getBackground();
-        this.desc = data.getDesc();
-    }
-
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
+	@Override
+	public String toString() {
+		return JsonUtil.toJson(this);
+	}
+	
 }
