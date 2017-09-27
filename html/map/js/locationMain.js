@@ -53,7 +53,6 @@ $(function() {
             }
             Util.ajaxLoadData(url,data,1,"POST",true,function(result) {
                 if(result.code == 0){
-                    console.log(result.data)
                     var userList = result.data.user_list;
 
                     document.getElementById('allPeopleNum').innerHTML = result.data.total_cnt
@@ -83,7 +82,6 @@ $(function() {
                                             addrs.push('未知')
                                         }
 
-                                        console.log("2:" + addrs)
                                         // 加载地图定位点
                                         var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
                                         for (var i = 0, marker; i < lnglats.length; i++) {
@@ -128,7 +126,6 @@ $(function() {
 
                         }
 
-                        console.log("1:" + addrs)
 
                     })
 

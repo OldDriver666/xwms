@@ -229,7 +229,7 @@ Util.cookieStorage ={
         var exp = new Date();
         exp.setTime(exp.getTime() + 60 * 1000 * expires);
         /*document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();*/
-        document.cookie = name + "=" + escape(value);
+        document.cookie = name + "=" + escape(value)
     },
     clearCookie:function(name){
         Util.cookieStorage.setCookie(name,"",-1);

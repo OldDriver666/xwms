@@ -41,7 +41,7 @@ $(function(){
 	var Index = {
 		init:function(){
 			Index.loadMenu();
-            $("#admin-header-nick").text(nick_name);
+			Index.getMyInfoData();
 		},
 		loadMenu : function(){
             var url = ctx + "boss/role/queryAuth";
@@ -81,6 +81,22 @@ $(function(){
                 alert("服务器异常，请稍后重试！");
             });
 		},
+        getMyInfoData: function () {
+            var url = ctx + "boss/admin/query";
+            var moduleId = 0;
+            var data = new Object();
+            data.account = userName;
+
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS){
+                    $("#admin-header-nick").text(result.data[0].nickName);
+                } else {
+                    toastr.error(result.msg);
+                }
+            },function(errorMsg) {
+                alert(errorMsg)
+            });
+        },
         sortBy: function(attr,rev){
             //第二个参数没有传递 默认升序排列
             if(rev ==  undefined){

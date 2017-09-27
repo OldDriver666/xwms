@@ -20,7 +20,7 @@ $(function(){
             data.client_name = "";
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     dataArray1 = result.data;
 
                     var url_query = ctx + "boss/departconf/queryimdepartconfig";
@@ -28,10 +28,9 @@ $(function(){
                     var data_query = new Object();
                     data_query.client_type = null;
                     data_query.depart_id = null;
-                    /*data_query.depart_id = parseInt(depart_id);*/
 
                     Util.ajaxLoadData(url_query,data_query,moduleId_query,"POST",true,function(result_query) {
-                        if(result_query.code == ReturnCode.SUCCESS && result_query.data != ""){
+                        if(result_query.code == ReturnCode.SUCCESS){
                             dataArray2 = result_query.data;
                             var Len1 = dataArray1.length;
                             var Len2 = dataArray2.length;
@@ -49,17 +48,17 @@ $(function(){
                             localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
                             localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
-                            alert(result_query.msg);
+                            //alert(result_query.msg);
                         }
-                    },function() {
-                        alert("服务器开个小差，请稍后重试！")
+                    },function(errorMsg) {
+                        alert(errorMsg)
                     });
 
                 } else {
                    /* alert(result.msg);*/
                 }
-            },function() {
-               /* alert("服务器开个小差，请稍后重试！")*/
+            },function(errorMsg) {
+                alert(errorMsg)
             });
 
         }

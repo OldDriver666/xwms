@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>修改密码</title>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 
 </head>
 
@@ -54,7 +55,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="ipt_new_password" class="col-sm-2 control-label"><span class="necessary">*</span>再次输入新密码</label>
+						<label for="ipt_new_password" class="col-sm-2 control-label"><span class="necessary">*</span>确认密码</label>
 						<div class="col-sm-10">
 							<input type="password" class="form-control" id="ipt_new_password" name="confirmPassword" placeholder="请再次输入新密码">
 						</div>
@@ -93,125 +94,20 @@
 </div>
 
 
-
-
-<script src="../../js/jquery.min.js"></script>
-<script src="../../js/bootstrap.min.js"></script>
-<script src="../../js/jquery.i18n.properties-min-1.0.9.js"></script>
-<script src="../../js/Util.js"></script>
-<script src="../../resource/lib/jquery.md5.js"></script>
-
+<script type ="text/javascript" src="../../js/jquery.min.js"></script>
+<script type ="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type ="text/javascript" src="../../js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../../js/Util.js"></script>
+<script type ="text/javascript" src="../../resource/lib/jquery.md5.js"></script>
+<script type ="text/javascript" src="js/myInfo.js"></script>
 <script>
-$(function() {
-    //获取cookie
-	var userName = Util.cookieStorage.getCookie("username");
-	var token_value = Util.cookieStorage.getCookie("accesstoken");
-	var depart_id = Util.cookieStorage.getCookie("departId");
-	var company_id = Util.cookieStorage.getCookie("companyId");
-	var role_level = Util.cookieStorage.getCookie("userLevel");
-	var admin_id = Util.cookieStorage.getCookie("adminId");
-	var nick_name = Util.cookieStorage.getCookie("nickname");
-
-    $(".nickName_txt").text(nickName);
-    $(".userName_txt").text(userName);
-
-	$("#ipt_old_password").change(function(){
-		if($(this).val() != ""){
-			$(this).parent().parent().removeClass("has-error");
-			$(this).next().remove();
-		}
-	});
-
-	$("#ipt_new_password").change(function(){
-		if($(this).val() != ""){
-			$(this).parent().parent().removeClass("has-error");
-			$(this).next().remove();
-		}
-	});
-
-	$("#ipt_nickname").change(function(){
-		if($(this).val() != ""){
-			$(this).parent().parent().removeClass("has-error");
-			$(this).next().remove();
-		}
-	});
-
-    //修改密码
-    $("#btn_submit").bind('click', function (e) {
-		var pwd1 = $("#ipt_old_password").val();
-		var pwd2 = $("#ipt_new_password").val();
-		if (pwd1 == "" ) {
-			$("#ipt_old_password").parent().parent().addClass("has-error");
-			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-			$("#ipt_old_password").parent().append(err_html);
-			return;
-		} else if(pwd2 == ""){
-			$("#ipt_new_password").parent().parent().addClass("has-error");
-			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-			$("#ipt_new_password").parent().append(err_html);
-			return;
-		}else if(pwd1 == pwd2){
-			var pwd =  $.md5(pwd2);
-			var url = ctx + "boss/admin/update";
-			var moduleId = 0;
-			var data = new Object();
-			data.login_id = parseInt(admin_id);
-			data.admin_id = parseInt(admin_id);
-			data.password = pwd;
-			data.depart_id = parseInt(depart_id);
-			data.company_id = parseInt(company_id);
-
-			Util.ajaxLoadData(url, data,moduleId,"POST", true, function (result) {
-				if (result.code == ReturnCode.SUCCESS) {
-					$("#editPW-modal").modal('hide');
-					alert("修改完成！");
-				} else {
-					alert(result.msg);
-				}
-			}, function () {
-				alert("服务器开个小差，请稍后重试！")
-			});
-		}else{
-			alert("两次输入的密码不一致！")
-		}
-    });
-
-    //修改昵称
-    $("#btn_submit1").bind('click',function(e){
-		if ($("#ipt_nickname").val() == "") {
-			$("#ipt_nickname").parent().parent().addClass("has-error");
-			var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-			$("#ipt_nickname").parent().append(err_html);
-			return;
-		}else {
-			var newNickName = $("#ipt_nickname").val();
-			var url = ctx + "boss/admin/update";
-			var moduleId = 0;
-			var data = new Object();
-			data.login_id = parseInt(admin_id);
-			data.admin_id = parseInt(admin_id);
-			data.nick_name = newNickName;
-			data.depart_id = parseInt(depart_id);
-			data.company_id = parseInt(company_id);
-
-			Util.ajaxLoadData(url, data,moduleId, "POST", true, function (result) {
-				if (result.code == ReturnCode.SUCCESS) {
-					Util.cookieStorage.setCookie("nickname", newNickName);
-					$(".nickName_txt").text(newNickName);
-					$("#NickName-modal").modal('hide');
-					alert("修改完成！");
-				} else {
-					alert(result.msg);
-				}
-			}, function () {
-				alert("服务器开个小差，请稍后重试！")
-			});
-		}
-    });
-
-});
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1000"
+    };
 </script>
-
 </body>
-
 </html>

@@ -7,6 +7,7 @@
 	<title>登录</title>
 	<link rel="stylesheet" href="layui/css/layui.css" media="all">
 	<link rel="stylesheet" href="css/bootstrap.css"/>
+	<link rel="stylesheet" href="resource/plugin/toastr/toastr.css"/>
 
 <style type="text/css">
 .beg-login-bg{width:100%; height:340px; background: url(images/headerBgImg.png) 0 0 repeat-y;background-size: 100% auto;}
@@ -109,10 +110,17 @@
 <script src="js/jquery.min.js"></script>
 <script type ="text/javascript" src="js/bootstrap.min.js"></script>
 <script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script type ="text/javascript" src="resource/plugin/toastr/toastr.min.js"></script>
 <script src="js/Util.js"></script>
 <script src="resource/lib/jquery.md5.js"></script>
 <script src="js/json2.js"></script>
 <script>
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1500"
+    };
     $("#form_login").submit(function(){
         return false;
     });
@@ -121,6 +129,7 @@
         var url = ctx + "boss/admin/login";
 		var data = {"account":$("#ipt_username").val(),"password": $.md5($("#ipt_password").val())};
         Util.ajaxLoginData(url,data,"POST",true,function(result) {
+            $("#modal-loading").modal("hide")
             if(result.code == ReturnCode.SUCCESS ){
                 Util.cookieStorage.setCookie("accesstoken",result.data.accessToken);
                 Util.cookieStorage.setCookie("username",result.data.account);
@@ -141,12 +150,6 @@
             alert("服务器异常，请稍后重试！");
         });
     });
-    toastr.options={
-        positionClass : 'toast-center-center',
-        showDuration: "300",
-        hideDuration: "300",
-        timeOut: "1000"
-    };
 </script>
 </body>
 

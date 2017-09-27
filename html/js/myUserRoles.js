@@ -7,7 +7,6 @@ $(function(){
     var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
 
-    //页面加载左侧Menu菜单栏
 	var Index = {
         myUserRoles: function(){
             var myUserRolesArray = [];
@@ -18,14 +17,13 @@ $(function(){
             data.company_id = parseInt(company_id);
             data.creator_id = parseInt(admin_id);
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
                     myUserRolesArray = result.data;
                     localStorage.setItem("myUserRolesArray",JSON.stringify(myUserRolesArray));
                 } else {
-                    /*alert(result.msg);*/
                 }
-            },function() {
-                /*alert("服务器开个小差，请稍后重试！")*/
+            },function(errorMsg) {
+                alert(errorMsg)
             });
         }
 	};

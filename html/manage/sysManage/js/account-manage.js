@@ -60,8 +60,10 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
+            },function(errorMsg) {
+                toastr.error(errorMsg);
             });
 		},
 		//获取所有数据
@@ -69,7 +71,7 @@ $(function() {
 			var search_account = $("#input-search-account").val();
 			var search_role_id = parseInt($('#input-search-userRoles option:selected').val());
 			var search_company_id = null;
-			if(1 == parseInt(role_level)){
+			if(parseInt(role_level) === 1){
 				$("#input-search-company_id-wrap").show();
 				$("#input-search-company_id-txt-wrap").hide();
 				$("#add-companyId-wrap").show();

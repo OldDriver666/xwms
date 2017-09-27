@@ -7,7 +7,6 @@ $(function(){
     var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
 
-    //页面加载左侧Menu菜单栏
 	var Index = {
         push: function(){
             var url = ctx + "boss/admin/islogin";
@@ -18,16 +17,15 @@ $(function(){
             data.company_id = parseInt(company_id);
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                if(result.code == ReturnCode.SUCCESS){
 
                 }else if(result.code == ReturnCode.TOKEN_ERROR){
                     alert(result.msg);
                     window.location.href = "login.html";
                 }
             },function(errorMsg) {
-                /*alert(errorMsg);*/
+                alert(errorMsg)
             });
-
         }
 	};
     setTimeout(function(){

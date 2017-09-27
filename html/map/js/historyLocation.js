@@ -67,7 +67,7 @@ $(function() {
                         var lnglat = {icon: iconUrl, position: [userList[n].lng, userList[n].lat]}
                         lnglats.push(lnglat)
                     }
-                    console.log(lnglats)
+
                     for (var i = 0, marker; i < lnglats.length; i++) {
                         marker = new AMap.Marker({
                             map: map,
