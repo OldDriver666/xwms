@@ -92,11 +92,11 @@ $(function() {
 					toastr.success("添加成功!");
 					action.loadPageData();
 				} else {
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			},function() {
-				alert("服务器开个小差，请稍后重试！")
-			});
+			},function(errorMsg) {
+                toastr.error(errorMsg);
+            });
 		},
 		//编辑数据
 		edit : function() {
@@ -109,16 +109,17 @@ $(function() {
 			data.company_id = parseInt(company_id);
 			data.depart_id = parseInt(depart_id);
 
-
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
 			 		$("#addTempl2-modal").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			});
+			},function(errorMsg) {
+                toastr.error(errorMsg);
+            });
 		},
         //删除数据
         deleteItem : function(id, name) {

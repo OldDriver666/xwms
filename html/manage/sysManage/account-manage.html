@@ -242,13 +242,6 @@
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
-				<tfoot>
-				<tr>
-					<td colspan="6">
-						<div id="pagination" class="pagination"></div>
-					</td>
-				</tr>
-				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -286,20 +279,19 @@
 </tr>
 </script>
 <script type="text/x-jquery-tmpl" id="pageUserRoles">
-    <option value=${id}>${name}</option>
+    <option value=${id}>${role_name}</option>
 </script>
 <script type="text/x-jquery-tmpl" id="pageCompanyInfo">
     <option value=${id}>${name}</option>
 </script>
 <script type="text/javascript">
 	var myUserRolesArray = JSON.parse(localStorage.getItem("myUserRolesArray"));
-	console.log(myUserRolesArray)
 	if(myUserRolesArray != null){
         var Lens1 = myUserRolesArray.length;
         function roleNameQuery(id){
             for(var i=0; i< Lens1; i++){
                 if(myUserRolesArray[i].id == id){
-                    return myUserRolesArray[i].name;
+                    return myUserRolesArray[i].role_name;
                 }
             }
         }

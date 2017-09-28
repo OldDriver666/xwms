@@ -22,38 +22,13 @@ $(function() {
     var updateAuth = parseInt(Request["updateAuth"]);
 
 	var action = {
-		//新增数据
-		add : function() {
-            var url = ctx + "boss/fisedevice/addfisedevice";
-            var data = new Object();
-            data.ime = $("#input-devIME").val();
-            data.account = $("#input-devXW").val();
-            data.type = parseInt($('#input-devType option:selected').val());
-            data.mobile = $("#input-phoneNo").val();
-            data.mark = $("#input-Mark").val();
-            data.depart_id = parseInt(depart_id);
-            data.company_id = parseInt(company_id);
-
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl-modal").modal('hide');
-                    toastr.success("添加成功!");
-                    action.loadPageData();
-                }else{
-                	alert(result.msg);
-				}
-            });
-		},
 		//获取所有数据
 		loadPageData : function() {
-            //var search_departID = $("#input-search-departID").val();
 			var search_domain = $("#input-search-domain").val();
             var search_phone = $("#input-search-phone").val();
             var search_user_id = parseInt($("#input-search-user_id").val());
             var search_online_status = parseInt($("#input-search-online_status option:selected").val());
 
-            var td_len = $("#table thead tr th").length;//表格字段数量
-            $("#pagination").hide();
             var url = ctx + "boss/user/query";
             var data = new Object();
                 data.page_no = 1;
@@ -87,157 +62,11 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
-		},
-        //获取设备类型列表数据
-        loadDevTypeData : function() {
-            var myDevTypeArray = JSON.parse(localStorage.getItem("myDevTypeArray"));
-            $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
-        },
-		//编辑数据
-		edit : function() {
-            var url = ctx + "boss/fisedevice/updatefisedevice";
-            var data = new Object();
-            data.fise_id = $("#input-id").val();
-            data.ime = $("#input-devIME").val();
-            data.status = parseInt($("input[name=status]:checked").val());
-            data.account = $("#input-devXW").val();
-            data.type = parseInt($("#input-devTypeNo").val());
-            data.mobile = $("#input-phoneNo").val();
-            data.mark = $("#input-Mark").val();
-            data.depart_id = parseInt(depart_id);
-            data.company_id = parseInt(company_id);
-
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == ReturnCode.SUCCESS) {
-                    $("#addTempl-modal").modal('hide');
-                    toastr.success("编辑成功!");
-                    action.loadPageData();
-                }else{
-                    alert(result.msg);
-                }
-            });
-		},
-		//删除数据
-        deleteItem : function(id) {
-			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
-				var url = ctx + "boss/fisedevice//delfisedevice";
-				var data = new Object();
-                data.fise_id = id;
-                data.depart_id = parseInt(depart_id);
-                data.company_id = parseInt(company_id);
-
-				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-					if (result.code == ReturnCode.SUCCESS) {
-                        toastr.success("删除成功!");
-                        action.loadPageData();
-					}else{
-                        alert(result.msg);
-                    }
-				});
-			}
 		}
 	};
 	window.action = action;
 	action.loadPageData();
-	action.loadDevTypeData();
 
-    //编辑获取数据数据
-    $("#pageContent").on("click",".table-edit-btn",function(){
-        var that = $(this).parent().parent();
-        var check_status = $.trim(that.find("td").eq(6).text());
-        var status_val = null;
-        if(check_status === "未激活"){
-            status_val = 0;
-        }else if(check_status === "激活"){
-            status_val = 1;
-        }
-
-        $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-devIME").val(that.find("td").eq(1).text());
-        $("#input-devXW").val(that.find("td").eq(2).text());
-        $("#input-devTypeNo").val(that.find("td").eq(9).text());
-        $("#input-devType-txt").val(that.find("td").eq(3).text());
-        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-        $("#input-phoneNo").val(that.find("td").eq(7).text());
-        $("#input-Mark").val(that.find("td").eq(8).text());
-        $("#addTempl-modal").modal("show");
-    });
-
-	$("#addTempl-modal").on('show.bs.modal', function(e) {
-		// 处理modal label显示及表单重置
-		var $form = $("form#form-addTempl");
-		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑设备信息");
-            $("#input-phoneNo-wrap").show();
-            $("#input-devType-wrap").hide();
-            $("#input-devTypeNo-wrap").hide();
-            $("#input-devType-txt-wrap").show();
-            $("#input-status-wrap").hide();
-			$form.data("action", "edit");
-		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加设备信息");
-			//$("#input-phoneNo-wrap").hide();
-            $("#input-devType-wrap").show();
-            $("#input-devTypeNo-wrap").hide();
-            $("#input-devType-txt-wrap").hide();
-            $("#input-status-wrap").hide();
-			$form.data("action", "add");
-			$form[0].reset();
-		}
-	});
-
-    $("#addTempl-modal2").on('show.bs.modal', function(e) {
-
-    });
-
-
-    $("#input-devIME").change(function(){
-        if($(this).val() != ""){
-            $(this).parent().parent().removeClass("has-error");
-            $(this).next().remove();
-        }
-    });
-    $("#input-devXW").change(function(){
-        if($(this).val() != ""){
-            $(this).parent().parent().removeClass("has-error");
-            $(this).next().remove();
-        }
-    });
-    $("#input-devType").change(function(){
-        if($(this).val() != ""){
-            $(this).parent().parent().removeClass("has-error");
-            $(this).next().remove();
-        }
-    });
-    $("#input-search-user_id").change(function () {
-        if(!isNaN($(this).val())) {
-            $(this).parent().removeClass("has-error");
-        }
-    });
-    $("#btn-add-submit").on('click', function() {
-        var action = $("form#form-addTempl").data("action");
-        if(action == "add"){
-            if (!$("#form-addTempl").valid()) {
-                return;
-            }else {
-                window.action.add();
-            }
-        }else if(action == "edit"){
-            window.action.edit();
-        }
-    });
-
-    $("#btn-add-submit2").click(function(){
-        if($("#filepath").val() != '' && $("#input-devType2").val() != ''){
-            $("#addTempl-modal2").modal('hide');
-            $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
-            action.getDevTxtInfo();
-        }else if($("#filepath").val() == ''){
-            alert("请选择文件！");
-        }else if($("#input-devType2").val() == ''){
-            alert("请选择设备类型！");
-        }
-    });
 
 	$("#btn-search").on('click', function() {
         if(isNaN($("#input-search-user_id").val())) {
