@@ -43,6 +43,8 @@ public class AppAdvert implements Serializable {
 
     private Integer typeId;
 
+    private String innerName;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -131,5 +133,13 @@ public class AppAdvert implements Serializable {
 
     public void setTypeId(Integer typeId) {
         this.typeId = typeId;
+    }
+
+    public String getInnerName() {
+        return innerName;
+    }
+
+    public void setInnerName(String innerName) {
+        this.innerName = innerName;
     }
 }

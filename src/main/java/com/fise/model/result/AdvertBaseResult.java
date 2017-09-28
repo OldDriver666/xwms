@@ -7,7 +7,7 @@ import com.fise.utils.JsonUtil;
 public class AdvertBaseResult {
 	private Integer id;
 
-	private String name;
+	private String advName;
 
 	private String type;
 
@@ -16,6 +16,24 @@ public class AdvertBaseResult {
 	private String image;
 
 	private Integer delayTime;
+	
+	private String innerName;
+	
+	public String getInnerName() {
+		return innerName;
+	}
+
+	public void setInnerName(String innerName) {
+		this.innerName = innerName;
+	}
+
+	public String getAdvName() {
+		return advName;
+	}
+
+	public void setAdvName(String advName) {
+		this.advName = advName;
+	}
 
 	public String getImage() {
 		return image;
@@ -32,15 +50,7 @@ public class AdvertBaseResult {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	public String getType() {
 		return type;
 	}
@@ -67,11 +77,12 @@ public class AdvertBaseResult {
 
 	public void init(AppAdvert appAdvert) {
 		this.id =appAdvert.getId();
-	    this.name =appAdvert.getAdvName();
+	    this.advName =appAdvert.getAdvName();
 	    this.type= appAdvert.getType();
 	    this.typeId=appAdvert.getTypeId();
 		this.delayTime = appAdvert.getDelayTime();
 		this.image = appAdvert.getAdvUrl();
+		this.innerName=appAdvert.getInnerName();
 	}
 
 	@Override

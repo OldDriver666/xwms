@@ -8,7 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author 
  */
 public class AppInformation implements Serializable {
-    private Integer id;
+    public String getAutoApp() {
+		return autoApp;
+	}
+
+	public void setAutoApp(String autoApp) {
+		this.autoApp = autoApp;
+	}
+
+	private Integer id;
 
     /**
      * APP唯一标示
@@ -20,6 +28,8 @@ public class AppInformation implements Serializable {
      */
     @JsonProperty("app_name")
     private String appName;
+
+    private String packageName;
 
     /**
      * 开发者ID
@@ -108,21 +118,13 @@ public class AppInformation implements Serializable {
      * 0-竖 1-横着
      */
     private Integer orientation;
-    
+
     @JsonProperty("autoApp")
     private String autoApp;
-
-    private static final long serialVersionUID = 1L;
     
-    public String getAutoApp() {
-		return autoApp;
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void setAutoApp(String autoApp) {
-		this.autoApp = autoApp;
-	}
-
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -144,6 +146,14 @@ public class AppInformation implements Serializable {
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public Integer getDevId() {

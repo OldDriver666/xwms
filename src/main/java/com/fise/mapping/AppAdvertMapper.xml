@@ -13,6 +13,7 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="inner_name" jdbcType="VARCHAR" property="innerName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, adv_name, adv_url, status, prority, delay_time, created, updated, description, 
-    type, type_id
+    type, type_id, inner_name
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppAdvertExample" resultMap="BaseResultMap">
     select
@@ -118,11 +119,13 @@
     insert into app_advert (id, adv_name, adv_url, 
       status, prority, delay_time, 
       created, updated, description, 
-      type, type_id)
+      type, type_id, inner_name
+      )
     values (#{id,jdbcType=INTEGER}, #{advName,jdbcType=VARCHAR}, #{advUrl,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, #{delayTime,jdbcType=INTEGER}, 
       #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER})
+      #{type,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{innerName,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppAdvert">
     insert into app_advert
@@ -160,6 +163,9 @@
       <if test="typeId != null">
         type_id,
       </if>
+      <if test="innerName != null">
+        inner_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -194,6 +200,9 @@
       </if>
       <if test="typeId != null">
         #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="innerName != null">
+        #{innerName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -239,6 +248,9 @@
       <if test="record.typeId != null">
         type_id = #{record.typeId,jdbcType=INTEGER},
       </if>
+      <if test="record.innerName != null">
+        inner_name = #{record.innerName,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -256,7 +268,8 @@
       updated = #{record.updated,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
-      type_id = #{record.typeId,jdbcType=INTEGER}
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      inner_name = #{record.innerName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -294,6 +307,9 @@
       <if test="typeId != null">
         type_id = #{typeId,jdbcType=INTEGER},
       </if>
+      <if test="innerName != null">
+        inner_name = #{innerName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -308,7 +324,8 @@
       updated = #{updated,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
-      type_id = #{typeId,jdbcType=INTEGER}
+      type_id = #{typeId,jdbcType=INTEGER},
+      inner_name = #{innerName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

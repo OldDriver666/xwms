@@ -823,6 +823,76 @@ public class AppAdvertExample {
             addCriterion("type_id not between", value1, value2, "typeId");
             return (Criteria) this;
         }
+
+        public Criteria andInnerNameIsNull() {
+            addCriterion("inner_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameIsNotNull() {
+            addCriterion("inner_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameEqualTo(String value) {
+            addCriterion("inner_name =", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameNotEqualTo(String value) {
+            addCriterion("inner_name <>", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameGreaterThan(String value) {
+            addCriterion("inner_name >", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameGreaterThanOrEqualTo(String value) {
+            addCriterion("inner_name >=", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameLessThan(String value) {
+            addCriterion("inner_name <", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameLessThanOrEqualTo(String value) {
+            addCriterion("inner_name <=", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameLike(String value) {
+            addCriterion("inner_name like", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameNotLike(String value) {
+            addCriterion("inner_name not like", value, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameIn(List<String> values) {
+            addCriterion("inner_name in", values, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameNotIn(List<String> values) {
+            addCriterion("inner_name not in", values, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameBetween(String value1, String value2) {
+            addCriterion("inner_name between", value1, value2, "innerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andInnerNameNotBetween(String value1, String value2) {
+            addCriterion("inner_name not between", value1, value2, "innerName");
+            return (Criteria) this;
+        }
     }
 
     /**
