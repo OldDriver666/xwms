@@ -91,49 +91,34 @@ public class AppStoreController {
 		return response;
 	}
 
-	
 	/**
 	 * 获取指定频道下的app的list
+	 * 
 	 * @param param
 	 * @return
 	 */
 	@IgnoreAuth
 	@RequestMapping(value = "/channel", method = RequestMethod.POST)
-	public Response getChannelInfo(@RequestBody @Valid Map<String, Object> param) {
-		Response resp = new Response();
-		if (param.get("channel_id") == null) {
-			return resp.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
-		}
-		Integer channelId = (Integer) param.get("channel_id");
+	public Response getChannelInfo(@RequestBody @Valid Page<AppChannel> param) {
+		Response response = new Response();
+		Integer channelId = param.getParam().getId();
 		AppChannelResult data = new AppChannelResult();
 		AppChannel channel = new AppChannel();
 		channel = channelSvr.getChannelInfo(channelId);
 		if (channel == null) {
-			resp.failure(ErrorCode.ERROR_PARAM_MEMBER_MOBILE_IS_EMPTY);
-			resp.setMsg("频道信息不存在");
-			return resp;
+			response.failure(ErrorCode.ERROR_PARAM_MEMBER_MOBILE_IS_EMPTY);
+			response.setMsg("频道信息不存在");
+			return response;
 		}
-
 		data.init(channel);
-
-		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
 		List<Integer> appIdList = channelSvr.getChannelAppId(channelId);
-
-		// 为了避免错误
-		appIdList.add(0);
-		List<AppInformation> appList = appSvr.queryByIdList(appIdList);
-		for (int i = 0; i < appList.size(); i++) {
-			AppBaseResult appBase = new AppBaseResult();
-			appBase.init(appList.get(i));
-			appData.add(appBase);
-		}
-		data.setAppList(appData);
-
-		return resp.success(data);
+		response = appSvr.queryByIdList(param, appIdList);
+		return response;
 	}
-	
+
 	/**
 	 * 根据传入的app_name参数判断是模糊查询两条app，还是查询所有的相关的app
+	 * 
 	 * @param param
 	 * @return
 	 */
@@ -145,7 +130,7 @@ public class AppStoreController {
 		response = appSvr.queryByAppName(param);
 		return response;
 	}
-	
+
 	/**
 	 * 热门搜索
 	 */
@@ -157,29 +142,24 @@ public class AppStoreController {
 		response = appSvr.hotSearch();
 		return response;
 	}
+
 	/**
 	 * 查询出app的具体信息
+	 * 
 	 * @param param
 	 * @return
 	 */
 	@IgnoreAuth
-    @RequestMapping(value = "/appinfo", method = RequestMethod.POST)
-    public Response getAppInfo(@RequestBody @Valid Map<String, String> param) {
-        Response resp = new Response();
-        if(StringUtil.isEmpty(param.get("app_index"))){
-            return resp.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
-        }
-        AppInformation data = appSvr.queryByAppIndex(param.get("app_index"));
-        if(data == null){
-            resp.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
-            resp.setMsg("亲，找不到您要的APP~");
-            return resp;
-        }
-        AppDetailResult result = new AppDetailResult();
-        result.init(data);
-        resp.success(result);
-        return resp;
-    }
+	@RequestMapping(value = "/appinfo", method = RequestMethod.POST)
+	public Response getAppInfo(@RequestBody @Valid Map<String, String> param) {
+		Response response = new Response();
+		if (StringUtil.isEmpty(param.get("app_index"))) {
+			return response.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+		}
+		response = appSvr.queryByAppIndex(param.get("app_index"));
+		return response;
+	}
+
 	@IgnoreAuth
 	@RequestMapping(value = "/home/aplash", method = RequestMethod.POST)
 	public Response getHomeSplash(@RequestBody @Valid Map<String, String> param) {
@@ -198,44 +178,44 @@ public class AppStoreController {
 		return response;
 	}
 
-//	 @IgnoreAuth
-//	 @RequestMapping(value = "/home", method = RequestMethod.POST)
-//	 public Response homePage(@RequestBody @Valid Map<String, String> param) {
-//	
-//	 Response resp = new Response();
-//	 Map<String, Object> data = new HashMap<String,Object>();
-//	 List<AppSplash> splashData = splashSvr.querySpalsh();
-//	 List<StoreSplashResult> splashRet = new ArrayList<StoreSplashResult>();
-//	 for(AppSplash tmp : splashData){
-//	 StoreSplashResult splash = new StoreSplashResult();
-//	 splash.init(tmp);
-//	 splashRet.add(splash);
-//	 }
-//	 data.put("splash", splashRet);
-//	
-//	 List<AppChannel> channelData = channelSvr.query();
-//	 List<AppChannelResult> baseData = new ArrayList<AppChannelResult>();
-//	 List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
-//	 for(AppChannel tmp2 : channelData){
-//	 AppChannelResult channel = new AppChannelResult();
-//	 appData.clear();
-//	 channel.init(tmp2);
-//	 if(tmp2.getChannelType() != 0){
-//	 List<Integer> appIdList = channelSvr.getChannelAppId(tmp2.getId());
-//	 List<AppInformation> appList = appSvr.queryByIdList(appIdList);
-//	 for(int i=0;i<appList.size();i++){
-//	 AppBaseResult appBase = new AppBaseResult();
-//	 appBase.init(appList.get(i));
-//	 appData.add(appBase);
-//	 }
-//	 channel.setAppList(appData);
-//	 baseData.add(channel);
-//	 } else {
-//	 baseData.add(channel);
-//	 }
-//	 }
-//	 data.put("channel", baseData);
-//	 resp.success(data);
-//	 return resp;
-//	 }
+	// @IgnoreAuth
+	// @RequestMapping(value = "/home", method = RequestMethod.POST)
+	// public Response homePage(@RequestBody @Valid Map<String, String> param) {
+	//
+	// Response resp = new Response();
+	// Map<String, Object> data = new HashMap<String,Object>();
+	// List<AppSplash> splashData = splashSvr.querySpalsh();
+	// List<StoreSplashResult> splashRet = new ArrayList<StoreSplashResult>();
+	// for(AppSplash tmp : splashData){
+	// StoreSplashResult splash = new StoreSplashResult();
+	// splash.init(tmp);
+	// splashRet.add(splash);
+	// }
+	// data.put("splash", splashRet);
+	//
+	// List<AppChannel> channelData = channelSvr.query();
+	// List<AppChannelResult> baseData = new ArrayList<AppChannelResult>();
+	// List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
+	// for(AppChannel tmp2 : channelData){
+	// AppChannelResult channel = new AppChannelResult();
+	// appData.clear();
+	// channel.init(tmp2);
+	// if(tmp2.getChannelType() != 0){
+	// List<Integer> appIdList = channelSvr.getChannelAppId(tmp2.getId());
+	// List<AppInformation> appList = appSvr.queryByIdList(appIdList);
+	// for(int i=0;i<appList.size();i++){
+	// AppBaseResult appBase = new AppBaseResult();
+	// appBase.init(appList.get(i));
+	// appData.add(appBase);
+	// }
+	// channel.setAppList(appData);
+	// baseData.add(channel);
+	// } else {
+	// baseData.add(channel);
+	// }
+	// }
+	// data.put("channel", baseData);
+	// resp.success(data);
+	// return resp;
+	// }
 }

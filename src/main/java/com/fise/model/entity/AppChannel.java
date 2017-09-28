@@ -2,10 +2,14 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author 
  */
 public class AppChannel implements Serializable {
+	
+	@JsonProperty("channel_id")
     private Integer id;
 
     private String channelName;

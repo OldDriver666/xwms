@@ -23,6 +23,7 @@ import com.fise.model.entity.AppStore;
 import com.fise.model.result.AdvertBaseResult;
 import com.fise.model.result.AppBaseResult;
 import com.fise.model.result.AppChannelResult;
+import com.fise.model.result.AppDetailResult;
 import com.fise.server.appstore.IAppStoreService;
 import com.fise.utils.StringUtil;
 
@@ -50,15 +51,15 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		return resp;
 	}
 
-	@Override
-	public List<AppInformation> queryByIdList(List<Integer> idList) {
-		AppInformationExample example = new AppInformationExample();
-		AppInformationExample.Criteria con = example.createCriteria();
-		example.setOrderByClause("prority desc");
-		con.andIdIn(idList);
-		List<AppInformation> data = appInfoDao.selectByExample(example);
-		return data;
-	}
+	// @Override
+	// public List<AppInformation> queryByIdList(List<Integer> idList) {
+	// AppInformationExample example = new AppInformationExample();
+	// AppInformationExample.Criteria con = example.createCriteria();
+	// example.setOrderByClause("prority desc");
+	// con.andIdIn(idList);
+	// List<AppInformation> data = appInfoDao.selectByExample(example);
+	// return data;
+	// }
 
 	// 分页查询App
 	@Override
@@ -71,8 +72,8 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		example.setOrderByClause("prority desc");
 		param.setPageSize(10);
 		List<AppInformation> data = appInfoDao.selectByPage(example, param);
-		
-		if(data.size()==0){
+
+		if (data.size() == 0) {
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
 			response.setMsg("亲，没有更多应用咯~");
 			return response;
@@ -96,12 +97,11 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		} else {
 			page.setHasMore(false);
 		}
-		
-			page.setResult(appData);
-		
-			response.success(page);
-		
-		
+
+		page.setResult(appData);
+
+		response.success(page);
+
 		return response;
 	}
 
@@ -141,7 +141,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 			if (param.getParam().getAutoApp().equals("false")) {
 				param.setPageSize(10);
 				List<AppInformation> pageData = appInfoDao.selectByPage(example, param);
-				if(pageData.size()==0){
+				if (pageData.size() == 0) {
 					response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
 					response.setMsg("亲，没有更多应用咯~");
 					return response;
@@ -212,15 +212,21 @@ public class AppStoreServiceImpl implements IAppStoreService {
 	}
 
 	@Override
-	public AppInformation queryByAppIndex(String param) {
+	public Response queryByAppIndex(String param) {
+		Response response = new Response();
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria con = example.createCriteria();
 		con.andAppIndexEqualTo(param);
 		List<AppInformation> data = appInfoDao.selectByExample(example);
-		if (data.isEmpty())
-			return null;
-		else
-			return data.get(0);
+		if (data == null) {
+			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，找不到您要的APP~");
+			return response;
+		}
+		AppDetailResult result = new AppDetailResult();
+		result.init(data.get(0));
+		response.success(result);
+		return response;
 	}
 
 	@Override
@@ -238,11 +244,49 @@ public class AppStoreServiceImpl implements IAppStoreService {
 				nameList.add(data.get(i).getAppName());
 			}
 		} else {
-			for (int i = 0; i <data.size(); i++) {
+			for (int i = 0; i < data.size(); i++) {
 				nameList.add(data.get(i).getAppName());
 			}
 		}
 		response.success(nameList);
+		return response;
+	}
+
+	@Override
+	public Response queryByIdList(Page<AppChannel> param, List<Integer> idList) {
+		Response response = new Response();
+		AppInformationExample example = new AppInformationExample();
+		AppInformationExample.Criteria con = example.createCriteria();
+		con.andStatusEqualTo(1);
+		example.setOrderByClause("prority desc");
+		con.andIdIn(idList);
+		param.setPageSize(10);
+		List<AppInformation> appList = appInfoDao.selectByPage(example, param);
+		if (appList.size() == 0) {
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，没有更多应用咯~");
+			return response;
+		}
+		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
+		for (int i = 0; i < appList.size(); i++) {
+			AppBaseResult appBase = new AppBaseResult();
+			appBase.init(appList.get(i));
+			appData.add(appBase);
+		}
+
+		Page<AppBaseResult> page = new Page<AppBaseResult>();
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
+		if (haveMore > 0) {
+			page.setHasMore(true);
+		} else {
+			page.setHasMore(false);
+		}
+		page.setResult(appData);
+		response.success(page);
 		return response;
 	}
 
