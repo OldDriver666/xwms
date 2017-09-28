@@ -172,7 +172,7 @@ public class AppStoreController {
         AppInformation data = appSvr.queryByAppIndex(param.get("app_index"));
         if(data == null){
             resp.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
-            resp.setMsg("APP信息不存在");
+            resp.setMsg("亲，找不到您要的APP~");
             return resp;
         }
         AppDetailResult result = new AppDetailResult();

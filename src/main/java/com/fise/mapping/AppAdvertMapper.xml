@@ -3,6 +3,7 @@
 <mapper namespace="com.fise.dao.AppAdvertMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.AppAdvert">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="adv_index" jdbcType="VARCHAR" property="advIndex" />
     <result column="adv_name" jdbcType="VARCHAR" property="advName" />
     <result column="adv_url" jdbcType="VARCHAR" property="advUrl" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, adv_name, adv_url, status, prority, delay_time, created, updated, description, 
-    inner_type, inner_id, inner_name
+    id, adv_index, adv_name, adv_url, status, prority, delay_time, created, updated, 
+    description, inner_type, inner_id, inner_name
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppAdvertExample" resultMap="BaseResultMap">
     select
@@ -116,22 +117,25 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.AppAdvert">
-    insert into app_advert (id, adv_name, adv_url, 
-      status, prority, delay_time, 
-      created, updated, description, 
-      inner_type, inner_id, inner_name
-      )
-    values (#{id,jdbcType=INTEGER}, #{advName,jdbcType=VARCHAR}, #{advUrl,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, #{delayTime,jdbcType=INTEGER}, 
-      #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{innerType,jdbcType=VARCHAR}, #{innerId,jdbcType=INTEGER}, #{innerName,jdbcType=VARCHAR}
-      )
+    insert into app_advert (id, adv_index, adv_name, 
+      adv_url, status, prority, 
+      delay_time, created, updated, 
+      description, inner_type, inner_id, 
+      inner_name)
+    values (#{id,jdbcType=INTEGER}, #{advIndex,jdbcType=VARCHAR}, #{advName,jdbcType=VARCHAR}, 
+      #{advUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
+      #{delayTime,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{innerType,jdbcType=VARCHAR}, #{innerId,jdbcType=INTEGER}, 
+      #{innerName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppAdvert">
     insert into app_advert
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="advIndex != null">
+        adv_index,
       </if>
       <if test="advName != null">
         adv_name,
@@ -170,6 +174,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="advIndex != null">
+        #{advIndex,jdbcType=VARCHAR},
       </if>
       <if test="advName != null">
         #{advName,jdbcType=VARCHAR},
@@ -218,6 +225,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.advIndex != null">
+        adv_index = #{record.advIndex,jdbcType=VARCHAR},
+      </if>
       <if test="record.advName != null">
         adv_name = #{record.advName,jdbcType=VARCHAR},
       </if>
@@ -259,6 +269,7 @@
   <update id="updateByExample" parameterType="map">
     update app_advert
     set id = #{record.id,jdbcType=INTEGER},
+      adv_index = #{record.advIndex,jdbcType=VARCHAR},
       adv_name = #{record.advName,jdbcType=VARCHAR},
       adv_url = #{record.advUrl,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
@@ -277,6 +288,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fise.model.entity.AppAdvert">
     update app_advert
     <set>
+      <if test="advIndex != null">
+        adv_index = #{advIndex,jdbcType=VARCHAR},
+      </if>
       <if test="advName != null">
         adv_name = #{advName,jdbcType=VARCHAR},
       </if>
@@ -315,7 +329,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.AppAdvert">
     update app_advert
-    set adv_name = #{advName,jdbcType=VARCHAR},
+    set adv_index = #{advIndex,jdbcType=VARCHAR},
+      adv_name = #{advName,jdbcType=VARCHAR},
       adv_url = #{advUrl,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       prority = #{prority,jdbcType=INTEGER},

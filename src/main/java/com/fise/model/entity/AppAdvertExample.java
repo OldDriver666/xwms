@@ -184,6 +184,76 @@ public class AppAdvertExample {
             return (Criteria) this;
         }
 
+        public Criteria andAdvIndexIsNull() {
+            addCriterion("adv_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexIsNotNull() {
+            addCriterion("adv_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexEqualTo(String value) {
+            addCriterion("adv_index =", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexNotEqualTo(String value) {
+            addCriterion("adv_index <>", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexGreaterThan(String value) {
+            addCriterion("adv_index >", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexGreaterThanOrEqualTo(String value) {
+            addCriterion("adv_index >=", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexLessThan(String value) {
+            addCriterion("adv_index <", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexLessThanOrEqualTo(String value) {
+            addCriterion("adv_index <=", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexLike(String value) {
+            addCriterion("adv_index like", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexNotLike(String value) {
+            addCriterion("adv_index not like", value, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexIn(List<String> values) {
+            addCriterion("adv_index in", values, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexNotIn(List<String> values) {
+            addCriterion("adv_index not in", values, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexBetween(String value1, String value2) {
+            addCriterion("adv_index between", value1, value2, "advIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andAdvIndexNotBetween(String value1, String value2) {
+            addCriterion("adv_index not between", value1, value2, "advIndex");
+            return (Criteria) this;
+        }
+
         public Criteria andAdvNameIsNull() {
             addCriterion("adv_name is null");
             return (Criteria) this;

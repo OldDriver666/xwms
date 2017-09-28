@@ -7,6 +7,8 @@ import com.fise.utils.JsonUtil;
 public class AdvertBaseResult {
 	private Integer id;
 
+	private String advIndex;
+	
 	private String advName;
 
 	private String innerType;
@@ -19,6 +21,14 @@ public class AdvertBaseResult {
 	
 	private String innerName;
 	
+	public String getAdvIndex() {
+		return advIndex;
+	}
+
+	public void setAdvIndex(String advIndex) {
+		this.advIndex = advIndex;
+	}
+
 	public String getInnerType() {
 		return innerType;
 	}
@@ -79,6 +89,7 @@ public class AdvertBaseResult {
 	public void init(AppAdvert appAdvert) {
 		this.id =appAdvert.getId();
 	    this.advName =appAdvert.getAdvName();
+	    this.advIndex=appAdvert.getAdvIndex();
 		this.delayTime = appAdvert.getDelayTime();
 		this.image = appAdvert.getAdvUrl();
 		this.innerName=appAdvert.getInnerName();

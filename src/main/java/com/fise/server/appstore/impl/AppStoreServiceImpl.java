@@ -3,7 +3,6 @@ package com.fise.server.appstore.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +74,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		
 		if(data.size()==0){
 			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
-			response.setMsg("没有更多应用咯，亲~");
+			response.setMsg("亲，没有更多应用咯~");
 			return response;
 		}
 		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
@@ -122,6 +121,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		switch (result) {
 		case 0:
 			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，找不到您要的APP~");
 			break;
 		case 1:
 			AppBaseResult appResult = new AppBaseResult();
@@ -139,8 +139,13 @@ public class AppStoreServiceImpl implements IAppStoreService {
 				response.success(appData);
 			}
 			if (param.getParam().getAutoApp().equals("false")) {
-				param.setPageSize(1);
+				param.setPageSize(10);
 				List<AppInformation> pageData = appInfoDao.selectByPage(example, param);
+				if(pageData.size()==0){
+					response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+					response.setMsg("亲，没有更多应用咯~");
+					return response;
+				}
 				for (int i = 0; i < pageData.size(); i++) {
 					AppBaseResult appBase = new AppBaseResult();
 					appBase.init(pageData.get(i));
@@ -153,7 +158,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 				page.setPageSize(param.getPageSize());
 				page.setTotalCount(param.getTotalCount());
 				page.setTotalPageCount(param.getTotalPageCount());
-				int haveMore = (int) (param.getTotalCount() - param.getPageNo());
+				int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
 				if (haveMore > 0) {
 					page.setHasMore(true);
 				} else {

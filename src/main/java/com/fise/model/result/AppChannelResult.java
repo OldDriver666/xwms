@@ -7,6 +7,7 @@ import com.fise.model.entity.AppChannel;
 import com.fise.utils.JsonUtil;
 
 public class AppChannelResult {
+	private Integer id;
 	private String name;
 	private String textColor;
 	private String color;
@@ -14,6 +15,14 @@ public class AppChannelResult {
 	@JsonProperty("app_list")
 	private List<AppBaseResult> appList;
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getColor() {
 		return color;
 	}
@@ -57,6 +66,7 @@ public class AppChannelResult {
 	}
 
 	public void init(AppChannel data) {
+		this.id=data.getId();
 		this.name = data.getChannelName();
 	    this.textColor = data.getTextcolor();
 	    this.color =data.getBackground();

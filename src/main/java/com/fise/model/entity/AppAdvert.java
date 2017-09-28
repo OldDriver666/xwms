@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class AppAdvert implements Serializable {
     private Integer id;
 
+    private String advIndex;
+
     /**
      * 广告名称
      */
@@ -53,6 +55,14 @@ public class AppAdvert implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAdvIndex() {
+        return advIndex;
+    }
+
+    public void setAdvIndex(String advIndex) {
+        this.advIndex = advIndex;
     }
 
     public String getAdvName() {
