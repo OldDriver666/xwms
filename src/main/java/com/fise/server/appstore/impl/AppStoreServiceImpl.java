@@ -69,7 +69,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 
 		con.andStatusEqualTo(1);
 		example.setOrderByClause("prority desc");
-		param.setPageSize(1);
+		param.setPageSize(10);
 		List<AppInformation> data = appInfoDao.selectByPage(example, param);
 		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
 		for (int i = 0; i < data.size(); i++) {
@@ -84,7 +84,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalCount() - param.getPageNo());
+		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
 		if (haveMore > 0) {
 			page.setHasMore(true);
 		} else {
