@@ -9,9 +9,9 @@ public class AdvertBaseResult {
 
 	private String advName;
 
-	private String type;
+	private String innerType;
 
-	private Integer typeId;
+	private Integer innerId;
 
 	private String image;
 
@@ -19,6 +19,22 @@ public class AdvertBaseResult {
 	
 	private String innerName;
 	
+	public String getInnerType() {
+		return innerType;
+	}
+
+	public void setInnerType(String innerType) {
+		this.innerType = innerType;
+	}
+
+	public Integer getInnerId() {
+		return innerId;
+	}
+
+	public void setInnerId(Integer innerId) {
+		this.innerId = innerId;
+	}
+
 	public String getInnerName() {
 		return innerName;
 	}
@@ -51,22 +67,7 @@ public class AdvertBaseResult {
 		this.id = id;
 	}
 	
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Integer getTypeId() {
-		return typeId;
-	}
-
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
-	}
-
+	
 	public Integer getDelayTime() {
 		return delayTime;
 	}
@@ -78,11 +79,11 @@ public class AdvertBaseResult {
 	public void init(AppAdvert appAdvert) {
 		this.id =appAdvert.getId();
 	    this.advName =appAdvert.getAdvName();
-	    this.type= appAdvert.getType();
-	    this.typeId=appAdvert.getTypeId();
 		this.delayTime = appAdvert.getDelayTime();
 		this.image = appAdvert.getAdvUrl();
 		this.innerName=appAdvert.getInnerName();
+		this.innerId=appAdvert.getInnerId();
+		this.innerType=appAdvert.getInnerType();
 	}
 
 	@Override

@@ -132,7 +132,7 @@ public class AppBaseResult {
 		this.version = data.getVersion();
 		this.versionCode = data.getVersioncode();
 		this.category = data.getCategory();
-		this.star = data.getStart();
+		this.star = data.getStar();
 		this.icon = data.getIcon();
 		this.iconType = data.getIconType();
 		this.size = data.getSize();

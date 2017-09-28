@@ -39,9 +39,9 @@ public class AppAdvert implements Serializable {
      */
     private String description;
 
-    private String type;
+    private String innerType;
 
-    private Integer typeId;
+    private Integer innerId;
 
     private String innerName;
 
@@ -119,20 +119,20 @@ public class AppAdvert implements Serializable {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public String getInnerType() {
+        return innerType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setInnerType(String innerType) {
+        this.innerType = innerType;
     }
 
-    public Integer getTypeId() {
-        return typeId;
+    public Integer getInnerId() {
+        return innerId;
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public void setInnerId(Integer innerId) {
+        this.innerId = innerId;
     }
 
     public String getInnerName() {

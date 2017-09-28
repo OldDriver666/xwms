@@ -3,6 +3,7 @@ package com.fise.server.appstore.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +72,12 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		example.setOrderByClause("prority desc");
 		param.setPageSize(10);
 		List<AppInformation> data = appInfoDao.selectByPage(example, param);
+		
+		if(data.size()==0){
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("没有更多应用咯，亲~");
+			return response;
+		}
 		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
 		for (int i = 0; i < data.size(); i++) {
 			AppBaseResult appBase = new AppBaseResult();
@@ -90,8 +97,12 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		} else {
 			page.setHasMore(false);
 		}
-		page.setResult(appData);
-		response.success(page);
+		
+			page.setResult(appData);
+		
+			response.success(page);
+		
+		
 		return response;
 	}
 

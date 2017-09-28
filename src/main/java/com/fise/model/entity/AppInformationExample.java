@@ -295,7 +295,7 @@ public class AppInformationExample {
         }
 
         public Criteria andAppNameLike(String value) {
-            addCriterion("app_name like", value, "appName");
+            addCriterion("CONCAT( app_name , app_spell )like", value, "appName");
             return (Criteria) this;
         }
 
@@ -321,6 +321,76 @@ public class AppInformationExample {
 
         public Criteria andAppNameNotBetween(String value1, String value2) {
             addCriterion("app_name not between", value1, value2, "appName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellIsNull() {
+            addCriterion("app_spell is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellIsNotNull() {
+            addCriterion("app_spell is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellEqualTo(String value) {
+            addCriterion("app_spell =", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellNotEqualTo(String value) {
+            addCriterion("app_spell <>", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellGreaterThan(String value) {
+            addCriterion("app_spell >", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellGreaterThanOrEqualTo(String value) {
+            addCriterion("app_spell >=", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellLessThan(String value) {
+            addCriterion("app_spell <", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellLessThanOrEqualTo(String value) {
+            addCriterion("app_spell <=", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellLike(String value) {
+            addCriterion("app_spell like", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellNotLike(String value) {
+            addCriterion("app_spell not like", value, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellIn(List<String> values) {
+            addCriterion("app_spell in", values, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellNotIn(List<String> values) {
+            addCriterion("app_spell not in", values, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellBetween(String value1, String value2) {
+            addCriterion("app_spell between", value1, value2, "appSpell");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppSpellNotBetween(String value1, String value2) {
+            addCriterion("app_spell not between", value1, value2, "appSpell");
             return (Criteria) this;
         }
 
@@ -1594,73 +1664,73 @@ public class AppInformationExample {
             return (Criteria) this;
         }
 
-        public Criteria andStartIsNull() {
-            addCriterion("start is null");
+        public Criteria andStarIsNull() {
+            addCriterion("star is null");
             return (Criteria) this;
         }
 
-        public Criteria andStartIsNotNull() {
-            addCriterion("start is not null");
+        public Criteria andStarIsNotNull() {
+            addCriterion("star is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStartEqualTo(String value) {
-            addCriterion("start =", value, "start");
+        public Criteria andStarEqualTo(String value) {
+            addCriterion("star =", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartNotEqualTo(String value) {
-            addCriterion("start <>", value, "start");
+        public Criteria andStarNotEqualTo(String value) {
+            addCriterion("star <>", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartGreaterThan(String value) {
-            addCriterion("start >", value, "start");
+        public Criteria andStarGreaterThan(String value) {
+            addCriterion("star >", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartGreaterThanOrEqualTo(String value) {
-            addCriterion("start >=", value, "start");
+        public Criteria andStarGreaterThanOrEqualTo(String value) {
+            addCriterion("star >=", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartLessThan(String value) {
-            addCriterion("start <", value, "start");
+        public Criteria andStarLessThan(String value) {
+            addCriterion("star <", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartLessThanOrEqualTo(String value) {
-            addCriterion("start <=", value, "start");
+        public Criteria andStarLessThanOrEqualTo(String value) {
+            addCriterion("star <=", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartLike(String value) {
-            addCriterion("start like", value, "start");
+        public Criteria andStarLike(String value) {
+            addCriterion("star like", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartNotLike(String value) {
-            addCriterion("start not like", value, "start");
+        public Criteria andStarNotLike(String value) {
+            addCriterion("star not like", value, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartIn(List<String> values) {
-            addCriterion("start in", values, "start");
+        public Criteria andStarIn(List<String> values) {
+            addCriterion("star in", values, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartNotIn(List<String> values) {
-            addCriterion("start not in", values, "start");
+        public Criteria andStarNotIn(List<String> values) {
+            addCriterion("star not in", values, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartBetween(String value1, String value2) {
-            addCriterion("start between", value1, value2, "start");
+        public Criteria andStarBetween(String value1, String value2) {
+            addCriterion("star between", value1, value2, "star");
             return (Criteria) this;
         }
 
-        public Criteria andStartNotBetween(String value1, String value2) {
-            addCriterion("start not between", value1, value2, "start");
+        public Criteria andStarNotBetween(String value1, String value2) {
+            addCriterion("star not between", value1, value2, "star");
             return (Criteria) this;
         }
 

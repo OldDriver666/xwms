@@ -8,15 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author 
  */
 public class AppInformation implements Serializable {
-    public String getAutoApp() {
-		return autoApp;
-	}
-
-	public void setAutoApp(String autoApp) {
-		this.autoApp = autoApp;
-	}
-
-	private Integer id;
+    private Integer id;
 
     /**
      * APP唯一标示
@@ -28,6 +20,8 @@ public class AppInformation implements Serializable {
      */
     @JsonProperty("app_name")
     private String appName;
+
+    private String appSpell;
 
     private String packageName;
 
@@ -112,19 +106,27 @@ public class AppInformation implements Serializable {
      */
     private String label;
 
-    private String start;
+    private String star;
 
     /**
      * 0-竖 1-横着
      */
     private Integer orientation;
-
+    
     @JsonProperty("autoApp")
     private String autoApp;
-    
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public String getAutoApp() {
+		return autoApp;
+	}
+
+	public void setAutoApp(String autoApp) {
+		this.autoApp = autoApp;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -146,6 +148,14 @@ public class AppInformation implements Serializable {
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    public String getAppSpell() {
+        return appSpell;
+    }
+
+    public void setAppSpell(String appSpell) {
+        this.appSpell = appSpell;
     }
 
     public String getPackageName() {
@@ -300,12 +310,12 @@ public class AppInformation implements Serializable {
         this.label = label;
     }
 
-    public String getStart() {
-        return start;
+    public String getStar() {
+        return star;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setStar(String star) {
+        this.star = star;
     }
 
     public Integer getOrientation() {

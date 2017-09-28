@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="app_index" jdbcType="VARCHAR" property="appIndex" />
     <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="app_spell" jdbcType="VARCHAR" property="appSpell" />
     <result column="package_name" jdbcType="VARCHAR" property="packageName" />
     <result column="dev_id" jdbcType="INTEGER" property="devId" />
     <result column="dev_name" jdbcType="VARCHAR" property="devName" />
@@ -24,7 +25,7 @@
     <result column="prority" jdbcType="INTEGER" property="prority" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="label" jdbcType="VARCHAR" property="label" />
-    <result column="start" jdbcType="VARCHAR" property="start" />
+    <result column="star" jdbcType="VARCHAR" property="star" />
     <result column="orientation" jdbcType="INTEGER" property="orientation" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -86,9 +87,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, app_index, app_name, package_name, dev_id, dev_name, top_category, category, 
-    status, description, version, versioncode, icon, icon_type, images, download, size, 
-    updated, created, prority, remarks, label, start, orientation
+    id, app_index, app_name, app_spell, package_name, dev_id, dev_name, top_category, 
+    category, status, description, version, versioncode, icon, icon_type, images, download, 
+    size, updated, created, prority, remarks, label, star, orientation
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppInformationExample" resultMap="BaseResultMap">
     select
@@ -130,23 +131,23 @@
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information (id, app_index, app_name, 
-      package_name, dev_id, dev_name, 
-      top_category, category, status, 
-      description, version, versioncode, 
-      icon, icon_type, images, 
-      download, size, updated, 
-      created, prority, remarks, 
-      label, start, orientation
-      )
+      app_spell, package_name, dev_id, 
+      dev_name, top_category, category, 
+      status, description, version, 
+      versioncode, icon, icon_type, 
+      images, download, size, 
+      updated, created, prority, 
+      remarks, label, star, 
+      orientation)
     values (#{id,jdbcType=INTEGER}, #{appIndex,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
-      #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, #{devName,jdbcType=VARCHAR}, 
-      #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{versioncode,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, #{images,jdbcType=VARCHAR}, 
-      #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{updated,jdbcType=INTEGER}, 
-      #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
-      #{label,jdbcType=VARCHAR}, #{start,jdbcType=VARCHAR}, #{orientation,jdbcType=INTEGER}
-      )
+      #{appSpell,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, #{devId,jdbcType=INTEGER}, 
+      #{devName,jdbcType=VARCHAR}, #{topCategory,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{versioncode,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
+      #{images,jdbcType=VARCHAR}, #{download,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, 
+      #{updated,jdbcType=INTEGER}, #{created,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, 
+      #{remarks,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR}, 
+      #{orientation,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppInformation">
     insert into app_information
@@ -159,6 +160,9 @@
       </if>
       <if test="appName != null">
         app_name,
+      </if>
+      <if test="appSpell != null">
+        app_spell,
       </if>
       <if test="packageName != null">
         package_name,
@@ -217,8 +221,8 @@
       <if test="label != null">
         label,
       </if>
-      <if test="start != null">
-        start,
+      <if test="star != null">
+        star,
       </if>
       <if test="orientation != null">
         orientation,
@@ -233,6 +237,9 @@
       </if>
       <if test="appName != null">
         #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appSpell != null">
+        #{appSpell,jdbcType=VARCHAR},
       </if>
       <if test="packageName != null">
         #{packageName,jdbcType=VARCHAR},
@@ -291,8 +298,8 @@
       <if test="label != null">
         #{label,jdbcType=VARCHAR},
       </if>
-      <if test="start != null">
-        #{start,jdbcType=VARCHAR},
+      <if test="star != null">
+        #{star,jdbcType=VARCHAR},
       </if>
       <if test="orientation != null">
         #{orientation,jdbcType=INTEGER},
@@ -316,6 +323,9 @@
       </if>
       <if test="record.appName != null">
         app_name = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appSpell != null">
+        app_spell = #{record.appSpell,jdbcType=VARCHAR},
       </if>
       <if test="record.packageName != null">
         package_name = #{record.packageName,jdbcType=VARCHAR},
@@ -374,8 +384,8 @@
       <if test="record.label != null">
         label = #{record.label,jdbcType=VARCHAR},
       </if>
-      <if test="record.start != null">
-        start = #{record.start,jdbcType=VARCHAR},
+      <if test="record.star != null">
+        star = #{record.star,jdbcType=VARCHAR},
       </if>
       <if test="record.orientation != null">
         orientation = #{record.orientation,jdbcType=INTEGER},
@@ -390,6 +400,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       app_index = #{record.appIndex,jdbcType=VARCHAR},
       app_name = #{record.appName,jdbcType=VARCHAR},
+      app_spell = #{record.appSpell,jdbcType=VARCHAR},
       package_name = #{record.packageName,jdbcType=VARCHAR},
       dev_id = #{record.devId,jdbcType=INTEGER},
       dev_name = #{record.devName,jdbcType=VARCHAR},
@@ -409,7 +420,7 @@
       prority = #{record.prority,jdbcType=INTEGER},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       label = #{record.label,jdbcType=VARCHAR},
-      start = #{record.start,jdbcType=VARCHAR},
+      star = #{record.star,jdbcType=VARCHAR},
       orientation = #{record.orientation,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -423,6 +434,9 @@
       </if>
       <if test="appName != null">
         app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appSpell != null">
+        app_spell = #{appSpell,jdbcType=VARCHAR},
       </if>
       <if test="packageName != null">
         package_name = #{packageName,jdbcType=VARCHAR},
@@ -481,8 +495,8 @@
       <if test="label != null">
         label = #{label,jdbcType=VARCHAR},
       </if>
-      <if test="start != null">
-        start = #{start,jdbcType=VARCHAR},
+      <if test="star != null">
+        star = #{star,jdbcType=VARCHAR},
       </if>
       <if test="orientation != null">
         orientation = #{orientation,jdbcType=INTEGER},
@@ -494,6 +508,7 @@
     update app_information
     set app_index = #{appIndex,jdbcType=VARCHAR},
       app_name = #{appName,jdbcType=VARCHAR},
+      app_spell = #{appSpell,jdbcType=VARCHAR},
       package_name = #{packageName,jdbcType=VARCHAR},
       dev_id = #{devId,jdbcType=INTEGER},
       dev_name = #{devName,jdbcType=VARCHAR},
@@ -513,11 +528,11 @@
       prority = #{prority,jdbcType=INTEGER},
       remarks = #{remarks,jdbcType=VARCHAR},
       label = #{label,jdbcType=VARCHAR},
-      start = #{start,jdbcType=VARCHAR},
+      star = #{star,jdbcType=VARCHAR},
       orientation = #{orientation,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+   <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
      select
     <include refid="Base_Column_List" />
     from app_information

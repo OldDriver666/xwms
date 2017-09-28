@@ -246,7 +246,7 @@ public class AppDetailResult {
         this.label=data.getLabel();
         this.versionCode=data.getVersioncode();
         this.iconType=data.getIconType();
-        this.star=data.getStart();
+        this.star=data.getStar();
         this.orientation=data.getOrientation();
         String imageStr= data.getImages();
         String[] listStr=imageStr.split(";");

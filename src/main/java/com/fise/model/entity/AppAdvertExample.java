@@ -694,133 +694,133 @@ public class AppAdvertExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNull() {
-            addCriterion("type is null");
+        public Criteria andInnerTypeIsNull() {
+            addCriterion("inner_type is null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
+        public Criteria andInnerTypeIsNotNull() {
+            addCriterion("inner_type is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(String value) {
-            addCriterion("type =", value, "type");
+        public Criteria andInnerTypeEqualTo(String value) {
+            addCriterion("inner_type =", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(String value) {
-            addCriterion("type <>", value, "type");
+        public Criteria andInnerTypeNotEqualTo(String value) {
+            addCriterion("inner_type <>", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(String value) {
-            addCriterion("type >", value, "type");
+        public Criteria andInnerTypeGreaterThan(String value) {
+            addCriterion("inner_type >", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(String value) {
-            addCriterion("type >=", value, "type");
+        public Criteria andInnerTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("inner_type >=", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(String value) {
-            addCriterion("type <", value, "type");
+        public Criteria andInnerTypeLessThan(String value) {
+            addCriterion("inner_type <", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(String value) {
-            addCriterion("type <=", value, "type");
+        public Criteria andInnerTypeLessThanOrEqualTo(String value) {
+            addCriterion("inner_type <=", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLike(String value) {
-            addCriterion("type like", value, "type");
+        public Criteria andInnerTypeLike(String value) {
+            addCriterion("inner_type like", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotLike(String value) {
-            addCriterion("type not like", value, "type");
+        public Criteria andInnerTypeNotLike(String value) {
+            addCriterion("inner_type not like", value, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<String> values) {
-            addCriterion("type in", values, "type");
+        public Criteria andInnerTypeIn(List<String> values) {
+            addCriterion("inner_type in", values, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<String> values) {
-            addCriterion("type not in", values, "type");
+        public Criteria andInnerTypeNotIn(List<String> values) {
+            addCriterion("inner_type not in", values, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(String value1, String value2) {
-            addCriterion("type between", value1, value2, "type");
+        public Criteria andInnerTypeBetween(String value1, String value2) {
+            addCriterion("inner_type between", value1, value2, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(String value1, String value2) {
-            addCriterion("type not between", value1, value2, "type");
+        public Criteria andInnerTypeNotBetween(String value1, String value2) {
+            addCriterion("inner_type not between", value1, value2, "innerType");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdIsNull() {
-            addCriterion("type_id is null");
+        public Criteria andInnerIdIsNull() {
+            addCriterion("inner_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdIsNotNull() {
-            addCriterion("type_id is not null");
+        public Criteria andInnerIdIsNotNull() {
+            addCriterion("inner_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdEqualTo(Integer value) {
-            addCriterion("type_id =", value, "typeId");
+        public Criteria andInnerIdEqualTo(Integer value) {
+            addCriterion("inner_id =", value, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdNotEqualTo(Integer value) {
-            addCriterion("type_id <>", value, "typeId");
+        public Criteria andInnerIdNotEqualTo(Integer value) {
+            addCriterion("inner_id <>", value, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdGreaterThan(Integer value) {
-            addCriterion("type_id >", value, "typeId");
+        public Criteria andInnerIdGreaterThan(Integer value) {
+            addCriterion("inner_id >", value, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("type_id >=", value, "typeId");
+        public Criteria andInnerIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("inner_id >=", value, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdLessThan(Integer value) {
-            addCriterion("type_id <", value, "typeId");
+        public Criteria andInnerIdLessThan(Integer value) {
+            addCriterion("inner_id <", value, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdLessThanOrEqualTo(Integer value) {
-            addCriterion("type_id <=", value, "typeId");
+        public Criteria andInnerIdLessThanOrEqualTo(Integer value) {
+            addCriterion("inner_id <=", value, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdIn(List<Integer> values) {
-            addCriterion("type_id in", values, "typeId");
+        public Criteria andInnerIdIn(List<Integer> values) {
+            addCriterion("inner_id in", values, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdNotIn(List<Integer> values) {
-            addCriterion("type_id not in", values, "typeId");
+        public Criteria andInnerIdNotIn(List<Integer> values) {
+            addCriterion("inner_id not in", values, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdBetween(Integer value1, Integer value2) {
-            addCriterion("type_id between", value1, value2, "typeId");
+        public Criteria andInnerIdBetween(Integer value1, Integer value2) {
+            addCriterion("inner_id between", value1, value2, "innerId");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("type_id not between", value1, value2, "typeId");
+        public Criteria andInnerIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("inner_id not between", value1, value2, "innerId");
             return (Criteria) this;
         }
 

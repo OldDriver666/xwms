@@ -11,8 +11,8 @@
     <result column="created" jdbcType="INTEGER" property="created" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="inner_type" jdbcType="VARCHAR" property="innerType" />
+    <result column="inner_id" jdbcType="INTEGER" property="innerId" />
     <result column="inner_name" jdbcType="VARCHAR" property="innerName" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, adv_name, adv_url, status, prority, delay_time, created, updated, description, 
-    type, type_id, inner_name
+    inner_type, inner_id, inner_name
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.AppAdvertExample" resultMap="BaseResultMap">
     select
@@ -119,12 +119,12 @@
     insert into app_advert (id, adv_name, adv_url, 
       status, prority, delay_time, 
       created, updated, description, 
-      type, type_id, inner_name
+      inner_type, inner_id, inner_name
       )
     values (#{id,jdbcType=INTEGER}, #{advName,jdbcType=VARCHAR}, #{advUrl,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{prority,jdbcType=INTEGER}, #{delayTime,jdbcType=INTEGER}, 
       #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
-      #{type,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{innerName,jdbcType=VARCHAR}
+      #{innerType,jdbcType=VARCHAR}, #{innerId,jdbcType=INTEGER}, #{innerName,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.AppAdvert">
@@ -157,11 +157,11 @@
       <if test="description != null">
         description,
       </if>
-      <if test="type != null">
-        type,
+      <if test="innerType != null">
+        inner_type,
       </if>
-      <if test="typeId != null">
-        type_id,
+      <if test="innerId != null">
+        inner_id,
       </if>
       <if test="innerName != null">
         inner_name,
@@ -195,11 +195,11 @@
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
+      <if test="innerType != null">
+        #{innerType,jdbcType=VARCHAR},
       </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=INTEGER},
+      <if test="innerId != null">
+        #{innerId,jdbcType=INTEGER},
       </if>
       <if test="innerName != null">
         #{innerName,jdbcType=VARCHAR},
@@ -242,11 +242,11 @@
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=VARCHAR},
+      <if test="record.innerType != null">
+        inner_type = #{record.innerType,jdbcType=VARCHAR},
       </if>
-      <if test="record.typeId != null">
-        type_id = #{record.typeId,jdbcType=INTEGER},
+      <if test="record.innerId != null">
+        inner_id = #{record.innerId,jdbcType=INTEGER},
       </if>
       <if test="record.innerName != null">
         inner_name = #{record.innerName,jdbcType=VARCHAR},
@@ -267,8 +267,8 @@
       created = #{record.created,jdbcType=INTEGER},
       updated = #{record.updated,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR},
-      type_id = #{record.typeId,jdbcType=INTEGER},
+      inner_type = #{record.innerType,jdbcType=VARCHAR},
+      inner_id = #{record.innerId,jdbcType=INTEGER},
       inner_name = #{record.innerName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -301,11 +301,11 @@
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=VARCHAR},
+      <if test="innerType != null">
+        inner_type = #{innerType,jdbcType=VARCHAR},
       </if>
-      <if test="typeId != null">
-        type_id = #{typeId,jdbcType=INTEGER},
+      <if test="innerId != null">
+        inner_id = #{innerId,jdbcType=INTEGER},
       </if>
       <if test="innerName != null">
         inner_name = #{innerName,jdbcType=VARCHAR},
@@ -323,8 +323,8 @@
       created = #{created,jdbcType=INTEGER},
       updated = #{updated,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      type_id = #{typeId,jdbcType=INTEGER},
+      inner_type = #{innerType,jdbcType=VARCHAR},
+      inner_id = #{innerId,jdbcType=INTEGER},
       inner_name = #{innerName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
