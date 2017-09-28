@@ -54,14 +54,15 @@ $(function() {
                         action.loadPageData();
                     }
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
 				}
+            },function(errorMsg) {
+                alert(errorMsg);
             });
 		},
 		//获取所有数据
 		loadPageData : function() {
             var td_len = $("#table thead tr th").length;//表格字段数量
-            $("#pagination").hide();
 
             var url = ctx + "boss/role/queryAuth";
             var data = new Object();
@@ -119,10 +120,10 @@ $(function() {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $("#pageMenu").tmpl(result.data).appendTo('#input-moduleName');
                 } else {
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
-            },function() {
-                alert("服务器开个小差，请稍后重试！")
+            },function(errorMsg) {
+                toastr.error(errorMsg);
             });
         },
 		//编辑数据
@@ -141,8 +142,10 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
                 }else{
-                    alert(result.msg);
+                    toastr.error(result.msg);
                 }
+            },function(errorMsg) {
+                toastr.error(errorMsg);
             });
 		}
 	};
@@ -229,22 +232,6 @@ $(function() {
 		}
 	});
 
-    $("#addTempl-modal2").on('show.bs.modal', function(e) {
-
-    });
-
-	//验证表单
-    $("#form-addTempl").validate({
-        rules : {
-            /*devIME : {
-                required : true
-            },
-            devXW : {
-                required : true
-            }*/
-        }
-    });
-
     $("#input-userRoles").change(function(){
         if($(this).val() != ""){
             $(this).parent().parent().removeClass("has-error");
@@ -277,7 +264,6 @@ $(function() {
             }
         }
     });
-
 
 	$("#btn-search").on('click', function() {
         if ($("#search-input-userRoles option:selected").val() == "") {

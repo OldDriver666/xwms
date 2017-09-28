@@ -40,10 +40,10 @@ $(function() {
 
 			data.depart_name = $("#input-name").val();
 			data.parent_id = parseInt($("#input-parentId").val());
-			data.depart_id = parseInt(depart_id);
+			//data.depart_id = parseInt(depart_id);
 			data.company_id = parseInt(company_id);
 			data.creator_id = parseInt(admin_id);
-            data.status = null;
+            //data.status = null;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -138,6 +138,7 @@ $(function() {
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
 			$("h4#addTempl-modal-label").text("添加部门信息");
+            $("#parentDepartment-ipt").show();
 			$form.data("action", "add");
 			$form[0].reset();
 		}

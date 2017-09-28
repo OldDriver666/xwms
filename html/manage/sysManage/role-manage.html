@@ -217,7 +217,7 @@
 											</div>
 										</div>-->
 										<div class="form-group" id="role-departId-wrap">
-											<label for="role-departId" class="col-sm-2 control-label"><span class="necessary"></span>角色部门</label>
+											<label for="role-departId" class="col-sm-2 control-label"><span class="necessary"></span>所属部门</label>
 											<div class="col-sm-10">
 												<select name="role-departId" id="role-departId" class="form-control">
 													<option value="">请选择角色的所属部门</option>
@@ -250,13 +250,6 @@
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
-				<tfoot>
-				<tr>
-					<td colspan="6">
-						<div id="pagination" class="pagination"></div>
-					</td>
-				</tr>
-				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -278,7 +271,7 @@
 <tr>
 	<td>${id}</td>
 	<td>${authLevel}</td>
-	<td>${name}</td>
+	<td>${role_name}</td>
 	<td>${desc}</td>
 	<td>${companyNameQuery(companyId)}</td>
 	<td>${departId}</td>
