@@ -29,11 +29,11 @@ $(function(){
         }
 	};
     setTimeout(function(){
-        //Index.push();
+        Index.push();
     },200);
 
     setInterval(function(){
-        //Index.push();
+        Index.push();
     },300000);
 });
 
