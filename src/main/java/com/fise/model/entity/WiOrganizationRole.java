@@ -13,6 +13,7 @@ public class WiOrganizationRole implements Serializable {
 
     private Integer authLevel;
 
+    @JsonProperty("role_name")
     private String name;
 
     @JsonProperty("desc")
