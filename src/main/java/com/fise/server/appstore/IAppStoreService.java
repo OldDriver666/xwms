@@ -28,6 +28,7 @@ public interface IAppStoreService {
     //根据appName可进行模糊查询，在我的应用的首页查询出相关的App，并根据权重进行排序
     public Response queryByAppName(Page<AppInformation> page);
     
+    public Response queryByAppName(String param);
     //热门搜索，返回四个热门的appName即可
     public Response hotSearch();
     

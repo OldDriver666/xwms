@@ -123,13 +123,25 @@ public class AppStoreController {
 	 * @return
 	 */
 	@IgnoreAuth
-	@RequestMapping(value = "/searchApp", method = RequestMethod.POST)
-	public Response getSearchApp(@RequestBody @Valid Page<AppInformation> param) {
+	@RequestMapping(value = "/simpleSearch", method = RequestMethod.POST)
+	public Response getsimpleSearch(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		logger.info(param.toString());
+		String appName=(String) param.get("app_name");
+		response = appSvr.queryByAppName(appName);
+		return response;
+	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/allSearch", method = RequestMethod.POST)
+	public Response getAllSearch(@RequestBody @Valid Page<AppInformation> param) {
 		Response response = new Response();
 		logger.info(param.toString());
 		response = appSvr.queryByAppName(param);
 		return response;
 	}
+	
+	
 
 	/**
 	 * 热门搜索
@@ -151,12 +163,14 @@ public class AppStoreController {
 	 */
 	@IgnoreAuth
 	@RequestMapping(value = "/appinfo", method = RequestMethod.POST)
-	public Response getAppInfo(@RequestBody @Valid Map<String, String> param) {
+	public Response getAppInfo(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
-		if (StringUtil.isEmpty(param.get("app_index"))) {
+		String appIdex=(String) param.get("app_index");
+		
+		if (StringUtil.isEmpty(appIdex)) {
 			return response.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 		}
-		response = appSvr.queryByAppIndex(param.get("app_index"));
+		response = appSvr.queryByAppIndex(appIdex);
 		return response;
 	}
 
