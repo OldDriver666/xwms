@@ -113,18 +113,7 @@ public class AppInformation implements Serializable {
      */
     private Integer orientation;
     
-    @JsonProperty("autoApp")
-    private String autoApp;
-
     private static final long serialVersionUID = 1L;
-
-    public String getAutoApp() {
-		return autoApp;
-	}
-
-	public void setAutoApp(String autoApp) {
-		this.autoApp = autoApp;
-	}
 
 	public Integer getId() {
         return id;

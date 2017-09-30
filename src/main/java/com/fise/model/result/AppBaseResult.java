@@ -5,7 +5,7 @@ import com.fise.model.entity.AppInformation;
 import com.fise.utils.JsonUtil;
 
 public class AppBaseResult {
-	private Integer appId;
+	private Integer id;
 	private String appIndex;
 	private String appName;
 	private String download;
@@ -17,9 +17,17 @@ public class AppBaseResult {
 	private String icon;
 	private Integer iconType;
 	private String size;
-	private Integer orientation;
+	//private Integer orientation;
+	private String packageName;
 	
-	
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
 	public String getAppIndex() {
 		return appIndex;
 	}
@@ -36,20 +44,12 @@ public class AppBaseResult {
 		this.download = download;
 	}
 
-	public Integer getOrientation() {
-		return orientation;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setOrientation(Integer orientation) {
-		this.orientation = orientation;
-	}
-
-	public Integer getAppId() {
-		return appId;
-	}
-
-	public void setAppId(Integer appId) {
-		this.appId = appId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getAppName() {
@@ -125,7 +125,7 @@ public class AppBaseResult {
 	}
 
 	public void init(AppInformation data) {
-		this.appId = data.getId();
+		this.id = data.getId();
 		this.appName = data.getAppName();
 		this.download = data.getDownload();
 		this.description = data.getDescription();
@@ -136,8 +136,9 @@ public class AppBaseResult {
 		this.icon = data.getIcon();
 		this.iconType = data.getIconType();
 		this.size = data.getSize();
-		this.orientation=data.getOrientation();
+		//this.orientation=data.getOrientation();
 		this.appIndex=data.getAppIndex();
+		this.packageName=data.getPackageName();
 	}
 
 	@Override

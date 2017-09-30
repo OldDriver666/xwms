@@ -9,22 +9,16 @@ import com.fise.utils.JsonUtil;
 
 public class AppDetailResult {
 
-    @JsonProperty("app_id")
     private Integer id;
 
-    @JsonProperty("app_index")
     private String appIndex;
 
-    @JsonProperty("app_name")
     private String appName;
 
-    @JsonProperty("dev_id")
     private Integer devId;
 
-    @JsonProperty("dev_name")
     private String devName;
 
-    @JsonProperty("top_category")
     private String topCategory;
 
     private String category;
@@ -55,8 +49,18 @@ public class AppDetailResult {
     
     private Integer orientation;
     
+    private String packageName;
+    
     private List<String> images;
     
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
+	}
+
 	public Integer getOrientation() {
 		return orientation;
 	}
@@ -248,6 +252,7 @@ public class AppDetailResult {
         this.iconType=data.getIconType();
         this.star=data.getStar();
         this.orientation=data.getOrientation();
+        this.packageName=data.getPackageName();
         String imageStr= data.getImages();
         String[] listStr=imageStr.split(";");
         List<String> imageList=new ArrayList<String>();
