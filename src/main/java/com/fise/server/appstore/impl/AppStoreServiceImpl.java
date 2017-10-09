@@ -51,16 +51,6 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		return resp;
 	}
 
-	// @Override
-	// public List<AppInformation> queryByIdList(List<Integer> idList) {
-	// AppInformationExample example = new AppInformationExample();
-	// AppInformationExample.Criteria con = example.createCriteria();
-	// example.setOrderByClause("prority desc");
-	// con.andIdIn(idList);
-	// List<AppInformation> data = appInfoDao.selectByExample(example);
-	// return data;
-	// }
-
 	// 分页查询App
 	@Override
 	public Response queryAppAll(Page<AppInformation> param) {
@@ -113,62 +103,36 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		criteria.andAppNameLike("%" + param.getParam().getAppName() + "%");
 		criteria.andStatusEqualTo(1);
 		example.setOrderByClause("prority desc");
-
-		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
-		List<AppInformation> data = appInfoDao.selectByExample(example);
-
-		int result = data.size();
-		switch (result) {
-		case 0:
+		param.setPageSize(10);
+		List<AppInformation> data = appInfoDao.selectByPage(example, param);
+		if (data.size() == 0) {
 			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
 			response.setMsg("亲，找不到您要的APP~");
-			break;
-		case 1:
-			AppBaseResult appResult = new AppBaseResult();
-			appResult.init(data.get(0));
-			appData.add(appResult);
-			response.success(appData);
-			break;
-		default:
-			if (param.getParam().getAutoApp().equals("true")) {
-				for (int i = 0; i < 2; i++) {
-					AppBaseResult appBase = new AppBaseResult();
-					appBase.init(data.get(i));
-					appData.add(appBase);
-				}
-				response.success(appData);
-			}
-			if (param.getParam().getAutoApp().equals("false")) {
-				param.setPageSize(10);
-				List<AppInformation> pageData = appInfoDao.selectByPage(example, param);
-				if (pageData.size() == 0) {
-					response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
-					response.setMsg("亲，没有更多应用咯~");
-					return response;
-				}
-				for (int i = 0; i < pageData.size(); i++) {
-					AppBaseResult appBase = new AppBaseResult();
-					appBase.init(pageData.get(i));
-					appData.add(appBase);
-				}
-
-				Page<AppBaseResult> page = new Page<AppBaseResult>();
-
-				page.setPageNo(param.getPageNo());
-				page.setPageSize(param.getPageSize());
-				page.setTotalCount(param.getTotalCount());
-				page.setTotalPageCount(param.getTotalPageCount());
-				int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-				if (haveMore > 0) {
-					page.setHasMore(true);
-				} else {
-					page.setHasMore(false);
-				}
-				page.setResult(appData);
-				response.success(page);
-			}
-			break;
+			return response;
 		}
+
+		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
+		for (int i = 0; i < data.size(); i++) {
+			AppBaseResult appBase = new AppBaseResult();
+			appBase.init(data.get(i));
+			appData.add(appBase);
+		}
+
+		Page<AppBaseResult> page = new Page<AppBaseResult>();
+
+		page.setPageNo(param.getPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
+		if (haveMore > 0) {
+			page.setHasMore(true);
+		} else {
+			page.setHasMore(false);
+		}
+		page.setResult(appData);
+		response.success(page);
+
 		return response;
 	}
 
@@ -218,8 +182,8 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		AppInformationExample.Criteria con = example.createCriteria();
 		con.andAppIndexEqualTo(param);
 		List<AppInformation> data = appInfoDao.selectByExample(example);
-		if (data == null) {
-			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+		if (data.size() == 0) {
+			response.setCode(200);
 			response.setMsg("亲，找不到您要的APP~");
 			return response;
 		}
@@ -290,4 +254,41 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		return response;
 	}
 
+	@Override
+	public Response queryByAppName(String param) {
+
+		Response response = new Response();
+		AppInformationExample example = new AppInformationExample();
+		AppInformationExample.Criteria criteria = example.createCriteria();
+		criteria.andAppNameLike("%" + param + "%");
+		criteria.andStatusEqualTo(1);
+		example.setOrderByClause("prority desc");
+
+		List<AppBaseResult> appData = new ArrayList<AppBaseResult>();
+		List<AppInformation> data = appInfoDao.selectByExample(example);
+
+		int result = data.size();
+		switch (result) {
+		case 0:
+			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，找不到您要的APP~");
+			break;
+		case 1:
+			AppBaseResult appResult = new AppBaseResult();
+			appResult.init(data.get(0));
+			appData.add(appResult);
+			response.success(appData);
+			break;
+		default:
+			for (int i = 0; i < 2; i++) {
+				AppBaseResult appBase = new AppBaseResult();
+				appBase.init(data.get(i));
+				appData.add(appBase);
+			}
+			response.success(appData);
+			break;
+		}
+		
+		return response;
+	}
 }
