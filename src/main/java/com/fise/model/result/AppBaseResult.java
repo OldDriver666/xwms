@@ -6,7 +6,6 @@ import com.fise.utils.JsonUtil;
 
 public class AppBaseResult {
 	private Integer id;
-	private String appIndex;
 	private String appName;
 	private String download;
 	private String description;
@@ -17,7 +16,6 @@ public class AppBaseResult {
 	private String icon;
 	private Integer iconType;
 	private String size;
-	//private Integer orientation;
 	private String packageName;
 	
 	public String getPackageName() {
@@ -26,14 +24,6 @@ public class AppBaseResult {
 
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
-	}
-
-	public String getAppIndex() {
-		return appIndex;
-	}
-
-	public void setAppIndex(String appIndex) {
-		this.appIndex = appIndex;
 	}
 
 	public String getDownload() {
@@ -136,8 +126,6 @@ public class AppBaseResult {
 		this.icon = data.getIcon();
 		this.iconType = data.getIconType();
 		this.size = data.getSize();
-		//this.orientation=data.getOrientation();
-		this.appIndex=data.getAppIndex();
 		this.packageName=data.getPackageName();
 	}
 
