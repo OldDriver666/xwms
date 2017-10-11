@@ -11,11 +11,6 @@ public class AppInformation implements Serializable {
     private Integer id;
 
     /**
-     * APP唯一标示
-     */
-    private String appIndex;
-
-    /**
      * 应用名称
      */
     @JsonProperty("app_name")
@@ -28,12 +23,7 @@ public class AppInformation implements Serializable {
     /**
      * 开发者ID
      */
-    private Integer devId;
-
-    /**
-     * 开发者名称
-     */
-    private String devName;
+    private Integer creatorId;
 
     /**
      * 应用大类型
@@ -112,23 +102,15 @@ public class AppInformation implements Serializable {
      * 0-竖 1-横着
      */
     private Integer orientation;
-    
+
     private static final long serialVersionUID = 1L;
 
-	public Integer getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAppIndex() {
-        return appIndex;
-    }
-
-    public void setAppIndex(String appIndex) {
-        this.appIndex = appIndex;
     }
 
     public String getAppName() {
@@ -155,20 +137,12 @@ public class AppInformation implements Serializable {
         this.packageName = packageName;
     }
 
-    public Integer getDevId() {
-        return devId;
+    public Integer getCreatorId() {
+        return creatorId;
     }
 
-    public void setDevId(Integer devId) {
-        this.devId = devId;
-    }
-
-    public String getDevName() {
-        return devName;
-    }
-
-    public void setDevName(String devName) {
-        this.devName = devName;
+    public void setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
     }
 
     public String getTopCategory() {

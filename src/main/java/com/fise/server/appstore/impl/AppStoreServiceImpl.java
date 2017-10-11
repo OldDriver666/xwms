@@ -1,10 +1,16 @@
 package com.fise.server.appstore.impl;
 
+import java.io.File;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
@@ -43,14 +49,126 @@ public class AppStoreServiceImpl implements IAppStoreService {
 	AppChannelMapper appChannelDao;
 
 	@Override
-	public Response insert(AppStore param) {
-		Response resp = new Response();
-		param.setAppId(StringUtil.md5(param.getAppName()));
-		appDao.insert(param);
-		resp.setData(param);
-		return resp;
+	public Response appInsert(Map<String ,Object> param,MultipartFile[] uploadPhoto,MultipartFile uploadApp) {
+		Response response = new Response();
+		
+		 if (uploadApp.isEmpty()) {
+	 			response.setCode(400);
+	 			response.setMsg("请选择上传的App");
+	 			return response;
+	 		}
+		
+		if(uploadPhoto==null||uploadPhoto.length==0){
+			response.setCode(400);
+ 			response.setMsg("请选择上传的图片");
+ 			return response;	
+		}
+		//param.setAppIndex(StringUtil.md5(param.getAppIndex()));
+		//param.setAppId(StringUtil.md5(param.getAppName()));
+		
+		String appName=(String)param.get("app_name");
+		String appSpell=(String) param.get("app_spell");
+		Integer creatorId=(Integer) param.get("creator_id");
+		String topCategory=(String) param.get("top_category");
+		String category=(String) param.get("category");
+		String icon=(String) param.get("icon");
+		Integer iconType=(Integer) param.get("icon_type");
+		String description=(String) param.get("description");
+		String version=(String) param.get("version");
+		String vserionCode=(String) param.get("versioncode");
+		//获取APP的size
+		String appSize=getAppSize(uploadApp.getSize());
+		
+		//要获取app的id，并根据app_id,多次将图片分别插入到
+		List<String> images=uploadPhoto(uploadPhoto);
+		
+		StringBuilder imagesUrl=new StringBuilder();
+		for(int i=0;i<images.size();i++){
+			imagesUrl.append(images.get(i)+";");
+		}
+		
+		//获取App的下载路径
+		String appUrl=uploadApp(uploadApp);
+		
+		String label=(String) param.get("label");
+		Integer orientation=(Integer) param.get("orientation");
+		
+		AppInformation appInfo=new AppInformation();
+		appInfo.setAppName(appName);
+		appInfo.setAppSpell(appSpell);
+		appInfo.setCreatorId(creatorId);
+		appInfo.setIcon(icon);
+		appInfo.setIconType(iconType);
+		appInfo.setTopCategory(topCategory);
+		appInfo.setCategory(category);
+		appInfo.setVersion(version);
+		appInfo.setVersioncode(vserionCode);
+		appInfo.setDescription(description);
+		appInfo.setLabel(label);
+		appInfo.setOrientation(orientation);
+		appInfo.setSize(appSize);
+		appInfo.setImages(imagesUrl.toString());
+		appInfo.setDownload(appUrl);
+		
+		int result=appInfoDao.insert(appInfo);
+		if(result==0){
+			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+			response.setMsg("新增App失败");
+			return response;
+		}
+		response.setData(param);
+		return response;
 	}
+	
+     private String uploadApp(MultipartFile uploadApp){
+ 		
+ 		//String appPath = "/home/fise/www/boss/appmarket/app/";
+ 		String appPath="E:/QQGame/";
+ 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+ 		String currentTime = df.format(new Date());
+ 		
+ 		String fileName = uploadApp.getOriginalFilename();
+ 		// 获取文件名的后缀
+ 		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+ 		// 获取文件名的前半部分
+ 		String prefix = fileName.substring(0, fileName.lastIndexOf("."));
+ 		// 新的文件名加上当前时间的年月日时分秒。
+ 		String newPath = appPath + prefix +"_" +currentTime + "." + suffix;
+ 		
+ 		if (suffix.equals("apk") || suffix.equals("ipa")) {
+ 			try {
+ 				uploadApp.transferTo(new File(newPath));
+ 			} catch (Exception e) {
+ 				e.printStackTrace();
+ 			}
+ 		}
+ 		String urlPath="http://192.168.2.250:8888/boss/appmarket/app/";
+		return urlPath+newPath;
+      }	
 
+     private List<String> uploadPhoto(MultipartFile[] uploadPhotos){
+    	String appPath="E:/QQGame/";
+  		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+  		String currentTime = df.format(new Date());
+  		List<String> result =new ArrayList<String>(); 
+  		for(int i=0;i<uploadPhotos.length;i++){
+  			MultipartFile photo=uploadPhotos[i];
+  			
+  			String fileName = photo.getOriginalFilename();
+  	 		// 获取文件名的后缀
+  	 		String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+  	 		// 获取文件名的前半部分
+  	 		String prefix = fileName.substring(0, fileName.lastIndexOf("."));
+  	 		// 新的文件名加上当前时间的年月日时分秒。
+  	 		String newPath = appPath + prefix +"_" +currentTime + "." + suffix;
+  	 		String urlPath="http://192.168.2.250:8888/boss/appmarket/photo/";
+  	 		result.add(urlPath+newPath);
+  	 		
+  		}
+  		
+    	return result;
+     }
+     
 	// 分页查询App
 	@Override
 	public Response queryAppAll(Page<AppInformation> param) {
@@ -176,11 +294,12 @@ public class AppStoreServiceImpl implements IAppStoreService {
 	}
 
 	@Override
-	public Response queryByAppIndex(String param) {
+	public Response queryByAppId(Integer param) {
 		Response response = new Response();
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria con = example.createCriteria();
-		con.andAppIndexEqualTo(param);
+		//con.andAppIndexEqualTo(param);
+		con.andIdEqualTo(param);
 		List<AppInformation> data = appInfoDao.selectByExample(example);
 		if (data.size() == 0) {
 			response.setCode(200);
@@ -290,5 +409,48 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		}
 		
 		return response;
+	}
+
+	@Override
+	public Response appModify(Map<String ,Object> param) {
+		Response response = new Response();
+		AppInformation appInfo=new AppInformation();
+		AppInformationExample example = new AppInformationExample();
+		AppInformationExample.Criteria criteria=example.createCriteria();
+		Integer appId=(Integer) param.get("app_id");
+		String appSpell=(String) param.get("app_spell");
+		appInfo.setAppSpell(appSpell);
+		
+		criteria.andIdEqualTo(appId);
+		
+		int result=appInfoDao.updateByExampleSelective(appInfo, example);
+		if (result==0){
+			response.setErrorCode(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
+			response.setMsg("修改App失败");
+			return response;
+		}
+		return response;
+	}
+
+	@Override
+	public Response appDelete(Integer param) {
+		Response response = new Response();
+//		AppInformationExample example = new AppInformationExample();
+//		AppInformationExample.Criteria criteria=example.createCriteria();
+		int result=appInfoDao.deleteByPrimaryKey(param);
+		if(result==0){
+			response.setErrorCode(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("删除App失败");
+			return response;
+		}
+		return response;
+	}
+
+	
+	private String getAppSize(long size) {
+		BigDecimal filesize = new BigDecimal(size);
+		BigDecimal megabyte = new BigDecimal(1024 * 1000);
+		float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP).floatValue();
+		return returnValue+"M";
 	}
 }

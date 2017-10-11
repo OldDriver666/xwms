@@ -8,16 +8,13 @@ import com.fise.model.entity.AppInformation;
 import com.fise.utils.JsonUtil;
 
 public class AppDetailResult {
-
+	
+	@JsonProperty("appId")
     private Integer id;
-
-    private String appIndex;
 
     private String appName;
 
-    private Integer devId;
-
-    private String devName;
+    private Integer creatorId;
 
     private String topCategory;
 
@@ -53,6 +50,14 @@ public class AppDetailResult {
     
     private List<String> images;
     
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
 	public String getPackageName() {
 		return packageName;
 	}
@@ -133,36 +138,12 @@ public class AppDetailResult {
         this.id = id;
     }
 
-    public String getAppIndex() {
-        return appIndex;
-    }
-
-    public void setAppIndex(String appIndex) {
-        this.appIndex = appIndex;
-    }
-
     public String getAppName() {
         return appName;
     }
 
     public void setAppName(String appName) {
         this.appName = appName;
-    }
-
-    public Integer getDevId() {
-        return devId;
-    }
-
-    public void setDevId(Integer devId) {
-        this.devId = devId;
-    }
-
-    public String getDevName() {
-        return devName;
-    }
-
-    public void setDevName(String devName) {
-        this.devName = devName;
     }
 
     public String getTopCategory() {
@@ -205,8 +186,6 @@ public class AppDetailResult {
         this.icon = icon;
     }
 
-   
-
     public String getDownload() {
         return download;
     }
@@ -233,10 +212,8 @@ public class AppDetailResult {
 
     public void init(AppInformation data){
         this.id = data.getId();
-        this.appIndex = data.getAppIndex();
+        this.creatorId=data.getCreatorId();
         this.appName = data.getAppName();
-        this.devId = data.getDevId();
-        this.devName = data.getDevName();
         this.topCategory = data.getTopCategory();
         this.category = data.getCategory();
         this.description = data.getDescription();

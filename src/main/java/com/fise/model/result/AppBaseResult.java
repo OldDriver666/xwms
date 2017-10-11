@@ -1,10 +1,12 @@
 package com.fise.model.result;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.model.entity.AppInformation;
 import com.fise.utils.JsonUtil;
 
 public class AppBaseResult {
+	@JsonProperty("appId")
 	private Integer id;
 	private String appName;
 	private String download;

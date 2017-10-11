@@ -184,76 +184,6 @@ public class AppInformationExample {
             return (Criteria) this;
         }
 
-        public Criteria andAppIndexIsNull() {
-            addCriterion("app_index is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexIsNotNull() {
-            addCriterion("app_index is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexEqualTo(String value) {
-            addCriterion("app_index =", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotEqualTo(String value) {
-            addCriterion("app_index <>", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexGreaterThan(String value) {
-            addCriterion("app_index >", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexGreaterThanOrEqualTo(String value) {
-            addCriterion("app_index >=", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexLessThan(String value) {
-            addCriterion("app_index <", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexLessThanOrEqualTo(String value) {
-            addCriterion("app_index <=", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexLike(String value) {
-            addCriterion("app_index like", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotLike(String value) {
-            addCriterion("app_index not like", value, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexIn(List<String> values) {
-            addCriterion("app_index in", values, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotIn(List<String> values) {
-            addCriterion("app_index not in", values, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexBetween(String value1, String value2) {
-            addCriterion("app_index between", value1, value2, "appIndex");
-            return (Criteria) this;
-        }
-
-        public Criteria andAppIndexNotBetween(String value1, String value2) {
-            addCriterion("app_index not between", value1, value2, "appIndex");
-            return (Criteria) this;
-        }
-
         public Criteria andAppNameIsNull() {
             addCriterion("app_name is null");
             return (Criteria) this;
@@ -295,7 +225,7 @@ public class AppInformationExample {
         }
 
         public Criteria andAppNameLike(String value) {
-            addCriterion("CONCAT( app_name , app_spell )like", value, "appName");
+            addCriterion("CONCAT( app_name , app_spell ) like", value, "appName");
             return (Criteria) this;
         }
 
@@ -464,133 +394,63 @@ public class AppInformationExample {
             return (Criteria) this;
         }
 
-        public Criteria andDevIdIsNull() {
-            addCriterion("dev_id is null");
+        public Criteria andCreatorIdIsNull() {
+            addCriterion("creator_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdIsNotNull() {
-            addCriterion("dev_id is not null");
+        public Criteria andCreatorIdIsNotNull() {
+            addCriterion("creator_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdEqualTo(Integer value) {
-            addCriterion("dev_id =", value, "devId");
+        public Criteria andCreatorIdEqualTo(Integer value) {
+            addCriterion("creator_id =", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdNotEqualTo(Integer value) {
-            addCriterion("dev_id <>", value, "devId");
+        public Criteria andCreatorIdNotEqualTo(Integer value) {
+            addCriterion("creator_id <>", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdGreaterThan(Integer value) {
-            addCriterion("dev_id >", value, "devId");
+        public Criteria andCreatorIdGreaterThan(Integer value) {
+            addCriterion("creator_id >", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("dev_id >=", value, "devId");
+        public Criteria andCreatorIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("creator_id >=", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdLessThan(Integer value) {
-            addCriterion("dev_id <", value, "devId");
+        public Criteria andCreatorIdLessThan(Integer value) {
+            addCriterion("creator_id <", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdLessThanOrEqualTo(Integer value) {
-            addCriterion("dev_id <=", value, "devId");
+        public Criteria andCreatorIdLessThanOrEqualTo(Integer value) {
+            addCriterion("creator_id <=", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdIn(List<Integer> values) {
-            addCriterion("dev_id in", values, "devId");
+        public Criteria andCreatorIdIn(List<Integer> values) {
+            addCriterion("creator_id in", values, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdNotIn(List<Integer> values) {
-            addCriterion("dev_id not in", values, "devId");
+        public Criteria andCreatorIdNotIn(List<Integer> values) {
+            addCriterion("creator_id not in", values, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdBetween(Integer value1, Integer value2) {
-            addCriterion("dev_id between", value1, value2, "devId");
+        public Criteria andCreatorIdBetween(Integer value1, Integer value2) {
+            addCriterion("creator_id between", value1, value2, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andDevIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("dev_id not between", value1, value2, "devId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameIsNull() {
-            addCriterion("dev_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameIsNotNull() {
-            addCriterion("dev_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameEqualTo(String value) {
-            addCriterion("dev_name =", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameNotEqualTo(String value) {
-            addCriterion("dev_name <>", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameGreaterThan(String value) {
-            addCriterion("dev_name >", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameGreaterThanOrEqualTo(String value) {
-            addCriterion("dev_name >=", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameLessThan(String value) {
-            addCriterion("dev_name <", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameLessThanOrEqualTo(String value) {
-            addCriterion("dev_name <=", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameLike(String value) {
-            addCriterion("dev_name like", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameNotLike(String value) {
-            addCriterion("dev_name not like", value, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameIn(List<String> values) {
-            addCriterion("dev_name in", values, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameNotIn(List<String> values) {
-            addCriterion("dev_name not in", values, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameBetween(String value1, String value2) {
-            addCriterion("dev_name between", value1, value2, "devName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDevNameNotBetween(String value1, String value2) {
-            addCriterion("dev_name not between", value1, value2, "devName");
+        public Criteria andCreatorIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("creator_id not between", value1, value2, "creatorId");
             return (Criteria) this;
         }
 

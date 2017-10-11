@@ -1,6 +1,5 @@
 package com.fise.controller.appstore;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,26 +10,21 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
-import com.fise.model.entity.AppAdvert;
 import com.fise.model.entity.AppChannel;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppSplash;
-import com.fise.model.entity.AppStore;
-import com.fise.model.result.AdvertBaseResult;
-import com.fise.model.result.AppBaseResult;
 import com.fise.model.result.AppChannelResult;
-import com.fise.model.result.AppDetailResult;
-import com.fise.model.result.StoreSplashResult;
 import com.fise.server.appstore.IAppChannelService;
 import com.fise.server.appstore.IAppSplashService;
 import com.fise.server.appstore.IAppStoreService;
-import com.fise.utils.StringUtil;
 
 @RestController
 @RequestMapping("/boss/store")
@@ -127,11 +121,11 @@ public class AppStoreController {
 	public Response getsimpleSearch(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
 		logger.info(param.toString());
-		String appName=(String) param.get("app_name");
+		String appName = (String) param.get("app_name");
 		response = appSvr.queryByAppName(appName);
 		return response;
 	}
-	
+
 	@IgnoreAuth
 	@RequestMapping(value = "/allSearch", method = RequestMethod.POST)
 	public Response getAllSearch(@RequestBody @Valid Page<AppInformation> param) {
@@ -140,8 +134,6 @@ public class AppStoreController {
 		response = appSvr.queryByAppName(param);
 		return response;
 	}
-	
-	
 
 	/**
 	 * 热门搜索
@@ -165,12 +157,11 @@ public class AppStoreController {
 	@RequestMapping(value = "/appinfo", method = RequestMethod.POST)
 	public Response getAppInfo(@RequestBody @Valid Map<String, Object> param) {
 		Response response = new Response();
-		String appIdex=(String) param.get("app_index");
-		
-		if (StringUtil.isEmpty(appIdex)) {
+		Integer appIdex = (Integer) param.get("app_id");
+		if(appIdex.equals("")||appIdex==null){
 			return response.failure(ErrorCode.ERROR_PARAM_BIND_EXCEPTION);
 		}
-		response = appSvr.queryByAppIndex(appIdex);
+		response = appSvr.queryByAppId(appIdex);
 		return response;
 	}
 
@@ -183,14 +174,56 @@ public class AppStoreController {
 		return resp;
 	}
 
+	/**
+	 * 开发者模式下的新增APP
+	 * 
+	 * @param param
+	 * @return
+	 */
 	@IgnoreAuth
-	@RequestMapping(value = "/appinsert", method = RequestMethod.POST)
-	public Response appInsert(@RequestBody @Valid AppStore param) {
-
+	@RequestMapping(value = "/appInsert", method = RequestMethod.POST)
+	public Response appInsert(@RequestBody  Map<String, Object> param, 
+			                  @RequestParam("images") MultipartFile[] uploadPhoto,
+			                  @RequestParam("app") MultipartFile uploadApp) {
+		
 		Response response = new Response();
-		response = appSvr.insert(param);
+		
+		response = appSvr.appInsert(param,uploadPhoto,uploadApp);
 		return response;
 	}
+
+	/**
+	 * 开发者模式下的修改APP
+	 * 
+	 * @param param
+	 * @return
+	 */
+	@IgnoreAuth
+	@RequestMapping(value = "/appModify", method = RequestMethod.POST)
+	public Response appModify(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		response = appSvr.appModify(param);
+		return response;
+	}
+
+	/**
+	 * 开发者模式下的删除APP
+	 * 
+	 * @param param
+	 * @return
+	 */
+	@IgnoreAuth
+	@RequestMapping(value = "/appDelete", method = RequestMethod.POST)
+	public Response appDelete(@RequestBody @Valid Map<String, Object> param) {
+		Response response = new Response();
+		Integer appId = (Integer) param.get("app_id");
+		response = appSvr.appDelete(appId);
+		return response;
+	}
+
+	/**
+	 * 
+	 */
 
 	// @IgnoreAuth
 	// @RequestMapping(value = "/home", method = RequestMethod.POST)
