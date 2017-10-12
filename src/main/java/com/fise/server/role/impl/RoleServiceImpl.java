@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -195,13 +196,8 @@ public class RoleServiceImpl implements IRoleService {
     		permissionDao.updateByExample(record, example);
 		}else{
 			WiPermission data = new WiPermission();
-			data.setCompanyId(param.getCompanyId());
-			data.setModuleId(param.getModuleId());
-			data.setRoleId(param.getRoleId());
-			data.setInsertAuth(param.getInsertAuth());
-			data.setUpdateAuth(param.getUpdateAuth());
-			data.setQueryAuth(param.getQueryAuth());
-			data.setStatus(param.getStatus());
+			
+			BeanUtils.copyProperties(param, data);
 			Integer tNow = DateUtil.getLinuxTimeStamp();
 			data.setUpdated(tNow);
 			data.setCreated(tNow);
