@@ -101,7 +101,11 @@ public class RoleController {
         if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-        response = roleSvr.insertAuth(role);
+        try {
+        	response = roleSvr.insertAuth(role);
+		} catch (Exception e) {
+			logger.info("新增权限失败");
+		}
         logger.info("新增权限:" + role.toString() + " 结果:" + response.getMsg());
         return response;
     }

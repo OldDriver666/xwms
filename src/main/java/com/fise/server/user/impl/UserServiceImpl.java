@@ -102,7 +102,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         criteria.andCompanyidEqualTo(param.getCompanyId());
-        criteria.andTypeEqualTo(19);
+//        criteria.andTypeEqualTo(19);
         List<IMUser> dataList = IMUserDao.selectByExample(example);
         if (dataList.size() == 0) {
             return response;
