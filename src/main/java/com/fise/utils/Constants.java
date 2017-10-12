@@ -129,4 +129,6 @@ public interface Constants {
 	public static final String ES_GYM_TYPE = "gym";
 	
 	public static final String FISE_SUPPER_ACCOUNT_NAME = "Administrator";
+	
+	public static final Integer PERMISSION_STATU_VISIBLE = 1;          //权限可见状态
 }
