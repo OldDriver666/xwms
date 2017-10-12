@@ -497,39 +497,23 @@ Util.Page = (function() {
         var url = this.url;
         var data = sendData;
         var callback = function(result) {
-            /*if(result.Status !=0){
-                Util.showDialog({title:"提示",msg:result.ErrorInfo,okBth:"确定"});
-            }*/
             if(!result.DeviceInfo){
                 result.DeviceInfo = null;
             }
             that.allPageSize = Math.ceil(result.DeviceCount/that.pageSize);
-            var list = null;
-            if (that.resultFilter) {
-                list = that.resultFilter(result);
-            } else {
-                list = result.DeviceInfo;
-            }
+            var list = result.DeviceInfo;
 
             // 把当前索引号添加进去
             for (var i = 0; i < list.length; i++) {
                 var h_ = list[i];
                 h_.DATAINDEX_ = (that.pageNow - 1) * that.pageSize + i + 1;
             }
-            var html = "";
-            if (that.tmplEvents) {
-                html = $("#" + that.rowTemplateId).tmpl(list, that.tmplEvents);
-            } else {
-                html = $("#" + that.rowTemplateId).tmpl(list);
-            }
+            var html = $("#" + that.rowTemplateId).tmpl(list);
 
             var bindTargets = html.find(".js_bind_data");
             if (typeof (that.targetContentId) == "string") {
-                // if(html.length!=0){
                 $("#" + that.targetContentId).html(html);
-                // }
-                bindTargets = $("#" + that.targetContentId).find(
-                    ".js_bind_data");
+                bindTargets = $("#" + that.targetContentId).find(".js_bind_data");
             } else {
                 that.targetContentId.html(html);
                 bindTargets = that.targetContentId.find(".js_bind_data");
@@ -550,9 +534,7 @@ Util.Page = (function() {
                 nodeName = nodeName.toLowerCase();
                 if (nodeName == "tbody") {
                     var length = target.prev().find("th").length || target.prev().find("td").length || 7;
-                    target.append("<tr><td colspan='"
-                        + length
-                        + "' class='t_a_c'>暂无数据</td></tr>");
+                    target.append("<tr><td colspan='" + length + "' class='t_a_c'>暂无数据</td></tr>");
                 } else {
                     target.append("<div class='no_data_div'>暂无数据</div>");
                 }
@@ -569,22 +551,3 @@ Util.Page = (function() {
     };
     return Page;
 })();
-
-/*Util.ajaxLoadData(url,data,"POST",true,function(result) {
- if(result.Status == ReturnCode.SUCCESS && result.AuthenticCode != ""){
- $('#pageContent').find("tr").remove();
- $("#pageTmpl").tmpl(result.DeviceInfo).appendTo('#pageContent');
-
- if($('#pageContent tr').length == 0 || result.Status == 6){
- $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
- }
- }else if(result.Status == 6){
- $('#pageContent').find("tr").remove();
- $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
- }else {
- alert("请求出错！");
- }
- },function() {
- alert("服务器开个小差，请稍后重试！")
- });
- */

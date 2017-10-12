@@ -32,8 +32,8 @@ $(function(){
                 window.location.href = "login.html";
             } else {
             }
-        },function() {
-            alert("服务器异常，请稍后重试！");
+        },function(errorMsg) {
+            alert(errorMsg)
         });
     });
 
@@ -77,8 +77,8 @@ $(function(){
                     $("#pageMenu").tmpl(parent_data).appendTo('#menuContent');
                 } else {
                 }
-            },function() {
-                alert("服务器异常，请稍后重试！");
+            },function(errorMsg) {
+                alert(errorMsg)
             });
 		},
         getMyInfoData: function () {

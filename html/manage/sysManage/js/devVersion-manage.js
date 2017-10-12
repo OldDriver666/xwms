@@ -53,8 +53,10 @@ $(function() {
 						action.loadPageData();
 					}
                 }else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
+            },function(errorMsg) {
+                alert(errorMsg)
             });
 		},
 		//获取所有数据
@@ -82,7 +84,7 @@ $(function() {
 					}
                 } else {
 					$('#pageContent').find("tr").remove();
-					alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
                 alert(errorMsg)
@@ -121,9 +123,11 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			});
+			},function(errorMsg) {
+                alert(errorMsg)
+            });
 		},
 		//删除数据
 		deleteConfig : function(id) {
@@ -139,9 +143,11 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-						alert(result.msg);
+                        toastr.error(result.msg);
 					}
-				});
+				},function(errorMsg) {
+                    alert(errorMsg)
+                });
 			}
 		}
 	};
@@ -239,7 +245,6 @@ $(function() {
 		}else if(action == "edit"){
 			    window.action.edit();
 		}
-
 	});
 
 	$("#btn-search").on('click', function() {

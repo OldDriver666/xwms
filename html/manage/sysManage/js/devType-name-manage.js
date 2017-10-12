@@ -49,8 +49,10 @@ $(function() {
                     action.loadPageData();
 					action.allDevTypeQuery();
                 }else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
+            },function(errorMsg) {
+                alert(errorMsg);
             });
 		},
 		//获取所有数据
@@ -79,10 +81,10 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else {
-					alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                alert(errorMsg);
             });
 
 		},
@@ -101,11 +103,11 @@ $(function() {
 					allDevTypeArray = result.data;
 					localStorage.setItem("allDevTypeArray",JSON.stringify(allDevTypeArray));
 				} else {
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			},function() {
-				alert("服务器开个小差，请稍后重试！")
-			});
+			},function(errorMsg) {
+                alert(errorMsg);
+            });
 
 		},
 		//编辑数据
@@ -125,9 +127,11 @@ $(function() {
                     action.loadPageData();
 					action.allDevTypeQuery();
 				}else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			});
+			},function(errorMsg) {
+                alert(errorMsg);
+            });
 		},
 		//删除数据
 		deleteConfig : function(id) {
@@ -146,9 +150,11 @@ $(function() {
                         action.loadPageData();
 						action.allDevTypeQuery();
 					}else{
-						alert(result.msg);
+                        toastr.error(result.msg);
 					}
-				});
+				},function(errorMsg) {
+                    alert(errorMsg);
+                });
 			}
 		}
 	};

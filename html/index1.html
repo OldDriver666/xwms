@@ -124,6 +124,7 @@
 <script src="js/Util.js"></script>
 <script src="resource/lib/jquery.md5.js"></script>
 <script src="js/index1.js"></script>
+<script src="js/myDevType.js"></script>
 <script src="js/allCompanyInfo.js"></script>
 <script src="js/myUserRoles.js"></script>
 <script src="js/polling.js"></script>
@@ -156,14 +157,14 @@
             <dd>
                 <a class="layui-nav-child-a" href="javascript:;">
                     <i class="layui-icon" style="top:2px; font-size:16px;">&#xe602;</i>
-                    <cite>${depart_name}</cite>
+                    <cite>${departName}</cite>
                 </a>
                 <ul class="layui-nav-child" style="display: none">
                   {{each(i,item) children}}
                     <li>
-                        <a class="children-menu" href="javascript:;" data-url="map/locationMain.html?id=${depart_id}">
+                        <a class="children-menu" href="javascript:;" data-url="map/locationMain.html?id=${id}">
                             <i class="layui-icon" style="top:2px; font-size:16px;"></i>
-                            <cite>${item.depart_name}</cite>
+                            <cite>${item.departName}</cite>
                         </a>
                     </li>
                   {{/each}}

@@ -24,13 +24,10 @@ $(function(){
                 localStorage.removeItem("allDevTypeArray");
                 localStorage.removeItem("allCompanyArray");
                 window.location.href = "login.html";
-            } else if(result.Status == 1){
-                alert("服务器开个小差，请稍后重试！");
             } else {
-                alert("账户名、密码或错误！");
             }
-        },function() {
-            alert("服务器开个小差，请稍后重试！");
+        },function(errorMsg) {
+            alert(errorMsg)
         });
     });
 
@@ -75,42 +72,43 @@ $(function(){
                     for(var i in parent_data){
                         $("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');
                     }
-
-                } else if(result.Status == 1){
-                    alert("服务器开个小差，请稍后重试！");
                 } else {
-                    alert("账户名、密码或错误！");
                 }
-            },function() {
-                alert("服务器开个小差，请稍后重试！");
+            },function(errorMsg) {
+                alert(errorMsg)
             });
 		},
         loadCheckMenu : function(){
             var url = ctx + "boss/depart/query";
             var moduleId= 0;
-            var data = {
-                "creator_id": parseInt(company_id),
-                "depart_name": parseInt(depart_id)
-            };
+            var data = new Object();
+            data.depart_name = '';
+            data.creator_id = parseInt(admin_id);
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == 0) {
                     var data = result.data;
-                    var checkMenuList = [];
-
+                    var allMenuList = [];
                     for(var i=0; i<data.length; i++){
-                        if(data[i].parent_id == 0){
-                            var children_menu = [];
-                            for(var j=0; j<data.length; j++){
-                                if(data[i].depart_id == data[j].parent_id){
-                                    children_menu.push(data[j]);
+                        if(data[i].parentId == 0) {
+                            var menuList1 = [];
+                            menuList1.id = data[i].id
+                            menuList1.departName = data[i].departName
+                            menuList1.children = []
+                            for (var j = 0; j < data.length; j++) {
+                                if (data[i].id == data[j].parentId) {
+                                    var menuList2 = [];
+                                    menuList2.id = data[j].id
+                                    menuList2.departName = data[j].departName
+                                    menuList1.children.push(menuList2)
                                 }
                             }
-                            data[i].children = children_menu;
-                            checkMenuList.push(data[i]);
+                            allMenuList.push(menuList1)
                         }
                     }
-                    $("#pageMenu2").tmpl(checkMenuList).appendTo('#menuContent2');
+                    $("#pageMenu2").tmpl(allMenuList).appendTo('#menuContent2');
                 }
+            },function(errorMsg) {
+                alert(errorMsg)
             });
         },
         sortBy: function(attr,rev){

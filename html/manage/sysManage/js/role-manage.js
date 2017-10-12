@@ -47,7 +47,6 @@ $(function() {
                 if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
 					$("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
-					localStorage.setItem("myUserRolesArray",JSON.stringify(result.data));
 
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
@@ -63,6 +62,21 @@ $(function() {
 				alert(errorMsg);
             });
 		},
+        loadDepartData : function() {
+            var url = ctx + "boss/depart/query";
+            var data = new Object();
+            data.depart_name = '';
+            data.creator_id = parseInt(admin_id);
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS){
+                    $("#pageUserRoles").tmpl(result.data).appendTo('#role-departId');
+                    localStorage.setItem("departArray",JSON.stringify(result.data));
+                }else {
+                }
+            },function(errorMsg) {
+                alert(errorMsg);
+            });
+        },
 		//新增用户角色
 		add : function() {
 			/*var add_depart_id = null;
@@ -118,7 +132,7 @@ $(function() {
                     toastr.error(result.msg);
 				}
 			},function(errorMsg) {
-                toastr.error(errorMsg);
+                alert(errorMsg);
             });
 		},
         //删除数据
@@ -138,20 +152,25 @@ $(function() {
 	};
 	window.action = action;
 	action.init();
+	action.loadDepartData();
 	action.loadPageData();
 
 
 	$("#addTempl2-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl2");
-		if (!e.relatedTarget) {
-			$("h4#addTempl2-modal-label").text("编辑用户角色");
-			$form.data("action", "edit");
-		} else if (e.relatedTarget.id = "btn-add-userRoles") {
-			$("h4#addTempl2-modal-label").text("添加用户角色");
-			$form.data("action", "add");
-			$form[0].reset();
-		}
+        if (!e.relatedTarget) {
+            $("#role-departId-wrap").hide();
+            $("#role-depart-txt-wrap").show();
+            $("h4#addTempl2-modal-label").text("编辑用户角色");
+            $form.data("action", "edit");
+        } else if (e.relatedTarget.id = "btn-add-userRoles") {
+            $("#role-departId-wrap").show();
+            $("#role-depart-txt-wrap").hide();
+            $("h4#addTempl2-modal-label").text("添加用户角色");
+            $form.data("action", "add");
+            $form[0].reset();
+        }
 	});
 
     //编辑获取数据
@@ -162,7 +181,8 @@ $(function() {
         $("#input-authLevel").val(that.find("td").eq(1).text());
         $("#input-name").val(that.find("td").eq(2).text());
 		$("#input-description").val(that.find("td").eq(3).text());
-		$("#role-departId").val(that.find("td").eq(5).text());
+		$("#role-depart-txt").val(that.find("td").eq(5).text());
+        //$("#input-userRoles-txt").val($('#search-input-userRoles option:selected').text());
 
         $("#addTempl2-modal").modal("show");
     });

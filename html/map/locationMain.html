@@ -85,6 +85,7 @@
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/Util.js"></script>
+<script type ="text/javascript" src="../resource/plugin/toastr/toastr.min.js"></script>
 <script type="text/javascript" src="js/locationMain.js"></script>
 <!--卫星地图，路况地图等需要ui/main.js-->
 <script src="http://webapi.amap.com/ui/1.0/main.js?v=1.0.10"></script>
@@ -102,6 +103,13 @@
     $("#map-container").on('click','.infoWindow-updata',function () {
         alert('更新成功')
     })
+
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1500"
+    };
 </script>
 </body>
 </html>

@@ -54,8 +54,10 @@ $(function() {
                     toastr.success("添加成功!");
                     action.loadPageData();
                 }else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
+            },function(errorMsg) {
+                alert(errorMsg)
             });
 		},
 		//获取所有数据
@@ -78,12 +80,11 @@ $(function() {
 						$(".table-manage").hide();
 					}
                 } else {
-					alert(result.msg);
+                    toastr.error(result.msg);
                 }
             },function(errorMsg) {
                 alert(errorMsg)
             });
-
 		},
 		//编辑数据
 		edit : function() {
@@ -107,9 +108,11 @@ $(function() {
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
-					alert(result.msg);
+                    toastr.error(result.msg);
 				}
-			});
+			},function(errorMsg) {
+                alert(errorMsg)
+            });
 		},
 		//删除数据
 		deleteItem : function(id) {
@@ -123,9 +126,11 @@ $(function() {
                         toastr.success("删除成功!");
                         action.loadPageData();
 					}else{
-						alert(result.msg);
+                        toastr.error(result.msg);
 					}
-				});
+				},function(errorMsg) {
+                    alert(errorMsg)
+                });
 			}
 		}
 	};
