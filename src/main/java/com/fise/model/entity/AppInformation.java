@@ -24,6 +24,8 @@ public class AppInformation implements Serializable {
      * 开发者ID
      */
     private Integer creatorId;
+    
+    private String creatorName;
 
     /**
      * 应用大类型
@@ -145,7 +147,15 @@ public class AppInformation implements Serializable {
         this.creatorId = creatorId;
     }
 
-    public String getTopCategory() {
+    public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
+
+	public String getTopCategory() {
         return topCategory;
     }
 

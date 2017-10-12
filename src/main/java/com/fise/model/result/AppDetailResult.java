@@ -15,6 +15,8 @@ public class AppDetailResult {
     private String appName;
 
     private Integer creatorId;
+    
+    private String creatorName;
 
     private String topCategory;
 
@@ -50,6 +52,14 @@ public class AppDetailResult {
     
     private List<String> images;
     
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
+
 	public Integer getCreatorId() {
 		return creatorId;
 	}
@@ -213,6 +223,7 @@ public class AppDetailResult {
     public void init(AppInformation data){
         this.id = data.getId();
         this.creatorId=data.getCreatorId();
+        this.creatorName=data.getCreatorName();
         this.appName = data.getAppName();
         this.topCategory = data.getTopCategory();
         this.category = data.getCategory();

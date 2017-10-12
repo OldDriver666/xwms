@@ -19,19 +19,19 @@ import com.fise.dao.AppAdvertMapper;
 import com.fise.dao.AppChannelMapper;
 import com.fise.dao.AppInformationMapper;
 import com.fise.dao.AppStoreMapper;
+import com.fise.dao.WiAdminMapper;
 import com.fise.model.entity.AppAdvert;
 import com.fise.model.entity.AppAdvertExample;
 import com.fise.model.entity.AppChannel;
 import com.fise.model.entity.AppChannelExample;
 import com.fise.model.entity.AppInformation;
 import com.fise.model.entity.AppInformationExample;
-import com.fise.model.entity.AppStore;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.result.AdvertBaseResult;
 import com.fise.model.result.AppBaseResult;
 import com.fise.model.result.AppChannelResult;
 import com.fise.model.result.AppDetailResult;
 import com.fise.server.appstore.IAppStoreService;
-import com.fise.utils.StringUtil;
 
 @Service
 public class AppStoreServiceImpl implements IAppStoreService {
@@ -48,6 +48,9 @@ public class AppStoreServiceImpl implements IAppStoreService {
 	@Autowired
 	AppChannelMapper appChannelDao;
 
+	@Autowired
+	WiAdminMapper adminMapper;
+	
 	@Override
 	public Response appInsert(Map<String ,Object> param,MultipartFile[] uploadPhoto,MultipartFile uploadApp) {
 		Response response = new Response();
@@ -306,7 +309,11 @@ public class AppStoreServiceImpl implements IAppStoreService {
 			response.setMsg("亲，找不到您要的APP~");
 			return response;
 		}
+		
+		
 		AppDetailResult result = new AppDetailResult();
+		String creatorName=getCreatorName(data.get(0).getCreatorId());
+		data.get(0).setCreatorName(creatorName);
 		result.init(data.get(0));
 		response.success(result);
 		return response;
@@ -452,5 +459,14 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		BigDecimal megabyte = new BigDecimal(1024 * 1000);
 		float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP).floatValue();
 		return returnValue+"M";
+	}
+	
+	//通过creatorId获取creatorName  (creatorName是关联在wi_admin表中的account字段)
+	private String getCreatorName(Integer creatorId){
+
+		WiAdmin admin=adminMapper.selectByPrimaryKey(creatorId);
+	    String creatorName=	admin.getAccount();
+	    
+		return creatorName;
 	}
 }
