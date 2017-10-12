@@ -1,10 +1,10 @@
 package com.fise.server.role.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,7 @@ import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.entity.WiOrganizationRoleExample.Criteria;
 import com.fise.model.entity.WiPermission;
+import com.fise.model.entity.WiPermissionExample;
 import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleParam;
 import com.fise.model.param.QueryRoleParam;
@@ -27,6 +28,7 @@ import com.fise.model.result.ModulePermissResult;
 import com.fise.server.depart.IDepartmentService;
 import com.fise.server.module.IModuleService;
 import com.fise.server.role.IRoleService;
+import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
@@ -181,20 +183,26 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public Response insertAuth(InsertAuthParam param) {
-        Response resp = new Response();
-        WiPermission data = new WiPermission();
-        data.setCompanyId(param.getCompanyId());
-        data.setModuleId(param.getModuleId());
-        data.setRoleId(param.getRoleId());
-        data.setInsertAuth(param.getInsertAuth());
-        data.setUpdateAuth(param.getUpdateAuth());
-        data.setQueryAuth(param.getQueryAuth());
-        data.setStatus(param.getStatus());
-        Integer tNow = DateUtil.getLinuxTimeStamp();
-        data.setUpdated(tNow);
-        data.setCreated(tNow);
-        
-        permissionDao.insert(data);
+    	Response resp = new Response();
+    	//根据角色id和模块id查询是否有记录
+    	WiPermissionExample example = new WiPermissionExample();
+    	WiPermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andRoleIdEqualTo(param.getRoleId());
+        criteria.andModuleIdEqualTo(param.getModuleId());
+    	long l = permissionDao.countByExample(example);
+    	if (l > 0) {
+    		WiPermission record = new WiPermission();
+    		record.setStatus(Constants.PERMISSION_STATU_VISIBLE);
+    		permissionDao.updateByExample(record, example);
+		}else{
+			WiPermission data = new WiPermission();
+			
+			BeanUtils.copyProperties(param, data);
+			Integer tNow = DateUtil.getLinuxTimeStamp();
+			data.setUpdated(tNow);
+			data.setCreated(tNow);
+			permissionDao.insert(data);
+		}
         return resp;
     }
 
