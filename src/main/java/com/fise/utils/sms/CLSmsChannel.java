@@ -10,8 +10,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.fise.framework.config.ConfigProperties;
-import com.qq.jutil.j4log.Logger;
+
 
 
 public class CLSmsChannel {

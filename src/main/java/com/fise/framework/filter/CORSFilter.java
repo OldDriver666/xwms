@@ -7,9 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.qq.jutil.j4log.Logger;
 
 /** 
  * @author 大表哥

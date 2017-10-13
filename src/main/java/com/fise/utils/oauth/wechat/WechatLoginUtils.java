@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
@@ -19,8 +20,8 @@ import com.fise.framework.config.ConfigProperties;
 import com.fise.model.param.OAuthParam;
 import com.fise.utils.Constants;
 import com.fise.utils.JsonUtil;
-import com.qq.jutil.j4log.Logger;
-import com.qq.jutil.string.StringUtil;
+import com.fise.utils.StringUtil;
+
 
 public class WechatLoginUtils {
 	// 微信登录获取token的根地址

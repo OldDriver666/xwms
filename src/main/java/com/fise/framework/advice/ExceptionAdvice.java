@@ -1,6 +1,7 @@
 package com.fise.framework.advice;
 
 
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -19,7 +20,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.framework.exception.AuthException;
 import com.fise.framework.exception.RequestHeaderException;
-import com.qq.jutil.j4log.Logger;
+
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
