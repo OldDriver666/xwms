@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.log4j.Logger;
 import org.apache.lucene.queryparser.xml.FilterBuilder;
 import org.apache.lucene.search.Sort;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -31,7 +32,7 @@ import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import com.fise.base.Page;
 import com.fise.framework.config.ConfigProperties;
 import com.fise.model.entity.Gym;
-import com.qq.jutil.j4log.Logger;
+
 
 public class ElasticSearchManager {
 	private volatile static ElasticSearchManager instance;

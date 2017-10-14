@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
@@ -12,7 +14,7 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.framework.config.ConfigProperties;
 import com.fise.model.result.OssUploadSignResult;
-import com.qq.jutil.j4log.Logger;
+
 
 /** 
  * @author 大表哥

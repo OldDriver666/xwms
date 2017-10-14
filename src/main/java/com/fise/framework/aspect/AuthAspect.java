@@ -1,6 +1,7 @@
 package com.fise.framework.aspect;
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -11,7 +12,6 @@ import com.fise.framework.exception.RequestHeaderException;
 import com.fise.framework.redis.RedisManager;
 import com.fise.utils.Constants;
 import com.fise.utils.StringUtil;
-import com.qq.jutil.j4log.Logger;
 
 import redis.clients.jedis.Jedis;
 /** 

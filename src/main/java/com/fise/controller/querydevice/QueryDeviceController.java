@@ -13,7 +13,8 @@ import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.param.QueryDeviceParam;
 import com.fise.server.deviceconfig.IDeviceConfigService;
-import com.qq.jutil.string.StringUtil;
+import com.fise.utils.StringUtil;
+
 
 @RestController
 @RequestMapping("/boss")
