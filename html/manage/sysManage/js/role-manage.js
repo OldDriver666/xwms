@@ -80,11 +80,13 @@ $(function() {
 		//新增用户角色
 		add : function() {
 			/*var add_depart_id = null;
-			if(1 == parseInt(role_level)){
-				if($('#role-companyId option:selected').val() == ""){
+			console.log(parseInt($('#role-departId option:selected').val()))
+			console.log(parseInt(role_level))
+			if(parseInt(role_level) == 1){
+				if($('#role-departId option:selected').val() == ""){
 					add_depart_id = null;
 				}else{
-					add_depart_id = parseInt($('#role-companyId option:selected').val());
+					add_depart_id = parseInt($('#role-departId option:selected').val());
 				}
 			}else{
 				add_depart_id = parseInt(depart_id);
@@ -97,7 +99,7 @@ $(function() {
 			data.role_name = $("#input-name").val();
 			data.desc = $("#input-description").val();
 			data.company_id = parseInt(company_id);
-			data.depart_id = parseInt(depart_id);
+			data.depart_id = parseInt($('#role-departId option:selected').val());
             data.creator_id = parseInt(admin_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
