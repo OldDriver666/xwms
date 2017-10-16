@@ -16,8 +16,6 @@ public class Page<T> implements Pagination,Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    
-    
     @JsonProperty("page_no")
     @NotNull
     private int pageNo ; // 当前页, 默认为第1页

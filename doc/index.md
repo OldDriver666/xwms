@@ -2370,21 +2370,17 @@ null 没有数据返回 看code是否成功
       }
    ]
 }
-
 4.搜索App
-   （1）加载两条数据（不分页）
+   （1）加载两条数据（
 
-   |   接口地址    |   boss/store/searchApp    |
+   |   接口地址    |   boss/store/simpleSearch   |
    |   ---         |   ---                   |
    |   请求方式    |   HTTP POST             |
    |   参数格式    |   JSON                        |
 ####请求
 {
-  "param":{
-             "app_name":"超",
-             "autoApp":"true"
-           }
- }
+   "app_name":"超级课程表"    
+}
 
 ####返回 
 {
@@ -2392,43 +2388,34 @@ null 没有数据返回 看code是否成功
    "msg": "ok",
    "data": [
       {
-         "appId": 3,
          "appName": "超级课程表",
          "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
          "description": "课程学习",
          "version": "9.1.2",
          "versionCode": "111",
          "category": "日常工具",
-         "star": "4",
+         "star": "4.8",
          "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
          "iconType": 1,
-         "size": "19.32M"
-      },
-      {
-         "appId": 4,
-         "appName": "超级课程",
-         "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
-         "description": "课程学习",
-         "version": "9.1.2",
-         "versionCode": "321",
-         "category": "日常工具",
-         "star": "4",
-         "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
-         "iconType": 2,
-         "size": "19.32M"
+         "size": "19.32M",
+         "packageName": "com.fise.app",
+         "appId": 3
       }
    ]
 }
 
 （2）点击进去，加载多条数据（分页）
 
+  |   接口地址    |   boss/store/allSearch   |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON        
   ####请求
 {
   "page_no":1,
   "param":{
-             "app_name":"超",
-             "autoApp":"false"
-           }
+             "app_name":"超级课程表"
+          }
  }
 
 ####返回 
@@ -2437,34 +2424,36 @@ null 没有数据返回 看code是否成功
    "msg": "ok",
    "data": {
       "page_no": 1,
-      "page_size": 1,
-      "total_count": 3,
-      "total_page_count": 3,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
       "param": null,
       "extra_param": null,
+      "hasMore": false,
       "result": [
          {
-            "appId": 3,
             "appName": "超级课程表",
             "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
             "description": "课程学习",
             "version": "9.1.2",
             "versionCode": "111",
             "category": "日常工具",
-            "star": "4",
+            "star": "4.8",
             "icon": "http://p18.qhimg.com/t0165cf86f621865736.png",
             "iconType": 1,
-            "size": "19.32M"
+            "size": "19.32M",
+            "packageName": "com.fise.app",
+            "appId": 3
          }
-      ],
-      "hasMore": true
+      ]
    }
 }
-
-
-
 ++++++++++++++热门搜索++++++++
 
+   |   接口地址    |   boss/store/hotSearch  |
+   |   ---    |   ---                |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON        
   ####请求
 {
  
@@ -2514,7 +2503,6 @@ null 没有数据返回 看code是否成功
       "result": [
          {
             "appId": 1,
-            "appIndex": "anzhuoshangdian",
             "appName": "安卓商店",
             "download": "http://shouji.360tpcdn.com/170809/b1db53b15738fa3b400745049d2015c1/com.juying.androidmarket_20000001.apk",
             "description": "安卓市场",
@@ -2529,7 +2517,6 @@ null 没有数据返回 看code是否成功
          },
          {
             "appId": 2,
-            "appIndex": "zipaishenqi",
             "appName": "自拍神器",
             "download": "http://shouji.360tpcdn.com/170726/0a4b5a3e1e9eec332b7bffd9b2064404/com.thundersoft.hz.selfportrait_61.apk",
             "description": "自拍美颜",
@@ -2544,7 +2531,6 @@ null 没有数据返回 看code是否成功
          },
          {
             "appId": 3,
-            "appIndex": "chaojikechengbiao",
             "appName": "超级课程表",
             "download": "http://shouji.360tpcdn.com/170831/4fda99a5a2e9a414708babeb308b93bc/com.xtuone.android.syllabus_107.apk",
             "description": "课程学习",
@@ -2570,7 +2556,7 @@ null 没有数据返回 看code是否成功
    |   参数格式    |   JSON                        |
 ####请求
 {
-"app_index":"X"
+"app_id":"X"
 }
 ####返回
 
@@ -2598,15 +2584,83 @@ null 没有数据返回 看code是否成功
          "http://p16.qhimg.com/dm/180_300_/t01b32d85a47074f32a.jpg",
          "http://p16.qhimg.com/dm/180_300_/t018ec0d9633156b02b.jpg"
       ],
-      "app_id": 5,
-      "app_index": "chaoji",
-      "app_name": "超级",
-      "dev_id": 0,
-      "dev_name": "广州超级周末科技有限公司",
-      "top_category": "软件"
+      "appId": 5,
+      "appName": "超级",
+      "devId": 0,
+      "devName": "广州超级周末科技有限公司",
+      "topCategory": "软件"
    }
 }
 
 
 
-```
++++++++++++++++++++应用市场的开发者模式+++++++++++++++++++++
+①开发者模式下的新增APP
+   |   接口地址    |   boss/store/appInsert    |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                  |
+####请求                              
+{
+"app_name":"X",             #应用名称：    app_name        (小雨)
+"app_spell":"X",            #应用名称拼音：app_spell       (xiaoyu)
+"creator_id":X,             #创建者ID：    creator_id      (2)
+"top_category":"X",         #应用大类型：  top_category    (应用 软件)
+"category":"X",             #应用小类型：  category        (系统工具 日常工具 自拍神器)
+"icon":"X",                 #应用图标：    icon        
+"icon_type":X,              #应用图标类型：icon_type        (1  2   3)
+"description":"X",          #应用描述：    description     (这是一个游戏app) 
+"version":"X",              #版本：        version         (1.2.3)
+"versioncode":"X",          #版本代码：    versioncode     (400 500)
+"images":[                  #图片：        images
+], 
+"app":"X",                  #应用:         app
+"label":"X",                #应用的标签：  label           (游戏 益智 儿童)
+"orientation":X             #图片的摆放：  orientation     (1-横放  0-竖放)
+
+}
+
+####返回
+无内容，直接查看返回码
+
+
+②开发者模式下的修改APP
+   |   接口地址    |   boss/store/appModify    |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                  |
+####请求                              
+{
+"app_name":"X",             #应用名称：    app_name        (小雨)
+"app_spell":"X",            #应用名称拼音：app_spell       (xiaoyu)
+"creator_id":X,             #创建者ID：    creator_id      (2)
+"top_category":"X",         #应用大类型：  top_category    (应用 软件)
+"category":"X",             #应用小类型：  category        (系统工具 日常工具 自拍神器)
+"icon":"X",                 #应用图标：    icon        
+"icon_type":X,              #应用图标类型：icon_type        (1  2   3)
+"description":"X",          #应用描述：    description     (这是一个游戏app) 
+"version":"X",              #版本：        version         (1.2.3)
+"versioncode":"X",          #版本代码：    versioncode     (400 500)
+"images":[                  #图片：        images
+], 
+"app":"X",                  #应用:         app
+"label":"X",                #应用的标签：  label           (游戏 益智 儿童)
+"orientation":X             #图片的摆放：  orientation     (1-横放  0-竖放)
+}
+
+####返回
+无内容，直接查看返回码
+
+
+
+③开发者模式下的删除APP
+   |   接口地址    |   boss/store/appDelete    |
+   |   ---         |   ---                   |
+   |   请求方式    |   HTTP POST             |
+   |   参数格式    |   JSON                  |
+####请求                              
+{
+"app_id":x
+}
+####返回
+无内容，直接查看返回码

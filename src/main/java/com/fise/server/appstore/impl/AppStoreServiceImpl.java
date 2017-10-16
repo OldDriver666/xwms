@@ -32,6 +32,7 @@ import com.fise.model.result.AppBaseResult;
 import com.fise.model.result.AppChannelResult;
 import com.fise.model.result.AppDetailResult;
 import com.fise.server.appstore.IAppStoreService;
+import com.fise.utils.DateUtil;
 
 @Service
 public class AppStoreServiceImpl implements IAppStoreService {
@@ -112,6 +113,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		appInfo.setSize(appSize);
 		appInfo.setImages(imagesUrl.toString());
 		appInfo.setDownload(appUrl);
+		appInfo.setCreated(DateUtil.getLinuxTimeStamp());
 		
 		int result=appInfoDao.insert(appInfo);
 		if(result==0){
@@ -425,8 +427,29 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		AppInformationExample example = new AppInformationExample();
 		AppInformationExample.Criteria criteria=example.createCriteria();
 		Integer appId=(Integer) param.get("app_id");
+		
+		String appName=(String)param.get("app_name");
 		String appSpell=(String) param.get("app_spell");
+		Integer creatorId=(Integer) param.get("creator_id");
+		String topCategory=(String) param.get("top_category");
+		String category=(String) param.get("category");
+		String icon=(String) param.get("icon");
+		Integer iconType=(Integer) param.get("icon_type");
+		String description=(String) param.get("description");
+		String version=(String) param.get("version");
+		String vserionCode=(String) param.get("versioncode");
+		
+		appInfo.setCreatorId(creatorId);
+		appInfo.setAppName(appName);
 		appInfo.setAppSpell(appSpell);
+		appInfo.setUpdated(DateUtil.getLinuxTimeStamp());
+		appInfo.setTopCategory(topCategory);
+		appInfo.setCategory(category);
+		appInfo.setIcon(icon);
+		appInfo.setIconType(iconType);
+		appInfo.setDescription(description);
+		appInfo.setVersion(version);
+		appInfo.setVersioncode(vserionCode);
 		
 		criteria.andIdEqualTo(appId);
 		
