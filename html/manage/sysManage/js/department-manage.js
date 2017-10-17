@@ -40,10 +40,8 @@ $(function() {
 
 			data.depart_name = $("#input-name").val();
 			data.parent_id = parseInt($("#input-parentId").val());
-			//data.depart_id = parseInt(depart_id);
 			data.company_id = parseInt(company_id);
 			data.creator_id = parseInt(admin_id);
-            //data.status = null;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
@@ -64,7 +62,6 @@ $(function() {
             var data = new Object();
             data.depart_name = search_name;
             data.creator_id = parseInt(admin_id);
-
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();

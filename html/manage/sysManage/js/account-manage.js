@@ -151,7 +151,7 @@ $(function() {
 			var pwd ="";
 			var pwd2 = $("#modify-password-wrap").val();
 			if(pwd2 == null || pwd2 == ""){
-				pwd = $("#input-password-wrap").val();
+				pwd = $("#input-password").val();
 			}else{
 				pwd = $.md5(pwd2);
 			}
@@ -269,7 +269,7 @@ $(function() {
 
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-account-txt").val(that.find("td").eq(1).text());
-        $("#input-password-wrap").val(that.find("td").eq(2).text());
+        $("#input-password").val(that.find("td").eq(2).text());
 		$("#input-nickName").val(that.find("td").eq(3).text());
 		$("#input-roleName-txt").val(that.find("td").eq(4).text());
 		$("#input-roleId").val(that.find("td").eq(8).text());
