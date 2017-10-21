@@ -99,13 +99,19 @@ public class AppStoreController {
 		AppChannelResult data = new AppChannelResult();
 		AppChannel channel = new AppChannel();
 		channel = channelSvr.getChannelInfo(channelId);
-		if (channel == null) {
+		if (null==channel) {
 			response.failure(ErrorCode.ERROR_PARAM_MEMBER_MOBILE_IS_EMPTY);
-			response.setMsg("频道信息不存在");
+			response.setMsg("亲，频道信息不存在哦~");
 			return response;
 		}
 		data.init(channel);
 		List<Integer> appIdList = channelSvr.getChannelAppId(channelId);
+		if(appIdList.size()==0){
+			response.failure(ErrorCode.ERROR_SEARCH_APP_UNEXIST);
+			response.setMsg("亲，该频道下没有应用哦~");
+			return response;
+		}
+		
 		response = appSvr.queryByIdList(param, appIdList);
 		return response;
 	}
