@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import com.fise.framework.config.ConfigProperties;
 
 
-
 public class CLSmsChannel {
 	
 	public static boolean sendSMS(String mobile, String content, boolean needStatus) {

@@ -69,8 +69,8 @@ http://boss.fise-wi.com
 
 
 ####实现单点登录
-|   接口地址    |   boss/admin/islogin         |
-|   ---         |   ---                   |
+|   接口地址     |   boss/admin/islogin         |
+|   ---    |   ---                   |
 
 ```
 //请求

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
@@ -189,7 +188,6 @@ public class AdministratorServiceImpl implements IAdministratorService {
     @Override
     public Response logout(LogoutParam param, HttpServletRequest request) {
         Response resp = new Response();
-        ;
         Integer memberId = param.getAdminId();
         String accessToken = request.getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
         try {
