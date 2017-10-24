@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
@@ -173,6 +174,13 @@ public class RoleServiceImpl implements IRoleService {
         roleDao.deleteByPrimaryKey(role.getId());
         return resp.success();
     }
+    
+    @Override
+    public Response delAuth(RolePermissionParam auth) {
+        Response resp = new Response();
+        roleDao.deleteByPrimaryKey(auth.getPermissionId());
+        return resp.success();
+    }
 
     @Override
     public Response updateRole(WiOrganizationRole param) {
@@ -205,5 +213,41 @@ public class RoleServiceImpl implements IRoleService {
 		}
         return resp;
     }
+
+	@Override
+	@Transactional
+	public Response insertRoleAndAuths(InsertRoleParam role, List<InsertAuthParam> auths) {
+		Response resp = new Response();
+		resp = insertRole(role);
+		for (InsertAuthParam insertAuthParam : auths) {
+			resp = insertAuth(insertAuthParam);
+		}
+		
+		return resp;
+	}
+
+	@Override
+	@Transactional
+	public Response updateRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths) {
+		Response resp = new Response();
+		resp = updateRole(param);
+        for (RolePermissionParam rolePermissionParam : auths) {
+        	resp = updateRoleAuth(rolePermissionParam);
+		}
+		
+		return resp;
+	}
+	
+	@Override
+	@Transactional
+	public Response deleteRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths) {
+		Response resp = new Response();
+		resp = delRole(param);
+        for (RolePermissionParam rolePermissionParam : auths) {
+        	resp = delAuth(rolePermissionParam);
+		}
+		
+		return resp;
+	}
 
 }

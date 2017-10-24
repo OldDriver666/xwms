@@ -125,4 +125,42 @@ public class RoleController {
         response = roleSvr.delRole(role);
         return response;
     }
+    
+    @RequestMapping(value = "/insertRoleAndAuths", method = RequestMethod.POST)
+    public Response insertRoleAndAuths(@RequestBody @Valid InsertRoleParam role ,@RequestBody List<InsertAuthParam> auths) {
+        Response response = new Response();
+
+        if (!authService.inserAuth()) {
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        
+        response = roleSvr.insertRoleAndAuths(role, auths);
+        logger.info("新增角色:" + role.toString() + " 结果:" + response.getMsg());
+        return response;
+    }
+    
+    @RequestMapping(value = "/updateRoleAndAuths", method = RequestMethod.POST)
+    public Response updateRoleAndAuths(@RequestBody @Valid WiOrganizationRole param,@RequestBody List<RolePermissionParam> auths) {
+        Response resp = new Response();
+        
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        resp = roleSvr.updateRoleAndAuths(param, auths);
+        return resp;
+    }
+    
+    
+    @RequestMapping(value = "/deleteRoleAndAuths", method = RequestMethod.POST)
+    public Response deleteRoleAndAuths(@RequestBody @Valid WiOrganizationRole param,@RequestBody List<RolePermissionParam> auths) {
+        Response resp = new Response();
+        
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+
+        resp = roleSvr.deleteRoleAndAuths(param, auths);
+        return resp;
+    }
 }

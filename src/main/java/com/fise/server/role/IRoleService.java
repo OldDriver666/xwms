@@ -27,4 +27,30 @@ public interface IRoleService {
     public Response insertAuth(InsertAuthParam role);
 
     public Response delRole(WiOrganizationRole role);
+    
+    /**
+     * 新增角色和权限
+     */
+    public Response insertRoleAndAuths(InsertRoleParam role, List<InsertAuthParam> auths);
+    
+    
+    /**
+     * 修改角色和权限
+     */
+    public Response updateRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths);
+    
+    
+    /**
+     * 删除角色和权限
+     */
+    public Response deleteRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths);
+
+    /**
+     * 删除权限
+     */
+	public Response delAuth(RolePermissionParam auth);
+
+	
+    
+    
 }
