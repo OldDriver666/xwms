@@ -1,9 +1,11 @@
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface WiOrganizationRoleMapper {
     long countByExample(WiOrganizationRoleExample example);
@@ -27,4 +29,6 @@ public interface WiOrganizationRoleMapper {
     int updateByPrimaryKeySelective(WiOrganizationRole record);
 
     int updateByPrimaryKey(WiOrganizationRole record);
+    
+    int delAuthByRoleId(Integer roleId);
 }

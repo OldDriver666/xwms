@@ -109,6 +109,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  
+  <delete id="delAuthByRoleId" parameterType="Integer">
+    delete from wi_permission where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  
   <insert id="insert" parameterType="com.fise.model.entity.WiOrganizationRole">
     insert into wi_organization_role (id, auth_level, name, 
       description, organization_id, depart_id ,creator_id

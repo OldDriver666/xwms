@@ -29,7 +29,6 @@ import com.fise.model.result.ModulePermissResult;
 import com.fise.server.depart.IDepartmentService;
 import com.fise.server.module.IModuleService;
 import com.fise.server.role.IRoleService;
-import com.fise.utils.Constants;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
@@ -176,7 +175,7 @@ public class RoleServiceImpl implements IRoleService {
     }
     
     @Override
-    public Response delAuth(RolePermissionParam auth) {
+    public Response delAuth(InsertAuthParam auth) {
         Response resp = new Response();
         roleDao.deleteByPrimaryKey(auth.getPermissionId());
         return resp.success();
@@ -186,7 +185,7 @@ public class RoleServiceImpl implements IRoleService {
     public Response updateRole(WiOrganizationRole param) {
         Response resp = new Response();
         roleDao.updateByPrimaryKeySelective(param);
-        return resp;
+        return resp.success();
     }
 
     @Override
@@ -198,20 +197,20 @@ public class RoleServiceImpl implements IRoleService {
         criteria.andRoleIdEqualTo(param.getRoleId());
         criteria.andModuleIdEqualTo(param.getModuleId());
     	long l = permissionDao.countByExample(example);
+    	//如果存在角色权限则修改
     	if (l > 0) {
     		WiPermission record = new WiPermission();
-    		record.setStatus(Constants.PERMISSION_STATU_VISIBLE);
-    		permissionDao.updateByExample(record, example);
+    		BeanUtils.copyProperties(param, record);
+    		permissionDao.updateByPrimaryKeySelective(record);
 		}else{
 			WiPermission data = new WiPermission();
-			
 			BeanUtils.copyProperties(param, data);
 			Integer tNow = DateUtil.getLinuxTimeStamp();
 			data.setUpdated(tNow);
 			data.setCreated(tNow);
 			permissionDao.insert(data);
 		}
-        return resp;
+        return resp.success();
     }
 
 	@Override
@@ -219,35 +218,43 @@ public class RoleServiceImpl implements IRoleService {
 	public Response insertRoleAndAuths(InsertRoleParam role, List<InsertAuthParam> auths) {
 		Response resp = new Response();
 		resp = insertRole(role);
+		WiOrganizationRoleExample example = new WiOrganizationRoleExample();
+        Criteria criteri = example.createCriteria();
+        criteri.andNameEqualTo(role.getRoleName());
+        criteri.andOrganizationIdEqualTo(role.getCompanyId());
+        List<WiOrganizationRole> list = roleDao.selectByExample(example);
+        WiOrganizationRole wrole = list.get(0);
 		for (InsertAuthParam insertAuthParam : auths) {
+			insertAuthParam.setCompanyId(role.getCompanyId());
+			insertAuthParam.setRoleId(wrole.getId());
 			resp = insertAuth(insertAuthParam);
 		}
 		
-		return resp;
+		return resp.success();
 	}
 
 	@Override
 	@Transactional
-	public Response updateRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths) {
+	public Response updateRoleAndAuths(WiOrganizationRole role, List<InsertAuthParam> auths) {
 		Response resp = new Response();
-		resp = updateRole(param);
-        for (RolePermissionParam rolePermissionParam : auths) {
-        	resp = updateRoleAuth(rolePermissionParam);
+		resp = updateRole(role);
+        for (InsertAuthParam insertAuthParam : auths) {
+        	insertAuthParam.setRoleId(role.getId());
+        	insertAuthParam.setCompanyId(role.getOrganizationId());
+        	resp = insertAuth(insertAuthParam);
 		}
 		
-		return resp;
+		return resp.success();
 	}
 	
 	@Override
 	@Transactional
-	public Response deleteRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths) {
+	public Response deleteRoleAndAuths(Integer roleId) {
 		Response resp = new Response();
-		resp = delRole(param);
-        for (RolePermissionParam rolePermissionParam : auths) {
-        	resp = delAuth(rolePermissionParam);
-		}
+		roleDao.deleteByPrimaryKey(roleId);
+	    roleDao.delAuthByRoleId(roleId);
 		
-		return resp;
+		return resp.success();
 	}
 
 }

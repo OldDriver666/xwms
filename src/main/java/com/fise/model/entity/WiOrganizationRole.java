@@ -3,6 +3,7 @@ package com.fise.model.entity;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 /**
  * @author 
@@ -82,5 +83,10 @@ public class WiOrganizationRole implements Serializable {
 
     public void setDepartId(Integer departId) {
         this.departId = departId;
+    }
+    
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
     }
 }

@@ -10,35 +10,42 @@ import com.fise.utils.JsonUtil;
 
 public class InsertAuthParam implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    @JsonProperty("key_id")
+    private Integer permissionId;
 
     @NotNull
     @JsonProperty("role_id")
     private Integer roleId;
     
-    @NotNull
     @JsonProperty("module_id")
     private Integer moduleId;
 
-    @NotNull
     @JsonProperty("company_id")
     private Integer companyId;
 
-    @NotNull
     private Integer status;
     
-    @NotNull
     @JsonProperty("insert_auth")
     private Integer insertAuth;
 
-    @NotNull
     @JsonProperty("update_auth")
     private Integer updateAuth;
 
-    @NotNull
     @JsonProperty("query_auth")
     private Integer queryAuth;
 
-    public Integer getStatus() {
+    public Integer getPermissionId() {
+		return permissionId;
+	}
+
+
+	public void setPermissionId(Integer permissionId) {
+		this.permissionId = permissionId;
+	}
+
+
+	public Integer getStatus() {
         return status;
     }
 

@@ -37,18 +37,19 @@ public interface IRoleService {
     /**
      * 修改角色和权限
      */
-    public Response updateRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths);
+    public Response updateRoleAndAuths(WiOrganizationRole param, List<InsertAuthParam> auths);
     
     
     /**
      * 删除角色和权限
      */
-    public Response deleteRoleAndAuths(WiOrganizationRole param, List<RolePermissionParam> auths);
+    public Response deleteRoleAndAuths(Integer roleId);
 
     /**
      * 删除权限
      */
-	public Response delAuth(RolePermissionParam auth);
+	public Response delAuth(InsertAuthParam auth);
+	
 
 	
     

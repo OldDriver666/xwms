@@ -12,15 +12,12 @@ import com.fise.utils.JsonUtil;
 public class InsertRoleParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @JsonProperty("role_level")
     private Integer roleLevel;
     
-    @NotEmpty
     @JsonProperty("role_name")
     private String roleName;
 
-    @NotNull
     @JsonProperty("company_id")
     private Integer companyId;
 

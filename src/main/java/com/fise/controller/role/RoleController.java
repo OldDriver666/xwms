@@ -9,15 +9,18 @@ import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
+import com.fise.model.param.InsertRoleAndAuthsParam;
 import com.fise.model.param.InsertRoleParam;
 import com.fise.model.param.QueryRoleParam;
 import com.fise.model.param.RolePermissionParam;
+import com.fise.model.param.UpdateRoleAndAuthsParam;
 import com.fise.model.result.ModulePermissResult;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.role.IRoleService;
@@ -127,40 +130,40 @@ public class RoleController {
     }
     
     @RequestMapping(value = "/insertRoleAndAuths", method = RequestMethod.POST)
-    public Response insertRoleAndAuths(@RequestBody @Valid InsertRoleParam role ,@RequestBody List<InsertAuthParam> auths) {
+    public Response insertRoleAndAuths(@RequestBody @Valid InsertRoleAndAuthsParam param) {
         Response response = new Response();
 
         if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         
-        response = roleSvr.insertRoleAndAuths(role, auths);
-        logger.info("新增角色:" + role.toString() + " 结果:" + response.getMsg());
+        response = roleSvr.insertRoleAndAuths(param.getRole(), param.getAuths());
+        logger.info("新增角色:" + param.toString() + " 结果:" + response.getMsg());
         return response;
     }
     
     @RequestMapping(value = "/updateRoleAndAuths", method = RequestMethod.POST)
-    public Response updateRoleAndAuths(@RequestBody @Valid WiOrganizationRole param,@RequestBody List<RolePermissionParam> auths) {
+    public Response updateRoleAndAuths(@RequestBody @Valid UpdateRoleAndAuthsParam param) {
         Response resp = new Response();
         
         if (!authService.updateAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 
-        resp = roleSvr.updateRoleAndAuths(param, auths);
+        resp = roleSvr.updateRoleAndAuths(param.getRole(), param.getAuths());
         return resp;
     }
     
     
     @RequestMapping(value = "/deleteRoleAndAuths", method = RequestMethod.POST)
-    public Response deleteRoleAndAuths(@RequestBody @Valid WiOrganizationRole param,@RequestBody List<RolePermissionParam> auths) {
+    public Response deleteRoleAndAuths(@RequestBody  @Valid InsertAuthParam role) {
         Response resp = new Response();
         
         if (!authService.updateAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 
-        resp = roleSvr.deleteRoleAndAuths(param, auths);
+        resp = roleSvr.deleteRoleAndAuths(role.getRoleId());
         return resp;
     }
 }
