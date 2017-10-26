@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -218,6 +219,9 @@ public class RoleServiceImpl implements IRoleService {
 	public Response insertRoleAndAuths(InsertRoleParam role, List<InsertAuthParam> auths) {
 		Response resp = new Response();
 		resp = insertRole(role);
+		if (!"ok".equals(resp.getMsg())){
+			return resp;
+		}
 		WiOrganizationRoleExample example = new WiOrganizationRoleExample();
         Criteria criteri = example.createCriteria();
         criteri.andNameEqualTo(role.getRoleName());
