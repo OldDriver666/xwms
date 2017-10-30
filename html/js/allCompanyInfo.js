@@ -15,7 +15,7 @@ $(function(){
                 } else {
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
         },
 	};

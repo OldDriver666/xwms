@@ -46,15 +46,21 @@ $(function() {
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     $('#pageContent').find("tr").remove();
-					$("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
+                   /* for(var i = 0; i<result.data.length; i++){
+                        result.data[i].depart_name = "it"
+                    }*/
+                    action.loadDepartData()
+                    setTimeout(function () {
+                        $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
 
-                    if($('#pageContent tr').length == 0){
-                        $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
-					}
-					if(0 == updateAuth){
-						$(".table-update").hide();
-						$(".table-manage").hide();
-					}
+                        if($('#pageContent tr').length == 0){
+                            $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
+                        }
+                        if(0 == updateAuth){
+                            $(".table-update").hide();
+                            $(".table-manage").hide();
+                        }
+                    },100)
                 } else {
                     toastr.error(result.msg);
 				}
@@ -77,30 +83,123 @@ $(function() {
                 alert(errorMsg);
             });
         },
+        loadMenu1 : function(){
+            var url = ctx + "boss/role/queryAuth";
+            var moduleId= 0;
+            var data = {
+                "role_id":parseInt(role_level),
+                "company_id":parseInt(company_id),
+                "creator_id": parseInt(admin_id)
+            };
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS){
+                    var rdata = result.data;
+                    var data = rdata.sort(action.sortBy('priority',false))
+                    var Len = data.length;
+                    var parent_data = new Array;
+
+                    for(var i=0; i<Len; i++){
+                        var mid = data[i].module_id	;
+                        var pid = data[i].parent_id;
+
+                        if(0 == pid){
+                            var children_menu = new Array;
+                            for(var j=0; j<Len; j++){
+                                if(mid == data[j].parent_id){
+                                    var str = data[j];
+                                    children_menu.push(str);
+                                }
+                            }
+                            data[i].children = children_menu;
+                            parent_data.push(data[i]);
+                        }
+                    }
+                    $("#menuContent").empty();
+                    $("#pageMenu").tmpl(parent_data).appendTo('#menuContent');
+                } else {
+                }
+            },function(errorMsg) {
+                alert(errorMsg)
+            });
+        },
+        sortBy: function(attr,rev){
+            //第二个参数没有传递 默认升序排列
+            if(rev ==  undefined){
+                rev = 1;
+            }else{
+                rev = (rev) ? 1 : -1;
+            }
+            return function(a,b){
+                a = a[attr];
+                b = b[attr];
+                if(a < b){
+                    return rev * -1;
+                }
+                if(a > b){
+                    return rev * 1;
+                }
+                return 0;
+            }
+        },
 		//新增用户角色
 		add : function() {
-			/*var add_depart_id = null;
-			console.log(parseInt($('#role-departId option:selected').val()))
-			console.log(parseInt(role_level))
-			if(parseInt(role_level) == 1){
-				if($('#role-departId option:selected').val() == ""){
-					add_depart_id = null;
-				}else{
-					add_depart_id = parseInt($('#role-departId option:selected').val());
-				}
-			}else{
-				add_depart_id = parseInt(depart_id);
-			}*/
+        	var p_len = $("#menuContent .tree_node_parent_checkbox").length;
+            var c_len = $("#menuContent .tree_node_child_checkbox").length;
 
-			var url = ctx + "boss/role/insert";
-			var data = new Object();
-			data.admin_id = parseInt(admin_id);
-			data.role_level = parseInt($("#input-authLevel").val());
-			data.role_name = $("#input-name").val();
-			data.desc = $("#input-description").val();
-			data.company_id = parseInt(company_id);
-			data.depart_id = parseInt($('#role-departId option:selected').val());
-            data.creator_id = parseInt(admin_id);
+			var auth_data = [];
+			for(var i = 0; i<p_len; i++){
+				var curr_moduleId = $("#menuContent .tree_node_parent_checkbox").eq(i).val();
+                var status_val1
+                if($("#menuContent .tree_node_parent_checkbox").eq(i).is(':checked')){
+                    status_val1 = 1
+                }else{
+                    status_val1 = 0
+                }
+                auth_data.push({module_id:parseInt(curr_moduleId),status:status_val1,insert_auth:0,update_auth:0,query_auth:0})
+			}
+            for(var j = 0; j<c_len; j++){
+                var curr_moduleId = $("#menuContent .tree_node_child_checkbox").eq(j).val();
+                var curr_query_auth = $("#menuContent .tree_node_child_checkbox").eq(j).next().find(".prem_query")
+                var curr_insert_auth = $("#menuContent .tree_node_child_checkbox").eq(j).next().find(".prem_add")
+                var curr_update_auth = $("#menuContent .tree_node_child_checkbox").eq(j).next().find(".prem_update")
+
+                var status_val2,query_auth_val,insert_auth_val,update_auth_val
+
+                if(curr_query_auth.is(':checked')){
+                    query_auth_val = 1
+                }else{
+                    query_auth_val = 0
+				}
+				if(curr_insert_auth.is(':checked')){
+                    insert_auth_val = 1
+				}else{
+                    insert_auth_val = 0
+				}
+                if(curr_update_auth.is(':checked')){
+                    update_auth_val = 1
+                }else{
+                    update_auth_val = 0
+				}
+				if($("#menuContent .tree_node_child_checkbox").eq(j).is(':checked')){
+                    status_val2 = 1
+                }else{
+                    status_val2 = 0
+                }
+                auth_data.push({module_id:parseInt(curr_moduleId),status:status_val2,query_auth:query_auth_val,insert_auth:insert_auth_val,update_auth:update_auth_val})
+            }
+
+			var url =  ctx + "boss/role/insertRoleAndAuths";
+            var data = {
+            	"role": {
+            		"role_level": parseInt($("#input-authLevel").val()),
+					"role_name": $("#input-name").val(),
+					"desc": $("#input-description").val(),
+					"company_id": parseInt(company_id),
+					"depart_id": parseInt($('#role-departId option:selected').val()),
+					"creator_id": parseInt(admin_id)
+				},
+				"auths": auth_data
+            };
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if(result.code == ReturnCode.SUCCESS){
@@ -116,14 +215,64 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
-			var url = ctx + "boss/role/update";
-			var data = new Object();
-			data.id = parseInt($("#input-id").val());
-			data.role_level = parseInt($("#input-authLevel").val());
-			data.role_name = $("#input-name").val();
-			data.desc = $("#input-description").val();
-			data.company_id = parseInt(company_id);
-			data.depart_id = parseInt(depart_id);
+            var p_len = $("#menuContent .tree_node_parent_checkbox").length;
+            var c_len = $("#menuContent .tree_node_child_checkbox").length;
+
+            var auth_data = [];
+            for(var i = 0; i<p_len; i++){
+                var curr_moduleId = $("#menuContent .tree_node_parent_checkbox").eq(i).val();
+                var permiss_id = $("#menuContent .tree_node_parent_checkbox").eq(i).attr("data-keyid");
+                var status_val1
+                if($("#menuContent .tree_node_parent_checkbox").eq(i).is(':checked')){
+                    status_val1 = 1
+                }else{
+                    status_val1 = 0
+                }
+                auth_data.push({module_id:parseInt(curr_moduleId),status:status_val1,insert_auth:0,update_auth:0,query_auth:0})
+            }
+            for(var j = 0; j<c_len; j++){
+                var curr_moduleId = $("#menuContent .tree_node_child_checkbox").eq(j).val();
+                var permiss_id = $("#menuContent .tree_node_child_checkbox").eq(j).attr("data-keyid");
+                var curr_query_auth = $("#menuContent .tree_node_child_checkbox").eq(j).next().find(".prem_query")
+                var curr_insert_auth = $("#menuContent .tree_node_child_checkbox").eq(j).next().find(".prem_add")
+                var curr_update_auth = $("#menuContent .tree_node_child_checkbox").eq(j).next().find(".prem_update")
+
+                var status_val2,query_auth_val,insert_auth_val,update_auth_val
+
+                if(curr_query_auth.is(':checked')){
+                    query_auth_val = 1
+                }else{
+                    query_auth_val = 0
+                }
+                if(curr_insert_auth.is(':checked')){
+                    insert_auth_val = 1
+                }else{
+                    insert_auth_val = 0
+                }
+                if(curr_update_auth.is(':checked')){
+                    update_auth_val = 1
+                }else{
+                    update_auth_val = 0
+                }
+                if($("#menuContent .tree_node_child_checkbox").eq(j).is(':checked')){
+                    status_val2 = 1
+                }else{
+                    status_val2 = 0
+                }
+                auth_data.push({module_id:parseInt(curr_moduleId),status:status_val2,query_auth:query_auth_val,insert_auth:insert_auth_val,update_auth:update_auth_val})
+            }
+			var url = ctx + "boss/role/updateRoleAndAuths";
+			var data = {
+				"role": {
+                    "id": parseInt($("#input-id").val()),
+                    "role_level": parseInt($("#input-authLevel").val()),
+                    "role_name": $("#input-name").val(),
+                    "desc": $("#input-description").val(),
+                    "company_id": parseInt(company_id),
+                    "depart_id": parseInt(depart_id)
+				},
+                "auths": auth_data
+        	}
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
@@ -154,9 +303,8 @@ $(function() {
 	};
 	window.action = action;
 	action.init();
-	action.loadDepartData();
 	action.loadPageData();
-
+    action.loadMenu1();
 
 	$("#addTempl2-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
@@ -177,16 +325,66 @@ $(function() {
 
     //编辑获取数据
     $("#pageContent").on("click",".table-edit-btn",function(){
+        $("#menuContent").find("input").removeAttr("checked");
         var that = $(this).parent().parent();
-
         $("#input-id").val(that.find("td").eq(0).text());
         $("#input-authLevel").val(that.find("td").eq(1).text());
         $("#input-name").val(that.find("td").eq(2).text());
 		$("#input-description").val(that.find("td").eq(3).text());
 		$("#role-depart-txt").val(that.find("td").eq(5).text());
-        //$("#input-userRoles-txt").val($('#search-input-userRoles option:selected').text());
 
         $("#addTempl2-modal").modal("show");
+
+        var id = that.find("td").eq(0).text();
+        function queryAuthData(id) {
+            var url = ctx + "boss/role/queryAuth";
+            var data = {
+                "role_id": parseInt(id),
+                "company_id": parseInt(company_id),
+                "include_all": 0
+            };
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS){
+                    var data_auth = result.data
+                    var tree_node_parent_length = $("#menuContent .tree_node_parent_checkbox").length
+                    for(var j = 0; j<tree_node_parent_length; j++){
+                        var v = $("#menuContent .tree_node_parent_checkbox").eq(j).val();
+                        for(var i = 0; i<data_auth.length; i++){
+                            if(v == data_auth[i].module_id && data_auth[i].status == 1){
+                                $("#menuContent input.tree_node_parent_checkbox").eq(j).prop("checked",true);
+                            }
+                        }
+                    }
+
+                    var tree_node_parent_length = $("#menuContent .tree_node_child_checkbox").length
+                    for(var k = 0; k<tree_node_parent_length; k++){
+                        var w = $("#menuContent .tree_node_child_checkbox").eq(k).val();
+                        for(var l = 0; l<data_auth.length; l++){
+                            if(w == data_auth[l].module_id && data_auth[l].status == 1){
+                                $("#menuContent input.tree_node_child_checkbox").eq(k).prop("checked",true);
+                                if(data_auth[l].query_auth == 1){
+                                    $("#menuContent input.tree_node_child_checkbox").eq(k).next().find('input.prem_query').eq(0).prop("checked",true);
+                                }
+                                if(data_auth[l].insert_auth == 1){
+                                    $("#menuContent input.tree_node_child_checkbox").eq(k).next().find('input.prem_add').eq(0).prop("checked",true);
+                                }
+                                if(data_auth[l].update_auth == 1){
+                                    $("#menuContent input.tree_node_child_checkbox").eq(k).next().find('input.prem_update').eq(0).prop("checked",true);
+                                }
+                            }
+                        }
+                    }
+
+                }else {
+                }
+            },function(errorMsg) {
+                console.log(errorMsg);
+            });
+        }
+        setTimeout(function () {
+            queryAuthData(id)
+        },200)
+
     });
 
 	//验证表单

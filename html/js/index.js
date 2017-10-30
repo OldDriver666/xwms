@@ -33,7 +33,7 @@ $(function(){
             } else {
             }
         },function(errorMsg) {
-            alert(errorMsg)
+            //alert(errorMsg)
         });
     });
 
@@ -79,6 +79,9 @@ $(function(){
                 }
             },function(errorMsg) {
                 alert(errorMsg)
+                if(errorMsg == '鉴权失败！'){
+                    window.location.href = "login.html";
+                }
             });
 		},
         getMyInfoData: function () {
@@ -94,7 +97,7 @@ $(function(){
                     toastr.error(result.msg);
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
         },
         sortBy: function(attr,rev){

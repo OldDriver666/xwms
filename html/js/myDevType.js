@@ -51,14 +51,14 @@ $(function(){
                             //alert(result_query.msg);
                         }
                     },function(errorMsg) {
-                        alert(errorMsg)
+                        //alert(errorMsg)
                     });
 
                 } else {
                    /* alert(result.msg);*/
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
 
         }

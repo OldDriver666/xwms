@@ -44,7 +44,7 @@ $(function() {
                     /*alert("请求出错！");*/
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
 		},
 
@@ -186,7 +186,7 @@ $(function() {
                    /* alert(result.msg);*/
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
 
         },
@@ -312,7 +312,7 @@ $(function() {
                    /* alert(result.msg);*/
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
         },
         myDevTypeQuery: function(nameParamArray){
@@ -391,7 +391,7 @@ $(function() {
                     /*alert(result.msg);*/
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
         }
 	};
@@ -404,7 +404,7 @@ $(function() {
     var init_starDate = changeDate(nowTime, init_days);//初始时的开始日期
     action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
     //点击日期选择天数，显示相应天数的数据
-    $(".group li").on("click",function(){
+    $(".tongji-userReg-date li").on("click",function(){
         $(this).addClass("curr").siblings().removeClass("curr");
         var days = $(this).data("days");
         var starDate = changeDate(nowTime, days);

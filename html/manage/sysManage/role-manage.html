@@ -65,6 +65,73 @@
 												</select>
 											</div>
 										</div>
+										<div class="form-group" id="role-permission-txt-wrap">
+											<label class="col-sm-2 control-label">角色权限</label>
+											<div class="col-sm-10 form-txt">
+
+												<div style="min-height: 36px;border:1px solid #ddd;" id="menuContent">
+													<!--<div class="tree_content">
+														<div class="tree_node">
+															<div class="div_inline"><input type="button" value="+" class="tree_node_toggle_button"></div>
+															<div class="div_inline tree_node_parent">
+																<input type="checkbox" class="tree_node_parent_checkbox">父节点1
+																<div class="tree_node_child" style="display:none;">
+																	<div class="tree_node_child_menu">
+																		<input type="checkbox" class="tree_node_child_checkbox">子节点1
+																		<div class="tree_node_child_permission_wrap">
+																			<span class="tree_node_child_permission"><input type="checkbox">添加</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">删除</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">修改</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">查询</span>
+																		</div>
+																	</div>
+																	<div class="tree_node_child_menu">
+																		<input type="checkbox" class="tree_node_child_checkbox">子节点点点2
+																		<div class="tree_node_child_permission_wrap">
+																			<span class="tree_node_child_permission"><input type="checkbox">添加</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">删除</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">修改</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">查询</span>
+																		</div>
+																	</div>
+																	<div class="tree_node_child_menu">
+																		<input type="checkbox" class="tree_node_child_checkbox">子节点点3
+																		<div class="tree_node_child_permission_wrap">
+																			<span class="tree_node_child_permission"><input type="checkbox">添加</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">删除</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">修改</span>
+																			<span class="tree_node_child_permission"><input type="checkbox">查询</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="tree_node">
+															&lt;!&ndash; 切换子目录隐藏或显示的按钮 &ndash;&gt;
+															<div class="div_inline"><input type="button" value="+" class="tree_node_toggle_button"></div>
+															<div class="div_inline tree_node_parent">
+																<input type="checkbox" class="tree_node_parent_checkbox">父节点2
+																<div class="tree_node_child" style="display:none;">
+																	<input type="checkbox" class="tree_node_child_checkbox">子节点1<br>
+																</div>
+															</div>
+														</div>
+														<div class="tree_node">
+															<div class="div_inline"><input type="button" value="+" class="tree_node_toggle_button"></div>
+															<div class="tree_node_parent div_inline">
+																<input type="checkbox" class="tree_node_parent_checkbox">父节点3
+																<div class="tree_node_child" style="display:none;">
+																	<input type="checkbox" class="tree_node_child_checkbox">子节点1<br>
+																	<input type="checkbox" class="tree_node_child_checkbox">子节点2<br>
+																	<input type="checkbox" class="tree_node_child_checkbox">子节点3<br>
+																</div>
+															</div>
+														</div>
+													</div>-->
+												</div>
+
+											</div>
+										</div>
 									</form>
 								</div>
 								<div class="modal-footer">
@@ -157,6 +224,99 @@
         hideDuration: "300",
         timeOut: "1000"
     };
+</script>
+
+<script type="text/x-jquery-tmpl" id="pageMenu">
+<div class="tree_content">
+	<div class="tree_node">
+		<div class="div_inline"><input type="button" value="+" class="tree_node_toggle_button"></div>
+		<div class="div_inline tree_node_parent">
+			<input type="checkbox" class="tree_node_parent_checkbox" value="${module_id}" checked="true">${module_name}
+			<div class="tree_node_child" style="display:none;">
+				{{each(i,item) children}}
+				<div class="tree_node_child_menu">
+					<input type="checkbox" class="tree_node_child_checkbox" value="${item.module_id}" checked="true">${item.module_name}
+					<div class="tree_node_child_permission_wrap">
+						<span class="tree_node_child_permission"><input type="checkbox" class="prem_query" checked="true">查询</span>
+						<span class="tree_node_child_permission"><input type="checkbox" class="prem_add" checked="true">添加</span>
+						<span class="tree_node_child_permission"><input type="checkbox" class="prem_update" checked="true">修改</span>
+						<!--<span class="tree_node_child_permission"><input type="checkbox" class="prem_del" checked="true">删除</span>-->
+					</div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+
+<script>
+    //树形复选框
+    // 页面加载完成后调用
+    $(function(){
+
+        // 为所有的父节点添加点击事件
+        $("#menuContent").on('click','.tree_node_parent_checkbox',function(){
+            // 获取父节点是否选中
+            var isChange = $(this).prop("checked");
+            if(isChange){
+                $(this).parent().find("input").prop("checked", true);
+            }else{
+                $(this).parent().find("input").removeAttr("checked");
+            }
+        });
+
+        // 为所有的子节点添加点击事件
+        $("#menuContent").on('click','.tree_node_child_checkbox',function () {
+            // 获取选中的节点的父节点下的所有子节点选中的数量
+            var length=$(this).parent().parent().find(".tree_node_child_checkbox:checked").length;
+            // 判断当前结点是否选中
+            if($(this).prop("checked")){ // 选中
+                $(this).parent().find("input").prop("checked", true);
+                // 如果当前节点选中后,所有的选中节点数量1，选中父节点
+                if(length >= 1){
+                    $(this).parent().parent().parent().find(".tree_node_parent_checkbox").prop("checked", true);
+                }
+            }else{ // 节点未选中
+                $(this).parent().find("input").removeAttr("checked");
+                if(length < 1){
+                    // 取消父节点的选中状态
+                    $(this).parent().parent().parent().find(".tree_node_parent_checkbox").removeAttr("checked");
+                }
+            }
+        });
+
+		// 为所有的子节点中的增删改查添加点击事件
+        $("#menuContent").on('click','.tree_node_child_permission_wrap input',function () {
+            // 获取选中的节点的父节点下的所有子节点选中的数量
+            var length2=$(this).parent().parent().find("input:checked").length;
+            // 判断当前结点是否选中
+            if($(this).prop("checked")){ // 选中
+                // 如果当前节点选中后,所有的选中节点数量1，选中父节点
+                if(length2 >= 1){
+                    $(this).parent().parent().parent().find(".tree_node_child_checkbox").prop("checked", true);
+                }
+            }else{ // 节点未选中
+                if(length2 < 1){
+                    // 取消父节点的选中状态
+                    $(this).parent().parent().parent().find(".tree_node_child_checkbox").removeAttr("checked");
+                }
+            }
+        })
+
+        // 为所有的切换按钮添加点击事件
+        $("#menuContent").on('click','.tree_node_toggle_button',function () {
+            // 获取需要隐藏或显示的节点
+            var $toggle_node = $(this).parent().next().find(".tree_node_child");
+            $toggle_node.toggle(); // 切换隐藏或显示
+            // 切换按钮的显示
+            if($toggle_node.is(":visible")){
+                $(this).val("-");
+            }else{
+                $(this).val("+");
+            }
+        });
+    });
 </script>
 </body>
 </html>

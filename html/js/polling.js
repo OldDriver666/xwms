@@ -20,11 +20,11 @@ $(function(){
                 if(result.code == ReturnCode.SUCCESS){
 
                 }else if(result.code == ReturnCode.TOKEN_ERROR){
-                    alert(result.msg);
+                    console.log(result.msg);
                     window.location.href = "login.html";
                 }
             },function(errorMsg) {
-                alert(errorMsg)
+                //alert(errorMsg)
             });
         }
 	};

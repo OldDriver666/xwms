@@ -1875,7 +1875,7 @@ pre code {
 	position: relative;
 	min-height: 1px;
 	padding-right: 15px;
-	padding-left: 15px
+	/*padding-left: 15px*/
 }
 
 .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3,
@@ -3277,8 +3277,8 @@ select[multiple].input-lg, textarea.input-lg {
 }
 
 .form-horizontal .form-group {
-	margin-right: -15px;
-	margin-left: -15px
+/*	margin-right: -15px;
+	margin-left: -15px*/
 }
 
 @media ( min-width :768px) {

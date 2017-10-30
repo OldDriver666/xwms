@@ -12,70 +12,114 @@
 <script type="text/javascript" src="../../js/echarts.min.js"></script>
 <script type="text/javascript" src="../../js/echarts-map-china.js"></script>
 
+	<style>
+		.admin-index{width: 100%;height: 120px;padding-top:10px; overflow: hidden;}
+		.admin-index dl{width: 23%;margin: 10px 1%;background-color: #fff;float: left;border-radius: 5px;overflow: hidden}
+		.admin-index dt{width: 40%;float: left;line-height: 100px;font-size: 45px;text-align: center;color: #FFF}
+		.admin-index dd{width: 60%;text-align: center;font-size: 45px;line-height: 45px;float: right;margin-top: 15px;color: #c6cad6}
+		.admin-index .f12{font-size: 14px;line-height: 16px;margin-top: 5px}
+		.admin-index .qs{background-color: #6ccac9}
+		.admin-index .cs{background-color: #ff6c60}
+		.admin-index .hs{background-color: #f8d347}
+		.admin-index .ls{background-color: #57c8f2}
+
+		/* 顶部数据块一次从右边滑动显示 */
+        [class*="am-animation-"] {
+          -webkit-animation-duration: 0.5s;
+                  animation-duration: 0.5s;
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
+          -webkit-animation-fill-mode: both;
+                  animation-fill-mode: both;
+        }
+        /* Hide animated element if scrollSpy is used */
+        @media screen {
+          .cssanimations [data-am-scrollspy*="animation"] {
+            opacity: 0;
+          }
+        }
+        .am-animation-slide-right {
+          -webkit-animation-name: am-slide-right;
+                  animation-name: am-slide-right;
+        }
+        /* Slide right */
+        @-webkit-keyframes am-slide-right {
+          0% {
+            opacity: 0;
+            -webkit-transform: translateX(100%);
+                    transform: translateX(100%);
+          }
+          100% {
+            opacity: 1;
+            -webkit-transform: translateX(0);
+                    transform: translateX(0);
+          }
+        }
+        @keyframes am-slide-right {
+          0% {
+            opacity: 0;
+            -webkit-transform: translateX(100%);
+                    transform: translateX(100%);
+          }
+          100% {
+            opacity: 1;
+            -webkit-transform: translateX(0);
+                    transform: translateX(0);
+          }
+        }
+	</style>
 
 </head>
 <body>
 <div class="main-cont-wrap">
 	<div class="main-cont">
-		<div class="tit-wrap"><label class="tit">今日统计信息</label></div>
-		<div id="summary">
-			<table class="summary">
-				<tbody>
-					<tr>
-						<td>
-							<span class="text">小位用户在线数</span>
-							<div class="value summary-ellipsis" id="xwUserOnlineInfo"></div>
-						</td>
-						<td>
-							<span class="text">小位用户注册数</span>
-							<div class="value summary-ellipsis" id="xwUserRegInfo"></div>
-						</td>
-						<td>
-							<span class="text">设备在线数</span>
-							<div class="value summary-ellipsis" id="devUserOnlineInfo"></div>
-						</td>
-						<td>
-							<span class="text">设备激活数</span>
-							<div class="value summary-ellipsis" id="devUserActiveInfo"></div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+
+			<div class="admin-index">
+				<dl data-am-scrollspy="{animation: 'slide-right', delay: 100}">
+					<dt class="qs"><i class="am-icon-users"><img src="../../images/index-a01.jpg"></i></dt>
+					<dd id="xwUserOnlineInfo"></dd>
+					<dd class="f12">在线人数</dd>
+				</dl>
+				<dl data-am-scrollspy="{animation: 'slide-right', delay: 300}">
+					<dt class="cs"><i class="am-icon-area-chart"><img src="../../images/module-edit.png"></i></dt>
+					<dd id="devUserOnlineInfo"></dd>
+					<dd class="f12">在线设备</dd>
+				</dl>
+				<dl data-am-scrollspy="{animation: 'slide-right', delay: 600}">
+					<dt class="hs"><i class="am-icon-shopping-cart"><img src="../../images/module-edit.png"></i></dt>
+					<dd id="xwUserRegInfo"></dd>
+					<dd class="f12">注册总数</dd>
+				</dl>
+				<dl data-am-scrollspy="{animation: 'slide-right', delay: 900}">
+					<dt class="ls"><i class="am-icon-cny"><img src="../../images/module-edit.png"></i></dt>
+					<dd id="devUserActiveInfo"></dd>
+					<dd class="f12">激活设备</dd>
+				</dl>
+			</div>
 	</div>
 
 	<div class="head-filter-wrap">
-		<form class="layui-form" action="">
-			<div class="layui-field-box">
-				<div class="layui-form-item">			
-			      	<span class="float-l label">时间：</span>
-			      	<div class="control-bar float-l mg-r-20">
-			        	<ul class="group">
-					        <li class="curr first" data-days="3">最近3天</li>
-					        <li data-days="7">最近7天</li>
-					        <li data-days="15">最近15天</li>
-					        <li data-days="30">最近30天</li>
-		            	</ul>
-			      	</div>
-				    
-				</div>
-				
-			</div>
-		</form>
+		信息概况
 	</div>
 
 	<div class="user-attr  clearfix">
         <div class="clearfix table-grid">
             <div class="left">
                 <div class="table-grid-item">
+	                <ul class="tongji-userReg-date">
+		                <li class="curr" data-days="3">最近3天</li>
+		                <li data-days="7">最近7天</li>
+		                <li data-days="15">最近15天</li>
+		                <li data-days="30">最近30天</li>
+	                </ul>
                     <div id="tongji-userReg" style="width:600px; height:380px; margin:0 auto;"></div>
                 </div>
             </div>
-            <div class="right">
-                <div class="table-grid-item">
-                    <div id="tongji-userSex"  style="width:600px; height:380px; margin:0 auto;"></div>
-                </div>
-            </div>
+	        <div class="right">
+		        <div class="table-grid-item">
+			        <div id="tongji-userArea" style="width:600px; height:380px; margin:0 auto;"></div>
+		        </div>
+	        </div>
         </div>
     </div>
     <div class="user-attr  clearfix">
@@ -85,11 +129,11 @@
                     <div id="tongji-userClient" style="width:600px; height:380px; margin:0 auto;"></div>
                 </div>
             </div>
-            <div class="right">
-                <div class="table-grid-item">
-                    <div id="tongji-userArea" style="width:600px; height:380px; margin:0 auto;"></div>
-                </div>
-            </div>
+	        <div class="right">
+		        <div class="table-grid-item">
+			        <div id="tongji-userSex"  style="width:600px; height:380px; margin:0 auto;"></div>
+		        </div>
+	        </div>
         </div>
     </div>
 
@@ -140,5 +184,19 @@ ${active_device}
 	var userSexChart = echarts.init(document.getElementById('tongji-userSex'));
 </script>
 
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="../../js/polyfill/rem.min.js"></script>
+<script src="../../js/polyfill/respond.min.js"></script>
+<script src="../../js/amazeui.legacy.js"></script>
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="../../js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script type="text/javascript">
+	$(".admin-index dl").removeClass("am-animation-slide-right")
+</script>
 </body>
 </html>

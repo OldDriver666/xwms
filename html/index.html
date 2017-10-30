@@ -35,14 +35,324 @@
     <link rel="stylesheet" href="css/global.css" media="all">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link id="layuicss-skinlayercss" rel="stylesheet" href="layui/css/modules/layer/default/layer.css" media="all">
+    <!--<link rel="stylesheet" href="css/amazeui.min.css"/>-->
     <style>
+        .layui-tab-content{
+            padding:0;
+        }
+        .row {
+            margin-right: -5px;
+            margin-left: -5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
         .layui-tab-title {
-            background-color: #e3eae9;
+            height: 35px;
+            background-color: #35404d;
+            border-bottom: 0;
+        }
+        .layui-tab-title li{
+            line-height: 22px;
+            min-width: auto;
+            margin: 5px;
+            border-radius: 2px;
+            color: #a2abb6;
+            background-color: #415164;
+            border-color: #415164;
         }
 
-        .layui-tab-title .layui-this {
-            background-color: #fff;
+        .layui-tab-title .layui-this{
+            color:#a2abb6;
         }
+        .layui-tab-title .layui-this:after{
+            border:0!important;
+        }
+        .layui-layout-admin .layui-side{
+            top:50px!important;
+        }
+        .layui-layout-admin .layui-body{
+            top:50px!important;
+        }
+        .layui-bg-black, .layui-nav{
+            background-color: #2a3542!important;
+        }
+
+
+        .admin-main{background: #2a3542}
+
+        .admin-sidebar{width: 180px;min-height: 100%;padding: 0 10px;font-size: 1.2rem;  left: 0; top: 50px;}
+        .admin-sidebar-list{margin-bottom: 0}
+        .admin-sidebar-list li a{color: #fff;padding-left: 24px}
+        .admin-sidebar-list li:first-child{border-top: none}
+        .admin-sidebar-sub{margin-top: 0;margin-bottom: 0;box-shadow: 0 16px 8px -15px #e2e2e2 inset;background: #ececec;font-size: 12px }
+        .admin-sidebar-sub li:first-child{border-top: 1px solid #dedede}
+        .admin-sidebar-panel{margin: 10px}
+
+
+        .sideMenu{padding: 0px;margin: 0px }
+        .sideMenu h3{height: 32px;line-height: 32px;color: #aeb2b7;cursor: pointer;padding: 0 0 0 10px;margin: 20px 0 0 0;border-top-left-radius: 3px;border-top-right-radius: 3px;font-weight: 400; }
+        .sideMenu h3 em{float: right;display: block;width: 40px;height: 32px;background: url(images/icoAdd.png) 16px 12px no-repeat;cursor: pointer}
+        .sideMenu h3.on em{background-position: 16px -57px}
+        .sideMenu h3.on{color: #ff6c60;background: #35404d}
+        .sideMenu h3 a{color: #aeb2b7;font-size: 12px;}
+        .sideMenu ul{line-height: 24px;color: #999;display: none;/* 默认都隐藏 */ ;background: #35404d;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;padding: 0px 0 10px 0;margin: 0px }
+        .sideMenu li{text-indent: 25px;width: 100%}
+        .sideMenu li{text-indent: 25px;width: 100%}
+        .sideMenu li a{color: #aeb2b7;font-size: 12px;}
+        .sideMenu li a:hover{color: #f8675e}
+
+        .daohang{position:fixed;right:0;bottom:0;top:50px;left:210px; overflow:auto;width: 100%; height: 35px; background-color: #35404d;}
+
+        .daohang ul{ padding: 0px; margin: 2px 0 0 5px;list-style-type: none; }
+        .daohang li{ float: left; margin-right: 5px;}
+
+        .daohang .am-btn-xs{ padding: 0px 3px 0px 6px; line-height: 22px; overflow: hidden; font-size: 12px; margin: 0px;}
+        .daohang .am-close{ height: 14px; overflow: hidden; line-height: 14px; opacity: 0.3; color: #aaaaaa;}
+        .daohang .am-close:hover{ opacity: 1;}
+
+        .daohang .am-btn-default{ color:#a2abb6;background-color:#415164;border-color:#415164 }
+        .daohang .am-btn-default a{ color: #fff; }
+        .daohang .am-btn-default:hover,.daohang .am-btn-default:focus,.daohang .am-btn-default:active,.daohang .am-btn-default .am-active, .daohang .am-active .daohang .am-btn-default .am-dropdown-toggle{color:#fff;background-color:#ff6c60;border-color:#ff6c60;}
+
+        .admin-nav-card li:hover,.admin-nav-card li:focus,.admin-nav-card li:active,.admin-nav-card li.layui-this{
+            color:#fff;background-color:#ff6c60;border-color:#ff6c60;
+        }
+
+        .admin-header-list{
+            float: right;
+        }
+        .am-nav>li {
+            position: relative;
+            display: block;
+        }
+        .am-nav>li>a {
+            position: relative;
+            line-height: 50px;
+            padding: 0 10px;
+            display: block;
+            border-radius: 0;
+        }
+        .am-topbar a {
+            color: #666;
+        }
+        .kuanjie a {
+            float: left;
+            margin-left: 10px;
+        }
+        .am-topbar-nav>li>a:after {
+            position: absolute;
+            left: 50%;
+            margin-left: -7px;
+            bottom: 0;
+            content: "";
+            display: inline-block;
+            width: 0;
+            height: 0;
+            vertical-align: middle;
+            border-bottom: 7px solid #f8f8f8;
+            border-right: 7px solid transparent;
+            border-left: 7px solid transparent;
+            border-top: 0 dotted;
+            -webkit-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+            opacity: 0;
+            -webkit-transition: opacity .1s;
+            transition: opacity .1s;
+        }
+        .am-topbar-nav>li>a:hover:after{opacity:1;border-bottom-color:#666}
+        .am-nav-pills>li{
+            float: left;
+        }
+        .am-nav-pills>li+li {
+            margin-left: 5px;
+            margin-top: 0;
+        }
+        .am-icon-arrows-alt img{
+            vertical-align: -2px;
+        }
+        .tognzhi {
+            margin-top: 12px;
+        }
+        .tognzhi .am-btn-xs {
+            padding: 6px 0 6px 12px;
+            font-size: 12px;
+            border-radius: 2px;
+            color: #fff;
+            background-color: #0e90d2;
+            border-color: #0e90d2;
+            border-radius: 2px;
+        }
+        .tognzhi .am-btn{
+            display: inline-block;
+            margin-bottom: 0;
+            vertical-align: middle;
+            font-weight: 400;
+            line-height: 1.2;
+            text-align: center;
+            white-space: nowrap;
+            background-image: none;
+            border: 1px solid transparent;
+            cursor: pointer;
+            outline: 0;
+            -webkit-appearance: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-transition: background-color 300ms ease-out,border-color 300ms ease-out;
+            transition: background-color 300ms ease-out,border-color 300ms ease-out;
+        }
+        .tognzhi .am-btn img{
+            vertical-align: -4px;
+        }
+        .tognzhi .am-btn-xs span {
+            font-size: 9px;
+            font-weight: 100;
+            padding: 2px 3px;
+            position: relative;
+            top: -10px;
+            right: -5px;
+            background-color: #dd514c;
+            border-radius: 1000px;
+            color: #fff;
+            line-height: 1;
+            vertical-align: baseline;
+            white-space: nowrap;
+            text-align: center;
+            display: inline-block;
+            min-width: 10px;
+        }
+        .tognzhi .am-dropdown-content {
+            border-radius: 4px;
+            box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.5);
+            border: none;
+            padding: 0px 0 9px 0;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1020;
+            display: none;
+            float: left;
+            min-width: 160px;
+            margin: 9px 0 0;
+            text-align: left;
+            line-height: 1.6;
+            background-color: #fff;
+            background-clip: padding-box;
+            animation-duration: .15s;
+        }
+        .am-active>.am-dropdown-content{display:block}
+        .tognzhi .am-dropdown-header {
+            background: url(images/l_07.png) left top repeat-x;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            font-size: 16px;
+            padding: 6px 10px;
+            margin-bottom: 9px;
+            color: #fff;
+            display: block;
+        }
+        .am-dropdown-content:before {
+            position: absolute;
+            display: block;
+            content: "";
+            width: 0;
+            height: 0;
+            border: 8px dashed transparent;
+            z-index: 1;
+            border-bottom-color: #ddd;
+            bottom: 0;
+            left: 10px;
+            top: -8px;
+            pointer-events: none;
+            border-bottom-style: solid;
+            border-width: 0 8px 8px;
+            border-bottom-color: #a1d166;
+        }
+        ul.am-dropdown-content>li>a {
+            display: block;
+            padding: 6px 20px;
+            clear: both;
+            font-weight: 400;
+            color: #333;
+            white-space: nowrap;
+            margin-top: 0;
+        }
+        .tognzhi .am-dropdown-content span {
+            font-size: 9px;
+            font-weight: 100;
+            padding: 1px 4px;
+            margin-left: 7px;
+            border-radius: 1000px;
+            background-color: #dd514c;
+            color:#fff;
+        }
+        .am-dropdown-content :first-child {
+            margin-top: 0;
+        }
+
+        
+        /* 点击顶部消息按钮显示隐藏下拉菜单 */
+        .am-animation-slide-top-fixed{
+            -webkit-animation-name:am-slide-top-fixed;
+            animation-name:am-slide-top-fixed
+        }
+        /* Slide top fixed */
+        @-webkit-keyframes am-slide-top-fixed {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(-10px);
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+        }
+        @keyframes am-slide-top-fixed {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(-10px);
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+        }
+        .am-dropdown-animation {
+            -webkit-animation: am-dropdown-animation 0.15s ease-out;
+            animation: am-dropdown-animation 0.15s ease-out;
+        }
+        @-webkit-keyframes am-dropdown-animation {
+            0% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translateY(-10px);
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes am-dropdown-animation {
+            0% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                -webkit-transform: translateY(-10px);
+                transform: translateY(-10px);
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -54,7 +364,7 @@
                     <span style="font-size: 22px;">沸石智能设备管理平台</span>
                 </a>
             </div>
-            <ul class="layui-nav head-r-nav">
+            <!--<ul class="layui-nav head-r-nav">
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="admin-header-user">
                         <img src="images/0.jpg" style="width: 40px; height: 40px; border-radius: 100%;">
@@ -70,33 +380,59 @@
                         </dd>
                     </dl>
                 </li>
+            </ul>-->
+
+            <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
+                <li class="am-dropdown tognzhi" data-am-dropdown>
+                    <button class="am-btn am-dropdown-toggle am-btn-xs am-icon-bell-o">
+                        <img src="images/icon-msg-bell.png">消息管理
+                        <span>6</span>
+                    </button>
+                    <ul class="am-dropdown-content">
+                        <li class="am-dropdown-header">所有消息都在这里</li>
+                        <li><a href="#">未激活会员 <span class="am-badge am-badge-danger am-round">556</span></a></li>
+                        <li><a href="#">未激活代理 <span class="am-badge am-badge-danger am-round">69</span></a></a></li>
+                        <li><a href="#">未处理汇款</a></li>
+                        <li><a href="#">未发放提现</a></li>
+                        <li><a href="#">未发货订单</a></li>
+                        <li><a href="#">低库存产品</a></li>
+                        <li><a href="#">信息反馈</a></li>
+                    </ul>
+                </li>
+                <li class="kuanjie"><a href="javascript:;" data-url="manage/myInfo/myInfo.html">个人中心</a></li>
+                <li><a href="javascript:;" id="header-safeExit"><i class="fa fa-sign-out" aria-hidden="true"></i> 安全退出</a></li>
+                <li class="am-hide-sm-only" style="float: right;">
+                    <a href="javascript:;" id="admin-fullscreen">
+                        <span class="am-icon-arrows-alt"><img src="images/icon-fullscreen.png"></span>
+                        <span class="admin-fullText">开启全屏</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
     <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree admin-nav-tree" id="menuContent"></ul>
+        <div class="nav-navicon admin-main admin-sidebar">
+            <div style="color:#aeb2b7; padding: 20px 0 0 0;font-size: 12px;"> 欢迎系统管理员：<span id="admin-header-nick"></span></div>
+            <div class="sideMenu" id="menuContent"></div>
         </div>
     </div>
     <div class="layui-body">
         <div class="layui-tab admin-nav-card" lay-filter="admin-tab">
             <ul class="layui-tab-title" id="admin-tab">
-                <!--<li class="layui-this">
-                    <i class="layui-icon" style="top: 2px; font-size: 16px;">&#xe63c;</i>
-                    <cite>整体概述</cite>
-                </li>-->
+                <li>
+                    <cite>首页</cite>
+                </li>
             </ul>
             <div class="layui-tab-content" id="admin-tab-container">
-               <!-- <div class="layui-tab-item layui-show">
-                    &lt;!&ndash;<iframe src="manage/main/main.html"></iframe>&ndash;&gt;
-                </div>-->
+                <div class="layui-tab-item layui-show">
+                    <iframe src="manage/main/main.html"></iframe>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="site-tree-mobile layui-hide"><i class="layui-icon"></i></div>
     <div class="site-mobile-shade"></div>
-
 
 </div>
 
@@ -111,26 +447,12 @@
 <script src="js/myUserRoles.js"></script>
 
 <script type="text/x-jquery-tmpl" id="pageMenu">
-<li class="layui-nav-item layui-nav-itemed">
-	<dl class=" layui-nav-child">
-		<dd>
-			<a class="layui-nav-child-a" href="javascript:;" data-menuid=${module_id} data-url=${url}>
-				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
-				<cite>${module_name}</cite>
-			</a>
-			<ul class="layui-nav-child" style="display: none">
-			  {{each(i,item) children}}
-		        <li>
-				<a class="children-menu" href="javascript:;" data-menuid=${item.module_id} data-url=${item.url} data-insert=${item.insert_auth} data-query=${item.query_auth} data-update=${item.update_auth}>
-				<i class="layui-icon" style="top:2px; font-size:16px;">&#xe63c;</i>
-				<cite>${item.module_name}</cite>
-				</a>
-				</li>
-				{{/each}}
-	        </ul>
-		</dd>
-	</dl>
-</li>
+    <h3 class="am-icon-flag"><em></em> <a href="#">${module_name}</a></h3>
+    <ul>
+        {{each(i,item) children}}
+            <li><a class="children-menu" href="javascript:;" data-menuid=${item.module_id} data-url=${item.url} data-insert=${item.insert_auth} data-query=${item.query_auth} data-update=${item.update_auth}><cite>${item.module_name}</cite></a></li>
+        {{/each}}
+    </ul>
 </script>
 
 <script type="text/javascript" src="layui/layui.js"></script>
@@ -143,7 +465,7 @@
         //iframe自适应
         $(window).on('resize', function () {
             var $content = $('.admin-nav-card .layui-tab-content');
-            $content.height($(this).height() - 131);
+            $content.height($(this).height() - 86);
             $content.find('iframe').each(function () {
                 $(this).height($content.height());
             });
@@ -154,7 +476,7 @@
         var $container = $('#admin-tab-container');
 
         //绑定 nav 点击事件（水平nav menu）
-        $('ul.head-r-nav').find('dd > a').each(function () {
+        $('.admin-header-list').find('a').each(function () {
             var $this = $(this);
             //获取设定的url
             var url = $this.data('url');
@@ -204,13 +526,9 @@
         });
 
         //绑定 nav 点击事件(垂直nav menu)
-             //点击一级菜单
-        $('.layui-side-scroll').on('click', '.layui-nav-child-a', function () {
-            $(this).next().toggle(200);
-        });
 
              //点击二级菜单
-        $('.layui-side-scroll').on('click', '.children-menu', function () {
+        $('.sideMenu').on('click', '.children-menu', function () {
             var $this = $(this);
             var url = $this.data('url');
             var menuid = $this.data('menuid');
@@ -318,6 +636,32 @@
         //禁止后退键  作用于IE、Chrome
         document.onkeydown=banBackSpace;
     }
+</script>
+
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="js/polyfill/rem.min.js"></script>
+<script src="js/polyfill/respond.min.js"></script>
+<script src="js/amazeui.legacy.js"></script>
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="js/app.js"></script>
+<script type="text/javascript">
+    setTimeout(function () {
+        jQuery(".sideMenu").slide({
+            titCell:"h3", //鼠标触发对象
+            targetCell:"ul", //与titCell一一对应，第n个titCell控制第n个targetCell的显示隐藏
+            effect:"slideDown", //targetCell下拉效果
+            delayTime:300 , //效果时间
+            triggerTime:150, //鼠标延迟触发时间（默认150）
+            defaultPlay:true,//默认是否执行效果（默认true）
+            returnDefault:true //鼠标从.sideMen移走后返回默认状态（默认false）
+        });
+    }, 500)
 </script>
 </body>
 </html>

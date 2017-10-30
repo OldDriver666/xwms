@@ -13,24 +13,28 @@ table .tdImg img{
 	font-size:18px!important;
 }
 .head-filter-wrap{
+	font-size: 16px;
+	line-height: 35px;
+	border-bottom: solid 1px #c9cdd7;
+	margin: 0 10px 10px 10px;
 }
-.head-filter-wrap .control-bar {
+.tongji-userReg-date .control-bar {
 	color: #323437;
 }
-.head-filter-wrap .label {
+.tongji-userReg-date .label {
 	display: inline-block;
 	height: 26px;
 	padding-right: 5px;
 	line-height: 26px;
 	color: #787a7d;
 }
-.head-filter-wrap .date-select-bar {
+.tongji-userReg-date .date-select-bar {
 	border-style: solid;
 	border-width: 1px;
 	border-color: #e1e3e4;
 	border-radius: 2px;
 }
-.head-filter-wrap .date-select-bar a {
+.tongji-userReg-date .date-select-bar a {
 	display: inline-block;
 	float: left;
 	height: 24px;
@@ -39,11 +43,11 @@ table .tdImg img{
 	color: #323437;
 	background-color: #fff;
 }
-.head-filter-wrap .date-select-bar a:first-child.cur {
+.tongji-userReg-date .date-select-bar a:first-child.cur {
 	border-radius: 2px 0 0 2px;
 	left: -1px;
 }
-.head-filter-wrap .date-select-bar .cur {
+.tongji-userReg-date .date-select-bar .cur {
 	position: relative;
 	bottom: -1px;
 	margin-top: -2px;
@@ -67,36 +71,38 @@ table .tdImg img{
 .w-120{
 	width: 120px;
 }
-.head-filter-wrap .layui-input{
+.tongji-userReg-date .layui-input{
 	height: 26px;
 	line-height: 26px;
 	line-height: 24px\9;
 }
-.head-filter-wrap .layui-form-mid {
+.tongji-userReg-date .layui-form-mid {
 	padding: 3px 0!important;
 }
-.head-filter-wrap .group {
-	float: left;
-	background-color: #fff;
-	border-radius: 2px;
+.tongji-userReg-date {
+	position: absolute;
+	right: 10px;
+	top: 40px;
+	z-index: 10;
 }
-.head-filter-wrap .group li {
+.tongji-userReg-date li {
 	cursor: pointer;
-	padding: 0 12px;
+	padding: 0 5px;
 	border: 1px solid #e1e3e4;
 	margin-left: -1px;
 	height: 24px;
 	line-height: 24px;
-	float: left;
+	font-size: 12px;
+	margin-top: -1px;
 }
-.head-filter-wrap .group .curr {
+.tongji-userReg-date .curr {
 	position: relative;
 	z-index: 1;
 	border: 1px solid #009688;
 	color: #fff;
 	background-color: #009688;
 }
-.head-filter-wrap .group li:first-child {
+.tongji-userReg-date li:first-child {
 	margin-left: 0;
 	border-top-left-radius: 2px;
 	border-bottom-left-radius: 2px;
@@ -127,12 +133,11 @@ table .tdImg img{
 	color: #121315;
 }
 .main-cont-wrap{
-	background-color: #ececec;
-	padding: 10px;
+	background-color: #F1F2F7;
+	/*padding: 10px;*/
 	min-width: 1000px;
 }
 .main-cont-wrap .main-cont{
-	background-color: #fff;
 	margin-bottom: 20px;
 }
 .main-cont-wrap .main-cont .tit-wrap{
@@ -145,15 +150,16 @@ table .tdImg img{
 }
 
 div.user-attr {
-	background-color: #ececec;
+	/*background-color: #ececec;*/
+	margin: 0 10px;
 }
 div.table-grid div.left {
 	float: left;
-	width: 49%;
+	width: 49.5%;
 }
 div.table-grid div.right {
 	float: right;
-	width: 49%;
+	width: 49.5%;
 }
 div.table-grid div.table-grid-item {
 	margin-top: 1px;
@@ -164,6 +170,7 @@ div.table-grid div.table-grid-item {
 	margin-bottom: 18px;
 	padding-top: 10px;
 	overflow-x: auto;
+	position: relative;
 }
 .table-grid .table-grid-item .title {
 	padding: 20px 20px 10px;
