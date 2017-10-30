@@ -202,7 +202,7 @@ public class RoleServiceImpl implements IRoleService {
     	if (l > 0) {
     		WiPermission record = new WiPermission();
     		BeanUtils.copyProperties(param, record);
-    		permissionDao.updateByPrimaryKeySelective(record);
+    		permissionDao.updateByRoleIdAndModleId(record);
 		}else{
 			WiPermission data = new WiPermission();
 			BeanUtils.copyProperties(param, data);

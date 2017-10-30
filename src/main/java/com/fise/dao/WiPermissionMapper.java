@@ -31,5 +31,7 @@ public interface WiPermissionMapper {
 
     int updateByPrimaryKey(WiPermission record);
     
+    int updateByRoleIdAndModleId(WiPermission record);
+    
     List<ModulePermissResult> selectAuthByRole(@Param("company") Integer company, @Param("role") Integer role, @Param("parent")Integer parent, @Param("needall")Integer needall);
 }
