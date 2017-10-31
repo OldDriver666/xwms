@@ -437,6 +437,18 @@
 </div>
 
 <script src="js/jquery.min.js"></script>
+
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="js/polyfill/rem.min.js"></script>
+<script src="js/polyfill/respond.min.js"></script>
+<script src="js/amazeui.legacy.js"></script>
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="js/amazeui.min.js"></script>
+<!--<![endif]-->
+
 <script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
 <script type="text/javascript" src="js/jquery.tmpl.js"></script>
 <script src="js/Util.js"></script>
@@ -638,18 +650,6 @@
     }
 </script>
 
-
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="js/polyfill/rem.min.js"></script>
-<script src="js/polyfill/respond.min.js"></script>
-<script src="js/amazeui.legacy.js"></script>
-<![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="js/amazeui.min.js"></script>
-<!--<![endif]-->
-<script src="js/app.js"></script>
 <script type="text/javascript">
     setTimeout(function () {
         jQuery(".sideMenu").slide({
@@ -663,5 +663,6 @@
         });
     }, 500)
 </script>
+<script src="js/app.js"></script>
 </body>
 </html>

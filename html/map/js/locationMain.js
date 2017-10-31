@@ -36,16 +36,22 @@ $(function() {
         }));
         map.addControl(new AMap.Scale());
     });
-    AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
-        // 卫星地图、路况地图等图层切换控件
-        map.addControl(new BasicControl.LayerSwitcher({
-            position: {top:'50px', right:'20px'}
-        }));
-    });
+    setTimeout(function () {
+        AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+            // 卫星地图、路况地图等图层切换控件
+            map.addControl(new BasicControl.LayerSwitcher({
+                position: {top:'50px', right:'20px'}
+            }));
+        });
+    }, 500)
 
     var action = {
         //获取所有数据
         loadPageData: function() {
+            var today_date = action.getDateStr(0);
+            var yesterday_date = action.getDateStr(-1);
+            var before_yesterday_date = action.getDateStr(-2);
+
             var url =  ctx + "boss/user/location";
             var data = {
                 company_id: parseInt(company_id),
@@ -59,6 +65,7 @@ $(function() {
                         document.getElementById('allPeopleNum').innerHTML = result.data.total_cnt
                         document.getElementById('onlineNum').innerHTML = result.data.online_cnt
 
+
                         AMap.plugin('AMap.Geocoder', function() {
                             var geocoder = new AMap.Geocoder({
                                 radius: 1000,
@@ -69,7 +76,6 @@ $(function() {
                             // 加载地图定位点
                             var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
                             var cluster, markers = []
-
                             for(var n = 0; n<userList.length; n++){
                                 var addrs = []
                                 var iconUrl = userList[n].online_status === 0 ? 'http://webapi.amap.com/theme/v1.3/markers/n/mark_r.png' : 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png'
@@ -86,6 +92,9 @@ $(function() {
                                     })
                                 });
 
+                                //聚合点
+                                markers.push(marker)
+
                                 //构建信息窗体中显示的内容
                                 var info = [];
                                 var onlineStatus = userList[n].online_status == 1 ? '在线' : '不在线'
@@ -98,7 +107,7 @@ $(function() {
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">实时位置：</span><span class="infoWindow-item-cont" id="addrs"></span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">在线状态：</span><span class="infoWindow-item-cont" style="color:#2B7AE3">' + onlineStatus + '</span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">电量、信号：</span><span class="infoWindow-item-cont" style="color:#2B7AE3">' + userList[n].battery + '% &nbsp;' + xinhao + '</span></div>');
-                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">历史轨迹：</span><span class="infoWindow-item-cont" style="color:#2B7AE3"><a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=20170908" target="_blank">今天</a> <a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=20170907" target="_blank">昨天</a> <a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=20170906" target="_blank">前天</a></span></div>');
+                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">历史轨迹：</span><span class="infoWindow-item-cont" style="color:#2B7AE3"><a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=' + today_date +'" target="_blank">今天</a> <a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=' + yesterday_date + '" target="_blank">昨天</a> <a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=' + before_yesterday_date + '" target="_blank">前天</a></span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">运动计步：</span><span class="infoWindow-item-cont" style="color:#2B7AE3">' + userList[n].step_cnt + '步</span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">监护群：</span><span class="infoWindow-item-cont sendMsg"><a href="javascript:;">发送消息</a></span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-updata"><a href="javascript:;">更新数据</a></span></div></div>');
@@ -108,6 +117,8 @@ $(function() {
                                 marker.on('click', markerClick);
 
                             }
+                            //聚合点
+                            cluster = new AMap.MarkerClusterer(map, markers,{gridSize:80});
                             function markerClick(e) {
                                 infoWindow.setContent(e.target.content);
                                 geocoder.getAddress(e.target.getPosition(), function (status, result) {
@@ -125,6 +136,8 @@ $(function() {
                             map.setFitView()
 
                         })
+                    } else{
+                        alert('no')
                     }
                 } else {
                     toastr.error(result.msg);
@@ -132,9 +145,18 @@ $(function() {
             },function(errorMsg) {
                 alert(errorMsg);
             });
+        },
+        getDateStr : function(AddDayCount) {
+            var dd = new Date();
+            dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+            var y = dd.getFullYear();
+            var m = dd.getMonth()+1;//获取当前月份的日期
+            var d = dd.getDate();
+            return y + "" + m + "" + d;
         }
     };
 
     window.action = action;
     action.loadPageData();
 });
+
