@@ -11,6 +11,7 @@ import com.fise.model.entity.IMLocation;
 import com.fise.model.entity.IMLocationExample;
 import com.fise.model.param.QueryUserParam;
 import com.fise.server.user.ILocationService;
+import com.fise.utils.DateUtil;
 
 @Service
 public class LocationServiceImpl implements ILocationService {
@@ -21,15 +22,17 @@ public class LocationServiceImpl implements ILocationService {
     @Override
     public Response queryUserHistory(QueryUserParam param) {
         Response resp = new Response();
-        //Integer userId = param.getUserId();
-        //String queryDate = param.getQueryDate();
+        Integer userId = param.getUserId();
+        String queryDate = param.getQueryDate();
+        long startTime = DateUtil.getDateline(queryDate);
+        long endTime = startTime + 24 * 60 * 60;
         
         IMLocationExample example = new IMLocationExample();
         IMLocationExample.Criteria con = example.createCriteria();
-        con.andUseridEqualTo(105328);
-        example.setLimit(100);
-        String tableName = "IMLocation_0";// + userId.intValue() % 8;
-        System.out.println(tableName + " " + param.toString());
+        con.andUseridEqualTo(userId);
+        con.andCreatedBetween(Integer.parseInt(String.valueOf(startTime)), Integer.parseInt(String.valueOf(endTime)));
+
+        String tableName = "IMLocation_" + userId.intValue() % 8;
         List<IMLocation> data = dbDao.selectByExample(tableName, example);
         return resp.success(data);
     }
