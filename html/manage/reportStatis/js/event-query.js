@@ -323,86 +323,49 @@ Util.Page = (function () {
         var url = this.url;
         var moduleId = this.moduleId;
         var data = sendData;
+
         var callback = function (result) {
-            /*if(result.Status !=0){
-             Util.showDialog({title:"提示",msg:result.ErrorInfo,okBth:"确定"});
-             }*/
-            if (!result.data) {
-                result.data = null;
-                alert(result.msg);
-            }
+            if(result.data != null) {
+                if(result.data.result.length > 0){
+                    var list = result.data.result;
+                    that.allPageSize = Math.ceil(result.data.total_count / that.pageSize);
 
-            if (result.code == ReturnCode.SUCCESS && result.data.result.length == 0) {
-                alert("记录不存在");
-            }
+                    // 把当前索引号添加进去
+                    for (var i = 0; i < list.length; i++) {
+                        var h_ = list[i];
+                        h_.DATAINDEX_ = (that.pageNow - 1) * that.pageSize + i + 1;
+                    }
+                    var html = $("#" + that.rowTemplateId).tmpl(list);
 
-            that.allPageSize = Math.ceil(result.data.total_count / that.pageSize);
-            var list = null;
-            if (that.resultFilter) {
-                list = that.resultFilter(result);
-            } else {
-                list = result.data.result;
-            }
+                    var bindTargets = html.find(".js_bind_data");
+                    if (typeof (that.targetContentId) == "string") {
+                        $("#" + that.targetContentId).html(html);
+                        bindTargets = $("#" + that.targetContentId).find(".js_bind_data");
+                    } else {
+                        that.targetContentId.html(html);
+                        bindTargets = that.targetContentId.find(".js_bind_data");
+                    }
 
-            // 把当前索引号添加进去
-            for (var i = 0; i < list.length; i++) {
-                var h_ = list[i];
-                h_.DATAINDEX_ = (that.pageNow - 1) * that.pageSize + i + 1;
-            }
-            var html = "";
-            if (that.tmplEvents) {
-                html = $("#" + that.rowTemplateId).tmpl(list, that.tmplEvents);
-            } else {
-                html = $("#" + that.rowTemplateId).tmpl(list);
-            }
+                    for (var i = 0; i < list.length; i++) {
+                        var h_ = $(bindTargets[i]);
+                        h_.data("personInfor", list[i]);
+                        h_.attr("html", i);
+                    }
 
-            var bindTargets = html.find(".js_bind_data");
-            if (typeof (that.targetContentId) == "string") {
-                // if(html.length!=0){
-                $("#" + that.targetContentId).html(html);
-                // }
-                bindTargets = $("#" + that.targetContentId).find(
-                    ".js_bind_data");
-            } else {
-                that.targetContentId.html(html);
-                bindTargets = that.targetContentId.find(".js_bind_data");
-            }
-
-            for (var i = 0; i < list.length; i++) {
-                var h_ = $(bindTargets[i]);
-                h_.data("personInfor", list[i]);
-                h_.attr("html", i);
-            }
-
-            that.initPageBtns(result.data.total_count, that.allPageSize);
-            target.find(".load_icon").remove();
-            //如果查询到的数据长度为0；
-            if (list.length == 0) {
-                var dom = target.get(0);
-                var nodeName = dom.nodeName;
-                nodeName = nodeName.toLowerCase();
-                if (nodeName == "tbody") {
-                    var length = target.prev().find("th").length || target.prev().find("td").length || 7;
-                    target.append("<tr><td colspan='"
-                        + length
-                        + "' class='t_a_c'>暂无数据</td></tr>");
-                } else {
-                    target.append("<div class='no_data_div'>暂无数据</div>");
+                    that.initPageBtns(result.data.total_count, that.allPageSize);
+                }else{
+                    var td_len = $("#table thead tr th").length;//表格字段数量
+                    $('#pageContent').find("tr").remove();
+                    $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
                 }
-            }
-            if (that.callback) {
-                that.callback();
-            }
-            if (typeof(that.tmplBindEvents) != "object") {
-                that.tmplBindEvents();
+            }else{
+                var td_len = $("#table thead tr th").length;//表格字段数量
+                $('#pageContent').find("tr").remove();
+                $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
             }
         };
 
-        var errorCallback = function(errorMsg){
-            alert(errorMsg);
-        };
-
-        Util.ajaxLoadData(url, data,moduleId, "POST", true, callback, errorCallback);
+        Util.ajaxLoadData(url,data,moduleId,"POST",true,callback);
     };
     return Page;
 })();

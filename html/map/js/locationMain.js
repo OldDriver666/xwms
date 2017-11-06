@@ -137,7 +137,7 @@ $(function() {
 
                         })
                     } else{
-                        alert('no')
+                        toastr.error('加载失败！');
                     }
                 } else {
                     toastr.error(result.msg);
