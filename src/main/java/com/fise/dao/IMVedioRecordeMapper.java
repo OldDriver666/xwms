@@ -1,9 +1,13 @@
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.fise.base.Page;
 import com.fise.model.entity.IMVedioRecorde;
 import com.fise.model.entity.IMVedioRecordeExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
+import com.fise.model.param.QueryVedioRecordParam;
 
 public interface IMVedioRecordeMapper {
     long countByExample(IMVedioRecordeExample example);
@@ -27,4 +31,6 @@ public interface IMVedioRecordeMapper {
     int updateByPrimaryKeySelective(IMVedioRecorde record);
 
     int updateByPrimaryKey(IMVedioRecorde record);
+    
+    List<IMVedioRecorde> selectByPage(@Param("example") IMVedioRecordeExample example,@Param("page") Page<QueryVedioRecordParam> page);
 }
