@@ -79,17 +79,6 @@
 </script>
 
 <script type="text/javascript">
-	var allDevTypeArray = JSON.parse(localStorage.getItem("allDevTypeArray"));
-	if(allDevTypeArray != null){
-        var Lens = allDevTypeArray.length;
-        function typeNameQuery(type){
-            for(var i=0; i< Lens; i++){
-                if(allDevTypeArray[i].client_type == type){
-                    return allDevTypeArray[i].client_name;
-                }
-            }
-        }
-	}
     toastr.options={
         positionClass : 'toast-center-center',
         showDuration: "300",
