@@ -2664,3 +2664,199 @@ null 没有数据返回 看code是否成功
 }
 ####返回
 无内容，直接查看返回码
+
+
+
+###角色权限
+####修改权限
+|   接口地址    |   boss/role/updateAuth        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "key_id":x,                    //必填 角色权限ID 从接口queryAuth返回中的permiss_id字段值
+    "status":x,                    //选填-1-可见 0-不可见
+    "insert_auth":x,               //选填-新增权限
+    "update_auth":x,               //选填-更新权限
+    "query_auth":x                 //选填-查询可见权限
+}
+
+//回复
+无回复 看结果
+```
+
+####新增权限
+|   接口地址    |   boss/role/insertAuth        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "role_id":x,                   //必填 权限ID 
+    "module_id":x,                 //必填-模块ID
+    "company_id":x,                //必填-公司ID
+    "status":x,                    //必填-1-可见 0-不可见
+    "insert_auth":x,               //必填-权限
+    "update_auth":x,               //必填-权限
+    "query_auth":x                 //必填-权限
+}
+
+//回复
+无回复 看结果
+```
+
+
+####新增角色和权限
+|   接口地址    |   boss/role/insertRoleAndAuths        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "role":
+		{
+			 "role_level":x,                        //必填-角色权值
+			 "role_name":"",                        //必填-角色名称
+			 "company_id":x                         //必填-公司id
+			 "desc":"",                             //选填-角色描述
+			 "depart_id":X ,                        //选填-角色部门
+			 "creator_id":X                         //必填-创建者id
+		},
+	
+	"auths":
+	    [  
+	        {
+
+			    "module_id":x,                 //必填-模块ID
+			    "status":x,                    //必填-1-可见 0-不可见
+			    "insert_auth":x,               //必填-权限
+			    "update_auth":x,               //必填-权限
+			    "query_auth":x                 //必填-权限
+		    },
+		    {
+			    "module_id":x,                 //必填-模块ID
+			    "status":x,                    //必填-1-可见 0-不可见
+			    "insert_auth":x,               //必填-权限
+			    "update_auth":x,               //必填-权限
+			    "query_auth":x                 //必填-权限
+		    }
+	    ]
+}
+
+//回复
+无回复 看结果
+```
+
+
+####修改角色和权限
+|   接口地址    |   boss/role/updateRoleAndAuths        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "role":
+		{
+			 "id":x                                 //必填-roleId
+			 "role_level":x,                        //选填-角色权值
+			 "role_name":"",                        //选填-角色名称
+			 "company_id":x                         //选填-公司id
+			 "desc":"",                             //选填-角色描述
+			 "depart_id":X                          //选填-角色部门
+		},
+	
+	"auths":
+	    [  
+	        {
+			  
+			    "module_id":x,                 //必填-模块ID
+			    "status":x,                    //选填-1-可见 0-不可见
+			    "insert_auth":x,               //选填-新增权限
+			    "update_auth":x,               //选填-更新权限
+			    "query_auth":x                 //选填-查询可见权限
+		    },
+		    {
+			  
+			    "module_id":x,                 //必填-模块ID
+			    "status":x,                    //选填-1-可见 0-不可见
+			    "insert_auth":x,               //选填-新增权限
+			    "update_auth":x,               //选填-更新权限
+			    "query_auth":x                 //选填-查询可见权限
+		    }
+	    ]
+}
+
+//回复
+无回复 看结果
+```
+
+####删除角色和权限
+|   接口地址    |   boss/role/deleteRoleAndAuths        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+ 
+    "roleId":x                             //必填-从roleId
+
+}
+
+//回复
+无回复 看结果
+```
+
+
+
+
+###设备多媒体信息
+####查询设备多媒体信息
+|   接口地址    |   boss/fisedevice/queryfisedevice         |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":x,                            //选填-当前页, 默认为第1页
+    "page_size":x,                          //选填-每页记录数，默认20
+    "param":
+    {
+        "dev_id":x                     //选填-设备状态   0-出厂 1-激活  
+    }
+}
+
+//回复
+{
+    "page_no": 1,
+    "page_size": 20,
+    "total_count": 89,
+    "total_page_count": 5,
+    "param": null,
+    "extra_param": null,
+    "result": [
+        {
+            "id": 1,
+            "devId": 205601,
+            "fileName": "007",
+            "duration": 120,
+            "imageUrl": "g0/00/00/0.png",
+            "vedioUrl": "",
+            "status": 1,
+            "type": 0,
+            "created": 1495882204
+        },
+        {
+            "id": 2,
+            "devId": 205601,
+            "fileName": "009",
+            "duration": 122,
+            "imageUrl": "g0/00/00/0.png",
+            "vedioUrl": "",
+            "status": 0,
+            "type": 0,
+            "created": 1495882775
+        }
+    ]
+}
+```
