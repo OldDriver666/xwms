@@ -55,7 +55,8 @@ $(function() {
             var v_y = startTime.substr(0,4);
             var v_m = startTime.substr(5,2);
             var v_d = startTime.substr(8,2);
-            var url = ctx + "boss/report/activate";
+            //var url = ctx + "boss/report/activate";
+            var url = "http://192.168.2.54:8080/managesvr/boss/report/activate";
             var data = {
                 "organ_id":parseInt(company_id),
                 "begin_date":begin_date,
@@ -104,8 +105,6 @@ $(function() {
                                     var str_month = str.substr(4, 2);
                                     var str_date = str.substr(6, 2);
                                     return str_year + '/' + str_month + '/' + str_date + ' : ' + params.value[1];
-                                   /* var date = new Date(params.name);
-                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1];*/
                                 },
                                 axisPointer: {
                                     animation: false
@@ -149,9 +148,7 @@ $(function() {
                                     var str_year = str.substr(0, 4);
                                     var str_month = str.substr(4, 2);
                                     var str_date = str.substr(6, 2);
-                                    return str_year + '/' + str_month + '/' + str_date + ' : ' + params.value[1];
-                                    /*var date = new Date(params.name);
-                                    return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate() + ' : ' + params.value[1];*/
+                                    return str_year + '-' + str_month + '-' + str_date + ' : ' + params.value[1];
                                 },
                                 axisPointer: {
                                     animation: false
@@ -400,7 +397,7 @@ $(function() {
 	action.getClientTypeData();
 
     var nowTime = getNowFormatDate();//当前日期
-    var init_days = 3;//初始时的天数
+    var init_days = 2;//初始时的天数-1
     var init_starDate = changeDate(nowTime, init_days);//初始时的开始日期
     action.getUseRegData(init_starDate,nowTime,init_days);//初始统计数据
     //点击日期选择天数，显示相应天数的数据
