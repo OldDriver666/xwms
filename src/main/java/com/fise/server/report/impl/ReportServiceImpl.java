@@ -1,7 +1,9 @@
 package com.fise.server.report.impl;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.KeyValueMap;
 import com.fise.base.Response;
 import com.fise.dao.ReportMapper;
@@ -20,6 +23,7 @@ import com.fise.model.param.ReportActivateParam;
 import com.fise.model.result.ActivateResult;
 import com.fise.model.result.MessageTypeResult;
 import com.fise.server.report.IReportService;
+import com.fise.utils.DateUtil;
 
 @Service
 public class ReportServiceImpl implements IReportService {
@@ -32,11 +36,26 @@ public class ReportServiceImpl implements IReportService {
     @Override
     public Response queryActivate(ReportActivateParam param) {
         Response resp = new Response();
+        List<String> dateList = null;
+        SimpleDateFormat sdf =   new SimpleDateFormat("yyyyMMdd");
+        try {
+            Date beginDate = sdf.parse(param.getBeginDate());
+            Date endDate = sdf.parse(param.getEndDate());
+            int trace = DateUtil.getIntervalDays(beginDate, endDate) + 1;
+            dateList = DateUtil.getRecentDays(endDate, sdf, trace, true);
+		} catch (Exception e) {
+            resp.setMsg("日期格式异常");
+		}        
+        
         List<ActivateResult> data = reportDao.queryActivateCountByDate(param);
         Map<String, Integer> resultData = new HashMap<String, Integer>();
+        for (String date : dateList) {
+        	resultData.put(date, 0);
+		}
         for (ActivateResult tmp : data){
             resultData.put(tmp.getQueryDate(), tmp.getCount());
         }
+
         resp.success(resultData);
         return resp;
     }
