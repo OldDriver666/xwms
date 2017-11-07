@@ -14,7 +14,6 @@ public class QueryVedioRecordParam implements Serializable{
     /**
      * 设备编号
      */
-    @NotNull
     @JsonProperty("dev_id")
 	private Integer devId;
 

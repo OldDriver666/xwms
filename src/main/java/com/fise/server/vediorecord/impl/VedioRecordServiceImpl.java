@@ -31,7 +31,9 @@ public class VedioRecordServiceImpl implements IVedioRecordService {
 
         IMVedioRecordeExample example = new IMVedioRecordeExample();
         Criteria criteria = example.createCriteria();
-        criteria.andDevIdEqualTo(param.getParam().getDevId());
+        if (null != param.getParam().getDevId()) {
+        	criteria.andDevIdEqualTo(param.getParam().getDevId());
+		}
 
         List<IMVedioRecorde> list = videoRecordDao.selectByPage(example, param);
 
