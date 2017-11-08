@@ -24,7 +24,7 @@ $(function() {
 	var action = {
 		//获取所有数据
 		loadPageData : function() {
-            var search_user_account = parseInt($("#input-search-account").val());
+            //var search_user_account = parseInt($("#input-search-account").val());
             var datetime_str = $("#dtp_input2").val();
             var search_dateTime = datetime_str.replace(/-/g,"");
 
@@ -33,7 +33,7 @@ $(function() {
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "account":search_user_account,
+                    "account":null,
                     "company_id":parseInt(company_id),
                     "query_date":search_dateTime
                 };
