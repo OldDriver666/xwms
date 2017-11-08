@@ -25,7 +25,6 @@ $(function() {
 		//获取所有数据
 		loadPageData : function() {
             var search_user_account = parseInt($("#input-search-account").val());
-            var search_company_id = parseInt($('#input-search-company-id option:selected').val());
             var datetime_str = $("#dtp_input2").val();
             var search_dateTime = datetime_str.replace(/-/g,"");
 
@@ -35,7 +34,7 @@ $(function() {
                 data.page_size = 20;
                 data.param = {
                     "account":search_user_account,
-                    "company_id":search_company_id,
+                    "company_id":parseInt(company_id),
                     "query_date":search_dateTime
                 };
             var opt = {
@@ -61,31 +60,10 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
-		},
-        //获取全部公司团体数据
-        allCompanyQuery: function(){
-            var allCompanyArray = [];
-            var url = ctx + "boss/organization/query";
-            var data = new Object();
-            data.name = "";
-            data.depart_id = parseInt(depart_id);
-            data.company_id = parseInt(company_id);
-            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS && result.data != ""){
-                    allCompanyArray = result.data;
-                    $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company-id');
-                } else {
-                    toastr.error(result.msg);
-                }
-            },function(errorMsg) {
-                alert(errorMsg);
-            });
-
-        }
+		}
 	};
 	window.action = action;
 	action.loadPageData();
-	action.allCompanyQuery();
 
 
 	$("#btn-search").on('click', function() {
@@ -95,6 +73,22 @@ $(function() {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
+    });
+
+    $("#pageContent").on("click",".check-video-btn",function(){
+        var that = $(this).parent().parent();
+        var video_url = $.trim(that.find("td").eq(6).text());
+
+        //var html_str = '<video src="http://192.168.2.250:8700/g0/000/000/1509350186806587_140055545194.mp4" controls="controls">'
+        var html_str = '<video width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
+            + '<source src="' + video_url
+            + '" type="video/mp4">'
+            + '您的浏览器不支持播放该视频！</video>'
+
+        $("#modal_check_video_wrap").html(html_str);
+        $("#modal_video_name").html(that.find("td").eq(3).text());
+
+        $("#fileCheckTempl-modal").modal("show");
     });
 });
 
