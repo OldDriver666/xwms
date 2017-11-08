@@ -24,15 +24,19 @@ $(function() {
 	var action = {
 		//获取所有数据
 		loadPageData : function() {
-            var search_dev_id = parseInt($("#input-search-dev_id").val());
+            var search_user_account = parseInt($("#input-search-account").val());
+            var search_company_id = parseInt($('#input-search-company-id option:selected').val());
+            var datetime_str = $("#dtp_input2").val();
+            var search_dateTime = datetime_str.replace(/-/g,"");
 
-            //var url = ctx + "boss/fisedevice/queryfisedevice";
-            var url = "http://192.168.2.54:8080/managesvr/boss/videorecord/query";
+            var url = ctx + "boss/videorecord/query";
             var data = new Object();
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "dev_id":search_dev_id
+                    "account":search_user_account,
+                    "company_id":search_company_id,
+                    "query_date":search_dateTime
                 };
             var opt = {
                 "targetContentId" : "pageContent",
@@ -57,24 +61,37 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
-		}
+		},
+        //获取全部公司团体数据
+        allCompanyQuery: function(){
+            var allCompanyArray = [];
+            var url = ctx + "boss/organization/query";
+            var data = new Object();
+            data.name = "";
+            data.depart_id = parseInt(depart_id);
+            data.company_id = parseInt(company_id);
+            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS && result.data != ""){
+                    allCompanyArray = result.data;
+                    $("#pageCompanyInfo").tmpl(allCompanyArray).appendTo('#input-search-company-id');
+                } else {
+                    toastr.error(result.msg);
+                }
+            },function(errorMsg) {
+                alert(errorMsg);
+            });
+
+        }
 	};
 	window.action = action;
 	action.loadPageData();
+	action.allCompanyQuery();
 
 
 	$("#btn-search").on('click', function() {
-        if(isNaN($("#input-search-dev_id").val())) {
-            $("#input-search-dev_id").parent().addClass("has-error");
-            return;
-        }
         action.loadPageData();
 	});
-    $("#input-search-dev_id").on('keydown', function(e) {
-        if(isNaN($("#input-search-dev_id").val())) {
-            $("#input-search-dev_id").parent().addClass("has-error");
-            return;
-        }
+    $("#input-search-account").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
