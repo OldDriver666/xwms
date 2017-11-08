@@ -3,6 +3,8 @@ package com.fise.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fise.model.entity.IMUserExample.Criteria;
+
 public class IMVedioRecordeExample {
     protected String orderByClause;
 
@@ -684,13 +686,23 @@ public class IMVedioRecordeExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatedBetween(Integer value1, Integer value2) {
+        public Criteria andCreatedBetween(long value1, long value2) {
             addCriterion("created between", value1, value2, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedNotBetween(Integer value1, Integer value2) {
             addCriterion("created not between", value1, value2, "created");
+            return (Criteria) this;
+        }
+        
+        public Criteria andCompanyIdEqualTo(Integer value) {
+            addCriterion("companyId =", value, "companyid");
+            return (Criteria) this;
+        }
+        
+        public Criteria andAccountEqualTo(String value) {
+            addCriterion("account =", value, "account");
             return (Criteria) this;
         }
     }

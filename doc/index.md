@@ -2812,7 +2812,7 @@ null 没有数据返回 看code是否成功
 
 ###设备多媒体信息
 ####查询设备多媒体信息
-|   接口地址    |   boss/fisedevice/queryfisedevice         |
+|   接口地址    |   boss/videorecord/query         |
 |   ---         |   ---                   |
 
 ```

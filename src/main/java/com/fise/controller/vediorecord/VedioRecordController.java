@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.QueryVedioRecordParam;
@@ -32,9 +33,12 @@ public class VedioRecordController {
         
         Response response=new Response();
         logger.info(param.toString());
-        response = videoRecordService.queryVideoRecordByPage(param);
-       
-        
+        try {
+        	response = videoRecordService.queryVideoRecordByPage(param);
+		} catch (Exception e) {
+			 e.printStackTrace();
+			 response.failure(ErrorCode.ERROR_SYSTEM);
+		}
         return response;
     }
     

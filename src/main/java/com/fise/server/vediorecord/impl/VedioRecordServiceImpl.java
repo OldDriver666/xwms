@@ -1,5 +1,8 @@
 package com.fise.server.vediorecord.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,14 +27,28 @@ public class VedioRecordServiceImpl implements IVedioRecordService {
     IMVedioRecordeMapper videoRecordDao;
 
     @Override
-    public Response queryVideoRecordByPage(Page<QueryVedioRecordParam> param) {
+    public Response queryVideoRecordByPage(Page<QueryVedioRecordParam> param) throws ParseException {
 
         Response response = new Response();
         String basePath = ConfigProperties.getValue("dev_medio_base_path").trim();
 
         IMVedioRecordeExample example = new IMVedioRecordeExample();
         Criteria criteria = example.createCriteria();
-        criteria.andDevIdEqualTo(param.getParam().getDevId());
+        if (null != param.getParam().getCompanyId()) {
+        	criteria.andCompanyIdEqualTo(param.getParam().getCompanyId());
+		}
+        if (null != param.getParam().getAccount()) {
+        	criteria.andAccountEqualTo(param.getParam().getAccount());
+		}
+        
+
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    	String date = param.getParam().getQueryDate();
+    	if (null != date) {
+    		long value1 = sdf.parse(date).getTime()/1000;
+        	criteria.andCreatedBetween(value1, value1 + 3600*24);
+		}
+
 
         List<IMVedioRecorde> list = videoRecordDao.selectByPage(example, param);
 

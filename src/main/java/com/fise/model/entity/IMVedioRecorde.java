@@ -15,6 +15,8 @@ public class IMVedioRecorde implements Serializable {
     private Integer duration;
 
     private String imageUrl;
+    
+    private String account;
 
     /**
      * 视频url
@@ -103,4 +105,13 @@ public class IMVedioRecorde implements Serializable {
     public void setCreated(Integer created) {
         this.created = created;
     }
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+    
 }
