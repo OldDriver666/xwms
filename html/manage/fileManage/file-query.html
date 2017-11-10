@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
 	<link rel="stylesheet" href="../../css/pagination.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
+	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.css">
 </head>
 
 <body>
@@ -17,12 +18,34 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div id="dev-query-condition" class="navbar-form navbar-left">
+						<!--<div class="form-group">
+							<input id="input-search-account" type="text" class="form-control" placeholder="请输入用户小位号">
+						</div>-->
 						<div class="form-group">
-							<input id="input-search-dev_id" type="text" class="form-control" placeholder="请输入设备ID">
+							<div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+								<input class="form-control" size="16" type="text" value="" readonly placeholder="根据日期查询">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+							<input type="hidden" id="dtp_input2" value="" /><br/>
 						</div>
 						<button id="btn-search" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
+					</div>
+
+					<div class="modal fade" id="fileCheckTempl-modal" tabindex="-1" role="dialog" aria-labelledby="fileCheckTempl-modal-label" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">查看视频 - <span id="modal_video_name"></span></h4>
+								</div>
+								<div class="modal-body">
+									<div id="modal_check_video_wrap" style="text-align: center;"></div>
+								</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
 					</div>
 
 				</div>
@@ -32,10 +55,10 @@
 				<tr>
 					<th>ID</th>
 					<th>设备ID</th>
+					<th>小位号</th>
 					<th>文件名称</th>
 					<th>时长</th>
-					<th>图片URL</th>
-					<th>视频URL</th>
+					<th>文件</th>
 					<th>状态</th>
 					<th>类型</th>
 					<th>创建时间</th>
@@ -60,6 +83,7 @@
 <script type ="text/javascript" src="../../resource/plugin/toastr/toastr.min.js"></script>
 <script type ="text/javascript" src="../../js/Util.js"></script>
 <script type ="text/javascript" src="js/file-query.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-datetimepicker.js"></script>
 <!-- jQuery Validate -->
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.min.js"></script>
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/additional-methods.min.js"></script>
@@ -68,16 +92,19 @@
 <tr>
 	<td >${id}</td>
 	<td>${devId}</td>
+	<td>${account}</td>
 	<td>${fileName}</td>
 	<td>${duration}</td>
-	<td><img style="width:40px;height:40px;" src="${imageUrl}"></td>
-	<td>${vedioUrl}</td>
+	<td><img class="check-video-btn" style="width:40px;height:40px;cursor:pointer;" title="点击查看文件" src="${imageUrl}"></td>
+	<td style="display:none">${vedioUrl}</td>
 	<td>${status}</td>
 	<td>{{if type == 0}}视频{{else type == 1}}图片{{/if}}</td>
 	<td>${Util.formatDateTime(created)}</td>
 </tr>
 </script>
-
+<script type="text/x-jquery-tmpl" id="pageCompanyInfo">
+    <option value=${id}>${name}</option>
+</script>
 <script type="text/javascript">
     toastr.options={
         positionClass : 'toast-center-center',
@@ -85,6 +112,19 @@
         hideDuration: "300",
         timeOut: "1000"
     };
+</script>
+
+<script type="text/javascript">
+    $('.form_date').datetimepicker({
+        language:  'cn',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
 </script>
 </body>
 </html>

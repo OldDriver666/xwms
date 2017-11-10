@@ -37,20 +37,9 @@ public class Page<T> implements Pagination,Serializable {
     @JsonProperty("extra_param")
     private Map<String,Object> extraParam;
     
-    @JsonProperty("hasMore")
-    private boolean hasMore;
-    
     @JsonProperty("result")
     private List<T> result; // 当前页记录List形式
     
-	public boolean isHasMore() {
-		return hasMore;
-	}
-
-	public void setHasMore(boolean hasMore) {
-		this.hasMore = hasMore;
-	}
-
 	public Page() {
         super();
     }

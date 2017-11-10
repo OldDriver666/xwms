@@ -24,15 +24,18 @@ $(function() {
 	var action = {
 		//获取所有数据
 		loadPageData : function() {
-            var search_dev_id = parseInt($("#input-search-dev_id").val());
+            //var search_user_account = parseInt($("#input-search-account").val());
+            var datetime_str = $("#dtp_input2").val();
+            var search_dateTime = datetime_str.replace(/-/g,"");
 
-            //var url = ctx + "boss/fisedevice/queryfisedevice";
-            var url = "http://192.168.2.54:8080/managesvr/boss/videorecord/query";
+            var url = ctx + "boss/videorecord/query";
             var data = new Object();
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "dev_id":search_dev_id
+                    "account":null,
+                    "company_id":parseInt(company_id),
+                    "query_date":search_dateTime
                 };
             var opt = {
                 "targetContentId" : "pageContent",
@@ -64,20 +67,28 @@ $(function() {
 
 
 	$("#btn-search").on('click', function() {
-        if(isNaN($("#input-search-dev_id").val())) {
-            $("#input-search-dev_id").parent().addClass("has-error");
-            return;
-        }
         action.loadPageData();
 	});
-    $("#input-search-dev_id").on('keydown', function(e) {
-        if(isNaN($("#input-search-dev_id").val())) {
-            $("#input-search-dev_id").parent().addClass("has-error");
-            return;
-        }
+    $("#input-search-account").on('keydown', function(e) {
         if (e.keyCode == 13) {
             action.loadPageData();
         }
+    });
+
+    $("#pageContent").on("click",".check-video-btn",function(){
+        var that = $(this).parent().parent();
+        var video_url = $.trim(that.find("td").eq(6).text());
+
+        //var html_str = '<video src="http://192.168.2.250:8700/g0/000/000/1509350186806587_140055545194.mp4" controls="controls">'
+        var html_str = '<video width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
+            + '<source src="' + video_url
+            + '" type="video/mp4">'
+            + '您的浏览器不支持播放该视频！</video>'
+
+        $("#modal_check_video_wrap").html(html_str);
+        $("#modal_video_name").html(that.find("td").eq(3).text());
+
+        $("#fileCheckTempl-modal").modal("show");
     });
 });
 

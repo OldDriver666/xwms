@@ -156,6 +156,9 @@ $(function() {
                             },
                             xAxis: {
                                 type: 'time',
+                                axisLabel: {
+                                    margin:12
+                                },
                                 splitLine: {
                                     show: false
                                 }

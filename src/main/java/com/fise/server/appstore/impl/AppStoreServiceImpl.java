@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -199,22 +200,16 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		}
 
 		Page<AppBaseResult> page = new Page<AppBaseResult>();
-
+        Map<String , Object> map=new HashMap<String , Object>();
 		page.setPageNo(param.getPageNo());
 		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-		if (haveMore > 0) {
-			page.setHasMore(true);
-		} else {
-			page.setHasMore(false);
-		}
-
+		boolean hasMore = param.getTotalPageCount()<param.getPageNo()?true:false;
+		map.put("hasMore", hasMore);
+		page.setExtraParam(map);
 		page.setResult(appData);
-
 		response.success(page);
-
 		return response;
 	}
 
@@ -242,17 +237,14 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		}
 
 		Page<AppBaseResult> page = new Page<AppBaseResult>();
-
+		Map<String , Object> map=new HashMap<String , Object>();
 		page.setPageNo(param.getPageNo());
 		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-		if (haveMore > 0) {
-			page.setHasMore(true);
-		} else {
-			page.setHasMore(false);
-		}
+		boolean hasMore = param.getTotalPageCount()<param.getPageNo()?true:false;
+		map.put("hasMore", hasMore);
+		page.setExtraParam(map);
 		page.setResult(appData);
 		response.success(page);
 
@@ -367,16 +359,14 @@ public class AppStoreServiceImpl implements IAppStoreService {
 		}
 
 		Page<AppBaseResult> page = new Page<AppBaseResult>();
+		Map<String , Object> map=new HashMap<String , Object>();
 		page.setPageNo(param.getPageNo());
 		page.setPageSize(param.getPageSize());
 		page.setTotalCount(param.getTotalCount());
 		page.setTotalPageCount(param.getTotalPageCount());
-		int haveMore = (int) (param.getTotalPageCount() - param.getPageNo());
-		if (haveMore > 0) {
-			page.setHasMore(true);
-		} else {
-			page.setHasMore(false);
-		}
+		boolean hasMore = param.getTotalPageCount()<param.getPageNo()?true:false;
+		map.put("hasMore", hasMore);
+		page.setExtraParam(map);
 		page.setResult(appData);
 		response.success(page);
 		return response;
