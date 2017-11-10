@@ -24,16 +24,17 @@ $(function() {
 	var action = {
 		//获取所有数据
 		loadPageData : function() {
-            //var search_user_account = parseInt($("#input-search-account").val());
+            var search_user_account = $("#input-search-account").val();
             var datetime_str = $("#dtp_input2").val();
             var search_dateTime = datetime_str.replace(/-/g,"");
 
             var url = ctx + "boss/videorecord/query";
+            // var url = "http://192.168.2.54:8080/managesvr/boss/videorecord/query";
             var data = new Object();
                 data.page_no = 1;
                 data.page_size = 20;
                 data.param = {
-                    "account":null,
+                    "account":search_user_account,
                     "company_id":parseInt(company_id),
                     "query_date":search_dateTime
                 };
@@ -79,7 +80,7 @@ $(function() {
         var that = $(this).parent().parent();
         var video_url = $.trim(that.find("td").eq(6).text());
 
-        //var html_str = '<video src="http://192.168.2.250:8700/g0/000/000/1509350186806587_140055545194.mp4" controls="controls">'
+        //var html_str = '<video src="http://test.fise-wi.com/g0/000/000/1510218938191585_139870710265.mp4" controls="controls">'
         var html_str = '<video width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
             + '<source src="' + video_url
             + '" type="video/mp4">'
