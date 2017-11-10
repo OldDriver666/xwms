@@ -19,6 +19,7 @@ import com.fise.model.entity.IMVedioRecordeExample;
 import com.fise.model.entity.IMVedioRecordeExample.Criteria;
 import com.fise.model.param.QueryVedioRecordParam;
 import com.fise.server.vediorecord.IVedioRecordService;
+import com.fise.utils.StringUtil;
 
 @Service
 public class VedioRecordServiceImpl implements IVedioRecordService {
@@ -37,14 +38,14 @@ public class VedioRecordServiceImpl implements IVedioRecordService {
         if (null != param.getParam().getCompanyId()) {
         	criteria.andCompanyIdEqualTo(param.getParam().getCompanyId());
 		}
-        if (null != param.getParam().getAccount()) {
+        if (StringUtil.isNotEmpty(param.getParam().getAccount())) {
         	criteria.andAccountEqualTo(param.getParam().getAccount());
 		}
         
 
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
     	String date = param.getParam().getQueryDate();
-    	if (null != date) {
+    	if (StringUtil.isNotEmpty(date)) {
     		long value1 = sdf.parse(date).getTime()/1000;
         	criteria.andCreatedBetween(value1, value1 + 3600*24);
 		}
