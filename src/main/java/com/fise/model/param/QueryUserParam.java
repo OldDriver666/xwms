@@ -3,6 +3,7 @@ package com.fise.model.param;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class QueryUserParam implements Serializable{
     
@@ -84,5 +85,8 @@ public class QueryUserParam implements Serializable{
         this.phone = phone;
     }
     
-    
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 }

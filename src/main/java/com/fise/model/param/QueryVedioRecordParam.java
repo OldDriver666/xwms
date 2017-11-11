@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fise.utils.JsonUtil;
 
 public class QueryVedioRecordParam implements Serializable{
     
@@ -69,5 +70,8 @@ public class QueryVedioRecordParam implements Serializable{
 		this.queryDate = queryDate;
 	}
 
-	
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
 }

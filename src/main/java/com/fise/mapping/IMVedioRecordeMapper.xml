@@ -13,6 +13,14 @@
 		<result column="type" jdbcType="INTEGER" property="type" />
 		<result column="created" jdbcType="INTEGER" property="created" />
 	</resultMap>
+	
+	<resultMap id="ResultMap" type="com.fise.model.result.IMVedioResult">
+		<result column="company_name" jdbcType="VARCHAR" property="companyName" />
+		<result column="dev_count" jdbcType="INTEGER" property="devCount" />
+		<result column="img_count" jdbcType="INTEGER" property="imgCount" />
+		<result column="vedio_count" jdbcType="INTEGER" property="vedioCount" />
+	</resultMap>
+	
 	<sql id="Example_Where_Clause">
 		<where>
 			<foreach collection="oredCriteria" item="criteria" separator="or">
@@ -310,6 +318,39 @@
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
+	</select>
+	
+	<select id="queryVideoRecordCount" parameterType="java.lang.Integer" resultMap="ResultMap">
+		SELECT
+			a.*, b.*
+		FROM
+			(
+				SELECT
+					sum(IF(a.type = 0, 1, 0)) vedio_count,
+					sum(IF(a.type = 1, 1, 0)) img_count
+				FROM
+					(
+						SELECT
+							u.companyId,
+							v.dev_id,
+							v.type
+						FROM
+							IMUser u
+						INNER JOIN IMVedioRecorde v ON v.dev_id = u.id
+						WHERE
+							u.companyId = #{companyId,jdbcType=INTEGER}
+					) a
+			) a,
+			(
+				SELECT
+					count(u.id) dev_count,
+					o.`name` company_name
+				FROM
+					IMUser u
+				INNER JOIN wi_organization o ON o.id = u.companyId
+				WHERE
+					u.companyId = #{companyId,jdbcType=INTEGER}
+			) b
 	</select>
 
 </mapper>

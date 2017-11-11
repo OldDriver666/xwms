@@ -8,6 +8,7 @@ import com.fise.base.Page;
 import com.fise.model.entity.IMVedioRecorde;
 import com.fise.model.entity.IMVedioRecordeExample;
 import com.fise.model.param.QueryVedioRecordParam;
+import com.fise.model.result.IMVedioResult;
 
 public interface IMVedioRecordeMapper {
     long countByExample(IMVedioRecordeExample example);
@@ -33,4 +34,6 @@ public interface IMVedioRecordeMapper {
     int updateByPrimaryKey(IMVedioRecorde record);
     
     List<IMVedioRecorde> selectByPage(@Param("example") IMVedioRecordeExample example,@Param("page") Page<QueryVedioRecordParam> page);
+    
+    IMVedioResult queryVideoRecordCount(Integer companyId);
 }

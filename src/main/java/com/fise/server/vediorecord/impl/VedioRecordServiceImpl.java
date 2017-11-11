@@ -18,6 +18,7 @@ import com.fise.model.entity.IMVedioRecorde;
 import com.fise.model.entity.IMVedioRecordeExample;
 import com.fise.model.entity.IMVedioRecordeExample.Criteria;
 import com.fise.model.param.QueryVedioRecordParam;
+import com.fise.model.result.IMVedioResult;
 import com.fise.server.vediorecord.IVedioRecordService;
 import com.fise.utils.StringUtil;
 
@@ -75,6 +76,18 @@ public class VedioRecordServiceImpl implements IVedioRecordService {
         response.success(page);
         return response;
     }
+
+	@Override
+	public Response queryVideoRecordCount(Integer companyId) throws ParseException {
+		Response response = new Response();
+		
+        IMVedioRecordeExample example = new IMVedioRecordeExample();
+        Criteria criteria = example.createCriteria();
+        criteria.andCompanyIdEqualTo(companyId);
+        IMVedioResult result = videoRecordDao.queryVideoRecordCount(companyId);
+		response.success(result);
+		return response;
+	}
 
 
 
