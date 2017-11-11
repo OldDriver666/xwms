@@ -61,10 +61,26 @@ $(function() {
                 "param" : data
             };
             this.page = new Util.Page(opt);
-		}
+		},
+        getCountData : function() {
+            var url = ctx + "boss/videorecord/queryCount";
+            // var url = "http://192.168.2.54:8080/managesvr/boss/videorecord/queryCount";
+            var data = new Object();
+            data.company_id = parseInt(company_id);
+            Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS){
+                    document.getElementById('devCount').innerHTML = result.data.devCount
+                    document.getElementById('imgCount').innerHTML = result.data.imgCount
+                    document.getElementById('videoCount').innerHTML = result.data.vedioCount
+                }
+            },function(errorMsg) {
+                alert(errorMsg);
+            });
+        }
 	};
 	window.action = action;
 	action.loadPageData();
+	action.getCountData();
 
 
 	$("#btn-search").on('click', function() {
