@@ -94,17 +94,26 @@ $(function() {
 
     $("#pageContent").on("click",".check-video-btn",function(){
         var that = $(this).parent().parent();
-        var video_url = $.trim(that.find("td").eq(6).text());
+        var fileType = $.trim(that.find("td").eq(8).text());
+        var file_url = $.trim(that.find("td").eq(6).text());
 
         //var html_str = '<video src="http://test.fise-wi.com/g0/000/000/1510218938191585_139870710265.mp4" controls="controls">'
-        var html_str = '<video width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
-            + '<source src="' + video_url
+        // 视频html
+        var html_video_str = '<video width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
+            + '<source src="' + file_url
             + '" type="video/mp4">'
             + '您的浏览器不支持播放该视频！</video>'
-
-        $("#modal_check_video_wrap").html(html_str);
-        $("#modal_video_name").html(that.find("td").eq(3).text());
-
+        // 图片html
+        var html_img_str = '<img src="' + file_url
+            + '" style="width:auto;height:400px;">'
+        // 根据文件类型显示内容
+        if (fileType === '视频') {
+            $("#modal_check_file_wrap").html(html_video_str);
+        }
+        if (fileType === '图片') {
+            $("#modal_check_file_wrap").html(html_img_str);
+        }
+        $("#modal_file_name").html('查看' + fileType + '文件 - ' + that.find("td").eq(3).text());
         $("#fileCheckTempl-modal").modal("show");
     });
 });

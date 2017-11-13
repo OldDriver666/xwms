@@ -42,10 +42,10 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title">查看视频 - <span id="modal_video_name"></span></h4>
+									<h4 class="modal-title"><span id="modal_file_name"></span></h4>
 								</div>
 								<div class="modal-body">
-									<div id="modal_check_video_wrap" style="text-align: center;"></div>
+									<div id="modal_check_file_wrap" style="text-align: center;"></div>
 								</div>
 							</div><!-- /.modal-content -->
 						</div><!-- /.modal -->
@@ -103,6 +103,7 @@
 	<td>${status}</td>
 	<td>{{if type == 0}}视频{{else type == 1}}图片{{/if}}</td>
 	<td>${Util.formatDateTime(created)}</td>
+	<td style="display:none">${imageUrl}</td>
 </tr>
 </script>
 <script type="text/x-jquery-tmpl" id="pageCompanyInfo">
