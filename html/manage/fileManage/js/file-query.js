@@ -104,7 +104,7 @@ $(function() {
             + '" type="video/mp4">'
             + '您的浏览器不支持播放该视频！</video>'
         // 图片html
-        var html_img_str = '<img src="' + file_url
+        var html_img_str = '<img src="' + $.trim(that.find("td").eq(9).text())
             + '" style="width:auto;height:400px;">'
         // 根据文件类型显示内容
         if (fileType === '视频') {
