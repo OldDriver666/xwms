@@ -129,6 +129,37 @@
         minView: 2,
         forceParse: 0
     });
+
+
+    //加快播放速度
+    $('#fileCheckTempl-modal').on('click','#fastFoward',function () {
+        console.log(document.getElementById("video_ele").playbackRate)
+        //FF不支持playbackRate
+        if(document.getElementById("video_ele").playbackRate){
+            document.getElementById("video_ele").playbackRate = document.getElementById("video_ele").playbackRate*2;
+        }else{
+            alert("对不起，你的浏览器不支持改变播放速度！");
+        }
+    })
+    //降低播放速度
+    $('#fileCheckTempl-modal').on('click','#fastBackward',function () {
+        console.log(document.getElementById("video_ele").playbackRate)
+        //FF不支持playbackRate
+        if(document.getElementById("video_ele").playbackRate){
+            document.getElementById("video_ele").playbackRate = document.getElementById("video_ele").playbackRate/2;
+        }else{
+            alert("对不起，你的浏览器不支持改变播放速度！");
+        }
+    })
+    function bindEvent(){
+        //循环检查视频的当前状态
+        setInterval(function(){
+            var speed = document.getElementById("video_ele").playbackRate||1;
+            document.getElementById("currentSpeed").innerHTML = speed + 'X'
+        },200);
+
+    }
+    //bindEvent()
 </script>
 </body>
 </html>

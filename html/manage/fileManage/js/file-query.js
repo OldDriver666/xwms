@@ -99,10 +99,11 @@ $(function() {
 
         //var html_str = '<video src="http://test.fise-wi.com/g0/000/000/1510218938191585_139870710265.mp4" controls="controls">'
         // 视频html
-        var html_video_str = '<video width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
+        var html_video_str = '<video id="video_ele" width="500" height="400" style="background-color:#000;color:#ccc" controls="controls">'
             + '<source src="' + file_url
             + '" type="video/mp4">'
             + '您的浏览器不支持播放该视频！</video>'
+            //+ '<div><button id="fastFoward">快进</button><button id="fastBackward">快退</button><div id="currentSpeed"></div></div>'
         // 图片html
         var html_img_str = '<img src="' + $.trim(that.find("td").eq(9).text())
             + '" style="width:auto;height:400px;">'

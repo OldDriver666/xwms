@@ -19,7 +19,7 @@
 .site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
 
 /* 头部 */
-.header{height: 50px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
+.header{height: 70px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
 #sysWebTitle {position: absolute; left: 0; top: 10px;}
 .logo img{width: 82px; height: 31px;}
 
