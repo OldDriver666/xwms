@@ -10,7 +10,7 @@
     select FROM_UNIXTIME(created,'%Y%m%d') as query_date,
            count(1) as count 
     from IMUser 
-    where departId = #{param.organId,jdbcType=INTEGER}
+    where companyId = #{param.organId,jdbcType=INTEGER}
       and FROM_UNIXTIME(created,'%Y%m%d') &gt;= #{param.beginDate,jdbcType=VARCHAR}
       and FROM_UNIXTIME(created,'%Y%m%d') &lt;= #{param.endDate,jdbcType=VARCHAR}
     group by FROM_UNIXTIME(created,'%Y%m%d')
@@ -25,7 +25,7 @@
     select case sex when 1 then '男' when 2 then '女' else '未知' end as sex,
            count(1) as count 
     from IMUser 
-    where departId = #{companyId,jdbcType=INTEGER}
+    where companyId = #{companyId,jdbcType=INTEGER}
     group by sex;
   </select>
 
@@ -37,7 +37,7 @@
     select type,
            count(1) as count 
     from IMUser 
-    where departId = #{companyId,jdbcType=INTEGER}
+    where companyId = #{companyId,jdbcType=INTEGER}
     group by type;
   </select>
 
@@ -49,7 +49,7 @@
     select if(length(province) &gt; 0,province,'未知') as province,
            count(1) as count 
     from IMUser 
-    where departId = #{companyId,jdbcType=INTEGER}
+    where companyId = #{companyId,jdbcType=INTEGER}
     group by province;
   </select>
 	
