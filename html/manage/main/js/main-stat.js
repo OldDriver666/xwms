@@ -55,8 +55,8 @@ $(function() {
             var v_y = startTime.substr(0,4);
             var v_m = startTime.substr(5,2);
             var v_d = startTime.substr(8,2);
-            //var url = ctx + "boss/report/activate";
-            var url = "http://192.168.2.54:8080/managesvr/boss/report/activate";
+            var url = ctx + "boss/report/activate";
+            // var url = "http://192.168.2.54:8080/managesvr/boss/report/activate";
             var data = {
                 "organ_id":parseInt(company_id),
                 "begin_date":begin_date,
