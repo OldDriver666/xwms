@@ -63,9 +63,9 @@ public class AdminstratorController {
     public Response adminInsert(@RequestBody @Valid AdminInsert param) {
         Response resp = new Response();
 
-//        if (!authService.inserAuth()) {
-//            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-//        }
+        if (!authService.inserAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
         param.setCreatorId(HttpContext.getMemberId());
         param.setCompanyId(HttpContext.getCompanyId());
         resp = adminSvr.insertAdmin(param);
@@ -77,10 +77,10 @@ public class AdminstratorController {
     public Response adminUpdate(@RequestBody @Valid AdminUpdate param) {
         Response resp = new Response();
 
-//        if (!authService.updateAuth()) {
-//            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-//        }
-
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        param.setCreatorId(HttpContext.getMemberId());
         logger.info(param.toString());
         resp = adminSvr.updateAdmin(param);
         return resp;
@@ -90,10 +90,10 @@ public class AdminstratorController {
     public Response adminDelete(@RequestBody @Valid AdminUpdate param) {
         Response resp = new Response();
 
-//        if (!authService.updateAuth()) {
-//            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-//        }
-
+        if (!authService.updateAuth()) {
+            return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
+        param.setCreatorId(HttpContext.getMemberId());
         logger.info(param.toString());
         resp = adminSvr.deleteAdmin(param);
         return resp;
@@ -102,7 +102,7 @@ public class AdminstratorController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response adminQuery(@RequestBody @Valid AdminQuery param) {
         Response resp = new Response();
-        param.setCompanyId(HttpContext.getCompanyId());
+        param.setCreatorId(HttpContext.getMemberId());
         logger.info(param.toString());
         resp = adminSvr.queryAdmin(param);
         return resp;

@@ -83,6 +83,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
             record.setParentId(param.getParentId());
         }
         record.setUpdated(DateUtil.getLinuxTimeStamp());
+        record.setCreatorId(param.getCreatorId());
         departDao.updateByPrimaryKeySelective(record);
         resp.success(record);
         return resp;
@@ -92,7 +93,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
     @Override
     public Response delete(DepartmentParam param) {
     	Response resp = new Response();
-    	departDao.deleteByPrimaryKey(param.getDepartId());
+    	departDao.deleteById(param);
     	resp.success(param);
     	return resp;
     }

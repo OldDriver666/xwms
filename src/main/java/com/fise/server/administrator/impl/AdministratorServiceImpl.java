@@ -343,6 +343,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         WiAdmin sqlAdmin = new WiAdmin();
         sqlAdmin.setId(param.getAdminId());
+        sqlAdmin.setCreatorId(param.getCreatorId());
         sqlAdmin.setUpdated(DateUtil.getLinuxTimeStamp());
         if (!StringUtil.isEmpty(param.getAccount())) {
             sqlAdmin.setAccount(param.getAccount());
@@ -380,7 +381,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         if (param.getStatus() != null) {
             sqlAdmin.setStatus(param.getStatus());
         }
-        adminDao.updateByPrimaryKeySelective(sqlAdmin);
+        adminDao.updateById(sqlAdmin);
         resp.success();
         return resp;
     }
@@ -391,9 +392,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         // 检测发起请求的用户
         WiAdminExample example = new WiAdminExample();
         Criteria loginWhere = example.createCriteria();
-        if(null != param.getAdminId()){
-        	loginWhere.andCreatorIdEqualTo(param.getAdminId());
-        }
+        loginWhere.andCreatorIdEqualTo(param.getCreatorId());
         if(null != param.getRoleId()){
         	loginWhere.andRoleIdEqualTo(param.getRoleId());
         }
@@ -492,7 +491,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
             return resp;
         }
         
-        adminDao.deleteByPrimaryKey(param.getAdminId());
+        adminDao.deleteById(param);
         return resp;
     }
 

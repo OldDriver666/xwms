@@ -2,6 +2,8 @@ package com.fise.dao;
 
 import com.fise.model.entity.WiDepartment;
 import com.fise.model.entity.WiDepartmentExample;
+import com.fise.model.param.DepartmentParam;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,6 +13,8 @@ public interface WiDepartmentMapper {
     int deleteByExample(WiDepartmentExample example);
 
     int deleteByPrimaryKey(Integer id);
+    
+    int deleteById(DepartmentParam param);
 
     int insert(WiDepartment record);
 

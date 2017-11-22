@@ -30,6 +30,16 @@ public class AdminUpdate {
 	private String email;
 	
 	private Integer status;
+	
+	private Integer creatorId;
+
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
 
 	public Integer getLoginId() {
 		return loginId;

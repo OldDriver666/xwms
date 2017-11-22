@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
+import com.fise.model.param.InsertAuthParam;
 
 public interface WiOrganizationRoleMapper {
     long countByExample(WiOrganizationRoleExample example);
@@ -27,8 +28,10 @@ public interface WiOrganizationRoleMapper {
     int updateByExample(@Param("record") WiOrganizationRole record, @Param("example") WiOrganizationRoleExample example);
 
     int updateByPrimaryKeySelective(WiOrganizationRole record);
+    int updateById(WiOrganizationRole record);
 
     int updateByPrimaryKey(WiOrganizationRole record);
     
-    int delAuthByRoleId(Integer roleId);
+    int delRoleByRoleId(InsertAuthParam role);
+    int delAuthByRoleId(InsertAuthParam role);
 }

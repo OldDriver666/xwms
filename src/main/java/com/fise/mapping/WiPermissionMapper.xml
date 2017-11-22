@@ -338,7 +338,7 @@
          on p.module_id=m.id
     where 
           p.role_id=#{role,jdbcType=INTEGER}
-          
+          and p.company_id=#{company,jdbcType=INTEGER}
           <if test="needall != 1">
             and p.status = 1 and m.status=1
           </if>

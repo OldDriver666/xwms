@@ -22,8 +22,19 @@ public class AdminQuery {
 
     @JsonProperty("depart_id")
     private Integer departId;
+    
+    private Integer creatorId;
+    
 
-    public Integer getDepartId() {
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public Integer getDepartId() {
         return departId;
     }
 

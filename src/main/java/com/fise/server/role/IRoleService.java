@@ -2,6 +2,8 @@ package com.fise.server.role;
 
 import java.util.List;
 
+
+
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
@@ -43,7 +45,7 @@ public interface IRoleService {
     /**
      * 删除角色和权限
      */
-    public Response deleteRoleAndAuths(Integer roleId);
+    public Response deleteRoleAndAuths(InsertAuthParam role);
 
     /**
      * 删除权限
