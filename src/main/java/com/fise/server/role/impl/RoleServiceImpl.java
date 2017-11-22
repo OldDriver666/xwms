@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
@@ -84,7 +85,8 @@ public class RoleServiceImpl implements IRoleService {
 //            tmpData = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),tmp.getModule_id(),needAll);
 //            result.addAll(tmpData);
 //        }
-    	List<ModulePermissResult> result = permissionDao.selectAuthByRole(null, param.getRole_id(),null,null);
+
+    	List<ModulePermissResult> result = permissionDao.selectAuthByRole(HttpContext.getCompanyId(), param.getRole_id(),null,null);
         return result;
     }
 
@@ -241,24 +243,31 @@ public class RoleServiceImpl implements IRoleService {
 	@Transactional
 	public Response updateRoleAndAuths(WiOrganizationRole role, List<InsertAuthParam> auths) {
 		Response resp = new Response();
-		resp = updateRole(role);
-        for (InsertAuthParam insertAuthParam : auths) {
-        	insertAuthParam.setRoleId(role.getId());
-        	insertAuthParam.setCompanyId(role.getOrganizationId());
-        	resp = insertAuth(insertAuthParam);
+		int idx = updateRoleById(role);
+		if (idx > 0) {
+			for (InsertAuthParam insertAuthParam : auths) {
+				insertAuthParam.setRoleId(role.getId());
+				insertAuthParam.setCompanyId(role.getOrganizationId());
+				resp = insertAuth(insertAuthParam);
+			}
 		}
-		
 		return resp.success();
 	}
 	
 	@Override
 	@Transactional
-	public Response deleteRoleAndAuths(Integer roleId) {
+	public Response deleteRoleAndAuths(InsertAuthParam role) {
 		Response resp = new Response();
-		roleDao.deleteByPrimaryKey(roleId);
-	    roleDao.delAuthByRoleId(roleId);
 		
+		int idx = roleDao.delRoleByRoleId(role);
+	    if (idx > 0) {
+	    	roleDao.delAuthByRoleId(role);
+		}
 		return resp.success();
 	}
+	
+    private int updateRoleById(WiOrganizationRole param) {
+        return roleDao.updateById(param);
+    }
 
 }
