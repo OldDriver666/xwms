@@ -87,7 +87,8 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         Integer adminId = admin.getId();
         Integer role_id = admin.getRoleId();
-        String accessToken = genAccessToken(adminId, role_id);
+        Integer companyId = admin.getCompanyId();
+        String accessToken = genAccessToken(adminId, role_id, companyId);
         WiAdmin updateAdmin = new WiAdmin();
         Integer nowTime = DateUtil.getLinuxTimeStamp();
         updateAdmin.setAccessToken(accessToken);
@@ -118,9 +119,10 @@ public class AdministratorServiceImpl implements IAdministratorService {
         resp.success(data);
         return resp;
     }
+    
 
     // 生成access token
-    private String genAccessToken(Integer memberId, Integer role_id) {
+    private String genAccessToken(Integer memberId, Integer role_id, Integer companyId) {
         Jedis jedis = null;
         String accessToken = null;
         try {
@@ -151,6 +153,11 @@ public class AdministratorServiceImpl implements IAdministratorService {
             String key1 = Constants.REDIS_KEY_PREFIX_MEMBER_ROLE_ID + "_" + memberId;
             String value1 = role_id + "y";
             jedis.setex(key1, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value1);
+            
+            // 将登录用户的companyId保存到redis
+            String key2 = Constants.REDIS_KEY_PREFIX_MEMBER_COMPANY_ID + "_" + memberId;
+            String value2 = companyId + "";
+            jedis.setex(key2, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value2);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

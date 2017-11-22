@@ -100,6 +100,7 @@ public interface Constants {
 	public static final String REDIS_KEY_PREFIX_MANAGER_ACCESS_TOKEN = "manager:access_token:";
 	public static final String REDIS_KEY_PREFIX_MEMBER_CHANGE_MOBILE_STEP = "member:change_mobile_step:";
 	public static final String REDIS_KEY_PREFIX_MEMBER_ROLE_ID = "member:role_id";
+	public static final String REDIS_KEY_PREFIX_MEMBER_COMPANY_ID = "member:company_id";
 	
 	// 评论状态
 	public static final Integer ORDER_COMMENT_STATUS_NOT_COMMENT = 0;		// 未评论

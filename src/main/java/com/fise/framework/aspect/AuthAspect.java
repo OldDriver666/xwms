@@ -1,6 +1,9 @@
 package com.fise.framework.aspect;
 import java.lang.reflect.Method;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -10,6 +13,7 @@ import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.framework.exception.AuthException;
 import com.fise.framework.exception.RequestHeaderException;
 import com.fise.framework.redis.RedisManager;
+import com.fise.server.auth.IAuthService;
 import com.fise.utils.Constants;
 import com.fise.utils.StringUtil;
 
@@ -21,6 +25,9 @@ import redis.clients.jedis.Jedis;
  * @desc 检查access token的切面
  */
 public class AuthAspect {
+	
+    @Resource
+    IAuthService authService;
     
     public Object execute(ProceedingJoinPoint pjp) throws Throwable {
         Logger logger = Logger.getLogger("AuthAspect");
@@ -101,6 +108,38 @@ public class AuthAspect {
         } finally {
             RedisManager.getInstance().returnResource(redisPoolName, jedis);
         }
+        
+        //设置companyId
+        redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
+        try {
+            jedis = RedisManager.getInstance().getResource(redisPoolName);
+            String key = Constants.REDIS_KEY_PREFIX_MEMBER_COMPANY_ID + "_" + id;
+            String companyId = jedis.get(key);
+            if (StringUtils.isNotBlank(companyId)) {
+            	HttpContext.setCompanyId(Integer.valueOf(companyId));
+			}
+        } finally {
+            RedisManager.getInstance().returnResource(redisPoolName, jedis);
+        }
+        Boolean flag = false;
+        //校验增删改权限
+        if (StringUtils.contains(uri, "Insert") || StringUtils.contains(uri, "insert") 
+        		|| StringUtils.contains(uri, "Add") || StringUtils.contains(uri, "add")) {
+			flag =!authService.inserAuth();
+		}
+        
+        if (StringUtils.contains(uri, "Update") || StringUtils.contains(uri, "update") 
+        		|| StringUtils.contains(uri, "Modify") || StringUtils.contains(uri, "modify")) {
+        	flag =!authService.updateAuth();
+		}
+        
+        if (StringUtils.contains(uri, "Delete") || StringUtils.contains(uri, "delete") 
+        		|| StringUtils.contains(uri, "Del") || StringUtils.contains(uri, "del")) {
+        	flag =!authService.updateAuth();
+		}
+        if (flag) {
+        	throw new AuthException("Auth failed!");
+		}
        
         logger.debug("domain=" + domain + "|uri=" + uri + "|token: " + accessToken + "|method_name = " + method.getName() + "|url=" +url.toString());
         
