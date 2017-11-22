@@ -2,6 +2,7 @@ package com.fise.framework.aspect;
 import java.lang.reflect.Method;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -40,14 +41,15 @@ public class AuthAspect {
             return pjp.proceed();
         }
         // 从 request header 中获取当前 token
-        String uri = HttpContext.getRequest().getRequestURI();
-        StringBuffer url = HttpContext.getRequest().getRequestURL();
+        HttpServletRequest req = HttpContext.getRequest();
+        String uri = req.getRequestURI();
+        StringBuffer url = req.getRequestURL();
         String domain = url.substring(0, url.toString().length() - uri.length() + 1);
         
         String accessToken = null;
         String redisPoolName = null;
         String keyPrefix = null;
-        String fitUA = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_FIT_USER_AGENT);
+        String fitUA = req.getHeader(Constants.HEADER_FIELD_FIT_USER_AGENT);
         if (StringUtil.isEmpty(fitUA)) {
             throw new RequestHeaderException("FISE-UA is empty!");
         }
@@ -75,17 +77,17 @@ public class AuthAspect {
         HttpContext.setPlatform(platform);
         if (uri.startsWith("/boss") || uri.startsWith("/managesvr")) {
             HttpContext.setMemberId(Integer.parseInt(id));
-            accessToken = HttpContext.getRequest().getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
+            accessToken = req.getHeader(Constants.HEADER_FIELD_NAME_ACCESS_TOKEN);
             redisPoolName = Constants.REDIS_POOL_NAME_MEMBER;
             keyPrefix = Constants.REDIS_KEY_PREFIX_MEMBER_ACCESS_TOKEN;
         } else if (uri.startsWith("/manage")) {
             HttpContext.setManagerId(Integer.parseInt(id));
-            accessToken = HttpContext.getRequest().getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
+            accessToken = req.getHeader(Constants.MANAGER_HEADER_FIELD_NAME_ACCESS_TOKEN);
             redisPoolName = Constants.REDIS_POOL_NAME_SYSTEM;
             keyPrefix = Constants.REDIS_KEY_PREFIX_MANAGER_ACCESS_TOKEN;
         } else if (uri.startsWith("/gym")) {
             HttpContext.setGymId(Integer.parseInt(id));
-            accessToken = HttpContext.getRequest().getHeader(Constants.GYM_HEADER_FIELD_NAME_ACCESS_TOKEN);
+            accessToken = req.getHeader(Constants.GYM_HEADER_FIELD_NAME_ACCESS_TOKEN);
             redisPoolName = Constants.REDIS_POOL_NAME_GYM;
             keyPrefix = Constants.REDIS_KEY_PREFIX_GYM_ACCESS_TOKEN;
         } else {
