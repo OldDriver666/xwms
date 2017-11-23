@@ -26,6 +26,7 @@ import com.fise.model.result.ModulePermissResult;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.role.IRoleService;
 import com.fise.utils.AdminUtil;
+import com.fise.utils.Constants;
 
 @RestController
 @RequestMapping("/boss/role")
@@ -53,9 +54,7 @@ public class RoleController {
     @RequestMapping(value = "/queryAuth", method = RequestMethod.POST)
     public Response queryAuth(@RequestBody @Valid QueryRoleParam param) {
         Response resp = new Response();
-        List<ModulePermissResult> data = roleSvr.queryRoleAuth(param);
-        resp.success(data);
-
+        resp = roleSvr.queryRoleAuth(param);
         return resp;
     }
 

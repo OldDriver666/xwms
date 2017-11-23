@@ -381,7 +381,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         if (param.getStatus() != null) {
             sqlAdmin.setStatus(param.getStatus());
         }
-        adminDao.updateById(sqlAdmin);
+        adminDao.updateByPrimaryKey(sqlAdmin);
         resp.success();
         return resp;
     }

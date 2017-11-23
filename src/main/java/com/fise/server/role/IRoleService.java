@@ -17,7 +17,7 @@ public interface IRoleService {
     public List<WiOrganizationRole> queryRole(QueryRoleParam param);
 
     /* 查询角色并返回对应权限-不包括不可见的 */
-    public List<ModulePermissResult> queryRoleAuth(QueryRoleParam param);
+    public Response queryRoleAuth(QueryRoleParam param);
 
     //更新角色信息
     public Response updateRole(WiOrganizationRole param);

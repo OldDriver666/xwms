@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +68,9 @@ public class AdminstratorController {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
         param.setCreatorId(HttpContext.getMemberId());
-        param.setCompanyId(HttpContext.getCompanyId());
+        if (null == param.getCompanyId() || 0 == param.getCompanyId()) {
+        	param.setCompanyId(HttpContext.getCompanyId());
+		}
         resp = adminSvr.insertAdmin(param);
         logger.info("新增管理员:"+param.toString());
         return resp;
