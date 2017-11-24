@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.model.param.ReportActivateParam;
 import com.fise.server.report.IReportService;
@@ -27,6 +28,7 @@ public class ReportController {
     @RequestMapping(value = "/activate", method = RequestMethod.POST)
     public Response queryActivate(@RequestBody ReportActivateParam param){
         Response resp = new Response();
+        param.setOrganId(HttpContext.getCompanyId());
         logger.info(param.toString());
         if( param.getBeginDate().compareTo(param.getEndDate()) > 0 ){
             //开始日期大于结束日期
@@ -48,7 +50,7 @@ public class ReportController {
             resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
             resp.setMsg("公司不能为空");
         } else {
-            resp = reportSvr.queryAboutPage((Integer)param.get("company_id"));
+            resp = reportSvr.queryAboutPage(HttpContext.getCompanyId());
         }
         return resp;
     }

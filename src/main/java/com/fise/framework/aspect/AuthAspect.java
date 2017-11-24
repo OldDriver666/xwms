@@ -124,11 +124,16 @@ public class AuthAspect {
             RedisManager.getInstance().returnResource(redisPoolName, jedis);
         }
         Boolean flag = false;
-        //校验增删改权限
+        //校验增删改查权限
+//        if (StringUtils.contains(uri, "Query") || StringUtils.contains(uri, "query") 
+//        		|| StringUtils.contains(uri, "Select") || StringUtils.contains(uri, "select")) {
+//			flag =!authService.queryAuth();
+//		}
+        
         if (StringUtils.contains(uri, "Insert") || StringUtils.contains(uri, "insert") 
         		|| StringUtils.contains(uri, "Add") || StringUtils.contains(uri, "add")) {
-			flag =!authService.inserAuth();
-		}
+        	flag =!authService.inserAuth();
+        }
         
         if (StringUtils.contains(uri, "Update") || StringUtils.contains(uri, "update") 
         		|| StringUtils.contains(uri, "Modify") || StringUtils.contains(uri, "modify")) {

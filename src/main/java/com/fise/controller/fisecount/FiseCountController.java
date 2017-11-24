@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.model.param.DeviceCountParam;
 import com.fise.server.activedevicecount.IActiveDeviceCountService;
@@ -27,6 +28,7 @@ public class FiseCountController {
     public Response getDeviceCount(@RequestBody @Valid DeviceCountParam param){
         
         Response response=new Response();
+        param.setCompanyId(HttpContext.getCompanyId());
         logger.info(param.toString());
         response=iActiveDeviceCountService.getActiveDeviceCount(param);
         
