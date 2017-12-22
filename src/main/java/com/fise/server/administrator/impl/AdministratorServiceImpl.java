@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationMapper;
@@ -87,7 +88,8 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         Integer adminId = admin.getId();
         Integer role_id = admin.getRoleId();
-        String accessToken = genAccessToken(adminId, role_id);
+        Integer companyId = admin.getCompanyId();
+        String accessToken = genAccessToken(adminId, role_id, companyId);
         WiAdmin updateAdmin = new WiAdmin();
         Integer nowTime = DateUtil.getLinuxTimeStamp();
         updateAdmin.setAccessToken(accessToken);
@@ -118,9 +120,10 @@ public class AdministratorServiceImpl implements IAdministratorService {
         resp.success(data);
         return resp;
     }
+    
 
     // 生成access token
-    private String genAccessToken(Integer memberId, Integer role_id) {
+    private String genAccessToken(Integer memberId, Integer role_id, Integer companyId) {
         Jedis jedis = null;
         String accessToken = null;
         try {
@@ -151,6 +154,11 @@ public class AdministratorServiceImpl implements IAdministratorService {
             String key1 = Constants.REDIS_KEY_PREFIX_MEMBER_ROLE_ID + "_" + memberId;
             String value1 = role_id + "y";
             jedis.setex(key1, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value1);
+            
+            // 将登录用户的companyId保存到redis
+            String key2 = Constants.REDIS_KEY_PREFIX_MEMBER_COMPANY_ID + "_" + memberId;
+            String value2 = companyId + "";
+            jedis.setex(key2, Constants.ACCESS_TOKEN_EXPIRE_SECONDS, value2);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -336,6 +344,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         WiAdmin sqlAdmin = new WiAdmin();
         sqlAdmin.setId(param.getAdminId());
+        sqlAdmin.setCreatorId(param.getCreatorId());
         sqlAdmin.setUpdated(DateUtil.getLinuxTimeStamp());
         if (!StringUtil.isEmpty(param.getAccount())) {
             sqlAdmin.setAccount(param.getAccount());
@@ -373,7 +382,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         if (param.getStatus() != null) {
             sqlAdmin.setStatus(param.getStatus());
         }
-        adminDao.updateByPrimaryKeySelective(sqlAdmin);
+        adminDao.updateByPrimaryKey(sqlAdmin);
         resp.success();
         return resp;
     }
@@ -384,9 +393,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         // 检测发起请求的用户
         WiAdminExample example = new WiAdminExample();
         Criteria loginWhere = example.createCriteria();
-        if(null != param.getAdminId()){
-        	loginWhere.andCreatorIdEqualTo(param.getAdminId());
-        }
+        loginWhere.andCreatorIdEqualTo(param.getCreatorId());
         if(null != param.getRoleId()){
         	loginWhere.andRoleIdEqualTo(param.getRoleId());
         }
@@ -485,8 +492,16 @@ public class AdministratorServiceImpl implements IAdministratorService {
             return resp;
         }
         
-        adminDao.deleteByPrimaryKey(param.getAdminId());
+        adminDao.deleteById(param);
         return resp;
     }
+
+	@Override
+	public Response queryAdminSelf() {
+		Response resp = new Response();
+        WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
+        resp.success(admin);
+		return resp;
+	}
 
 }

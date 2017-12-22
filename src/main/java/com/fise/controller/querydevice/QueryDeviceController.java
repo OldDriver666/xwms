@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.model.param.QueryDeviceParam;
 import com.fise.server.deviceconfig.IDeviceConfigService;
@@ -30,6 +31,7 @@ public class QueryDeviceController {
     public Response queryDeviceByAccount(@RequestBody @Valid QueryDeviceParam param){
         
         Response response=new Response();
+        param.setCompanyId(HttpContext.getCompanyId());
         logger.info(param.toString());
         if(StringUtil.isEmpty(param.getAccount()) 
                 && StringUtil.isEmpty(param.getPhone())

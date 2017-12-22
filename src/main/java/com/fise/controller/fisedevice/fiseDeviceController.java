@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.FiseDevice;
@@ -34,7 +35,7 @@ public class fiseDeviceController {
     public Response addFiseDevice(@RequestBody @Valid FiseDevice param) {
 
         Response response = new Response();
-
+        param.setCompanyid(HttpContext.getCompanyId());
         if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
@@ -49,7 +50,7 @@ public class fiseDeviceController {
     public Response queryFiseDevice(@RequestBody @Valid Page<QueryFiseDeviceParam> page) {
 
         Response response = new Response();
-        
+        page.getParam().setCompanyId(HttpContext.getCompanyId());
         response = fiseDeviceService.queryFiseDevice(page);
         logger.info("查询设备：" + page.toString());
         return response;
@@ -68,7 +69,9 @@ public class fiseDeviceController {
         if (param.getFiseId() == null) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-
+        if (HttpContext.getCompanyId() != param.getCompanyId()) {
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
         response = fiseDeviceService.delFiseDevice(param);
         logger.info("删除设备:" + param.toString());
         return response;
@@ -86,7 +89,9 @@ public class fiseDeviceController {
         if (param.getId() == null) {
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
-
+        if (HttpContext.getCompanyId() != param.getCompanyid()) {
+            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
+        }
         response = fiseDeviceService.updateFiseDevice(param);
         logger.info("更新设备："+ param.toString() + " 结果:" + response.getMsg());
         return response;

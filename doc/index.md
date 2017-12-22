@@ -157,8 +157,64 @@ null 没有数据返回 看code是否成功
 ]
 ```
 
+
+####查询当前用户
+|   接口地址    |   boss/admin/queryself         |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+}
+
+//回复
+[    
+    {
+        "id": 3,
+        "account": "chenzhongchao",
+        "salt": "1540",
+        "password": "",
+        "nickName": "陈钟超",
+        "roleId": 3,
+        "departId":x,
+        "companyId": 1,
+        "phone": "",
+        "email": "",
+        "accessToken": null,
+        "status": 1,
+        "lastLogin": null,
+        "created": 1496315408,
+        "updated": 1496396165
+    }
+]
+```
+
+
 ####管理员修改
 |   接口地址    |   boss/admin/update         |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "login_id":x,       //必填-登录者id
+    "admin_id":X,       //必填-需要修改者id
+    "account":"",       //增管理员账号
+    "password":"",      //密码
+    "nick_name":"",     //昵称
+    "status":1,         //0-不可用，1-可用  2-删除 
+    "role_id":x,        //角色
+    "organization_id":x,//公司组织id
+    "phone":"",
+    "email":""
+}
+
+//回复
+null 没有数据返回 看code是否成功
+```
+
+####管理员删除
+|   接口地址    |   boss/admin/delete       |
 |   ---         |   ---                   |
 
 ```
@@ -3077,3 +3133,6 @@ null 没有数据返回 看code是否成功
       "vedioCount": 847                 //视频数量
 }
 ```
+
+
+

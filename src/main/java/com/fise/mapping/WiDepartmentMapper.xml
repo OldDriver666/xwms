@@ -102,6 +102,12 @@
     delete from wi_department
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <delete id="deleteById" parameterType="com.fise.model.param.DepartmentParam">
+    delete from wi_department
+    where id = #{departId,jdbcType=INTEGER}
+    and creator_id = #{creatorId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.fise.model.entity.WiDepartmentExample">
     delete from wi_department
     <if test="_parameter != null">
@@ -229,6 +235,7 @@
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
+    and creator_id = #{creatorId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fise.model.entity.WiDepartment">
     update wi_department

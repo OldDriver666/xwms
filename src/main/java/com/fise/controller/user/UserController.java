@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
@@ -48,6 +49,7 @@ public class UserController {
     public Response queryUserInfo(@RequestBody @Valid Page<QueryUserParam> param){
         
         Response response=new Response();
+//        param.getParam().setCompanyId(HttpContext.getCompanyId());
         logger.info(param.toString());
         response=IQueryUserService.queryUserByPage(param);
        

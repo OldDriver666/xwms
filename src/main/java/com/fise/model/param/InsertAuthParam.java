@@ -34,8 +34,20 @@ public class InsertAuthParam implements Serializable {
 
     @JsonProperty("query_auth")
     private Integer queryAuth;
+    
+    private Integer creatorId;
 
-    public Integer getPermissionId() {
+    public Integer getCreatorId() {
+		return creatorId;
+	}
+
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
+	}
+
+
+	public Integer getPermissionId() {
 		return permissionId;
 	}
 

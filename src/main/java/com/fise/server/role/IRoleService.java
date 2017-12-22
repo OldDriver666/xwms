@@ -2,6 +2,8 @@ package com.fise.server.role;
 
 import java.util.List;
 
+
+
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
@@ -15,7 +17,7 @@ public interface IRoleService {
     public List<WiOrganizationRole> queryRole(QueryRoleParam param);
 
     /* 查询角色并返回对应权限-不包括不可见的 */
-    public List<ModulePermissResult> queryRoleAuth(QueryRoleParam param);
+    public Response queryRoleAuth(QueryRoleParam param);
 
     //更新角色信息
     public Response updateRole(WiOrganizationRole param);
@@ -43,7 +45,7 @@ public interface IRoleService {
     /**
      * 删除角色和权限
      */
-    public Response deleteRoleAndAuths(Integer roleId);
+    public Response deleteRoleAndAuths(InsertAuthParam role);
 
     /**
      * 删除权限

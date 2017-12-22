@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.param.QueryVedioRecordParam;
@@ -38,6 +39,7 @@ public class VedioRecordController {
     public Response queryVideoRecordInfo(@RequestBody @Valid Page<QueryVedioRecordParam> param){
         
         Response response=new Response();
+        param.getParam().setCompanyId(HttpContext.getCompanyId());
         logger.info(param.toString());
         try {
         	response = videoRecordService.queryVideoRecordByPage(param);
@@ -57,7 +59,7 @@ public class VedioRecordController {
         Response response=new Response();
         logger.info(param);
         try {
-        	response = videoRecordService.queryVideoRecordCount(param.getCompanyId());
+        	response = videoRecordService.queryVideoRecordCount(HttpContext.getCompanyId());
 		} catch (Exception e) {
 			 e.printStackTrace();
 			 response.failure(ErrorCode.ERROR_SYSTEM);

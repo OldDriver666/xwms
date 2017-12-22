@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.param.AdminInsert;
@@ -65,7 +67,10 @@ public class AdminstratorController {
         if (!authService.inserAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-
+        param.setCreatorId(HttpContext.getMemberId());
+        if (null == param.getCompanyId() || 0 == param.getCompanyId()) {
+        	param.setCompanyId(HttpContext.getCompanyId());
+		}
         resp = adminSvr.insertAdmin(param);
         logger.info("新增管理员:"+param.toString());
         return resp;
@@ -78,7 +83,7 @@ public class AdminstratorController {
         if (!authService.updateAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-
+        param.setCreatorId(HttpContext.getMemberId());
         logger.info(param.toString());
         resp = adminSvr.updateAdmin(param);
         return resp;
@@ -91,7 +96,7 @@ public class AdminstratorController {
         if (!authService.updateAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-
+        param.setCreatorId(HttpContext.getMemberId());
         logger.info(param.toString());
         resp = adminSvr.deleteAdmin(param);
         return resp;
@@ -100,8 +105,18 @@ public class AdminstratorController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response adminQuery(@RequestBody @Valid AdminQuery param) {
         Response resp = new Response();
+        param.setCreatorId(HttpContext.getMemberId());
         logger.info(param.toString());
         resp = adminSvr.queryAdmin(param);
+        return resp;
+    }
+    
+    @RequestMapping(value = "/queryself", method = RequestMethod.POST)
+    public Response adminQuerySelf() {
+        Response resp = new Response();
+//        param.setCreatorId(HttpContext.getMemberId());
+//        logger.info(param.toString());
+        resp = adminSvr.queryAdminSelf();
         return resp;
     }
 

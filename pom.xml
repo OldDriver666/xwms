@@ -354,6 +354,7 @@
 					<include>jdbc.properties</include>
 					<include>redis.properties</include>
 					<include>config.properties</include>
+					<include>log4j.properties</include>
 				</includes>
 				<filtering>true</filtering>		<!-- 需要进行变量替换的文件 -->
 			</resource>

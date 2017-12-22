@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
@@ -30,6 +31,7 @@ import com.fise.model.result.ModulePermissResult;
 import com.fise.server.depart.IDepartmentService;
 import com.fise.server.module.IModuleService;
 import com.fise.server.role.IRoleService;
+import com.fise.utils.AdminUtil;
 import com.fise.utils.DateUtil;
 import com.fise.utils.StringUtil;
 
@@ -68,7 +70,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<ModulePermissResult> queryRoleAuth(QueryRoleParam param) {
+    public Response queryRoleAuth(QueryRoleParam param) {
 //        // 需要返回的真实JSON格式数据
 //        List<ModulePermissResult> data = new ArrayList<ModulePermissResult>();
 //        List<ModulePermissResult> tmpData = new ArrayList<ModulePermissResult>();
@@ -84,8 +86,26 @@ public class RoleServiceImpl implements IRoleService {
 //            tmpData = permissionDao.selectAuthByRole(param.getCompany_id(), param.getRole_id(),tmp.getModule_id(),needAll);
 //            result.addAll(tmpData);
 //        }
-    	List<ModulePermissResult> result = permissionDao.selectAuthByRole(null, param.getRole_id(),null,null);
-        return result;
+    	Response response = new Response();
+        // 判断用户权限
+    	Integer roleId1 = param.getRole_id();
+    	Integer roleId2 = AdminUtil.getRoleId(HttpContext.getMemberId());
+    	if (roleId1 != roleId2) {
+    		WiOrganizationRoleExample example = new WiOrganizationRoleExample();
+        	WiOrganizationRoleExample.Criteria criteria = example.createCriteria();
+            criteria.andIdEqualTo(roleId1);
+            criteria.andCreatorIdEqualTo(HttpContext.getMemberId());
+            List<WiOrganizationRole> list = roleDao.selectByExample(example);
+            if (list.isEmpty()) {
+            	response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+                response.setMsg("角色权限值错误");
+                return response;
+            }
+		}
+
+    	List<ModulePermissResult> data = permissionDao.selectAuthByRole(null, param.getRole_id(),null,null);
+    	response.success(data);
+    	return response;
     }
 
     @Override
@@ -228,6 +248,12 @@ public class RoleServiceImpl implements IRoleService {
         criteri.andOrganizationIdEqualTo(role.getCompanyId());
         List<WiOrganizationRole> list = roleDao.selectByExample(example);
         WiOrganizationRole wrole = list.get(0);
+        if (!valiteAuths(auths)) {
+        	resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+            resp.setMsg("角色权限值错误");
+            return resp;
+		}
+        
 		for (InsertAuthParam insertAuthParam : auths) {
 			insertAuthParam.setCompanyId(role.getCompanyId());
 			insertAuthParam.setRoleId(wrole.getId());
@@ -241,24 +267,59 @@ public class RoleServiceImpl implements IRoleService {
 	@Transactional
 	public Response updateRoleAndAuths(WiOrganizationRole role, List<InsertAuthParam> auths) {
 		Response resp = new Response();
-		resp = updateRole(role);
-        for (InsertAuthParam insertAuthParam : auths) {
-        	insertAuthParam.setRoleId(role.getId());
-        	insertAuthParam.setCompanyId(role.getOrganizationId());
-        	resp = insertAuth(insertAuthParam);
-		}
 		
+		if (!valiteAuths(auths)) {
+        	resp.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+            resp.setMsg("角色权限值错误");
+            return resp;
+		}
+		int idx = updateRoleById(role);
+		
+		if (idx > 0) {
+			for (InsertAuthParam insertAuthParam : auths) {
+				insertAuthParam.setRoleId(role.getId());
+				insertAuthParam.setCompanyId(role.getOrganizationId());
+				resp = insertAuth(insertAuthParam);
+			}
+		}
 		return resp.success();
 	}
 	
 	@Override
 	@Transactional
-	public Response deleteRoleAndAuths(Integer roleId) {
+	public Response deleteRoleAndAuths(InsertAuthParam role) {
 		Response resp = new Response();
-		roleDao.deleteByPrimaryKey(roleId);
-	    roleDao.delAuthByRoleId(roleId);
 		
+		int idx = roleDao.delRoleByRoleId(role);
+	    if (idx > 0) {
+	    	roleDao.delAuthByRoleId(role);
+		}
 		return resp.success();
 	}
+	
+    private int updateRoleById(WiOrganizationRole param) {
+        return roleDao.updateById(param);
+    }
+    
+    /**
+     * 验证权限是否是当前用户所拥有
+     */
+    private boolean valiteAuths(List<InsertAuthParam> auths) {
+    	Integer roleId = AdminUtil.getRoleId(HttpContext.getMemberId());
+    	List<ModulePermissResult> data = permissionDao.selectAuthByRole(null, roleId,null,null);
+    	Boolean flag = false;
+    	for (InsertAuthParam insertAuthParam : auths) {
+    		flag = false;
+    		for (ModulePermissResult modulePermissResult : data) {
+    			if (insertAuthParam.getModuleId() == modulePermissResult.getModule_id()) {
+					flag = true;
+				}
+    		}
+    		if(!flag) {
+    			return false;
+    		}
+		}
+    	return true;
+    }
 
 }

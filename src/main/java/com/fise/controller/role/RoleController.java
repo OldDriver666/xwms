@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
@@ -24,6 +25,8 @@ import com.fise.model.param.UpdateRoleAndAuthsParam;
 import com.fise.model.result.ModulePermissResult;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.role.IRoleService;
+import com.fise.utils.AdminUtil;
+import com.fise.utils.Constants;
 
 @RestController
 @RequestMapping("/boss/role")
@@ -40,7 +43,8 @@ public class RoleController {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     public Response queryRole(@RequestBody @Valid QueryRoleParam param) {
         Response resp = new Response();
-        System.out.println("oo");
+        param.setCreator_id(HttpContext.getMemberId());
+        param.setCompany_id(HttpContext.getCompanyId());
         List<WiOrganizationRole> data = roleSvr.queryRole(param);
         resp.success(data);
         logger.info("查询角色:" + param.toString() + " 结果:" + resp.getMsg());
@@ -50,10 +54,7 @@ public class RoleController {
     @RequestMapping(value = "/queryAuth", method = RequestMethod.POST)
     public Response queryAuth(@RequestBody @Valid QueryRoleParam param) {
         Response resp = new Response();
-
-        List<ModulePermissResult> data = roleSvr.queryRoleAuth(param);
-        resp.success(data);
-
+        resp = roleSvr.queryRoleAuth(param);
         return resp;
     }
 
@@ -136,7 +137,7 @@ public class RoleController {
         if (!authService.inserAuth()) {
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-        
+        param.getRole().setCreatorId(HttpContext.getMemberId());
         response = roleSvr.insertRoleAndAuths(param.getRole(), param.getAuths());
         logger.info("新增角色:" + param.toString() + " 结果:" + response.getMsg());
         return response;
@@ -145,11 +146,11 @@ public class RoleController {
     @RequestMapping(value = "/updateRoleAndAuths", method = RequestMethod.POST)
     public Response updateRoleAndAuths(@RequestBody @Valid UpdateRoleAndAuthsParam param) {
         Response resp = new Response();
-        
+        param.getRole().setCreatorId(HttpContext.getMemberId());
         if (!authService.updateAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
-
+        param.getRole().setCreatorId(HttpContext.getMemberId());
         resp = roleSvr.updateRoleAndAuths(param.getRole(), param.getAuths());
         return resp;
     }
@@ -158,12 +159,12 @@ public class RoleController {
     @RequestMapping(value = "/deleteRoleAndAuths", method = RequestMethod.POST)
     public Response deleteRoleAndAuths(@RequestBody  @Valid InsertAuthParam role) {
         Response resp = new Response();
-        
+        role.setCreatorId(HttpContext.getMemberId());
         if (!authService.updateAuth()) {
             return resp.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
 
-        resp = roleSvr.deleteRoleAndAuths(role.getRoleId());
+        resp = roleSvr.deleteRoleAndAuths(role);
         return resp;
     }
 }

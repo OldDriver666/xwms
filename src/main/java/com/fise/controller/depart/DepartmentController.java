@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.model.param.DepartmentParam;
 import com.fise.server.auth.IAuthService;
@@ -31,7 +32,7 @@ public class DepartmentController {
 	public Response insertDepartment(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
-		
+		param.setCreatorId(HttpContext.getMemberId());
 		if(!authService.inserAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
@@ -49,6 +50,7 @@ public class DepartmentController {
 	public Response queryImdepartConfig(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
+		param.setCreatorId(HttpContext.getMemberId());
 		logger.info(param.toString());
 		response=iDepartmentSvr.queryList(param);
 		return response;
@@ -58,7 +60,7 @@ public class DepartmentController {
 	public Response updateDepartment(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
-		
+		param.setCreatorId(HttpContext.getMemberId());
 		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }
@@ -72,7 +74,7 @@ public class DepartmentController {
 	public Response deleteDepartment(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
-		
+		param.setCreatorId(HttpContext.getMemberId());
 		if(!authService.updateAuth()){
             return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
         }

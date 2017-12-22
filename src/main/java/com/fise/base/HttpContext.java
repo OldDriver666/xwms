@@ -16,6 +16,7 @@ public class HttpContext {
     
     // 业务变量
     private static ThreadLocal<Integer> memberIdHolder = new ThreadLocal<Integer>(); 
+    private static ThreadLocal<Integer> companyIdHolder = new ThreadLocal<Integer>(); 
     private static ThreadLocal<Integer> gymIdHolder = new ThreadLocal<Integer>();
     private static ThreadLocal<Integer> managerIdHolder = new ThreadLocal<Integer>();
     private static ThreadLocal<String> versionNameHolder = new ThreadLocal<String>();
@@ -52,6 +53,16 @@ public class HttpContext {
     // 获取memberId
     public static Integer getMemberId(){
     	return memberIdHolder.get();
+    }
+    
+    // 设置companyId
+    public static void setCompanyId(Integer companyId) {
+    	companyIdHolder.set(companyId);
+    }
+    
+    // 获取companyId
+    public static Integer getCompanyId(){
+    	return companyIdHolder.get();
     }
     
     // 设置gymId
