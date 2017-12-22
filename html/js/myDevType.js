@@ -11,7 +11,7 @@ $(function(){
 	var Index = {
         myDevTypeQuery: function(){
             var dataArray1 = [];
-            var dataArray2 = [];
+            // var dataArray2 = [];
             var myDevTypeArray = [];
             var url = ctx + "boss/clienttype/queryclienttype";
             var moduleId = 0;
@@ -22,8 +22,18 @@ $(function(){
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     dataArray1 = result.data;
+                    for(var i =0; i < dataArray1.length; i++){
+                        var str ={
+                            client_type: dataArray1[i].client_type,
+                            client_name: dataArray1[i].client_name
+                        };
+                        myDevTypeArray.push(str);
+                    }
+                    localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
+                    localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
 
-                    var url_query = ctx + "boss/departconf/queryimdepartconfig";
+
+                    /*var url_query = ctx + "boss/departconf/queryimdepartconfig";
                     var moduleId_query = 0;
                     var data_query = new Object();
                     data_query.client_type = null;
@@ -31,6 +41,7 @@ $(function(){
 
                     Util.ajaxLoadData(url_query,data_query,moduleId_query,"POST",true,function(result_query) {
                         if(result_query.code == ReturnCode.SUCCESS){
+                            console.log(result_query.data)
                             dataArray2 = result_query.data;
                             var Len1 = dataArray1.length;
                             var Len2 = dataArray2.length;
@@ -45,6 +56,7 @@ $(function(){
                                     }
                                 }
                             }
+                            console.log(myDevTypeArray)
                             localStorage.setItem("myDevTypeArray",JSON.stringify(myDevTypeArray));
                             localStorage.setItem("allDevTypeArray",JSON.stringify(dataArray1));
                         } else {
@@ -52,7 +64,7 @@ $(function(){
                         }
                     },function(errorMsg) {
                         //alert(errorMsg)
-                    });
+                    });*/
 
                 } else {
                    /* alert(result.msg);*/
