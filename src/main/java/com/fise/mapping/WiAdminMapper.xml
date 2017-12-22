@@ -386,7 +386,7 @@
   
   <delete id="deleteById" parameterType="com.fise.model.param.AdminUpdate">
     delete from wi_admin
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{adminId,jdbcType=INTEGER}
     and creator_id = #{creatorId,jdbcType=INTEGER}
   </delete>
   
