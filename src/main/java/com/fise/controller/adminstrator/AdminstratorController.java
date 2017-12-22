@@ -110,6 +110,15 @@ public class AdminstratorController {
         resp = adminSvr.queryAdmin(param);
         return resp;
     }
+    
+    @RequestMapping(value = "/queryself", method = RequestMethod.POST)
+    public Response adminQuerySelf() {
+        Response resp = new Response();
+//        param.setCreatorId(HttpContext.getMemberId());
+//        logger.info(param.toString());
+        resp = adminSvr.queryAdminSelf();
+        return resp;
+    }
 
     @IgnoreAuth
     @RequestMapping(value = "/islogin", method = RequestMethod.POST)

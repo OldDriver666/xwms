@@ -157,6 +157,39 @@ null 没有数据返回 看code是否成功
 ]
 ```
 
+
+####查询当前用户
+|   接口地址    |   boss/admin/queryself         |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+}
+
+//回复
+[    
+    {
+        "id": 3,
+        "account": "chenzhongchao",
+        "salt": "1540",
+        "password": "",
+        "nickName": "陈钟超",
+        "roleId": 3,
+        "departId":x,
+        "companyId": 1,
+        "phone": "",
+        "email": "",
+        "accessToken": null,
+        "status": 1,
+        "lastLogin": null,
+        "created": 1496315408,
+        "updated": 1496396165
+    }
+]
+```
+
+
 ####管理员修改
 |   接口地址    |   boss/admin/update         |
 |   ---         |   ---                   |
@@ -3077,3 +3110,6 @@ null 没有数据返回 看code是否成功
       "vedioCount": 847                 //视频数量
 }
 ```
+
+
+

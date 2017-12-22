@@ -27,6 +27,9 @@ public interface IAdministratorService {
 
     /* 查询公司所有管理员 */
     public Response queryAdmin(AdminQuery param);
+    
+    /* 查询当前用户 */
+    public Response queryAdminSelf();
 
     /* 判断用户是否异地登录 */
     public Response isLogin(String accessToken);

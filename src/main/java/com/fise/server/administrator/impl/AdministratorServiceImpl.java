@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationMapper;
@@ -494,5 +495,13 @@ public class AdministratorServiceImpl implements IAdministratorService {
         adminDao.deleteById(param);
         return resp;
     }
+
+	@Override
+	public Response queryAdminSelf() {
+		Response resp = new Response();
+        WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
+        resp.success(admin);
+		return resp;
+	}
 
 }
