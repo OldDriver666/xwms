@@ -213,6 +213,29 @@ null 没有数据返回 看code是否成功
 null 没有数据返回 看code是否成功
 ```
 
+####管理员删除
+|   接口地址    |   boss/admin/delete       |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "login_id":x,       //必填-登录者id
+    "admin_id":X,       //必填-需要修改者id
+    "account":"",       //增管理员账号
+    "password":"",      //密码
+    "nick_name":"",     //昵称
+    "status":1,         //0-不可用，1-可用  2-删除 
+    "role_id":x,        //角色
+    "organization_id":x,//公司组织id
+    "phone":"",
+    "email":""
+}
+
+//回复
+null 没有数据返回 看code是否成功
+```
+
 ###角色权限管理
 ####新增角色
 |   接口地址    |   boss/role/insert        |
