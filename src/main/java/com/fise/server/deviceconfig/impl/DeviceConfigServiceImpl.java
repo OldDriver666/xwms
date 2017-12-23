@@ -114,7 +114,7 @@ public class DeviceConfigServiceImpl implements IDeviceConfigService{
             data.put("crontab", crontab);
         }
         
-        if(param.getType()==19){
+        if(param.getType()==19 || param.getType()==32){
             DeviceConf baseInfo=DeviceConfDao.selectByPrimaryKey(nDeviceId);
             data.put("base_info", baseInfo);
         }
