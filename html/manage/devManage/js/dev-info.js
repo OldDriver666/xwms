@@ -92,6 +92,7 @@ $(function() {
         //获取设备类型列表数据
         loadDevTypeData : function() {
             var myDevTypeArray = JSON.parse(localStorage.getItem("myDevTypeArray"));
+            console.log(localStorage.getItem("myDevTypeArray"))
             $("#pageDevType").tmpl(myDevTypeArray).appendTo('#input-devType');
         },
 		//编辑数据

@@ -98,14 +98,15 @@ $(function(){
             });
 		},
         getMyInfoData: function () {
-            var url = ctx + "boss/admin/query";
+            var url = ctx + "boss/admin/queryself";
             var moduleId = 0;
             var data = new Object();
             data.account = userName;
 
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
-                    $("#admin-header-nick").text(result.data[0].nickName);
+                    $("#admin-header-nick").text(result.data.nickName);
+                    Util.cookieStorage.setCookie("nickname",result.data.nickName);
                 } else {
                     toastr.error(result.msg);
                 }

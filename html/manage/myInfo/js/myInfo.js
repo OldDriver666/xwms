@@ -10,15 +10,15 @@ $(function() {
 
 
     function getMyInfoData () {
-        var url = ctx + "boss/admin/query";
+        var url = ctx + "boss/admin/queryself";
         var moduleId = 0;
         var data = new Object();
         data.account = userName;
 
         Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
-                $(".nickName_txt").text(result.data[0].nickName);
-                $(".userName_txt").text(result.data[0].account);
+                $(".nickName_txt").text(result.data.nickName);
+                $(".userName_txt").text(result.data.account);
             } else {
                 toastr.error(result.msg);
             }
