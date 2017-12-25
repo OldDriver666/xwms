@@ -344,7 +344,9 @@ public class AdministratorServiceImpl implements IAdministratorService {
 
         WiAdmin sqlAdmin = new WiAdmin();
         sqlAdmin.setId(param.getAdminId());
-        sqlAdmin.setCreatorId(param.getCreatorId());
+        if (param.getCreatorId() != param.getAdminId()) {
+        	sqlAdmin.setCreatorId(param.getCreatorId());
+		}
         sqlAdmin.setUpdated(DateUtil.getLinuxTimeStamp());
         if (!StringUtil.isEmpty(param.getAccount())) {
             sqlAdmin.setAccount(param.getAccount());
@@ -382,7 +384,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
         if (param.getStatus() != null) {
             sqlAdmin.setStatus(param.getStatus());
         }
-        adminDao.updateByPrimaryKey(sqlAdmin);
+        adminDao.updateByPrimaryKeySelective(sqlAdmin);
         resp.success();
         return resp;
     }
