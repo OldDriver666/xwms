@@ -148,7 +148,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
  				e.printStackTrace();
  			}
  		}
- 		String urlPath="http://192.168.252.250:8888/boss/appmarket/app/";
+ 		String urlPath="http://10.252.252.250:8888/boss/appmarket/app/";
 		return urlPath+newPath;
       }	
 
@@ -167,7 +167,7 @@ public class AppStoreServiceImpl implements IAppStoreService {
   	 		String prefix = fileName.substring(0, fileName.lastIndexOf("."));
   	 		// 新的文件名加上当前时间的年月日时分秒。
   	 		String newPath = appPath + prefix +"_" +currentTime + "." + suffix;
-  	 		String urlPath="http://192.168.252.250:8888/boss/appmarket/photo/";
+  	 		String urlPath="http://10.252.252.250:8888/boss/appmarket/photo/";
   	 		result.add(urlPath+newPath);
   	 		
   		}
