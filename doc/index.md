@@ -1276,7 +1276,10 @@ type和name都是选填，如果都不填，则查询所有信息
 {
  "user_id":x,                     //必填-用户id
  "uname":"",                      //必填-用户名
- "suggestion":"",                 //选填-意见内容 
+ "title":"",                      //标题
+ "type":0,                        //0-公开 1-私有
+ "suggest_id":"",                 //意见id
+ "content":"",                    //选填-意见内容 
  "contact":""                     //选填-联系方式
 }
 
@@ -1284,6 +1287,7 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ``` 
 
+```
 ####查询用户意见
 |   接口地址    |   boss/suggest/query        |
 |   ---         |   ---                   |
@@ -1294,33 +1298,113 @@ type和name都是选填，如果都不填，则查询所有信息
 {
     "param":
     {
-        "uname":""               //选填-用户名
+        "uname":"tom"               //选填-用户名
+    },
+    "page_no":1,
+    "page_size":10
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 2,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 8,
+            "userId": 1024,
+            "count": 6,
+            "uname": "jack",
+            "status": 0,
+            "type": true,
+            "title": "提问2",
+            "suggestId": "123",
+            "content": "this is a test suggest",
+            "contact": "13423720455",
+            "created": 1489411761,
+            "updated": 1499839643
+         },
+         {
+            "id": 1,
+            "userId": 1024,
+            "count": 6,
+            "uname": "jack",
+            "status": 0,
+            "type": true,
+            "title": "提问1",
+            "suggestId": "abc",
+            "content": "this is a test suggest",
+            "contact": "13423720455",
+            "created": 1489411761,
+            "updated": 1499839643
+         }
+      ]
+   }
+}
+```
+
+####根据意见id查询用户意见
+|   接口地址    |   boss/suggest/queryBySuggestId        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":1,
+    "page_size":10,
+    "param":
+    {
+           "suggest_id":"abc"
     }
 }
 
 //回复
-[
-    {
-    "suggest_id":x,
-    "user_id":x,
-    "uname":"",
-    "status":0,
-    "suggestion":"",
-    "contact":"",
-    "created":x,
-    "updated":x
-    },
-    {
-    "suggest_id":x,
-    "user_id":x,
-    "uname":"",
-    "status":0,
-    "suggestion":"",
-    "contact":"",
-    "created":x,
-    "updated":x
-    }
-]
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": -1,
+      "total_page_count": -1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "userId": 1024,
+            "uname": "jack",
+            "status": 0,
+            "type": true,
+            "title": "提问1",
+            "suggestId": "abc",
+            "content": "this is a test suggest",
+            "contact": "13423720455",
+            "created": 1489411761,
+            "updated": 1499839643
+         },
+         {
+            "id": 2,
+            "userId": 1024,
+            "uname": "tom",
+            "status": 0,
+            "type": true,
+            "title": null,
+            "suggestId": "abc",
+            "content": "不告诉你，就是不告诉你，你想怎么样",
+            "contact": null,
+            "created": 1496988701,
+            "updated": 1496988701
+         }
+      ]
+   }
+}
 ```
 
 ####删除用户意见
@@ -1347,7 +1431,7 @@ type和name都是选填，如果都不填，则查询所有信息
  "suggest_id":x,                  //必填-ID
  "user_id":x,                     //选填-用户id
  "uname":"",                      //选填-用户名
- "status":0,                      //选填-记录状态 0 :初始正常 1:已经回复
+ "status":0,                      //选填-记录状态  0:待处理  1:处理中  2:关闭
  "suggestion":"",                 //选填-意见内容   
  "contact":""                     //选填-联系方式 
  }

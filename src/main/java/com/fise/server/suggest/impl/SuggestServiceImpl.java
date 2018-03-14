@@ -20,7 +20,6 @@ import com.fise.utils.StringUtil;
 @Service
 public class SuggestServiceImpl implements ISuggestService{
 
-	private Logger logger=Logger.getLogger(getClass());
 	
 	@Autowired 
 	IMSuggestMapper IMSuggestDao;
@@ -68,13 +67,42 @@ public class SuggestServiceImpl implements ISuggestService{
 		response.success(page);
 		return response;
 	}
+	
+	@Override
+	public Response queryBySuggestId(Page<SuggestParam> param) {
+		
+		Response response=new Response();
+		
+		IMSuggestExample example=new IMSuggestExample();
+		Criteria criteria=example.createCriteria();
+		
+		criteria.andSuggestIdEqualTo(param.getParam().getSuggestId());
+		example.setOrderByClause("created");
+		
+		List<IMSuggest> list=IMSuggestDao.selectByExample(example);
+		if(list.size()==0){
+			return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_UNEXIST);
+		}
+		
+		Page<IMSuggest> page=new Page<IMSuggest>();
+		page.setPageNo(param.getCurrentPageNo());
+		page.setPageSize(param.getPageSize());
+		page.setTotalCount(param.getTotalCount());
+		page.setTotalPageCount(param.getTotalPageCount());
+		page.setResult(list);
+		
+		response.success(page);
+		return response;
+	}
 
 	@Override
 	public Response delSuggest(SuggestParam param) {
 		
 		Response response=new Response();
-		
-		IMSuggestDao.deleteByPrimaryKey(param.getId());
+		IMSuggestExample example=new IMSuggestExample();
+		Criteria criteria=example.createCriteria();
+		criteria.andSuggestIdEqualTo(param.getSuggestId());
+		IMSuggestDao.deleteByExample(example);
 		
 		return response.success();
 	}

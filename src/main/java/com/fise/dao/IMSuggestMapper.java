@@ -14,7 +14,7 @@ public interface IMSuggestMapper {
     int deleteByExample(IMSuggestExample example);
 
     int deleteByPrimaryKey(Integer id);
-
+    
     int insert(IMSuggest record);
 
     int insertSelective(IMSuggest record);

@@ -64,6 +64,18 @@ public class SuggestController {
 		return response;
 	}
 	
+	//查询suggest信息
+	@RequestMapping(value="/queryBySuggestId",method=RequestMethod.POST)
+	public Response queryBySuggestId(@RequestBody @Valid Page<SuggestParam> param){
+		
+		Response response=new Response();
+		logger.info(param.toString());
+		response=iSuggestService.queryBySuggestId(param);
+		
+		
+		return response;
+	}
+	
 	//删除suggest信息
 	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delSuggest(@RequestBody @Valid SuggestParam param){
@@ -76,7 +88,7 @@ public class SuggestController {
 		
 		logger.info(param.toString());
 		
-		if(param.getId()==null){
+		if(param.getSuggestId()==null){
             return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
         }
 		

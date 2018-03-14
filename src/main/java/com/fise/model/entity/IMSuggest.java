@@ -2,18 +2,24 @@ package com.fise.model.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fise.utils.JsonUtil;
-
 /**
  * @author 
  */
 public class IMSuggest implements Serializable {
-	@JsonProperty("suggest_id")
+    /**
+     * 问题id
+     */
     private Integer id;
-	
-	@JsonProperty("user_id")
+
+    /**
+     * 用户id
+     */
     private Integer userId;
+    
+    /**
+     * 回复数量
+     */
+    private Integer count;
 
     /**
      * 用户名
@@ -26,9 +32,24 @@ public class IMSuggest implements Serializable {
     private Byte status;
 
     /**
-     * 意见内容
+     * 0-公开 1-私有
      */
-    private String suggestion;
+    private Boolean type;
+
+    /**
+     * 标题
+     */
+    private String title;
+
+    /**
+     * 建议id
+     */
+    private String suggestId;
+
+    /**
+     * 内容
+     */
+    private String content;
 
     /**
      * 联系方式
@@ -36,12 +57,12 @@ public class IMSuggest implements Serializable {
     private String contact;
 
     /**
-     * 创建时间´
+     * 创建时间
      */
     private Integer created;
 
     /**
-     * 更新时间´
+     * 更新时间
      */
     private Integer updated;
 
@@ -55,7 +76,15 @@ public class IMSuggest implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public Integer getUserId() {
         return userId;
     }
 
@@ -79,12 +108,36 @@ public class IMSuggest implements Serializable {
         this.status = status;
     }
 
-    public String getSuggestion() {
-        return suggestion;
+    public Boolean getType() {
+        return type;
     }
 
-    public void setSuggestion(String suggestion) {
-        this.suggestion = suggestion;
+    public void setType(Boolean type) {
+        this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSuggestId() {
+        return suggestId;
+    }
+
+    public void setSuggestId(String suggestId) {
+        this.suggestId = suggestId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getContact() {
@@ -110,10 +163,4 @@ public class IMSuggest implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
-
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
-    
 }
