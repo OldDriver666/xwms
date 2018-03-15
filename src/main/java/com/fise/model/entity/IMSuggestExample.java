@@ -644,6 +644,76 @@ public class IMSuggestExample {
             return (Criteria) this;
         }
 
+        public Criteria andPicturesIsNull() {
+            addCriterion("pictures is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesIsNotNull() {
+            addCriterion("pictures is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesEqualTo(String value) {
+            addCriterion("pictures =", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesNotEqualTo(String value) {
+            addCriterion("pictures <>", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesGreaterThan(String value) {
+            addCriterion("pictures >", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesGreaterThanOrEqualTo(String value) {
+            addCriterion("pictures >=", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesLessThan(String value) {
+            addCriterion("pictures <", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesLessThanOrEqualTo(String value) {
+            addCriterion("pictures <=", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesLike(String value) {
+            addCriterion("pictures like", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesNotLike(String value) {
+            addCriterion("pictures not like", value, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesIn(List<String> values) {
+            addCriterion("pictures in", values, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesNotIn(List<String> values) {
+            addCriterion("pictures not in", values, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesBetween(String value1, String value2) {
+            addCriterion("pictures between", value1, value2, "pictures");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicturesNotBetween(String value1, String value2) {
+            addCriterion("pictures not between", value1, value2, "pictures");
+            return (Criteria) this;
+        }
+
         public Criteria andContactIsNull() {
             addCriterion("contact is null");
             return (Criteria) this;

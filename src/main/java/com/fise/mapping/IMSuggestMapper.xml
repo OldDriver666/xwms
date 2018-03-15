@@ -11,6 +11,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="suggest_id" jdbcType="VARCHAR" property="suggestId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pictures" jdbcType="VARCHAR" property="pictures" />
     <result column="contact" jdbcType="VARCHAR" property="contact" />
     <result column="created" jdbcType="INTEGER" property="created" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
@@ -74,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, uname, status, type, title, suggest_id, content, contact, created, updated
+    id, user_id, uname, status, type, title, suggest_id, content, pictures, contact, 
+    created, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.IMSuggestExample" resultMap="BaseResultMap">
     select
@@ -129,12 +131,12 @@
   <insert id="insert" parameterType="com.fise.model.entity.IMSuggest">
     insert into IMSuggest (id, user_id, uname, 
       status, type, title, suggest_id, 
-      content, contact, created, 
-      updated)
+      content, pictures, contact, 
+      created, updated)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, 
       #{status,jdbcType=TINYINT}, #{type,jdbcType=BIT}, #{title,jdbcType=VARCHAR}, #{suggestId,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{created,jdbcType=INTEGER}, 
-      #{updated,jdbcType=INTEGER})
+      #{content,jdbcType=VARCHAR}, #{pictures,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.IMSuggest">
     insert into IMSuggest
@@ -162,6 +164,9 @@
       </if>
       <if test="content != null">
         content,
+      </if>
+      <if test="pictures != null">
+        pictures,
       </if>
       <if test="contact != null">
         contact,
@@ -197,6 +202,9 @@
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pictures != null">
+        #{pictures,jdbcType=VARCHAR},
       </if>
       <if test="contact != null">
         #{contact,jdbcType=VARCHAR},
@@ -242,6 +250,9 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
+      <if test="record.pictures != null">
+        pictures = #{record.pictures,jdbcType=VARCHAR},
+      </if>
       <if test="record.contact != null">
         contact = #{record.contact,jdbcType=VARCHAR},
       </if>
@@ -266,6 +277,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       suggest_id = #{record.suggestId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
+      pictures = #{record.pictures,jdbcType=VARCHAR},
       contact = #{record.contact,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=INTEGER},
       updated = #{record.updated,jdbcType=INTEGER}
@@ -297,6 +309,9 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
+      <if test="pictures != null">
+        pictures = #{pictures,jdbcType=VARCHAR},
+      </if>
       <if test="contact != null">
         contact = #{contact,jdbcType=VARCHAR},
       </if>
@@ -318,6 +333,7 @@
       title = #{title,jdbcType=VARCHAR},
       suggest_id = #{suggestId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
+      pictures = #{pictures,jdbcType=VARCHAR},
       contact = #{contact,jdbcType=VARCHAR},
       created = #{created,jdbcType=INTEGER},
       updated = #{updated,jdbcType=INTEGER}

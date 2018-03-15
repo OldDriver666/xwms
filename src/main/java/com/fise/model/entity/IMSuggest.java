@@ -15,12 +15,12 @@ public class IMSuggest implements Serializable {
      * 用户id
      */
     private Integer userId;
-    
+
     /**
      * 回复数量
      */
     private Integer count;
-
+    
     /**
      * 用户名
      */
@@ -52,6 +52,11 @@ public class IMSuggest implements Serializable {
     private String content;
 
     /**
+     * 图片
+     */
+    private String pictures;
+
+    /**
      * 联系方式
      */
     private String contact;
@@ -76,6 +81,10 @@ public class IMSuggest implements Serializable {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
     public Integer getCount() {
 		return count;
 	}
@@ -84,11 +93,7 @@ public class IMSuggest implements Serializable {
 		this.count = count;
 	}
 
-	public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
+	public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -138,6 +143,14 @@ public class IMSuggest implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(String pictures) {
+        this.pictures = pictures;
     }
 
     public String getContact() {
