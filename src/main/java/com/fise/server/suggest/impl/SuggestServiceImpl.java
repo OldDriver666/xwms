@@ -1,6 +1,7 @@
 package com.fise.server.suggest.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class SuggestServiceImpl implements ISuggestService{
 		long nowtime=System.currentTimeMillis()/1000;
 		record.setCreated((int)nowtime);
 		record.setUpdated((int)nowtime);
+		record.setSuggestId(UUID.randomUUID().toString().replaceAll("-", ""));
 		
 		IMSuggestDao.insertSelective(record);
 		response.success();

@@ -1266,20 +1266,19 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ```
 
-###用户意见 
-####新增用户意见
+###用户建议
+####新增用户建议
 |   接口地址    |   boss/suggest/add        |
 |   ---         |   ---                   |
 
 ```
 //请求
 {
- "user_id":x,                     //必填-用户id
+ "userId":x,                     //必填-用户id
  "uname":"",                      //必填-用户名
  "title":"",                      //标题
  "type":0,                        //0-公开 1-私有
- "suggest_id":"",                 //意见id
- "content":"",                    //选填-意见内容 
+ "content":"",                    //选填-建议内容 
  "contact":""                     //选填-联系方式
 }
 
@@ -1288,7 +1287,7 @@ type和name都是选填，如果都不填，则查询所有信息
 ``` 
 
 ```
-####查询用户意见
+####查询用户建议
 |   接口地址    |   boss/suggest/query        |
 |   ---         |   ---                   |
 
@@ -1317,18 +1316,19 @@ type和name都是选填，如果都不填，则查询所有信息
       "extra_param": null,
       "result": [
          {
-            "id": 8,
-            "userId": 1024,
-            "count": 6,
-            "uname": "jack",
-            "status": 0,
-            "type": true,
-            "title": "提问2",
-            "suggestId": "123",
-            "content": "this is a test suggest",
-            "contact": "13423720455",
-            "created": 1489411761,
-            "updated": 1499839643
+            "id": 8,                                    //问题id
+            "userId": 1024,                             //用户id
+            "count": 6,                                 //回复数量
+            "uname": "jack",                            //用户名                          
+            "status": 0,                                //记录状态 0 :初始正常 1:已经回复          
+            "type": true,                               //0-公开 1-私有                    
+            "title": "提问2",                           //标题                           
+            "suggestId": "123",                         //id                           
+            "content": "this is a test suggest",        //内容                           
+            "picture":""                                //图片                           
+            "contact": "13423720455",                   //联系方式                         
+            "created": 1489411761,                      //创建时间                         
+            "updated": 1499839643                       //更新时间                         
          },
          {
             "id": 1,
@@ -1349,7 +1349,7 @@ type和name都是选填，如果都不填，则查询所有信息
 }
 ```
 
-####根据意见id查询用户意见
+####根据建议id查询用户建议
 |   接口地址    |   boss/suggest/queryBySuggestId        |
 |   ---         |   ---                   |
 
@@ -1360,7 +1360,7 @@ type和name都是选填，如果都不填，则查询所有信息
     "page_size":10,
     "param":
     {
-           "suggest_id":"abc"
+           "suggestId":"abc"
     }
 }
 
@@ -1377,74 +1377,81 @@ type和name都是选填，如果都不填，则查询所有信息
       "extra_param": null,
       "result": [
          {
-            "id": 1,
-            "userId": 1024,
-            "uname": "jack",
-            "status": 0,
-            "type": true,
-            "title": "提问1",
-            "suggestId": "abc",
-            "content": "this is a test suggest",
-            "contact": "13423720455",
-            "created": 1489411761,
-            "updated": 1499839643
+            "id": 8,                                    //问题id
+            "userId": 1024,                             //用户id
+            "uname": "jack",                            //用户名                          
+            "status": 0,                                //记录状态 0 :初始正常 1:已经回复          
+            "type": true,                               //0-公开 1-私有                    
+            "title": "提问2",                           //标题                           
+            "suggestId": "123",                         //id                           
+            "content": "this is a test suggest",        //内容                           
+            "picture":""                                //图片                           
+            "contact": "13423720455",                   //联系方式                         
+            "created": 1489411761,                      //创建时间                         
+            "updated": 1499839643                       //更新时间     
          },
          {
-            "id": 2,
-            "userId": 1024,
-            "uname": "tom",
-            "status": 0,
-            "type": true,
-            "title": null,
-            "suggestId": "abc",
-            "content": "不告诉你，就是不告诉你，你想怎么样",
-            "contact": null,
-            "created": 1496988701,
-            "updated": 1496988701
+            "id": 8,                                    //问题id
+            "userId": 1024,                             //用户id
+            "uname": "jack",                            //用户名                          
+            "status": 0,                                //记录状态 0 :初始正常 1:已经回复          
+            "type": true,                               //0-公开 1-私有                    
+            "title": "提问2",                           //标题                           
+            "suggestId": "123",                         //id                           
+            "content": "this is a test suggest",        //内容                           
+            "picture":""                                //图片                           
+            "contact": "13423720455",                   //联系方式                         
+            "created": 1489411761,                      //创建时间                         
+            "updated": 1499839643                       //更新时间     
          }
       ]
    }
 }
 ```
 
-####删除用户意见
+####删除用户建议
 |   接口地址    |   boss/suggest/del        |
 |   ---         |   ---                   |
 
 ```
 //请求
 {
-    "suggest_id":x                  //必填-ID
+    "suggestId":x                  //必填-ID
 }
 
 //回复
 无内容，直接查看返回码
-``` 
 
-####修改用户意见
+``` 
+```
+
+####修改用户建议
 |   接口地址    |   boss/suggest/update        |
 |   ---         |   ---                   |
 
 ```
+
 //请求
 {
- "suggest_id":x,                  //必填-ID
+ "suggestId":x,                  //必填-ID
  "user_id":x,                     //选填-用户id
  "uname":"",                      //选填-用户名
  "status":0,                      //选填-记录状态  0:待处理  1:处理中  2:关闭
- "suggestion":"",                 //选填-意见内容   
+ "suggestion":"",                 //选填-建议内容   
  "contact":""                     //选填-联系方式 
  }
 
 //回复
 无内容，直接查看返回码
-```
 
+``` 
+```
 ###用户查询
 |   接口地址    |   boss/user/query        |
 |   ---         |   ---                   |
 
 ```
+
 //请求
 不填，则查询所有
 {
@@ -1540,6 +1547,8 @@ type和name都是选填，如果都不填，则查询所有信息
 }
 
 ``` 
+
+
 ###组织/公司管理
 ####公司新增
 |   接口地址    |   boss/organization/insert        |
@@ -3219,4 +3228,83 @@ null 没有数据返回 看code是否成功
 ```
 
 
+###知识库
+####查询知识库
+|   接口地址    |   boss/wiki/query   |
+|   ---         |   ---                   |
 
+```
+//请求
+{
+    "id":1,                         //知识id
+    "type":1,                       //类型1-入门指南 2-常见问题 3-使用技巧 4-高级版相关 5-账号相关 6-关于我们
+    "title":"入门指导"               //标题
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 1,
+         "type": 1,
+         "title": "入门指导",
+         "content": "小位物联网平台",
+         "helpful": 22,
+         "nohelp": 2
+      }
+   ]
+}
+```
+
+
+####新增知识库
+|   接口地址    |   boss/wiki/add   |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "type":1,                       //类型1-入门指南 2-常见问题 3-使用技巧 4-高级版相关 5-账号相关 6-关于我们
+    "title":"入门指导"               //标题
+    "content": "小位物联网平台",      //内容
+}
+
+//回复
+无回复 看结果
+```
+
+####修改知识库
+|   接口地址    |   boss/wiki/update   |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "id":1,                         //知识id
+    "type":1,                       //类型1-入门指南 2-常见问题 3-使用技巧 4-高级版相关 5-账号相关 6-关于我们
+    "title":"入门指导"               //标题
+    "content": "小位物联网平台",      //内容
+    "helpful": 22,                  //有帮助
+    "nohelp": 2                     //没帮助
+}
+
+//回复
+无回复 看结果
+```
+
+####删除知识库
+|   接口地址    |   boss/wiki/del  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "id":1,                         //知识id
+
+}
+
+//回复
+无回复 看结果
+```
