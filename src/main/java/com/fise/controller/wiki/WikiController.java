@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.Wiki;
 import com.fise.model.param.WikiParam;
 import com.fise.server.auth.IAuthService;
@@ -53,6 +54,7 @@ public class WikiController {
 	}
 	
 	//查询wiki信息
+	@IgnoreAuth
 	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response queryWiki(@RequestBody @Valid WikiParam param){
 		
