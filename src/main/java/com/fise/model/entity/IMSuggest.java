@@ -34,7 +34,7 @@ public class IMSuggest implements Serializable {
     /**
      * 0-公开 1-私有
      */
-    private Boolean type;
+    private Integer type;
 
     /**
      * 标题
@@ -113,15 +113,15 @@ public class IMSuggest implements Serializable {
         this.status = status;
     }
 
-    public Boolean getType() {
-        return type;
-    }
+    public Integer getType() {
+		return type;
+	}
 
-    public void setType(Boolean type) {
-        this.type = type;
-    }
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
-    public String getTitle() {
+	public String getTitle() {
         return title;
     }
 

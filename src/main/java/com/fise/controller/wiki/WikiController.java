@@ -32,14 +32,12 @@ public class WikiController {
 	IAuthService authService;
 	
 	//添加wiki信息
+	@IgnoreAuth
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addWiki(@RequestBody @Valid Wiki record){
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
 		
 		logger.info(record.toString());
 		
@@ -67,14 +65,12 @@ public class WikiController {
 	}
 	
 	//删除wiki信息
+	@IgnoreAuth
 	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delWiki(@RequestBody @Valid WikiParam param){
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
 		
 		logger.info(param.toString());
 		
@@ -89,14 +85,11 @@ public class WikiController {
 	}
 	
 	//修改 信息
+	@IgnoreAuth
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public Response updateWiki(@RequestBody @Valid Wiki record){
 		
 		Response response=new Response();
-		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
 		
 		logger.info(record.toString());
 		

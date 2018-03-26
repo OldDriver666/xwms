@@ -34,7 +34,9 @@ public class SuggestServiceImpl implements ISuggestService{
 		long nowtime=System.currentTimeMillis()/1000;
 		record.setCreated((int)nowtime);
 		record.setUpdated((int)nowtime);
-		record.setSuggestId(UUID.randomUUID().toString().replaceAll("-", ""));
+		if (StringUtil.isEmpty(record.getSuggestId())) {
+			record.setSuggestId(UUID.randomUUID().toString().replaceAll("-", ""));
+		}
 		
 		IMSuggestDao.insertSelective(record);
 		response.success();

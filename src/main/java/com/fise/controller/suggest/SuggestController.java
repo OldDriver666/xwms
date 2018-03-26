@@ -32,20 +32,14 @@ public class SuggestController {
 	IAuthService authService;
 	
 	//添加suggest信息
+	@IgnoreAuth
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(record.toString());
 		
-		if(record.getUserId()==null || StringUtil.isEmpty(record.getUname())){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
 		
 		response=iSuggestService.insertSuggest(record);
 		
@@ -71,6 +65,7 @@ public class SuggestController {
 	}
 	
 	//查询suggest信息
+	@IgnoreAuth
 	@RequestMapping(value="/queryBySuggestId",method=RequestMethod.POST)
 	public Response queryBySuggestId(@RequestBody @Valid Page<SuggestParam> param){
 		
@@ -83,14 +78,12 @@ public class SuggestController {
 	}
 	
 	//删除suggest信息
+	@IgnoreAuth
 	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public Response delSuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
 		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
 		
 		logger.info(param.toString());
 		
@@ -105,14 +98,11 @@ public class SuggestController {
 	}
 	
 	//修改suggest信息
+	@IgnoreAuth
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
-		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
 		
 		logger.info(record.toString());
 		

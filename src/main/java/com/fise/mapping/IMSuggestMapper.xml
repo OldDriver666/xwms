@@ -7,7 +7,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="uname" jdbcType="VARCHAR" property="uname" />
     <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="type" jdbcType="BIT" property="type" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="suggest_id" jdbcType="VARCHAR" property="suggestId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -134,7 +134,7 @@
       content, pictures, contact, 
       created, updated)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{type,jdbcType=BIT}, #{title,jdbcType=VARCHAR}, #{suggestId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{suggestId,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{pictures,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
       #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER})
   </insert>
@@ -192,7 +192,7 @@
         #{status,jdbcType=TINYINT},
       </if>
       <if test="type != null">
-        #{type,jdbcType=BIT},
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -239,7 +239,7 @@
         status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=BIT},
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
@@ -273,7 +273,7 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       uname = #{record.uname,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=TINYINT},
-      type = #{record.type,jdbcType=BIT},
+      type = #{record.type,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       suggest_id = #{record.suggestId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
         status = #{status,jdbcType=TINYINT},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=BIT},
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
@@ -329,7 +329,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       uname = #{uname,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
-      type = #{type,jdbcType=BIT},
+      type = #{type,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       suggest_id = #{suggestId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
