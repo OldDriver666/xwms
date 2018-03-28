@@ -3,10 +3,15 @@
 <mapper namespace="com.fise.dao.IMSuggestMapper">
   <resultMap id="BaseResultMap" type="com.fise.model.entity.IMSuggest">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="count" jdbcType="INTEGER" property="count" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="uname" jdbcType="VARCHAR" property="uname" />
     <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="suggestion" jdbcType="VARCHAR" property="suggestion" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="suggest_id" jdbcType="VARCHAR" property="suggestId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pictures" jdbcType="VARCHAR" property="pictures" />
     <result column="contact" jdbcType="VARCHAR" property="contact" />
     <result column="created" jdbcType="INTEGER" property="created" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
@@ -70,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, uname, status, suggestion, contact, created, updated
+    id, user_id, uname, status, type, title, suggest_id, content, pictures, contact, 
+    created, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.IMSuggestExample" resultMap="BaseResultMap">
     select
@@ -95,12 +101,13 @@
     </if>
   </select>
   <select id="selectByExamplebypage" parameterType="map" resultMap="BaseResultMap">
-    select
+    select count(0)-1 count,
     <include refid="Base_Column_List" />
     from IMSuggest
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+    group by suggest_id
     <if test="example.orderByClause != null">
       order by ${example.orderByClause}
     </if>
@@ -123,10 +130,12 @@
   </delete>
   <insert id="insert" parameterType="com.fise.model.entity.IMSuggest">
     insert into IMSuggest (id, user_id, uname, 
-      status, suggestion, contact, 
+      status, type, title, suggest_id, 
+      content, pictures, contact, 
       created, updated)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{suggestion,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{suggestId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{pictures,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
       #{created,jdbcType=INTEGER}, #{updated,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fise.model.entity.IMSuggest">
@@ -144,8 +153,20 @@
       <if test="status != null">
         status,
       </if>
-      <if test="suggestion != null">
-        suggestion,
+      <if test="type != null">
+        type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="suggestId != null">
+        suggest_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="pictures != null">
+        pictures,
       </if>
       <if test="contact != null">
         contact,
@@ -170,8 +191,20 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
-      <if test="suggestion != null">
-        #{suggestion,jdbcType=VARCHAR},
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestId != null">
+        #{suggestId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pictures != null">
+        #{pictures,jdbcType=VARCHAR},
       </if>
       <if test="contact != null">
         #{contact,jdbcType=VARCHAR},
@@ -205,8 +238,20 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
-      <if test="record.suggestion != null">
-        suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suggestId != null">
+        suggest_id = #{record.suggestId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pictures != null">
+        pictures = #{record.pictures,jdbcType=VARCHAR},
       </if>
       <if test="record.contact != null">
         contact = #{record.contact,jdbcType=VARCHAR},
@@ -228,7 +273,11 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       uname = #{record.uname,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=TINYINT},
-      suggestion = #{record.suggestion,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      suggest_id = #{record.suggestId,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      pictures = #{record.pictures,jdbcType=VARCHAR},
       contact = #{record.contact,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=INTEGER},
       updated = #{record.updated,jdbcType=INTEGER}
@@ -248,8 +297,20 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
-      <if test="suggestion != null">
-        suggestion = #{suggestion,jdbcType=VARCHAR},
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestId != null">
+        suggest_id = #{suggestId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pictures != null">
+        pictures = #{pictures,jdbcType=VARCHAR},
       </if>
       <if test="contact != null">
         contact = #{contact,jdbcType=VARCHAR},
@@ -268,10 +329,15 @@
     set user_id = #{userId,jdbcType=INTEGER},
       uname = #{uname,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
-      suggestion = #{suggestion,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      suggest_id = #{suggestId,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      pictures = #{pictures,jdbcType=VARCHAR},
       contact = #{contact,jdbcType=VARCHAR},
       created = #{created,jdbcType=INTEGER},
       updated = #{updated,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
 </mapper>

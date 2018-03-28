@@ -48,7 +48,6 @@
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.8</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
-		<log4j.version>2.1</log4j.version>
 		<log4j.version>1.2.16</log4j.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<aspectj.version>1.8.7</aspectj.version>
@@ -65,8 +64,8 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-		
-        <dependency>
+
+		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.1</version>
@@ -275,14 +274,30 @@
 			<version>5.1.3.Final</version>
 			<!-- <classifier>testing</classifier> -->
 		</dependency>
-		<!-- <dependency> <groupId>org.glassfish</groupId> <artifactId>javax.el</artifactId> 
-			<version>3.0.0</version> <scope>test</scope> </dependency> 
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>el-api</artifactId>
-			<version>2.2</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
 		</dependency>
-		-->
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.glassfish</groupId> <artifactId>javax.el</artifactId> 
+			<version>3.0.0</version> <scope>test</scope> </dependency> <dependency> <groupId>javax.el</groupId> 
+			<artifactId>el-api</artifactId> <version>2.2</version> </dependency> -->
 	</dependencies>
 	<profiles>
 		<!-- 开发环境 -->

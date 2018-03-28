@@ -8,7 +8,7 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="alarm_battery" jdbcType="BIT" property="alarmBattery" />
     <result column="alarm_poweroff" jdbcType="BIT" property="alarmPoweroff" />
-    <result column="alarm_pen" jdbcType="BIT" property="alarmPen" />
+    
     <result column="alarm_call" jdbcType="BIT" property="alarmCall" />
     <result column="listen_silent" jdbcType="BIT" property="listenSilent" />
     <result column="electricize" jdbcType="BIT" property="electricize" />
@@ -76,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    device_id, group_id, master_id, mobile, alarm_battery, alarm_poweroff, alarm_pen, 
+    device_id, group_id, master_id, mobile, alarm_battery, alarm_poweroff, 
     alarm_call, listen_silent, electricize, mode, bell_mode, updated, created
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.DeviceConfExample" resultMap="BaseResultMap">
@@ -120,7 +120,7 @@
   <insert id="insert" parameterType="com.fise.model.entity.DeviceConf">
     insert into DeviceConf (device_id, group_id, master_id, 
       mobile, alarm_battery, alarm_poweroff, 
-      alarm_pen, alarm_call, listen_silent, 
+      alarm_call, listen_silent, 
       electricize, mode, bell_mode, updated, 
       created)
     values (#{deviceId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{masterId,jdbcType=INTEGER}, 
@@ -149,9 +149,6 @@
       </if>
       <if test="alarmPoweroff != null">
         alarm_poweroff,
-      </if>
-      <if test="alarmPen != null">
-        alarm_pen,
       </if>
       <if test="alarmCall != null">
         alarm_call,
@@ -247,9 +244,6 @@
       <if test="record.alarmPoweroff != null">
         alarm_poweroff = #{record.alarmPoweroff,jdbcType=BIT},
       </if>
-      <if test="record.alarmPen != null">
-        alarm_pen = #{record.alarmPen,jdbcType=BIT},
-      </if>
       <if test="record.alarmCall != null">
         alarm_call = #{record.alarmCall,jdbcType=BIT},
       </if>
@@ -284,7 +278,6 @@
       mobile = #{record.mobile,jdbcType=VARCHAR},
       alarm_battery = #{record.alarmBattery,jdbcType=BIT},
       alarm_poweroff = #{record.alarmPoweroff,jdbcType=BIT},
-      alarm_pen = #{record.alarmPen,jdbcType=BIT},
       alarm_call = #{record.alarmCall,jdbcType=BIT},
       listen_silent = #{record.listenSilent,jdbcType=BIT},
       electricize = #{record.electricize,jdbcType=BIT},
@@ -313,9 +306,6 @@
       </if>
       <if test="alarmPoweroff != null">
         alarm_poweroff = #{alarmPoweroff,jdbcType=BIT},
-      </if>
-      <if test="alarmPen != null">
-        alarm_pen = #{alarmPen,jdbcType=BIT},
       </if>
       <if test="alarmCall != null">
         alarm_call = #{alarmCall,jdbcType=BIT},
@@ -348,7 +338,6 @@
       mobile = #{mobile,jdbcType=VARCHAR},
       alarm_battery = #{alarmBattery,jdbcType=BIT},
       alarm_poweroff = #{alarmPoweroff,jdbcType=BIT},
-      alarm_pen = #{alarmPen,jdbcType=BIT},
       alarm_call = #{alarmCall,jdbcType=BIT},
       listen_silent = #{listenSilent,jdbcType=BIT},
       electricize = #{electricize,jdbcType=BIT},

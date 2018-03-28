@@ -1,13 +1,10 @@
 package com.fise.model.param;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 
 public class SuggestParam {
-	@JsonProperty("suggest_id")
-    private Integer id;
+    private String suggestId;
 	
-	@JsonProperty("user_id")
     private Integer userId;
 
     /**
@@ -15,12 +12,13 @@ public class SuggestParam {
      */
     private String uname;
 
-	public Integer getId() {
-		return id;
+
+	public String getSuggestId() {
+		return suggestId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setSuggestId(String suggestId) {
+		this.suggestId = suggestId;
 	}
 
 	public Integer getUserId() {
