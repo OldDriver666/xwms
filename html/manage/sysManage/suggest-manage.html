@@ -101,7 +101,7 @@
 				<tr>
 					<th>用户ID</th>
 					<th>用户名</th>
-					<th>记录状态</th>
+					<th>状态</th>
 					<th>意见内容</th>
 					<th>联系方式</th>
 					<th>更新时间</th>
@@ -137,10 +137,10 @@
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
 	<td style="display:none;">${suggest_id}</td>
-	<td>${user_id}</td>
+	<td>${userId}</td>
 	<td>${uname}</td>
 	<td>{{if status == 1}}已经回复{{else status == 0}}初始正常{{/if}}</td>
-	<td>${suggestion}</td>
+	<td>${content}</td>
 	<td>${contact}</td>
 	<td>${Util.formatDateTime(updated)}</td>
 	<td>${Util.formatDateTime(created)}</td>
