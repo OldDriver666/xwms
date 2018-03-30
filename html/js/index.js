@@ -85,7 +85,7 @@ $(function(){
                             delayTime:300 , //效果时间
                             triggerTime:150, //鼠标延迟触发时间（默认150）
                             defaultPlay:true,//默认是否执行效果（默认true）
-                            returnDefault:true //鼠标从.sideMen移走后返回默认状态（默认false）
+                            returnDefault:false //鼠标从.sideMen移走后返回默认状态（默认false）
                         });
                     }, 500)
                 } else {
