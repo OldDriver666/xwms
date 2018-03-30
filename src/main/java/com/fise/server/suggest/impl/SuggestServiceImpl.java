@@ -54,6 +54,9 @@ public class SuggestServiceImpl implements ISuggestService{
 		if(param.getParam().getUname()!=null){
 			criteria.andUnameEqualTo(param.getParam().getUname());
 		}
+		if(param.getParam().getType()!=null){
+			criteria.andTypeEqualTo(param.getParam().getType());
+		}
 		example.setOrderByClause("created desc");
 		
 		List<IMSuggest> list=IMSuggestDao.selectByExamplebypage(example, param);

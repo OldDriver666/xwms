@@ -3,15 +3,34 @@ package com.fise.model.param;
 import com.fise.utils.JsonUtil;
 
 public class SuggestParam {
+	/**
+	 * 建议id
+	 */
     private String suggestId;
 	
+    /**
+     * 用户Id
+     */
     private Integer userId;
 
     /**
      * 用户名
      */
     private String uname;
+    
+    /**
+     * 0-公有 1-私有
+     */
+    private Integer type;
 
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
 	public String getSuggestId() {
 		return suggestId;
