@@ -5,8 +5,8 @@
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" href="../css/global.css"/>
-	<link rel="stylesheet" href="../css/bootstrap.css"/>
 	<link rel="stylesheet" href="../resource/plugin/toastr/toastr.css"/>
+	<link href="../css/style.css" rel="stylesheet" type="text/css" />
 	<script src="http://webapi.amap.com/maps?v=1.3&key=c5a05248e534bb18c39ae266093088d3&plugin=AMap.MarkerClusterer"></script>
 	<style>
 		html,body{height:100%;}
@@ -20,20 +20,19 @@
 		.tab-tit-num{
 			position: absolute;
 			top: 0;
-			left: 0;
-			width: 100%;
-			height: 40px;
+			right: 20px;
 			line-height: 40px;
 			white-space: nowrap;
 			font-size: 14px;
-			/*border-bottom: 1px solid #e2e2e2;*/
 			transition: all .2s;
 			-webkit-transition: all .2s;
-			background-color: #e3eae9;
-			z-index: 1000;
 		}
 		.tab-tit-num span{
 			margin-left:30px;
+			display: inline-block;
+		}
+		.tab-tit-num span em{
+			font-style: normal;
 		}
 		.infoWindow-wrap{
 			font-size:12px;
@@ -68,10 +67,21 @@
 </head>
 <body>
 <div class="container-fluid" style="height:100%;padding:0;">
-	<div class="tab-tit-num">
+	<div class="place">
+		<span>位置：</span>
+		<ul class="placeul">
+			<li><a href="../index.html" target="_parent">首页</a></li>
+			<li><a href="javascript:;" target="_parent">用户位置</a></li>
+		</ul>
+		<div class="tab-tit-num">
+			<span>总人数：<em id="allPeopleNum">0</em></span>
+			<span>在线人数：<em id="onlineNum">0</em></span>
+		</div>
+	</div>
+	<!--<div class="tab-tit-num">
 		<span>总人数：<em id="allPeopleNum">0</em></span>
 		<span>在线人数：<em id="onlineNum">0</em></span>
-	</div>
+	</div>-->
 	<div id="map-container" style="height:100%;"></div>
 	<div id="msgWarp" style="display: none;">
 		<div style="background-color: #fff;border-radius: 5px;">

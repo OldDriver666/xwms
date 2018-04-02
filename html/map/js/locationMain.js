@@ -52,7 +52,7 @@ $(function() {
             var yesterday_date = action.getDateStr(-1);
             var before_yesterday_date = action.getDateStr(-2);
 
-            var url =  ctx + "boss/user/location";
+            var url =  ctx + "boss/user/patient";
             var data = {
                 company_id: parseInt(company_id),
                 depart_id: parseInt(depart_id)
@@ -110,6 +110,11 @@ $(function() {
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">历史轨迹：</span><span class="infoWindow-item-cont" style="color:#2B7AE3"><a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=' + today_date +'" target="_blank">今天</a> <a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=' + yesterday_date + '" target="_blank">昨天</a> <a href="historyLocation.html?dId=' + depart_id + '&uId=' + userList[n].uid + '&cId=' + company_id + '&time=' + before_yesterday_date + '" target="_blank">前天</a></span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">运动计步：</span><span class="infoWindow-item-cont" style="color:#2B7AE3">' + userList[n].step_cnt + '步</span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">监护群：</span><span class="infoWindow-item-cont sendMsg"><a href="javascript:;">发送消息</a></span></div>');
+                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">身体状况：</span><span class="infoWindow-item-cont">' + userList[n].bodyStatus + '</span></div>');
+                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">片区民警：</span><span class="infoWindow-item-cont">' + userList[n].policeInfo + '</span></div>');
+                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">直系亲属：</span><span class="infoWindow-item-cont">' + userList[n].cognate + '</span></div>');
+                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">监护人：</span><span class="infoWindow-item-cont">' + userList[n].guardian + '</span></div>');
+                                info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-item">有奖监护：</span><span class="infoWindow-item-cont">' + userList[n].reward + '</span></div>');
                                 info.push('<div class="infoWindow-item-wrap"><span class="infoWindow-updata"><a href="javascript:;">更新数据</a></span></div></div>');
 
                                 // 点击点标记打开信息窗口
@@ -153,9 +158,9 @@ $(function() {
             var m = dd.getMonth()+1;//获取当前月份的日期
             var d = dd.getDate();
             if(m < 10)
-               m = "0" + m;
+                m = "0" + m;
             if(d < 10)
-               d = "0" + d;
+                d = "0" + d;
             return y + "-" + m + "-" + d;
         }
     };

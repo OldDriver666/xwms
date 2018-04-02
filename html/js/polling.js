@@ -16,12 +16,12 @@ $(function(){
             data.depart_id = parseInt(depart_id);
             data.company_id = parseInt(company_id);
 
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+            Util.ajaxLoadData(url,data,moduleId,"POST",false,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
 
                 }else if(result.code == ReturnCode.TOKEN_ERROR){
                     console.log(result.msg);
-                    window.location.href = "login.html";
+                    window.open('login.html', '_parent');
                 }
             },function(errorMsg) {
                 //alert(errorMsg)

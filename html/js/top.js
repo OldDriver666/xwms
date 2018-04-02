@@ -36,20 +36,18 @@ $(function(){
 	var Index = {
 		init:function(){
 			Index.loadMenu();
-			Index.loadCheckMenu();
-            $("#admin-header-nick").text(nick_name);
+            //$("#admin-header-nick").text(nick_name);
 		},
 		loadMenu : function(){
-            var url = ctx + "boss/module/query";
+            var url = ctx + "boss/role/queryPatientAuth";
             var moduleId= 0;
             var data = {
-                "admin_id":parseInt(admin_id),
-                "role_id":parseInt(role_level),
-                "company_id":parseInt(company_id)
+                "role_id":parseInt(role_level)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
-                    var rdata = result.data;
+                    $("#pageMenu").tmpl(result.data).appendTo('#menuContent');
+                    /*var rdata = result.data;
                     var data = rdata.sort(Index.sortBy('priority',false))
                     var Len = data.length;
                     var parent_data = new Array;
@@ -72,46 +70,13 @@ $(function(){
                     }
                     for(var i in parent_data){
                         $("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');
-                    }
+                    }*/
                 } else {
                 }
             },function(errorMsg) {
                 alert(errorMsg)
             });
 		},
-        loadCheckMenu : function(){
-            var url = ctx + "boss/depart/query";
-            var moduleId= 0;
-            var data = new Object();
-            data.depart_name = '';
-            data.creator_id = parseInt(admin_id);
-            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if (result.code == 0) {
-                    var data = result.data;
-                    var allMenuList = [];
-                    for(var i=0; i<data.length; i++){
-                        if(data[i].parentId == 0) {
-                            var menuList1 = [];
-                            menuList1.id = data[i].id
-                            menuList1.departName = data[i].departName
-                            menuList1.children = []
-                            for (var j = 0; j < data.length; j++) {
-                                if (data[i].id == data[j].parentId) {
-                                    var menuList2 = [];
-                                    menuList2.id = data[j].id
-                                    menuList2.departName = data[j].departName
-                                    menuList1.children.push(menuList2)
-                                }
-                            }
-                            allMenuList.push(menuList1)
-                        }
-                    }
-                    /*$("#pageMenu2").tmpl(allMenuList).appendTo('#menuContent2');*/
-                }
-            },function(errorMsg) {
-                alert(errorMsg)
-            });
-        },
         sortBy: function(attr,rev){
             //第二个参数没有传递 默认升序排列
             if(rev ==  undefined){
