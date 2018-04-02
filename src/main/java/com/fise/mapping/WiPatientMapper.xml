@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fise.dao.WiPatientMapper">
+  <resultMap id="BaseResultMap" type="com.fise.model.entity.WiPatient">
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="body_status" jdbcType="VARCHAR" property="bodyStatus" />
+    <result column="police_info" jdbcType="VARCHAR" property="policeInfo" />
+    <result column="cognate" jdbcType="VARCHAR" property="cognate" />
+    <result column="guardian" jdbcType="VARCHAR" property="guardian" />
+    <result column="reward" jdbcType="VARCHAR" property="reward" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    domain, body_status, police_info, cognate, guardian, reward
+  </sql>
+  <select id="selectByExample" parameterType="com.fise.model.entity.WiPatientExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wi_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.fise.model.entity.WiPatientExample">
+    delete from wi_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fise.model.entity.WiPatient">
+    insert into wi_patient (domain, body_status, police_info, 
+      cognate, guardian, reward
+      )
+    values (#{domain,jdbcType=VARCHAR}, #{bodyStatus,jdbcType=VARCHAR}, #{policeInfo,jdbcType=VARCHAR}, 
+      #{cognate,jdbcType=VARCHAR}, #{guardian,jdbcType=VARCHAR}, #{reward,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fise.model.entity.WiPatient">
+    insert into wi_patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="domain != null">
+        domain,
+      </if>
+      <if test="bodyStatus != null">
+        body_status,
+      </if>
+      <if test="policeInfo != null">
+        police_info,
+      </if>
+      <if test="cognate != null">
+        cognate,
+      </if>
+      <if test="guardian != null">
+        guardian,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="domain != null">
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="bodyStatus != null">
+        #{bodyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="policeInfo != null">
+        #{policeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="cognate != null">
+        #{cognate,jdbcType=VARCHAR},
+      </if>
+      <if test="guardian != null">
+        #{guardian,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fise.model.entity.WiPatientExample" resultType="java.lang.Long">
+    select count(*) from wi_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wi_patient
+    <set>
+      <if test="record.domain != null">
+        domain = #{record.domain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bodyStatus != null">
+        body_status = #{record.bodyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policeInfo != null">
+        police_info = #{record.policeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cognate != null">
+        cognate = #{record.cognate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guardian != null">
+        guardian = #{record.guardian,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reward != null">
+        reward = #{record.reward,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wi_patient
+    set domain = #{record.domain,jdbcType=VARCHAR},
+      body_status = #{record.bodyStatus,jdbcType=VARCHAR},
+      police_info = #{record.policeInfo,jdbcType=VARCHAR},
+      cognate = #{record.cognate,jdbcType=VARCHAR},
+      guardian = #{record.guardian,jdbcType=VARCHAR},
+      reward = #{record.reward,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
