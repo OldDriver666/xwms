@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/global.css" media="all">
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+    </ul>
+</div>
+
+<div id="menuContent2">
+    <!--<div class="comtitle">
+        <span><img src="images/clist.png" /></span>
+        <h2>龙华公安分局</h2>
+        <div class="rline"></div>
+    </div>
+
+    <ul class="disklist">
+        <li>
+            <a href="filelist.html">
+                <div class="dright">
+                    <h2>大浪派出所</h2>
+                </div>
+            </a>
+        </li>
+
+        <li>
+            <div class="dright">
+                <h2>上塘派出所</h2>
+            </div>
+        </li>
+
+        <li>
+            <div class="dright">
+                <h2>民治派出所</h2>
+            </div>
+        </li>
+
+        <li>
+            <div class="dright">
+                <h2>观澜派出所</h2>
+            </div>
+        </li>
+    </ul>
+
+    <div class="comtitle">
+        <span><img src="images/clist.png" /></span>
+        <h2>南山公安分局</h2>
+        <div class="rline"></div>
+    </div>
+
+    <ul class="disklist">
+        <li>
+            <div class="dright">
+                <h2>西丽派出所</h2>
+            </div>
+        </li>
+    </ul>-->
+</div>
+
+<script src="js/jquery.i18n.properties-min-1.0.9.js"></script>
+<script type="text/javascript" src="js/jquery.tmpl.js"></script>
+<script src="js/Util.js"></script>
+<script src="resource/lib/jquery.md5.js"></script>
+<script src="js/main.js"></script>
+<script type="text/x-jquery-tmpl" id="pageMenu2">
+    <div class="comtitle">
+        <span><img src="images/clist.png" /></span>
+        <h2>${departName}</h2>
+        <div class="rline"></div>
+    </div>
+    <ul class="disklist">
+        {{each(i,item) children}}
+        <li>
+            <a href="map/locationMain.html?id=${id}">
+                <div class="dright">
+                    <h2>${item.departName}</h2>
+                </div>
+            </a>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+</body>
+</html>

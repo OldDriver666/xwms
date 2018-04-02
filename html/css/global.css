@@ -8,7 +8,9 @@
 .cl, .clearfix{
   zoom:1
 }
+.layui-side{width:300px!important;}
 .layui-body{
+  left:300px!important;
   bottom:0!important;
 }
 
@@ -19,12 +21,26 @@
 .site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
 
 /* 头部 */
-.header{height: 70px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
-#sysWebTitle {position: absolute; left: 0; top: 10px;}
+.header{height: 88px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
+.logo{position: absolute; left: 0; top: 20px;}
 .logo img{width: 82px; height: 31px;}
+.logo span{color:#fff;font-size:34px;}
 
 .header .layui-nav{position: absolute; right: 0; top: 0; padding: 0; background: none;}
-.header .layui-nav .layui-nav-item{margin: 0 20px; line-height: 66px;}
+.header .layui-nav .layui-nav-item{margin: 0 20px; line-height: 90px;}
+.layui-layout-admin .layui-side, .layui-layout-admin .layui-body, .layui-nav .layui-nav-item .layui-anim-upbit{top:90px!important;}
+.layui-nav .layui-anim-upbit dd a{color:#333!important;}
+.head-r-nav .layui-nav-bar{height:0!important;}
+.layui-side .layui-tab{margin:0!important;}
+.layui-side .layui-tab .layui-side-scroll, .layui-side .layui-tab .layui-side-scroll .layui-nav-tree{width:100%!important;}
+.layui-side .layui-tab-title{background-color: #4f4f4f; border-bottom:0!important;}
+.layui-side .layui-tab-title li{min-width:130px!important;}
+.layui-side .layui-tab-title .layui-this{background-color: #393D49!important;color:#fff!important;}
+.layui-side .layui-tab-title .layui-this:after{border:0!important;}
+.layui-body .layui-tab-title{background-color: #e3eae9;}
+.layui-body .layui-tab-title .layui-this{background-color: #fff;}
+.layui-side .admin-nav-tree .layui-nav-child a {padding-left: 10px!important;}
+.layui-side .admin-nav-tree .layui-nav-item dd{border-bottom:1px solid #505050}
 
 .menu{position: absolute; right: 0; top: 0; line-height: 65px;}
 .menu a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
@@ -35,11 +51,10 @@
 
 .header-index{background-color: #080018; border: none;}
 
-.layui-layout-admin .header-demo{border-bottom:0px; background-color: #fff;}
-.header-demo .logo{left: 40px; display: block;}
+.layui-layout-admin .header-demo{border-bottom: 2px solid #2760b7; background: url(../images/headerBgImg.png) 0 0 repeat-y;background-size: 100% auto;}
+.header-demo .logo{left: 40px;}
 .header-demo .layui-nav{top: 0;}
-.header-demo .layui-nav .layui-nav-item{margin: 0 10px; line-height: 70px;}
-.header-demo .layui-nav .layui-nav-item a{color: #999;}
+.header-demo .layui-nav .layui-nav-item a{color: #fff;}
 .header-demo .layui-nav .layui-this{background-color: #f2f2f2;}
 .header-demo .layui-nav .layui-nav-item a:hover, 
 .header-demo .layui-nav .layui-this a{color: #000;}
@@ -316,9 +331,6 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 }
 
 /* 自定义css */
-.admin-nav-tree .layui-nav-child a {
-	padding-left: 30px;
-}
 
 .admin-nav-tree .layui-nav-child .layui-nav-child {
   padding-left: 30px;
@@ -339,13 +351,13 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 }
 .admin-nav-card .layui-tab-title cite{
 	font-style: normal;
-    font-size: 12px;
 }
 .admin-header-user .layui-nav-more{
-	top:33px;
+	top:42px;
+    right: -18px;
 }
 .admin-header-user .layui-nav-mored{
-	top: 26px;
+	top: 35px;
 }
 
 /*table*/
@@ -363,57 +375,9 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 .admin-table-page .page .layui-laypage {margin: 6px 0 0 0;}
 
 /**/
-/*.admin-main {margin: 15px;padding-bottom: 40px;}*/
+.admin-main {margin: 15px;padding-bottom: 40px;}
 
 /*
 #table, #table th {
   text-align: center !important;
 }*/
-#table tfoot tr td {
-  border-top: 0 solid #ddd;
-}
-#table tfoot{
-  border-top: 1px solid #ddd;
-}
-
-
-/*权限树形结构*/
-.tree_content{
-/*  border: 1px solid #ddd;*/
-  width: 100%;
-  /*height: 160px;*/
-  overflow-y: auto;
-  padding: 10px 10px 0 10px;
-}
-.tree_content .div_inline{
-  display: inline;
-}
-.tree_content .tree_node_child{
-  margin-left: 40px;
-  position: relative;
-}
-.tree_content .tree_node{
-  margin-bottom:10px;
-}
-.tree_content .tree_node .layui-form-checkbox{
-  display: none;
-}
-.tree_content .tree_node_toggle_button{
-  width: 24px;
-  height: 24px;
-  line-height: 19px;
-}
-.tree_content .tree_node_child_menu{
-  position: relative;
-}
-.tree_content .tree_node_child_permission_wrap{
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-.tree_content .tree_node_child_permission{
-  margin:0 10px;
-}
-.tree_content input[type=checkbox], input[type=radio] {
-  vertical-align: -2px;
-}

@@ -23,7 +23,8 @@ $(function(){
                 localStorage.removeItem("myUserRolesArray");
                 localStorage.removeItem("allDevTypeArray");
                 localStorage.removeItem("allCompanyArray");
-                window.location.href = "login.html";
+
+                window.open('login.html', '_parent');
             } else {
             }
         },function(errorMsg) {
@@ -105,7 +106,7 @@ $(function(){
                             allMenuList.push(menuList1)
                         }
                     }
-                    $("#pageMenu2").tmpl(allMenuList).appendTo('#menuContent2');
+                    /*$("#pageMenu2").tmpl(allMenuList).appendTo('#menuContent2');*/
                 }
             },function(errorMsg) {
                 alert(errorMsg)

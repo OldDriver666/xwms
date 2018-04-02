@@ -2,17 +2,15 @@ $(function(){
     var userName = Util.cookieStorage.getCookie("username");
     var token_value = Util.cookieStorage.getCookie("accesstoken");
     var depart_id = Util.cookieStorage.getCookie("departId");
-    var company_id = Util.cookieStorage.getCookie("companyId");
     var role_level = Util.cookieStorage.getCookie("userLevel");
 	var admin_id = Util.cookieStorage.getCookie("adminId");
     var nick_name = Util.cookieStorage.getCookie("nickname");
-
+    var company_id = Util.cookieStorage.getCookie("companyId");
+    var depart_id = Util.cookieStorage.getCookie("departId");
     //安全退出
     $("#header-safeExit").on('click', function(){
         var url = ctx + "boss/admin/logout";
-        var data = {
-            "adminId":parseInt(admin_id)
-        };
+        var data = {"adminId":parseInt(admin_id)};
         Util.ajaxLoadData(url,data,0,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
                 Util.cookieStorage.clearCookie("username");
@@ -20,11 +18,7 @@ $(function(){
                 Util.cookieStorage.clearCookie("nickname");
                 Util.cookieStorage.clearCookie("adminId");
                 Util.cookieStorage.clearCookie("departId");
-                Util.cookieStorage.clearCookie("companyId");
                 Util.cookieStorage.clearCookie("userLevel");
-                Util.cookieStorage.clearCookie("phone");
-                Util.cookieStorage.clearCookie("home");
-
                 localStorage.removeItem("myDevTypeArray");
                 localStorage.removeItem("myUserRolesArray");
                 localStorage.removeItem("allDevTypeArray");
@@ -33,7 +27,7 @@ $(function(){
             } else {
             }
         },function(errorMsg) {
-            //alert(errorMsg)
+            alert(errorMsg)
         });
     });
 
@@ -41,15 +35,16 @@ $(function(){
 	var Index = {
 		init:function(){
 			Index.loadMenu();
-			Index.getMyInfoData();
+			Index.loadCheckMenu();
+            $("#admin-header-nick").text(nick_name);
 		},
 		loadMenu : function(){
-            var url = ctx + "boss/role/queryAuth";
+            var url = ctx + "boss/module/query";
             var moduleId= 0;
             var data = {
+                "admin_id":parseInt(admin_id),
                 "role_id":parseInt(role_level),
-                "company_id":parseInt(company_id),
-                "creator_id": parseInt(admin_id)
+                "company_id":parseInt(company_id)
             };
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
@@ -59,13 +54,13 @@ $(function(){
                     var parent_data = new Array;
 
                     for(var i=0; i<Len; i++){
-                        var mid = data[i].module_id	;
-                        var pid = data[i].parent_id;
+                        var mid = data[i].id;
+                        var pid = data[i].parentId;
 
                         if(0 == pid){
                             var children_menu = new Array;
                             for(var j=0; j<Len; j++){
-                                if(mid == data[j].parent_id){
+                                if(mid == data[j].parentId){
                                     var str = data[j];
                                     children_menu.push(str);
                                 }
@@ -74,44 +69,46 @@ $(function(){
                             parent_data.push(data[i]);
                         }
                     }
-                    $("#pageMenu").tmpl(parent_data).appendTo('#menuContent');
-
-                    //展开目录动画特效
-                    setTimeout(function () {
-                        jQuery(".sideMenu").slide({
-                            titCell:"h3", //鼠标触发对象
-                            targetCell:"ul", //与titCell一一对应，第n个titCell控制第n个targetCell的显示隐藏
-                            effect:"slideDown", //targetCell下拉效果
-                            delayTime:300 , //效果时间
-                            triggerTime:150, //鼠标延迟触发时间（默认150）
-                            defaultPlay:true,//默认是否执行效果（默认true）
-                            returnDefault:false //鼠标从.sideMen移走后返回默认状态（默认false）
-                        });
-                    }, 500)
+                    for(var i in parent_data){
+                        /*$("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');*/
+                    }
                 } else {
                 }
             },function(errorMsg) {
                 alert(errorMsg)
-                if(errorMsg == '鉴权失败！'){
-                    window.location.href = "login.html";
-                }
             });
 		},
-        getMyInfoData: function () {
-            var url = ctx + "boss/admin/queryself";
-            var moduleId = 0;
+        loadCheckMenu : function(){
+            var url = ctx + "boss/depart/query";
+            var moduleId= 0;
             var data = new Object();
-            data.account = userName;
-
+            data.depart_name = '';
+            data.creator_id = parseInt(admin_id);
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
-                if(result.code == ReturnCode.SUCCESS){
-                    $("#admin-header-nick").text(result.data.nickName);
-                    Util.cookieStorage.setCookie("nickname",result.data.nickName);
-                } else {
-                    toastr.error(result.msg);
+                if (result.code == 0) {
+                    var data = result.data;
+                    var allMenuList = [];
+                    for(var i=0; i<data.length; i++){
+                        if(data[i].parentId == 0) {
+                            var menuList1 = [];
+                            menuList1.id = data[i].id
+                            menuList1.departName = data[i].departName
+                            menuList1.children = []
+                            for (var j = 0; j < data.length; j++) {
+                                if (data[i].id == data[j].parentId) {
+                                    var menuList2 = [];
+                                    menuList2.id = data[j].id
+                                    menuList2.departName = data[j].departName
+                                    menuList1.children.push(menuList2)
+                                }
+                            }
+                            allMenuList.push(menuList1)
+                        }
+                    }
+                    /*$("#pageMenu2").tmpl(allMenuList).appendTo('#menuContent2');*/
                 }
             },function(errorMsg) {
-                //alert(errorMsg)
+                alert(errorMsg)
             });
         },
         sortBy: function(attr,rev){
