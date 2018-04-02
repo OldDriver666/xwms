@@ -103,6 +103,7 @@ public class UserServiceImpl implements IUserService {
 
         criteria.andCompanyidEqualTo(param.getCompanyId());
 //        criteria.andTypeEqualTo(19);
+        
         List<IMUser> dataList = IMUserDao.selectByExample(example);
         if (dataList.size() == 0) {
             return response;
@@ -166,6 +167,68 @@ public class UserServiceImpl implements IUserService {
             detail.initUserDetail(dataList.get(0));
             response.success(detail);
         }
+        return response;
+    }
+    
+    @Override
+    public Response queryUserPatient(QueryUserParam param) {
+
+        Response response = new Response();
+
+        IMUserExample example = new IMUserExample();
+        Criteria criteria = example.createCriteria();
+
+        if (!StringUtil.isEmpty(param.getDomain())) {
+            criteria.andDomainEqualTo(param.getDomain());
+        }
+
+        if (!StringUtil.isEmpty(param.getPhone())) {
+            criteria.andPhoneEqualTo(param.getPhone());
+        }
+
+        if (param.getUserId() != null) {
+            criteria.andIdEqualTo(param.getUserId());
+        }
+
+        if (param.getOnlineStatus() != null) {
+            criteria.andOnlineStatusEqualTo(param.getOnlineStatus());
+        }
+
+        if (param.getDepartId() != null && param.getDepartId() != 0) {
+            List<Integer> idList = departSvr.getChildDepatId(param.getDepartId());
+            criteria.andDepartidIn(idList);
+        }
+
+        criteria.andCompanyidEqualTo(param.getCompanyId());
+//        criteria.andTypeEqualTo(19);
+        
+        List<IMUser> dataList = IMUserDao.selectUserByExample(example);
+        if (dataList.size() == 0) {
+            return response;
+        }
+        // List<UserLocation> user_list = new ArrayList<UserLocation>();
+        List<UserDetail> user_list = new ArrayList<UserDetail>();
+        UserLocationInfo data = new UserLocationInfo();
+        data.setTotal_cnt(dataList.size());
+        int onlineCnt = 0;
+        for (int i = 0; i < dataList.size(); i++) {
+            IMUser u = dataList.get(i);
+            if (u.getOnlineStatus().intValue() == 1) {
+                onlineCnt++;
+            }
+            /*
+             * UserLocation usr = new UserLocation();
+             * usr.setLocation_x(u.getLat()); usr.setLocation_y(u.getLng());
+             * usr.setUid(u.getId()); usr.setUname(u.getNick());
+             * usr.setOnline_status(u.getOnlineStatus()); user_list.add(usr);
+             */
+            UserDetail detail = new UserDetail();
+            detail.initUserDetail(dataList.get(i));
+            user_list.add(detail);
+        }
+        data.setUser_list(user_list);
+        data.setOnline_cnt(onlineCnt);
+        response.success(data);
         return response;
     }
 

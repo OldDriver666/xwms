@@ -3308,3 +3308,56 @@ null 没有数据返回 看code是否成功
 //回复
 无回复 看结果
 ```
+
+
+####查询病人位置
+|   接口地址    |   boss/user/patient   |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+   
+	 "company_id":5,  //公司
+	 "depart_id":6    //部门
+
+
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "total_cnt": 1,
+      "online_cnt": 0,
+      "user_list": [
+         {
+            "uid": 105328,
+            "sex": 1,
+            "account": "111222",
+            "avatar": "g0/000/000/1509458661071993_139835503093.jpg",
+            "nick": "非本人禁止登陆",
+            "province": "15",
+            "city": "1",
+            "address": "",
+            "phone": "xxxxxxxxxxxxx",
+            "sos_phone": "15985648002",
+            "height": 0,
+            "weight": 0,
+            "online_status": 0,
+            "online_time": 1522647776,
+            "location_x": "22.681579",
+            "location_y": "113.99096",
+            "battery": 57,
+            "sq": 4,
+            "step_cnt": 41,
+            "bodyStatus": "人民医院治疗:康复中", //病情
+            "policeInfo": "民警:王五",        //民警
+            "cognate": "李四",               //直系亲属
+            "guardian": "张三",              //监护人
+            "reward": "1万元"                有奖监护
+         }
+   ]}
+}
+```
