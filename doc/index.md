@@ -3361,3 +3361,51 @@ null 没有数据返回 看code是否成功
    ]}
 }
 ```
+
+
+####查询病人管理系统权限
+|   接口地址    |   boss/role/queryPatientAuth  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+	"role_id":78               //角色id
+}
+
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "module_id": 7,
+         "module_name": "设备信息",
+         "url": "manage/devManage/dev-info.html",
+         "module_type": 0,
+         "priority": 890,
+         "parent_id": 2,
+         "status": 1,
+         "permiss_id": 434,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      },
+      {
+         "module_id": 50,
+         "module_name": "用户位置",
+         "url": "map/locationMain.html",
+         "module_type": 0,
+         "priority": 20,
+         "parent_id": 3,
+         "status": 1,
+         "permiss_id": 432,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      }
+   ]
+}
+```
