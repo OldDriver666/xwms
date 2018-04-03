@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
 import com.fise.base.Response;
 import com.fise.dao.DBFunctionMapper;
+import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiDepartmentMapper;
+import com.fise.dao.WiOrganizationRoleMapper;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiDepartment;
 import com.fise.model.entity.WiDepartmentExample;
 import com.fise.model.entity.WiDepartmentExample.Criteria;
+import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.DepartmentParam;
 import com.fise.server.depart.IDepartmentService;
 import com.fise.utils.DateUtil;
@@ -27,6 +32,12 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Autowired
     DBFunctionMapper dbDao;
+	
+    @Autowired
+    private WiAdminMapper adminDao;
+    
+    @Autowired
+    WiOrganizationRoleMapper roleDao;
 	
     @Override
     public Response insertOne(DepartmentParam record) {
@@ -56,9 +67,15 @@ public class DepartmentServiceImpl implements IDepartmentService{
     @Override
     public Response queryList(DepartmentParam param) {
         Response resp = new Response();
+        
+        WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
+        WiOrganizationRole role = roleDao.selectByPrimaryKey(admin.getRoleId());
         WiDepartmentExample example = new WiDepartmentExample();
         Criteria con =  example.createCriteria();
-        con.andCreatorIdEqualTo(param.getCreatorId());
+        con.andCompanyIdEqualTo(admin.getCompanyId());
+        if(role.getDepartId() != null && role.getDepartId() != 0){
+            con.andIdIn(getChildDepatId(role.getDepartId()));
+        }
         if(StringUtil.isNotEmpty(param.getDepartName())){
         	con.andDepartNameLike(param.getDepartName());
         }
