@@ -174,7 +174,6 @@ public class RoleController {
      * @param param
      * @return
      */
-    @IgnoreAuth
     @RequestMapping(value = "/queryPatientAuth", method = RequestMethod.POST)
     public Response queryPatientAuth(@RequestBody @Valid QueryRoleParam param) {
         Response resp = new Response();
