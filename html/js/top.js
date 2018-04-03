@@ -36,7 +36,7 @@ $(function(){
 	var Index = {
 		init:function(){
 			Index.loadMenu();
-            //$("#admin-header-nick").text(nick_name);
+            $("#admin-header-nick").text(nick_name);
 		},
 		loadMenu : function(){
             var url = ctx + "boss/role/queryPatientAuth";
@@ -47,30 +47,10 @@ $(function(){
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     $("#pageMenu").tmpl(result.data).appendTo('#menuContent');
-                    /*var rdata = result.data;
-                    var data = rdata.sort(Index.sortBy('priority',false))
-                    var Len = data.length;
-                    var parent_data = new Array;
-
-                    for(var i=0; i<Len; i++){
-                        var mid = data[i].id;
-                        var pid = data[i].parentId;
-
-                        if(0 == pid){
-                            var children_menu = new Array;
-                            for(var j=0; j<Len; j++){
-                                if(mid == data[j].parentId){
-                                    var str = data[j];
-                                    children_menu.push(str);
-                                }
-                            }
-                            data[i].children = children_menu;
-                            parent_data.push(data[i]);
-                        }
-                    }
-                    for(var i in parent_data){
-                        $("#pageMenu").tmpl(parent_data[i]).appendTo('#menuContent');
-                    }*/
+                    $("#menuContent").on('click', 'li', function(){
+                        $(this).siblings().find('a').removeClass("selected");
+                        $(this).find('a').addClass("selected");
+                    })
                 } else {
                 }
             },function(errorMsg) {

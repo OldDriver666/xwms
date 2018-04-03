@@ -38,15 +38,17 @@
 <div class="loginbody">
     <span class="systemlogo"></span>
     <div class="loginbox">
-	    <ul>
-		    <li><input id="ipt_username" type="text" class="loginuser" placeholder="账号"/></li>
-		    <li><input id="ipt_password" type="password" class="loginpwd" placeholder="密码"/></li>
-		    <li>
-			    <input id="btn_submit" type="button" class="loginbtn" value="登录"/>
-			    <!--<label><input name="" type="checkbox" value="" checked="checked"/>记住密码</label>-->
-			    <!--<label><a href="#">忘记密码？</a></label>-->
-		    </li>
-	    </ul>
+	    <form id="form-loginTempl">
+		    <ul>
+			    <li><input id="ipt_username" name="username" type="text" class="loginuser" placeholder="账号"/></li>
+			    <li><input id="ipt_password" name="password" type="password" class="loginpwd" placeholder="密码"/></li>
+			    <li>
+				    <input id="btn_submit" type="button" class="loginbtn" value="登录"/>
+				    <!--<label><input name="" type="checkbox" value="" checked="checked"/>记住密码</label>-->
+				    <!--<label><a href="#">忘记密码？</a></label>-->
+			    </li>
+		    </ul>
+	    </form>
     </div>
 </div>
 
@@ -74,8 +76,10 @@
         hideDuration: "300",
         timeOut: "1500"
     };
-
-    $("#btn_submit").bind('click',function(){
+    $("#form-loginTempl").submit(function(){
+        return false;
+    });
+    function login() {
         $("#modal-loading").modal({backdrop: 'static', keyboard: false, show: true});
         var url = ctx + "boss/admin/login";
         var data = {"account":$("#ipt_username").val(),"password": $.md5($("#ipt_password").val())};
@@ -100,6 +104,31 @@
             $("#modal-loading").modal("hide")
             alert("服务器异常，请稍后重试！");
         });
+    }
+    $("#btn_submit").bind('click',function(){
+        if($("#ipt_username").val() === "") {
+            toastr.error("用户名不能为空！");
+            return;
+        } else if($("#ipt_password").val() === "") {
+            toastr.error("密码不能为空！");
+            return;
+        } else {
+            login();
+        }
+    });
+
+    $("#ipt_password").on('keydown', function(e) {
+        if (e.keyCode == 13) {
+            if($("#ipt_username").val() === "") {
+                toastr.error("用户名不能为空！");
+                return;
+            } else if($("#ipt_password").val() === "") {
+                toastr.error("密码不能为空！");
+                return;
+            } else {
+                login();
+            }
+        }
     });
 
 </script>

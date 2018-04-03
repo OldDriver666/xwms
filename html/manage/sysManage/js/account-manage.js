@@ -183,7 +183,7 @@ $(function() {
 		},
 		//删除数据
 		deleteConfig : function(id) {
-			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
+			if (confirm("删除后不可恢复，确定删除？")) {
 				var url = ctx + "boss/admin/delete";
 				// var url = "http://192.168.2.87:8080/managesvr/boss/admin/delete"
 				var data = new Object();
