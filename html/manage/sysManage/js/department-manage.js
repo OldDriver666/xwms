@@ -36,6 +36,7 @@ $(function() {
 		//新增数据
 		add : function() {
             var url = ctx + "boss/depart/insert";
+            //var url = "http://192.168.2.48:8080/managesvr/boss/depart/insert";
             var data = new Object();
 
 			data.depart_name = $("#input-name").val();

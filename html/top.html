@@ -21,7 +21,7 @@
         <ul>
             <!--<li><span><img src="images/help.png" title="帮助"  class="helpimg"/></span><a href="#">帮助</a></li>
             <li><a href="#">关于</a></li>-->
-            <li><a href="javascript:;" id="header-safeExit" target="_parent">退出</a></li>
+            <li><a href="javascript:;" id="header-safeExit" target="_parent">安全退出</a></li>
         </ul>
      
         <div class="user">
@@ -40,7 +40,7 @@
 <script src="js/polling.js"></script>
 <script src="js/top.js"></script>
 <script type="text/x-jquery-tmpl" id="pageMenu">
-    <li><a href="${url}"  target="rightFrame"><img src="${getImg(module_id)}" title="${module_name}" /><h2>${module_name}</h2></a></li>
+    <li><a href="${url}?moduleId=${module_id}"  target="rightFrame" data-menuid=${module_id} data-url=${url} data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth}><img src="${getImg(module_id)}" title="${module_name}" /><h2>${module_name}</h2></a></li>
 </script>
 <script type="application/javascript">
     var imgList = [{'id': '7', 'url': 'images/icon01.png'}, {'id': '18', 'url': 'images/icon02.png'}, {'id': '41', 'url': 'images/icon03.png'}, {'id': '49', 'url': 'images/icon04.png'}, {'id': '50', 'url': 'images/icon05.png'}]

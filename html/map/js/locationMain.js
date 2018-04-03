@@ -22,6 +22,9 @@ $(function() {
     };
 
     var depart_id = Request["id"];
+    if (depart_id === null || depart_id === undefined || depart_id === '') {
+        depart_id = Util.cookieStorage.getCookie("departId");
+    }
     var company_id = Util.cookieStorage.getCookie("companyId");
 
     var map = new AMap.Map("map-container", {
