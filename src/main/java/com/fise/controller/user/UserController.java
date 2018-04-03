@@ -121,11 +121,7 @@ public class UserController {
     public Response queryUserPatient(@RequestBody @Valid QueryUserParam param){
         Response response=new Response();
         logger.info(param.toString());
-        if(param.getCompanyId() == null){
-            response.setErrorCode(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-            response.setMsg("查询组织标示为空");
-            return response;
-        }
+        param.setCompanyId(HttpContext.getCompanyId());
         response=IQueryUserService.queryUserPatient(param);
         return response;
     }
