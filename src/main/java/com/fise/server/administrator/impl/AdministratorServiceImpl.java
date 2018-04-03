@@ -348,22 +348,22 @@ public class AdministratorServiceImpl implements IAdministratorService {
         	sqlAdmin.setCreatorId(param.getCreatorId());
 		}
         sqlAdmin.setUpdated(DateUtil.getLinuxTimeStamp());
-        if (!StringUtil.isEmpty(param.getAccount())) {
+        if (null!=param.getAccount()) {
             sqlAdmin.setAccount(param.getAccount());
         }
 
-        if (!StringUtil.isEmpty(param.getEmail())) {
+        if (null!=param.getEmail()) {
             sqlAdmin.setEmail(param.getEmail());
         }
-        if (!StringUtil.isEmpty(param.getPassword())) {
+        if (null!=param.getPassword()) {
             sqlAdmin.setPassword(param.getPassword());
         }
 
-        if (!StringUtil.isEmpty(param.getNickName())) {
+        if (null!=param.getNickName()) {
             sqlAdmin.setNickName(param.getNickName());
         }
 
-        if (!StringUtil.isEmpty(param.getEmail())) {
+        if (null!=param.getEmail()) {
             sqlAdmin.setEmail(param.getEmail());
         }
 
@@ -377,7 +377,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
             }
         }
 
-        if (!StringUtil.isEmpty(param.getPhone())) {
+        if (null!=param.getPhone()) {
             sqlAdmin.setPhone(param.getPhone());
         }
 
