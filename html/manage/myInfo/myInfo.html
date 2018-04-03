@@ -15,32 +15,42 @@
 			margin-right: 0;
 			margin-left: 0;
 		}
+		.comtitle{padding:20px; clear:both;}
+		.comtitle h2{font-size:20px; font-weight: bold; margin:0!important;display:block; float:left;color:#2a3e93; background:#fff; padding-left:5px; padding-right:8px;}
+		.rline{border-bottom:solid 1px #e5ecf0; height:10px; margin-left:50px;}
 	</style>
 </head>
 
 <body>
 <div class="form-horizontal">
-	<div class="form-group">
-		<label class="col-sm-2 control-label">昵称：</label>
-		<div class="col-sm-10" style="padding-top: 7px;">
-			<span class="form-control-static nickName_txt"></span>
-			<span id="btn-NickName" title="修改昵称" style="margin-left: 20px;border: 1px solid #ddd;padding: 2px 3px;cursor: pointer;border-radius: 4px;" data-toggle="modal" data-target="#NickName-modal">
+	<div class="comtitle">
+		<h2>个人信息</h2>
+		<div class="rline"></div>
+	</div>
+	<div style="padding:20px;">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">昵称：</label>
+			<div class="col-sm-10" style="padding-top: 7px;">
+				<span class="form-control-static nickName_txt"><input type="text" disabled></span>
+				<span id="btn-NickName" title="修改昵称" style="margin-left: 20px;border: 1px solid #ddd;padding: 2px 3px;cursor: pointer;border-radius: 4px;" data-toggle="modal" data-target="#NickName-modal">
 				<span class="glyphicon glyphicon-pencil"></span>
 			</span>
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">用户名：</label>
-		<div class="col-sm-10">
-			<p class="form-control-static userName_txt"></p>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">用户名：</label>
+			<div class="col-sm-10">
+				<p class="form-control-static userName_txt"><input type="text" disabled></p>
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">密码：</label>
-		<div class="col-sm-10" style="padding-top: 7px;">
-			<span id="btn-editPW" title="修改密码" style="margin-left: 20px;border: 1px solid #ddd;padding: 2px 3px;cursor: pointer;border-radius: 4px;" data-toggle="modal" data-target="#editPW-modal">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">密码：</label>
+			<div class="col-sm-10" style="padding-top: 7px;">
+				<span class="password_txt"><input type="text" disabled></span>
+				<span id="btn-editPW" title="修改密码" style="margin-left: 20px;border: 1px solid #ddd;padding: 2px 3px;cursor: pointer;border-radius: 4px;" data-toggle="modal" data-target="#editPW-modal">
 				<span class="glyphicon glyphicon-pencil"></span>
 			</span>
+			</div>
 		</div>
 	</div>
 </div>

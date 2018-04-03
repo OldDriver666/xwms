@@ -17,8 +17,8 @@ $(function() {
 
         Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
             if(result.code == ReturnCode.SUCCESS){
-                $(".nickName_txt").text(result.data.nickName);
-                $(".userName_txt").text(result.data.account);
+                $(".nickName_txt input").val(result.data.nickName);
+                $(".userName_txt input").val(result.data.account);
             } else {
                 toastr.error(result.msg);
             }

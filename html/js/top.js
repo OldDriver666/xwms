@@ -36,7 +36,10 @@ $(function(){
 	var Index = {
 		init:function(){
 			Index.loadMenu();
-            $("#admin-header-nick").text(nick_name);
+            //$("#admin-header-nick").text(nick_name);
+            if(nick_name !== '') {
+                $('.user').append('<span id="admin-header-nick">' + nick_name + '</span>');
+            }
 		},
 		loadMenu : function(){
             var url = ctx + "boss/role/queryPatientAuth";

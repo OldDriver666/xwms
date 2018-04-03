@@ -93,9 +93,6 @@
 <!--<script src="js/cloud.js" type="text/javascript"></script>-->
 <script>
 window.onload = function() {
-    /*document.getElementById("ipt_username").value = Util.cookieStorage.getCookie('username');
-    document.getElementById("ipt_password").value = Util.cookieStorage.getCookie('password');*/
-
     toastr.options = {
         positionClass: 'toast-center-center',
         showDuration: "300",
@@ -121,9 +118,6 @@ window.onload = function() {
                 Util.cookieStorage.setCookie("adminId", result.data.id);
                 Util.cookieStorage.setCookie("phone", result.data.phone);
                 Util.cookieStorage.setCookie("home", result.data.home);
-                /*if (document.getElementById("savePwd").checked === true) {
-                    Util.cookieStorage.setCookie("password", $("#ipt_password").val(), 2040);
-                }*/
                 window.location.href = result.data.home;
             } else {
                 toastr.error(result.msg);
