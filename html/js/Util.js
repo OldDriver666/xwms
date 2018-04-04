@@ -738,7 +738,7 @@ Util.regionArgumentsDetail = function(regionlist){
 //获取当前域名
 Util.pathName = function(){
 	//生产
-    ctx = "http://svr.fise-wi.com:8589/managesvr/";
+    ctx = "http://file.fise-wi.com:8589/managesvr/";
     Util.localStorage.add("ctx",ctx);
     Util.localStorage.add("fileServUrl", "http://file.fise-wi.com:8700/")
     
