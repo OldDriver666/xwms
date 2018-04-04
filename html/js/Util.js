@@ -737,9 +737,15 @@ Util.regionArgumentsDetail = function(regionlist){
 
 //获取当前域名
 Util.pathName = function(){
-    ctx = "http://10.252.252.250:8787/managesvr/";
+	//生产
+    ctx = "http://svr.fise-wi.com:8589/managesvr/";
     Util.localStorage.add("ctx",ctx);
-    Util.localStorage.add("fileServUrl", "http://10.252.252.250:8700/")
+    Util.localStorage.add("fileServUrl", "http://file.fise-wi.com:8700/")
+    
+//开发
+//    ctx = "http://10.252.252.250:8787/managesvr/";
+//    Util.localStorage.add("ctx",ctx);
+//    Util.localStorage.add("fileServUrl", "http://10.252.252.250:8700/")
 };
 
 //获取资源文件
