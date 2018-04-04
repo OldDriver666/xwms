@@ -28,7 +28,7 @@
             return unescape(document.cookie.substring(len, end));
         }
         var token_value = getCookie("accesstoken");
-        if (token_value === '' || token_value === 'undefined') {
+        if (token_value === '' || token_value === undefined) {
             window.location.href = "login.html";
         }
     </script>
