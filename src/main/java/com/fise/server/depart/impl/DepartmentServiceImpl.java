@@ -69,12 +69,12 @@ public class DepartmentServiceImpl implements IDepartmentService{
         Response resp = new Response();
         
         WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
-        WiOrganizationRole role = roleDao.selectByPrimaryKey(admin.getRoleId());
+//        WiOrganizationRole role = roleDao.selectByPrimaryKey(admin.getRoleId());
         WiDepartmentExample example = new WiDepartmentExample();
         Criteria con =  example.createCriteria();
         con.andCompanyIdEqualTo(admin.getCompanyId());
-        if(role.getDepartId() != null && role.getDepartId() != 0){
-            con.andIdIn(getChildDepatId(role.getDepartId()));
+        if(admin.getDepartId() != null && admin.getDepartId() != 0){
+            con.andIdIn(getChildDepatId(admin.getDepartId()));
         }
         if(StringUtil.isNotEmpty(param.getDepartName())){
         	con.andDepartNameLike(param.getDepartName());
