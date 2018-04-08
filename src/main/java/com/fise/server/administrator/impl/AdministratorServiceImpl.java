@@ -293,13 +293,14 @@ public class AdministratorServiceImpl implements IAdministratorService {
         record.setRoleId(param.getRoleId());
         record.setCreatorId(param.getCreatorId());
         Integer nNow = DateUtil.getLinuxTimeStamp();
+        WiOrganizationRole role = roleDao.selectByPrimaryKey(param.getRoleId());
 
         record.setCreated(nNow);
         record.setUpdated(nNow);
         record.setNickName(StringUtil.isEmpty(param.getNickName()) ? "" : param.getNickName());
         record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
         record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
-        record.setDepartId(param.getDepartId() == null ? 0 : param.getDepartId());
+        record.setDepartId(role.getDepartId() == null ? 0 : role.getDepartId());
         record.setSalt(nNow.toString().substring(5, 9));
         record.setStatus(1);
         record.setAccessToken("");
