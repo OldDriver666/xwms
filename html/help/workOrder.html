@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title></title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="js/toastr/toastr.css"/>
+<link rel="stylesheet" href="css/feedback.css">
+<link rel="stylesheet" href="css/vendor.css">
+<link rel="stylesheet" href="css/pagination.css"/>
+</head>
+<body>
+<div class="tabs">
+	<span class="active">
+		<a href="myFeedback.html">
+			<em class="octicon octicon-list-unordered"></em>我的工单
+		</a>
+	</span>
+  <span class="active">
+		<a href="addFeedback.html">
+			<em class="octicon octicon-plus"></em>新建工单
+		</a>
+	</span>
+</div>
+<div class="application">
+  <div class="main container clearfix">
+    <div class="search">
+      <input id="search" placeholder="请输入关键词搜索" type="text" oninput="action.getSearchKey()" autocomplete="off">
+      <em class="octicon octicon-search"></em>
+      <div id="search_results" class="search_results hide"></div>
+    </div>
+    <div class="tab-navs">
+      <li class="tab-nav">
+        <a href="feedback.html"><em class="octicon octicon-book"></em>知识库</a>
+      </li>
+      <li class="tab-nav active">
+        <a href="workOrder.html"><em class="octicon octicon-comment-discussion"></em>公开工单</a>
+      </li>
+    </div>
+    <div class="main-content tickets">
+      <div class="public_tickets">
+        <div class="list" id="pageContent">
+        </div>
+        <div style="text-align: center;margin: 20px 0;"><div id="pagination" class="pagination"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="js/Util.js"></script>
+<script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
+<script type="text/javascript" src="js/workOrder.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+<a href="workOrderDetail.html?id=${id}&sid=${suggestId}&uname=${uname}" class="ticket">
+  <div class="avatar"><img src="img/none.png"></div>
+  <div class="title">
+  {{if status == 1}}<span class="status-in_progress mini-status">处理中</span>
+  {{else status == 0}}<span class="status-open mini-status">开启</span>
+  {{/if}}
+  ${title}
+  </div>
+  <div class="author">${uname}<span class="time">${timestampToTime(created)}</span></div>
+  <div class="reply"><em class="octicon octicon-comment"></em>${count}</div>
+</a>
+</script>
+<script type="text/x-jquery-tmpl" id="pageTmpl2">
+	    <div class="search-item">
+	        <a href="feedback-detail.html?id=${id}&type=${type}"><em class="octicon octicon-book"></em>${title}</a>
+	    </div>
+</script>
+<script type="text/javascript">
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
+        h = date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() + ':';
+        m = date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' : date.getMinutes() + ':';
+        s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1500"
+    };
+</script>
+
+</body>
+</html>

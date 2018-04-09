@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="js/toastr/toastr.css"/>
+	<link rel="stylesheet" href="css/feedback.css">
+    <link rel="stylesheet" href="css/vendor.css">
+</head>
+<body>
+<div class="tabs">
+	<span class="active">
+		<a href="myFeedback.html">
+			<em class="octicon octicon-list-unordered"></em>我的工单
+		</a>
+	</span>
+	<span class="active">
+		<a href="addFeedback.html">
+			<em class="octicon octicon-plus"></em>新建工单
+		</a>
+	</span>
+</div>
+<div class="application">
+  <div class="main container clearfix">
+    <div class="article" id="pageContent">
+    </div>
+	  <div class="vote gap_line">
+	    <span id="upvote" class="small_btn fbtn green_btn">
+	        <em class="octicon octicon-thumbsup"></em>有帮助<number>0</number>
+	    </span>
+		  <span id="downvote" class="small_btn fbtn gray_btn">
+	        <em class="octicon octicon-thumbsdown"></em>没帮助<number>0</number>
+	    </span>
+	  </div>
+  </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="js/Util.js"></script>
+<script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="js/feedback-detail.js"></script>
+<script type="text/x-jquery-tmpl" id="pageTmpl">
+	<div class="title">
+	    <!--<a href="feedback.html" title="知识库" class="go_back"></a>-->
+	    <h2>${title}</h2>
+	</div>
+	<div id="content" class="content markdown-body">${content}</div>
+</script>
+<script type="text/javascript">
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1500"
+    };
+</script>
+</body>
+</html>

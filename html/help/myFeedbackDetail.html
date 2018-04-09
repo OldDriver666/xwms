@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="js/toastr/toastr.css"/>
+	<link rel="stylesheet" href="css/feedback.css">
+	<link rel="stylesheet" href="css/vendor.css">
+</head>
+<body>
+<div class="tabs">
+	<span class="active">
+		<a href="myFeedback.html">
+			<em class="octicon octicon-list-unordered"></em>我的工单
+		</a>
+	</span>
+	<span class="active">
+		<a href="addFeedback.html">
+			<em class="octicon octicon-plus"></em>新建工单
+		</a>
+	</span>
+</div>
+<div class="application">
+	<div class="main container clearfix">
+		<div class="ticket">
+			<div class="title">
+				<!--<a href="myFeedback.html" title="我的意见反馈" class="go_back"></a>-->
+				<h2 style="color:#444443"></h2>
+				<em class="time"></em>
+			</div>
+			<div class="content markdown-body">
+				<p></p>
+			</div>
+			<div class="attachment"></div>
+			<div class="reply_list gap_line">
+				<div class="reply-num">
+					<span class="replyNum">0</span> 条回复
+					<div id="pageContent"></div>
+				</div>
+				<div class="add_reply gap_line">
+					<div id="addReply" class="form-aligned body">
+						<textarea placeholder="回复内容" name="content" rows="5" required=""></textarea>
+						<button type="submit" data-submitting="提交中.." data-submit="提交" class="fbtn green_btn">提交 </button>
+						<div data-filetoolarge="您选择文件太大，请更换文件" data-fileuploadfailed="文件上传失败，请稍后再试" class="attachFile">
+							<em class="octicon octicon-cloud-upload"></em>
+							<span data-uploading="上传中.." data-attachment="上传图片">上传图片</span>
+							<input id="fileupload" type="file" name="attachments[]" data-url="http://10.252.252.250:4869/upload" multiple="" />
+						</div>
+					</div>
+					<div id="file_list" class="attachment2 hide"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="js/Util.js"></script>
+<script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="js/myFeedbackDetail.js"></script>
+<script type="text/javascript">
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1500"
+    };
+</script>
+<script type="text/javascript" src="js/vendor.js"></script>
+<script type="text/javascript">
+    $("#fileupload").length > 0 && $("#fileupload").fileupload({
+        dataType: "json",
+        fail: function(t, e) {
+            return "Request Entity Too Large" === e.errorThrown ? alert($(".attachFile").data("filetoolarge")) : alert($(".attachFile").data("fileuploadfailed")),
+                $(".attachFile em").addClass("octicon-cloud-upload").removeClass("uploading"),
+                $(".attachFile span").text($(".attachFile span").data("attachment"))
+        },
+        done: function(t, e) {
+            if(e.result.ret === true){
+                $("#file_list").show();
+                var html = '<div class="attachment2-item">\n  <div class="imgWrap">\n <img src="http://10.252.252.250:4869/' + e.result.info.md5 + '"/>\n </div>\n <em class="close">&times;</em>\n</div>';
+                $("#file_list").append(html)
+            }
+
+            $(".close").click(function() {
+                return $(this).parent().remove()
+            });
+            $(".attachFile em").addClass("octicon-cloud-upload").removeClass("uploading");
+            $(".attachFile span").text($(".attachFile span").data("attachment"));
+        },
+        progressall: function() {
+            return $(".attachFile em").addClass("uploading").removeClass("octicon-cloud-upload"),
+                $(".attachFile span").text($(".attachFile span").data("uploading"))
+        }
+    })
+</script>
+<script>
+    $("#addReply").submit(function(e){
+        return false;
+    });
+</script>
+</body>
+</html>
