@@ -24,6 +24,33 @@ public class UserDetail {
     private Integer battery;
     private Integer sq;
     private Integer step_cnt;
+    
+    /**
+     * 身体状况
+     */
+    private String bodyStatus;
+
+    /**
+     * 片区民警信息
+     */
+    private String policeInfo;
+
+    /**
+     * 直系亲属
+     */
+    private String cognate;
+
+    /**
+     * 监护人
+     */
+    private String guardian;
+
+    /**
+     * 有奖监护
+     */
+    private String reward;
+    
+    
     public Integer getUid() {
         return uid;
     }
@@ -139,6 +166,11 @@ public class UserDetail {
         Random random = new Random();
         int s = random.nextInt(9999)%(300);
         this.step_cnt = s;
+        this.bodyStatus=u.getBodyStatus();
+        this.policeInfo=u.getPoliceInfo();
+        this.cognate=u.getCognate();
+        this.guardian=u.getGuardian();
+        this.reward=u.getReward();
     }
     public Integer getStep_cnt() {
         return step_cnt;
@@ -164,4 +196,36 @@ public class UserDetail {
     public void setSos_phone(String sos_phone) {
         this.sos_phone = sos_phone;
     }
+	public String getBodyStatus() {
+		return bodyStatus;
+	}
+	public void setBodyStatus(String bodyStatus) {
+		this.bodyStatus = bodyStatus;
+	}
+	public String getPoliceInfo() {
+		return policeInfo;
+	}
+	public void setPoliceInfo(String policeInfo) {
+		this.policeInfo = policeInfo;
+	}
+	public String getCognate() {
+		return cognate;
+	}
+	public void setCognate(String cognate) {
+		this.cognate = cognate;
+	}
+	public String getGuardian() {
+		return guardian;
+	}
+	public void setGuardian(String guardian) {
+		this.guardian = guardian;
+	}
+	public String getReward() {
+		return reward;
+	}
+	public void setReward(String reward) {
+		this.reward = reward;
+	}
+    
+    
 }

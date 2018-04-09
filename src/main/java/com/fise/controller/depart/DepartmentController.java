@@ -50,7 +50,6 @@ public class DepartmentController {
 	public Response queryImdepartConfig(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
-		param.setCreatorId(HttpContext.getMemberId());
 		logger.info(param.toString());
 		response=iDepartmentSvr.queryList(param);
 		return response;

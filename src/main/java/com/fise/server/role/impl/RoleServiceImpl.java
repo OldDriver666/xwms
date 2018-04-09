@@ -16,6 +16,7 @@ import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.dao.WiPermissionMapper;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganizationRole;
@@ -320,6 +321,32 @@ public class RoleServiceImpl implements IRoleService {
     		}
 		}
     	return true;
+    }
+    
+    
+    @Override
+    public Response queryPatientAuth(QueryRoleParam param) {
+
+    	Response response = new Response();
+        // 判断用户权限
+    	Integer roleId1 = param.getRole_id();
+    	Integer roleId2 = AdminUtil.getRoleId(HttpContext.getMemberId());
+    	if (roleId1 != roleId2) {
+    		WiOrganizationRoleExample example = new WiOrganizationRoleExample();
+        	WiOrganizationRoleExample.Criteria criteria = example.createCriteria();
+            criteria.andIdEqualTo(roleId1);
+            criteria.andCreatorIdEqualTo(HttpContext.getMemberId());
+            List<WiOrganizationRole> list = roleDao.selectByExample(example);
+            if (list.isEmpty()) {
+            	response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+                response.setMsg("角色权限值错误");
+                return response;
+            }
+		}
+
+    	List<ModulePermissResult> data = permissionDao.queryPatientAuth(param.getRole_id());
+    	response.success(data);
+    	return response;
     }
 
 }

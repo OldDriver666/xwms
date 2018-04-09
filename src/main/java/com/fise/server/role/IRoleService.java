@@ -53,7 +53,12 @@ public interface IRoleService {
 	public Response delAuth(InsertAuthParam auth);
 	
 
-	
+    /**
+     * 查询精神病角色并返回对应权限-不包括不可见的 
+     * @param param
+     * @return
+     */
+    public Response queryPatientAuth(QueryRoleParam param);
     
     
 }

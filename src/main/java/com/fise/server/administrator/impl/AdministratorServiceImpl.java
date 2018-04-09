@@ -293,13 +293,14 @@ public class AdministratorServiceImpl implements IAdministratorService {
         record.setRoleId(param.getRoleId());
         record.setCreatorId(param.getCreatorId());
         Integer nNow = DateUtil.getLinuxTimeStamp();
+        WiOrganizationRole role = roleDao.selectByPrimaryKey(param.getRoleId());
 
         record.setCreated(nNow);
         record.setUpdated(nNow);
         record.setNickName(StringUtil.isEmpty(param.getNickName()) ? "" : param.getNickName());
         record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
         record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
-        record.setDepartId(param.getDepartId() == null ? 0 : param.getDepartId());
+        record.setDepartId(role.getDepartId() == null ? 0 : role.getDepartId());
         record.setSalt(nNow.toString().substring(5, 9));
         record.setStatus(1);
         record.setAccessToken("");
@@ -348,22 +349,22 @@ public class AdministratorServiceImpl implements IAdministratorService {
         	sqlAdmin.setCreatorId(param.getCreatorId());
 		}
         sqlAdmin.setUpdated(DateUtil.getLinuxTimeStamp());
-        if (!StringUtil.isEmpty(param.getAccount())) {
+        if (null!=param.getAccount()) {
             sqlAdmin.setAccount(param.getAccount());
         }
 
-        if (!StringUtil.isEmpty(param.getEmail())) {
+        if (null!=param.getEmail()) {
             sqlAdmin.setEmail(param.getEmail());
         }
-        if (!StringUtil.isEmpty(param.getPassword())) {
+        if (null!=param.getPassword()) {
             sqlAdmin.setPassword(param.getPassword());
         }
 
-        if (!StringUtil.isEmpty(param.getNickName())) {
+        if (null!=param.getNickName()) {
             sqlAdmin.setNickName(param.getNickName());
         }
 
-        if (!StringUtil.isEmpty(param.getEmail())) {
+        if (null!=param.getEmail()) {
             sqlAdmin.setEmail(param.getEmail());
         }
 
@@ -377,7 +378,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
             }
         }
 
-        if (!StringUtil.isEmpty(param.getPhone())) {
+        if (null!=param.getPhone()) {
             sqlAdmin.setPhone(param.getPhone());
         }
 
