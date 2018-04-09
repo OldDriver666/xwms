@@ -150,7 +150,7 @@ $(function () {
                          '<div class="avatar">' +
                          '<img src="img/none.png" />' +
                          '</div>' +
-                         '<span class="author">' + formatname((myData[i].uname) + '</span>' +
+                         '<span class="author">' + formatname((myData[i].uname)) + '</span>' +
                          '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
                          '</div>' +
                          '<div class="content">' +
