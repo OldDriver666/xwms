@@ -150,7 +150,7 @@ $(function () {
                          '<div class="avatar">' +
                          '<img src="img/none.png" />' +
                          '</div>' +
-                         '<span class="author">' + myData[i].uname + '</span>' +
+                         '<span class="author">' + formatname((myData[i].uname) + '</span>' +
                          '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
                          '</div>' +
                          '<div class="content">' +
@@ -181,6 +181,13 @@ $(function () {
         m = date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' : date.getMinutes() + ':';
         s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
         return Y+M+D+h+m+s;
+    }
+    function formatname(uname) {
+        if((/^1[34578]\d{9}$/.test(uname))) {
+            return uname.substr(0,3) + '****' + uname.substr(7)
+        } else {
+            return uname
+        }
     }
 
     $('#addReply').find('button[type=submit]').click(function (t) {

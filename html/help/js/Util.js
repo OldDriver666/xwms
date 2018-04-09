@@ -660,8 +660,8 @@ Util.regionArgumentsDetail = function(regionlist){
 Util.pathName = function(){
     // ctx = Util.cookieStorage.getCookie("siteUrl");
     // 开发环境
-    // ctx = "http://10.252.252.250:8787/managesvr/";
-	ctx = "http://192.168.2.41:8080/managesvr/";
+    ctx = "http://10.252.252.250:8787/managesvr/";
+	//ctx = "http://192.168.2.41:8080/managesvr/";
     Util.localStorage.add("ctx",ctx);
 };
 
