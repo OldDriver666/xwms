@@ -10,6 +10,7 @@ $(function () {
     };
     var typeId = parseInt(Request["id"]);
 
+    var typelist = ['入门指南', '常见问题', '使用技巧', '高级版相关', '账号相关', '关于我们']
     var action = {
         //获取所有数据
         loadPageData : function(typeId) {
@@ -22,6 +23,7 @@ $(function () {
             } else {
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {
                     if(result.code == ReturnCode.SUCCESS){
+                        $('.collection .title').html(typelist[typeId - 1]);
                         $("#pageTmpl").tmpl(result.data).appendTo('#pageContent');
                     }else {
                         console.log("请求出错！");
