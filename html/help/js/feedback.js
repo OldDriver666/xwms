@@ -112,19 +112,19 @@ $(function() {
                         '<a href="feedback-class.html?id=1" class="title">入门指南</a>' +
                         '<ul class="article-list">' + li_arr1.join('') + '</ul></div>';
                     var html_li2 = '<div class="collection-item">' +
-                        '<a href="feedback-class.html?id=1" class="title">常见问题</a>' +
+                        '<a href="feedback-class.html?id=2" class="title">常见问题</a>' +
                         '<ul class="article-list">' + li_arr2.join('') + '</ul></div>';
                     var html_li3 = '<div class="collection-item">' +
-                        '<a href="feedback-class.html?id=1" class="title">使用技巧</a>' +
+                        '<a href="feedback-class.html?id=3" class="title">使用技巧</a>' +
                         '<ul class="article-list">' + li_arr3.join('') + '</ul></div>';
                     var html_li4 = '<div class="collection-item">' +
-                        '<a href="feedback-class.html?id=1" class="title">高级版相关</a>' +
+                        '<a href="feedback-class.html?id=4" class="title">高级版相关</a>' +
                         '<ul class="article-list">' + li_arr4.join('') + '</ul></div>';
                     var html_li5 = '<div class="collection-item">' +
-                        '<a href="feedback-class.html?id=1" class="title">账号相关</a>' +
+                        '<a href="feedback-class.html?id=5" class="title">账号相关</a>' +
                         '<ul class="article-list">' + li_arr5.join('') + '</ul></div>';
                     var html_li6 = '<div class="collection-item">' +
-                        '<a href="feedback-class.html?id=1" class="title">关于我们</a>' +
+                        '<a href="feedback-class.html?id=6" class="title">关于我们</a>' +
                         '<ul class="article-list">' + li_arr6.join('') + '</ul></div>';
                     $('#collection-list').html(html_li1 + html_li2 + html_li3 + html_li4 + html_li5 + html_li6)
                 }else {
