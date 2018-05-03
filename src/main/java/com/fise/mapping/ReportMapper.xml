@@ -74,4 +74,32 @@
   	from ${tablename} 
   	GROUP BY type 
   </select>
+  
+  <select id="activeCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(0) as count 
+  	from IMUser
+  	where FROM_UNIXTIME(created,'%Y-%m-%d') = #{date,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="onlinePeopleCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(0) as count 
+  	from IMUser
+  	where type &lt; 19 and (online_status=1 or FROM_UNIXTIME(last_online_time,'%Y-%m-%d') = #{date,jdbcType=VARCHAR})
+  </select>
+  
+  <select id="onlineDeviceCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(0) as count 
+  	from IMUser
+  	where type &gt;= 19 and (online_status=1 or FROM_UNIXTIME(last_online_time,'%Y-%m-%d') = #{date,jdbcType=VARCHAR})
+  </select>
+  
+  <select id="queryTypeDayMessages" parameterType="map" resultMap="typemessage">
+  	SELECT type,
+  	COUNT(1) as count 
+  	from ${tablename} 
+  	WHERE FROM_UNIXTIME(created,'%Y-%m-%d') = #{daytime,jdbcType=VARCHAR}
+  	GROUP BY type
+  </select>	
+  
+  
 </mapper>

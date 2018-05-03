@@ -1,6 +1,8 @@
 package com.fise.server.event.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,5 +59,24 @@ public class EventServiceImpl implements IEventService {
         resp.success(page);
         return resp;
     }
+
+	@Override
+	public Map<Integer, Integer> queryTypeDayEvents(String daytime) {
+
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		List<IMEvent> list = null;
+
+		for (int i = 0; i < 8; i++) {
+			list = eventDao.queryTypeDayEvents("IMEvent_" + i, daytime);
+			for (IMEvent event : list) {
+				if (null == map.get(event.getEventKey())) {
+					map.put(event.getEventKey(), event.getCount());
+				} else {
+					map.put(event.getEventKey(), map.get(event.getEventKey()) + event.getCount());
+				}
+			}
+		}
+		return map;
+	}
 
 }

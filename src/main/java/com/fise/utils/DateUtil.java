@@ -325,6 +325,13 @@ public class DateUtil {
         cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));  
         return cal.getTime();  
     }  
+    
+    // 获得昨天时间
+    public static Date getYesterday() {  
+        Calendar cal = Calendar.getInstance();  
+        cal.add(cal.DAY_OF_MONTH, -1);
+        return cal.getTime();  
+    }  
 	
 	public static void main(String[] args) throws ParseException {
 	    Date today = getTodayBeginDate();

@@ -22,5 +22,14 @@ public interface ReportMapper {
     
     MessageDayResult querydaymessages(@Param("tablename") String tablename,@Param("daytime") String daytime);
     
+    List<MessageTypeResult> queryTypeDayMessages(@Param("tablename") String tablename,@Param("daytime") String daytime);
+    
     List<MessageTypeResult> querytypemessages(@Param("tablename") String tablename);
+    
+    int activeCount(String date);
+    
+    int onlinePeopleCount(String date);
+    
+    int onlineDeviceCount(String date);
+
 }

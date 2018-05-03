@@ -317,4 +317,13 @@
       created = #{created,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="queryTypeDayEvents" parameterType="map" resultMap="BaseResultMap">
+  	SELECT event_key,
+  	COUNT(1) as count 
+  	from ${tablename}
+  	WHERE FROM_UNIXTIME(created,'%Y-%m-%d') = #{daytime,jdbcType=VARCHAR}
+  	GROUP BY event_key
+  </select>	
+  
 </mapper>

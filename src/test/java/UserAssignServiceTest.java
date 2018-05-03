@@ -9,21 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fise.base.Response;
 import com.fise.model.param.AdminQuery;
 import com.fise.server.administrator.IAdministratorService;
+import com.fise.task.ReportTask;
 
 public class UserAssignServiceTest extends BaseJunit4Test {
 
-    @Resource
-    private IAdministratorService adminSvr;
+	@Autowired
+    private ReportTask reportTask;
 	
 	@Test // 标明是测试方法
 	@Transactional // 标明此方法需使用事务
 	@Rollback(false) // 标明使用完此方法后事务不回滚,true时为回滚
 	public void insert() {
-		Response resp = new Response();
-		AdminQuery param = new AdminQuery();
-		param.setAdminId(2);
-		resp = adminSvr.queryAdmin(param);
-		System.out.println(resp);
+		reportTask.show();
         
 	}
 
