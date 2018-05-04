@@ -139,7 +139,7 @@ public class ModuleServiceImpl implements IModuleService {
 		WiModuleExample example=new WiModuleExample();
 		WiModuleExample.Criteria criteria=example.createCriteria();
 		
-		if(param.getParam().getName()!=null){
+		if(StringUtil.isNotEmpty(param.getParam().getName())){
 			criteria.andNameLike("%" + param.getParam().getName() + "%");
 		}
 
