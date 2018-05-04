@@ -98,7 +98,6 @@ public class ModuleController {
         return resp;
     }
     
-    @IgnoreAuth
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
     public Response queryModuleByPage(@RequestBody @Valid Page<WiModule> param){
 
@@ -109,7 +108,6 @@ public class ModuleController {
         return resp;
     }
     
-    @IgnoreAuth
     @RequestMapping(value = "/queryParentModule", method = RequestMethod.POST)
     public Response queryParentModule(){
     	
