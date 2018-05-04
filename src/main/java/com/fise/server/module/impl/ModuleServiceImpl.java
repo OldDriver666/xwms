@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiModuleMapper;
 import com.fise.dao.WiPermissionMapper;
@@ -128,5 +130,21 @@ public class ModuleServiceImpl implements IModuleService {
         resp.success();
         return resp;
     }
+
+	@Override
+	public Response queryModuleByPage(Page<WiModule> param) {
+		
+		Response response=new Response();
+		
+		WiModuleExample example=new WiModuleExample();
+		WiModuleExample.Criteria criteria=example.createCriteria();
+		
+		if(param.getParam().getName()!=null){
+			criteria.andNameLike("%" + param.getParam().getName() + "%");
+		}
+
+		param.setResult(moduleDao.selectByExampleByPage(example, param));
+		return response.success(param);
+	}
 
 }

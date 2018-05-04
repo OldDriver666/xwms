@@ -8,7 +8,14 @@ import java.io.Serializable;
 public class WiModule implements Serializable {
     private Integer id;
 
+    /**
+     * 菜单名称
+     */
     private String name;
+    /**
+     * 上级菜单名称
+     */
+    private String pname;
 
     /**
      * 0-管理 1-查询
@@ -116,4 +123,13 @@ public class WiModule implements Serializable {
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
+
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+    
 }
