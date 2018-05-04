@@ -108,4 +108,13 @@ public class ModuleController {
         logger.info("获取菜单:"+JsonUtil.toJson(param));
         return resp;
     }
+    
+    @IgnoreAuth
+    @RequestMapping(value = "/queryParentModule", method = RequestMethod.POST)
+    public Response queryParentModule(){
+    	
+    	Response resp = new Response();
+    	resp.success(moduleSvr.queryParentModule());
+    	return resp;
+    }
 }

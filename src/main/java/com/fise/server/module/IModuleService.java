@@ -17,6 +17,9 @@ public interface IModuleService {
     
     /*分页查询模块*/
     Response queryModuleByPage(Page<WiModule> param);
+    
+    /*查询父类模块*/
+    Response queryParentModule();
 
     /*新增用户可见模块*/
     Response InsertModule(ModuleInsertParam param, Integer roleId);

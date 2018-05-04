@@ -146,5 +146,15 @@ public class ModuleServiceImpl implements IModuleService {
 		param.setResult(moduleDao.selectByExampleByPage(example, param));
 		return response.success(param);
 	}
+	@Override
+	public Response queryParentModule() {
+		
+		Response response=new Response();
+		WiModuleExample example=new WiModuleExample();
+		WiModuleExample.Criteria criteria=example.createCriteria();
+		criteria.andParentIdEqualTo(0);
+		List<WiModule> list = moduleDao.selectByExample(example);
+		return response.success(list);
+	}
 
 }
