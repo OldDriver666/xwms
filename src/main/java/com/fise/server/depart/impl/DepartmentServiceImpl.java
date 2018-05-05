@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.DBFunctionMapper;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiDepartmentMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiDepartment;
 import com.fise.model.entity.WiDepartmentExample;
 import com.fise.model.entity.WiDepartmentExample.Criteria;
@@ -126,5 +128,25 @@ public class DepartmentServiceImpl implements IDepartmentService{
         }
         return idList;
     }
+    
+    
+	@Override
+	public Response queryDepartmentByPage(Page<WiDepartment> page) {
+		
+		Response response=new Response();
+		
+		WiDepartmentExample example=new WiDepartmentExample();
+		WiDepartmentExample.Criteria criteria=example.createCriteria();
+		WiDepartment param = page.getParam();
+        if(null != param.getCreatorId()){
+        	criteria.andCreatorIdEqualTo(param.getCreatorId());
+        }
+        if(StringUtil.isNotEmpty(param.getDepartName())){
+        	criteria.andDepartNameLike("%" + param.getDepartName() + "%");
+        }
+
+        page.setResult(departDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
 
 }
