@@ -86,11 +86,10 @@ public class DepartmentController {
 		response=iDepartmentSvr.delete(param);
 		return response;
 	}
-	@IgnoreAuth
     @RequestMapping(value = "/queryDepartmentByPage", method = RequestMethod.POST)
     public Response queryDepartmentByPage(@RequestBody @Valid Page<WiDepartment> page) {
         Response resp = new Response();
-        page.getParam().setCreatorId(HttpContext.getMemberId());
+//        page.getParam().setCreatorId(HttpContext.getMemberId());
         logger.info(page.toString());
         resp = iDepartmentSvr.queryDepartmentByPage(page);
         return resp;

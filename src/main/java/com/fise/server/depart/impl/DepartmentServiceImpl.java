@@ -134,10 +134,16 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	public Response queryDepartmentByPage(Page<WiDepartment> page) {
 		
 		Response response=new Response();
-		
+		WiDepartment param = page.getParam();
 		WiDepartmentExample example=new WiDepartmentExample();
 		WiDepartmentExample.Criteria criteria=example.createCriteria();
-		WiDepartment param = page.getParam();
+		WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
+        if(admin.getCompanyId() != null && admin.getCompanyId() != 0){
+        	criteria.andCompanyIdEqualTo(admin.getCompanyId());
+        }
+        if(admin.getDepartId() != null && admin.getDepartId() != 0){
+        	criteria.andIdIn(getChildDepatId(admin.getDepartId()));
+        }
         if(null != param.getCreatorId()){
         	criteria.andCreatorIdEqualTo(param.getCreatorId());
         }
