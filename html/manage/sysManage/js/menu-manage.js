@@ -78,7 +78,7 @@ $(function() {
 			var url = ctx + "boss/module/queryByPage";
 			var data = {
                 "page_no": 1,
-                "page_size": 20,
+                "page_size": 10,
                 "param": {
                     "name": searchMenuName
 				}
@@ -109,9 +109,14 @@ $(function() {
 		},
 		//编辑数据
 		edit : function() {
+		    var parentId = null;
+		    if (parseInt($('#parent-menu-txt').val()) === 0) {
+                parentId = 0;
+            } else {
+                parentId = parseInt($('#parent-menu option:selected').val());
+            }
 			var url = ctx + "boss/module/update";
 			var data = new Object();
-            /*data.admin_id = parseInt(admin_id),*/
 			data.module_id = parseInt($("#input-moduleId").val());
 			data.name = $("#input-moduleName").val();
             data.description = $("#input-description").val();
@@ -119,8 +124,7 @@ $(function() {
 			data.sn = $("#input-sn").val();
 			data.status = parseInt($("input[name=status]:checked").val());
 			data.url = $("#input-url").val();
-			data.parent_id = parseInt($('#parent-menu-txt').val());
-			/*data.depart_id = parseInt(depart_id);*/
+			data.parent_id = parentId;
 			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
@@ -189,8 +193,15 @@ $(function() {
         $("#input-moduleName").val(that.find(".td-moduleName").text());
         $("#input-url").val(that.find(".td-url").text());
 		$("#input-sn").val(that.find(".td-sn").text());
-		$("#parent-menu-txt").val(that.find(".td-parent_id").text());
-		$(".parent-menu-txt-name").html(that.find(".td-parent_name").text());
+        if (that.find(".td-parent_id").text() === '0') {
+            $("#parent-menu-txt").val(that.find(".td-parent_id").text());
+            $(".parent-menu-txt-name").html(that.find(".td-parent_name").text());
+            $("#parent-menu").hide();
+        } else {
+            $("#parent-menu").show();
+            $("#parent-menu").val(that.find(".td-parent_id").text());
+        }
+
 		$("#input-description").val(that.find(".td-description").text());
 		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("#addTempl-modal").modal("show");
@@ -200,13 +211,10 @@ $(function() {
 		// 处理modal label显示及表单重置
 		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-            $("#parent-menu-txt-wrap").show();
-            $("#parent-menu-wrap").hide();
 			$("h4#addTempl-modal-label").text("编辑菜单信息");
 			$form.data("action", "edit");
 		} else if (e.relatedTarget.id = "btn-add") {
-            $("#parent-menu-txt-wrap").hide();
-            $("#parent-menu-wrap").show();
+            $("#parent-menu").show();
 			$("h4#addTempl-modal-label").text("添加菜单信息");
 			$form.data("action", "add");
 			$form[0].reset();
