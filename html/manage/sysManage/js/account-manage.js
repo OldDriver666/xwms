@@ -36,7 +36,7 @@ $(function() {
 		//新增数据
 		add : function() {
 			var add_company_id = null;
-			if(1 == parseInt(role_level)){
+			if(parseInt(role_level) === 1){
 				add_company_id = parseInt($('#add-companyId option:selected').val());
 			}else{
 				add_company_id = parseInt(company_id);
@@ -163,7 +163,7 @@ $(function() {
 			data.account = $("#input-account-txt").val();
 			data.password = pwd;
 			data.nick_name = $("#input-nickName").val();
-			data.role_id = parseInt($("#input-roleId").val());
+			data.role_id = parseInt($('#add-search-userRoles option:selected').val());
 			data.organization_id = parseInt($("#input-companyId").val());
 			data.phone = $("#input-phone").val();
 			data.email = $("#input-email").val();
@@ -218,9 +218,6 @@ $(function() {
 			$("#add-companyId-wrap").hide();
 			$("#input-password-txt").hide();
 			$("#input-password-txt-wrap").hide();
-			$("#input-roleId-wrap").hide();
-			$("#add-userRoles-wrap").hide();
-			$("#input-roleName-txt-wrap").show();
 			$("#add-companyId-txt-wrap").show();
 			$("#input-companyId-txt").hide();
 			$("#modify-password-txt-wrap").show();
@@ -230,11 +227,9 @@ $(function() {
 			$("h4#addTempl-modal-label").text("添加管理员");
 			$("#input-account-wrap").show();
 			$("#input-account-txt-wrap").hide();
+            $("#add-companyId-wrap").show();
 			$("#input-password-txt").show();
 			$("#input-password-txt-wrap").hide();
-			$("#input-roleId-wrap").hide();
-			$("#add-userRoles-wrap").show();
-			$("#input-roleName-txt-wrap").hide();
 			$("#add-companyId-txt-wrap").hide();
 			$("#input-companyId-txt").hide();
 			$("#modify-password-txt-wrap").hide();
@@ -268,18 +263,16 @@ $(function() {
 			status_val = 0;
 		}
 
-        $("#input-id").val(that.find("td").eq(0).text());
-        $("#input-account-txt").val(that.find("td").eq(1).text());
-        $("#input-password").val(that.find("td").eq(2).text());
-		$("#input-nickName").val(that.find("td").eq(3).text());
-		$("#input-roleName-txt").val(that.find("td").eq(4).text());
-		$("#input-roleId").val(that.find("td").eq(8).text());
-		$("#input-phone").val(that.find("td").eq(5).text());
-		$("#input-email").val(that.find("td").eq(6).text());
-		$("#add-companyId-txt").val(that.find("td").eq(7).text());
-		$("#input-companyId").val(that.find("td").eq(9).text());
+        $("#input-id").val(that.find(".td-id").text());
+        $("#input-account-txt").val(that.find(".td-account").text());
+        $("#input-password").val(that.find(".td-password").text());
+		$("#input-nickName").val(that.find(".td-nickName").text());
+		$("#add-search-userRoles").val(parseInt(that.find(".td-roleId").text()));
+		$("#input-phone").val(that.find(".td-phone").text());
+		$("#input-email").val(that.find(".td-email").text());
+		$("#add-companyId-txt").val(that.find(".td-companyName").text());
+		$("#input-companyId").val(that.find(".td-companyId").text());
 		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-		/*$("#input-status").val(that.find("td").eq(8).text());*/
 
 
         $("#addTempl-modal").modal("show");
@@ -319,12 +312,7 @@ $(function() {
 				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
 				$("#add-search-userRoles").parent().append(err_html);
 				return;
-			}/*else if($("#add-companyId").val() == "") {
-				$("#add-companyId").parent().parent().addClass("has-error");
-				var err_html = "<label class='error control-label' style='padding-left: 5px;'>必填字段</label>";
-				$("#add-companyId").parent().append(err_html);
-				return;
-			}*/else {
+			}else {
 				window.action.add();
 			}
 		}else if(action == "edit"){
@@ -332,21 +320,6 @@ $(function() {
 		}
 	});
 
-	/*$("#btn-add-submit2").on('click', function() {
-		var action = $("form#form-addTempl2").data("action");
-		if(action == "add"){
-			if (!$("#form-addTempl2").valid()) {
-				return;
-			}else if(isNaN($("#input-authLevel").val())) {
-				$("#input-authLevel").parent().parent().addClass("has-error");
-				var err_html = "<label class='error control-label' style='padding-left: 5px;'>请填入数字</label>";
-				$("#input-authLevel").parent().append(err_html);
-				return;
-			}else {
-				window.action.addUserRolesData();
-			}
-		}
-	});*/
 
 	$("#input-authLevel").change(function () {
 		if(!isNaN($(this).val())) {

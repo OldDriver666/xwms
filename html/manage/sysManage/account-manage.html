@@ -106,18 +106,6 @@
 												</select>
 											</div>
 										</div>
-										<div class="form-group" id="input-roleName-txt-wrap">
-											<label class="col-sm-2 control-label">角色类型</label>
-											<div class="col-sm-10 form-txt">
-												<input type="text" class="form-control" id="input-roleName-txt" name="roleName-txt" readonly="readonly" style="border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
-											</div>
-										</div>
-										<div class="form-group" id="input-roleId-wrap">
-											<label for="input-roleId" class="col-sm-2 control-label"><span class="necessary">*</span>roleId</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-roleId" name="client_name" placeholder="输入roleId">
-											</div>
-										</div>
 										<div class="form-group">
 											<label for="input-phone" class="col-sm-2 control-label"><span class="necessary"></span>电话号码</label>
 											<div class="col-sm-10">
@@ -208,16 +196,16 @@
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
-	<td style="display:none;">${id}</td>
-	<td >${account}</td>
-	<td style="display:none;">${password}</td>
-	<td>${nickName}</td>
-	<td>${roleNameQuery(roleId)}</td>
-	<td>${phone}</td>
-	<td>${email}</td>
-	<td>${companyNameQuery(companyId)}</td>
-	<td style="display:none;">${roleId}</td>
-	<td style="display:none;">${companyId}</td>
+	<td class="td-id" style="display:none;">${id}</td>
+	<td class="td-account">${account}</td>
+	<td class="td-password" style="display:none;">${password}</td>
+	<td class="td-nickName">${nickName}</td>
+	<td class="td-roleName">${roleNameQuery(roleId)}</td>
+	<td class="td-phone">${phone}</td>
+	<td class="td-email">${email}</td>
+	<td class="td-companyName">${companyNameQuery(companyId)}</td>
+	<td class="td-roleId" style="display:none;">${roleId}</td>
+	<td class="td-companyId" style="display:none;">${companyId}</td>
 	<td>{{if status == 1}}可用{{else status == 0}}不可用{{/if}}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
