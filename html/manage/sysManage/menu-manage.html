@@ -6,6 +6,7 @@
 	<title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/pagination.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 </head>
 
@@ -15,6 +16,14 @@
 		<div class="mod-body">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
+					<div id="dev-query-condition" class="navbar-form navbar-left">
+						<div class="form-group">
+							<input id="input-search-menu-name" type="text" class="form-control" placeholder="请输入菜单名称">
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
 					<div class="navbar-form navbar-right">
 						<button id="btn-add" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl-modal">
 							<span class="glyphicon glyphicon-plus"> </span><span style="margin-left: 3px">添加菜单信息</span>
@@ -37,9 +46,9 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="input-priority" class="col-sm-2 control-label"><span class="necessary">*</span>Priority</label>
+											<label for="input-priority" class="col-sm-2 control-label"><span class="necessary">*</span>优先级</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-priority" name="priority" placeholder="请输入Priority值">
+												<input type="text" class="form-control" id="input-priority" name="priority" placeholder="请输入优先级数值">
 											</div>
 										</div>
 										<div class="form-group">
@@ -54,10 +63,19 @@
 												<input type="text" class="form-control" id="input-url" name="url" placeholder="请输入URL地址">
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="input-parent_id" class="col-sm-2 control-label"><span class="necessary">*</span>ParentID</label>
+										<div class="form-group" id="parent-menu-txt-wrap" style="display: none;">
+											<label class="col-sm-2 control-label">父级菜单</label>
+											<div class="col-sm-10 form-txt">
+												<input type="text" class="form-control" id="parent-menu-txt" name="parent-menu-txt" style="display:none;border: 0;background: #fff;box-shadow: none;-webkit-box-shadow: none;">
+												<span class="parent-menu-txt-name" style="height: 34px;line-height: 34px;padding: 6px 12px;"></span>
+											</div>
+										</div>
+										<div class="form-group" id="parent-menu-wrap">
+											<label for="parent-menu" class="col-sm-2 control-label"><span class="necessary"></span>父级菜单</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="input-parent_id" name="parent_id" placeholder="请输入ParentID">
+												<select name="parent-menu" id="parent-menu" class="form-control">
+													<option value="">请选择父级菜单</option>
+												</select>
 											</div>
 										</div>
 										<div class="form-group">
@@ -93,10 +111,11 @@
 					<tr>
 						<th>菜单ID</th>
 						<th>菜单名称</th>
-						<th>Priority</th>
+						<th>优先级</th>
 						<th>SN</th>
 						<th>URL</th>
-						<th>ParentID</th>
+						<th>父级ID</th>
+						<th>父级名称</th>
 						<th>状态</th>
 						<th class="table-manage">管理</th>
 					</tr>
@@ -104,7 +123,7 @@
 				<tbody id="pageContent"></tbody>
 				<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="9">
 						<div id="pagination" class="pagination"></div>
 					</td>
 				</tr>
@@ -133,6 +152,7 @@
 	<td class="td-sn">${sn}</td>
 	<td class="td-url">${url}</td>
 	<td class="td-parent_id">${parentId}</td>
+	<td class="td-parent_name">${pname}</td>
 	<td class="td-status">{{if status == 1}}可见{{else status == 0}}不可见{{/if}}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">编辑</a>
@@ -140,7 +160,9 @@
 	</td>
 </tr>
 </script>
-
+<script type="text/x-jquery-tmpl" id="pageParentMenu">
+    <option value=${id}>${name}</option>
+</script>
 <script type="text/javascript">
     toastr.options={
         positionClass : 'toast-center-center',

@@ -32,7 +32,7 @@ $(function() {
             // var url = "http://192.168.2.54:8080/managesvr/boss/videorecord/query";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = 10;
                 data.param = {
                     "account":search_user_account,
                     "company_id":parseInt(company_id),

@@ -67,7 +67,7 @@ $(function() {
             var url = ctx + "boss/fisedevice/queryfisedevice";
             var data = new Object();
                 data.page_no = 1;
-                data.page_size = 20;
+                data.page_size = 10;
                 data.param = {
                     "ime":search_IME,
                     "account":search_XW,

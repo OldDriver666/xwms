@@ -3510,3 +3510,91 @@ null 没有数据返回 看code是否成功
     ]
 }
 ```
+
+####管理员分页查询
+|   接口地址    |   boss/admin/queryAdminByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":x,                            //选填-当前页, 默认为第1页
+    "page_size":x,                          //选填-每页记录数，默认10
+    "param":
+    {
+        "roleId":x,                   //角色id
+        "nickName":"x",               //昵称
+        "account":"x",                //账号
+        "companyId":x                 //公司id
+    }
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 5,
+      "total_count": 29,
+      "total_page_count": 6,
+      "param": {
+         "id": null,
+         "account": "",
+         "salt": null,
+         "password": null,
+         "nickName": null,
+         "roleId": null,
+         "companyId": null,
+         "departId": null,
+         "phone": null,
+         "email": null,
+         "accessToken": null,
+         "status": null,
+         "lastLogin": null,
+         "created": null,
+         "updated": null,
+         "creatorId": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "account": "18601735176",
+            "salt": "3678",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "nickName": "廖国顺",
+            "roleId": 3,
+            "companyId": 1,
+            "departId": 0,
+            "phone": "",
+            "email": "",
+            "accessToken": "fb2300f2f96a49e9b345174327e0e3bc",
+            "status": 1,
+            "lastLogin": 1514449812,
+            "created": 1225404661,
+            "updated": 1508998414,
+            "creatorId": 2
+         },
+         {
+            "id": 6,
+            "account": "pe",
+            "salt": "3678",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "nickName": "pee",
+            "roleId": 1,
+            "companyId": 1,
+            "departId": 0,
+            "phone": "13578945612",
+            "email": "13578945612@139.com",
+            "accessToken": "5c62430458b946ecaac2f51da2536ec2",
+            "status": 1,
+            "lastLogin": 1514974939,
+            "created": 1497924926,
+            "updated": 1505460923,
+            "creatorId": 2
+         }
+      ]
+   }
+}
+```
