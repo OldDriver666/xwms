@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationMapper;
@@ -20,6 +21,7 @@ import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
+import com.fise.model.entity.WiModuleExample;
 import com.fise.model.entity.WiAdminExample.Criteria;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.entity.WiOrganizationExample;
@@ -505,6 +507,35 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
         resp.success(admin);
 		return resp;
+	}
+
+	@Override
+	public Response queryAdminByPage(Page<WiAdmin> page) {
+		
+		Response response=new Response();
+		
+		WiAdminExample example=new WiAdminExample();
+		WiAdminExample.Criteria criteria=example.createCriteria();
+		WiAdmin param = page.getParam();
+        if(null != param.getCreatorId()){
+        	criteria.andCreatorIdEqualTo(param.getCreatorId());
+        }
+        if(null != param.getRoleId()){
+        	criteria.andRoleIdEqualTo(param.getRoleId());
+        }
+        if(null != param.getCompanyId()){
+        	criteria.andCompanyIdEqualTo(param.getCompanyId());
+        }
+        if(StringUtil.isNotEmpty(param.getAccount())){
+        	criteria.andAccountLike("%" + param.getAccount() + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getNickName())){
+        	criteria.andNickNameLike("%" + param.getNickName() + "%");
+        }
+        criteria.andStatusNotEqualTo((byte) 2);
+
+        page.setResult(adminDao.selectByExampleByPage(example, page));
+		return response.success(page);
 	}
 
 }
