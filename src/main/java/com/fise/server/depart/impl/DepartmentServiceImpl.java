@@ -144,6 +144,9 @@ public class DepartmentServiceImpl implements IDepartmentService{
         if(StringUtil.isNotEmpty(param.getDepartName())){
         	criteria.andDepartNameLike("%" + param.getDepartName() + "%");
         }
+        if(StringUtil.isNotEmpty(param.getParentName())){
+        	criteria.andParentNameLike("%" + param.getParentName() + "%");
+        }
 
         page.setResult(departDao.selectByExampleByPage(example, page));
 		return response.success(page);

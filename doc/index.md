@@ -3610,7 +3610,8 @@ null 没有数据返回 看code是否成功
     "page_size":10,                      //选填-每页记录数，默认10
     "param":                 
     {                        
-        "departName":"派出所"             //部门名称
+        "departName":"派出所",             //部门名称
+        "parentName":"龙华"                //上级部门名称
     }                              
 }                          
 
