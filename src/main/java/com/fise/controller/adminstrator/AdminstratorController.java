@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.param.AdminInsert;
 import com.fise.model.param.AdminQuery;
 import com.fise.model.param.AdminUpdate;
@@ -126,6 +127,14 @@ public class AdminstratorController {
         Response resp = new Response();
         logger.info(map.toString());
         resp = adminSvr.isLogin(map.get("accessToken"));
+        return resp;
+    }
+    @RequestMapping(value = "/queryAdminByPage", method = RequestMethod.POST)
+    public Response queryAdminByPage(@RequestBody @Valid Page<WiAdmin> page) {
+        Response resp = new Response();
+        page.getParam().setCreatorId(HttpContext.getMemberId());
+        logger.info(page.toString());
+        resp = adminSvr.queryAdminByPage(page);
         return resp;
     }
 }

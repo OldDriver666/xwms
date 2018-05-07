@@ -11,6 +11,8 @@ public class WiDepartment implements Serializable {
     private Integer companyId;
 
     private String departName;
+    //上级部门
+    private String parentName;
 
     private Integer status;
 
@@ -77,4 +79,13 @@ public class WiDepartment implements Serializable {
     public void setUpdated(Integer updated) {
         this.updated = updated;
     }
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
 }

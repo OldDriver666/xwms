@@ -2,9 +2,9 @@ package com.fise.server.role;
 
 import java.util.List;
 
-
-
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleParam;
@@ -60,5 +60,7 @@ public interface IRoleService {
      */
     public Response queryPatientAuth(QueryRoleParam param);
     
+    /* 分页查询角色 */
+    public Response queryOrganizationRoleByPage(Page<WiOrganizationRole> page);
     
 }

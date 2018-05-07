@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleAndAuthsParam;
@@ -180,4 +182,14 @@ public class RoleController {
         resp = roleSvr.queryPatientAuth(param);
         return resp;
     }
+    
+    @RequestMapping(value = "/queryRoleByPage", method = RequestMethod.POST)
+    public Response queryWiOrganizationRoleByPage(@RequestBody @Valid Page<WiOrganizationRole> page) {
+        Response resp = new Response();
+        page.getParam().setCreatorId(HttpContext.getMemberId());
+        logger.info(page.toString());
+        resp = roleSvr.queryOrganizationRoleByPage(page);
+        return resp;
+    }
+    
 }

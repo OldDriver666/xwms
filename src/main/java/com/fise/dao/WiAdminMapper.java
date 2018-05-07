@@ -1,7 +1,10 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
+import com.fise.model.entity.WiModule;
+import com.fise.model.entity.WiModuleExample;
 import com.fise.model.param.AdminUpdate;
 
 import java.util.List;
@@ -33,4 +36,6 @@ public interface WiAdminMapper {
     int updateById(WiAdmin param); 
     
     int deleteById(AdminUpdate param);
+    
+    List<WiAdmin> selectByExampleByPage(@Param("example") WiAdminExample example,@Param("page") Page<WiAdmin> page);
 }

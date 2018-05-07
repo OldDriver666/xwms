@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiOrganization;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.organization.IOrganizationService;
@@ -102,5 +105,13 @@ public class OrganizationController {
 
         logger.info("删除公司:"+JsonUtil.toJson(param)+" 结果:"+response.getMsg());
         return response;
+    }
+    
+    @RequestMapping(value = "/queryOrganizationByPage", method = RequestMethod.POST)
+    public Response queryOrganizationByPage(@RequestBody @Valid Page<WiOrganization> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = organtSvr.queryOrganizationByPage(page);
+        return resp;
     }
 }

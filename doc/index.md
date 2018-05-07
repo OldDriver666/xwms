@@ -3510,3 +3510,278 @@ null 没有数据返回 看code是否成功
     ]
 }
 ```
+
+####管理员分页查询
+|   接口地址    |   boss/admin/queryAdminByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":x,                            //选填-当前页, 默认为第1页
+    "page_size":x,                          //选填-每页记录数，默认10
+    "param":
+    {
+        "roleId":x,                   //角色id
+        "nickName":"x",               //昵称
+        "account":"x",                //账号
+        "companyId":x                 //公司id
+    }
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 5,
+      "total_count": 29,
+      "total_page_count": 6,
+      "param": {
+         "id": null,
+         "account": "",
+         "salt": null,
+         "password": null,
+         "nickName": null,
+         "roleId": null,
+         "companyId": null,
+         "departId": null,
+         "phone": null,
+         "email": null,
+         "accessToken": null,
+         "status": null,
+         "lastLogin": null,
+         "created": null,
+         "updated": null,
+         "creatorId": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "account": "18601735176",
+            "salt": "3678",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "nickName": "廖国顺",
+            "roleId": 3,
+            "companyId": 1,
+            "departId": 0,
+            "phone": "",
+            "email": "",
+            "accessToken": "fb2300f2f96a49e9b345174327e0e3bc",
+            "status": 1,
+            "lastLogin": 1514449812,
+            "created": 1225404661,
+            "updated": 1508998414,
+            "creatorId": 2
+         },
+         {
+            "id": 6,
+            "account": "pe",
+            "salt": "3678",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "nickName": "pee",
+            "roleId": 1,
+            "companyId": 1,
+            "departId": 0,
+            "phone": "13578945612",
+            "email": "13578945612@139.com",
+            "accessToken": "5c62430458b946ecaac2f51da2536ec2",
+            "status": 1,
+            "lastLogin": 1514974939,
+            "created": 1497924926,
+            "updated": 1505460923,
+            "creatorId": 2
+         }
+      ]
+   }
+}
+```
+
+####部门分页查询
+|   接口地址    |   boss/depart/queryDepartmentByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "departName":"派出所",             //部门名称
+        "parentName":"龙华"                //上级部门名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 10,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "companyId": null,
+         "departName": "派出所",
+         "parentName": null,
+         "status": null,
+         "parentId": null,
+         "creatorId": null,
+         "updated": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 6,
+            "companyId": 1,
+            "departName": "南头派出所",
+            "parentName": "南山公安分局",
+            "status": 1,
+            "parentId": 5,
+            "creatorId": 22,
+            "updated": 1504699496
+         },
+         {
+            "id": 45,
+            "companyId": 10,
+            "departName": "上塘派出所",
+            "parentName": "龙华公安分局",
+            "status": 1,
+            "parentId": 35,
+            "creatorId": 66,
+            "updated": 1522736850
+         }
+      ]
+   }
+}
+```
+
+####角色分页查询
+|   接口地址    |   boss/role/queryRoleByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "role_name":"派出所"            //角色名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 6,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "authLevel": null,
+         "departId": null,
+         "creatorId": 2,
+         "role_name": "管理员",
+         "desc": null,
+         "companyId": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 2,
+            "authLevel": 800,
+            "departId": 2,
+            "creatorId": 2,
+            "role_name": "超级管理员",
+            "desc": "合作公司管理员账号",
+            "companyId": 1
+         },
+         {
+            "id": 3,
+            "authLevel": 700,
+            "departId": 0,
+            "creatorId": 2,
+            "role_name": "管理员",
+            "desc": "管理员账号",
+            "companyId": 1
+         }
+      ]
+   }
+}
+```
+
+####公司管理分页查询
+|   接口地址    |   boss/organization/queryOrganizationByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "name":"深圳"            //公司名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "name": "深圳",
+         "address": null,
+         "contact": null,
+         "email": null,
+         "home": null,
+         "describtion": null,
+         "status": null,
+         "created": null,
+         "updated": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 5,
+            "name": "深圳市南山公安局",
+            "address": "深圳市南山公安局",
+            "contact": "110",
+            "email": "110@email.com",
+            "home": "index1.html",
+            "describtion": "为人名服务",
+            "status": 1,
+            "created": 1504681677,
+            "updated": 1504681677
+         },
+         {
+            "id": 9,
+            "name": "深圳市汇晔光电科技有限公司",
+            "address": "",
+            "contact": "",
+            "email": "",
+            "home": "index.html",
+            "describtion": "",
+            "status": 1,
+            "created": 1516094687,
+            "updated": 1522229498
+         }
+      ]
+   }
+}
+```
