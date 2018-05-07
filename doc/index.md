@@ -3718,3 +3718,70 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+####公司管理分页查询
+|   接口地址    |   boss/organization/queryOrganizationByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "name":"深圳"            //公司名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "name": "深圳",
+         "address": null,
+         "contact": null,
+         "email": null,
+         "home": null,
+         "describtion": null,
+         "status": null,
+         "created": null,
+         "updated": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 5,
+            "name": "深圳市南山公安局",
+            "address": "深圳市南山公安局",
+            "contact": "110",
+            "email": "110@email.com",
+            "home": "index1.html",
+            "describtion": "为人名服务",
+            "status": 1,
+            "created": 1504681677,
+            "updated": 1504681677
+         },
+         {
+            "id": 9,
+            "name": "深圳市汇晔光电科技有限公司",
+            "address": "",
+            "contact": "",
+            "email": "",
+            "home": "index.html",
+            "describtion": "",
+            "status": 1,
+            "created": 1516094687,
+            "updated": 1522229498
+         }
+      ]
+   }
+}
+```

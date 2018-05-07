@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiOrganizationMapper;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.entity.WiOrganizationExample;
 import com.fise.model.entity.WiOrganizationExample.Criteria;
@@ -69,5 +72,23 @@ public class OrganizationServiceImpl implements IOrganizationService {
         
         return response.success();
     }
+    
+    @Override
+	public Response queryOrganizationByPage(Page<WiOrganization> page) {
+		
+		Response response=new Response();
+		
+		WiOrganizationExample example=new WiOrganizationExample();
+		WiOrganizationExample.Criteria criteria=example.createCriteria();
+		WiOrganization param = page.getParam();
+        
+        if(StringUtil.isNotEmpty(param.getName())){
+        	criteria.andNameLike("%" + param.getName() + "%");
+        }
+        criteria.andStatusNotEqualTo((byte) 2);
+
+        page.setResult(organDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
 
 }
