@@ -1,5 +1,6 @@
 package com.fise.server.smstemplate;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSmsTemplate;
 import com.fise.model.param.SmsTemplateParam;
@@ -16,4 +17,7 @@ public interface ISmsTemplateService {
     
     /*删除短信模板*/
     Response delSmsTemplate(IMSmsTemplate record);
+    
+    /* 分页查询短信模板 */
+    public Response queryIMSmsTemplateByPage(Page<IMSmsTemplate> page);
 }

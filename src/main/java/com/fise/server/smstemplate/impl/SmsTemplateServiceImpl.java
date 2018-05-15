@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMSmsTemplateMapper;
 import com.fise.model.entity.IMSmsTemplate;
@@ -20,7 +21,7 @@ import com.fise.utils.StringUtil;
 public class SmsTemplateServiceImpl implements ISmsTemplateService{
 
     @Autowired
-    IMSmsTemplateMapper IMSmsTemplateDao;
+    IMSmsTemplateMapper smsTemplateDao;
     
     @Override
     public Response addSmsTemplate(IMSmsTemplate record) {
@@ -32,7 +33,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
             IMSmsTemplateExample example=new IMSmsTemplateExample();
             Criteria criteria=example.createCriteria();
             criteria.andActionEqualTo(record.getAction());
-            List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+            List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
             if(list.size()!=0){
                 response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
                 response.setMsg("action已经存在！！");
@@ -45,7 +46,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
             IMSmsTemplateExample example=new IMSmsTemplateExample();
             Criteria criteria=example.createCriteria();
             criteria.andActionNameEqualTo(record.getActionName());
-            List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+            List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
             if(list.size()!=0){
                 response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
                 response.setMsg("actionName已经存在！！");
@@ -58,7 +59,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
             IMSmsTemplateExample example=new IMSmsTemplateExample();
             Criteria criteria=example.createCriteria();
             criteria.andTemplateNameEqualTo(record.getTemplateName());
-            List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+            List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
             if(list.size()!=0){
                 response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
                 response.setMsg("templateName已经存在！！");
@@ -69,7 +70,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
         record.setUpdated(DateUtil.getLinuxTimeStamp());
         record.setCreated(DateUtil.getLinuxTimeStamp());
         
-        IMSmsTemplateDao.insertSelective(record);
+        smsTemplateDao.insertSelective(record);
         return response.success();
     }
 
@@ -83,7 +84,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
         if(param.getAction()!=null){
             criteria.andActionEqualTo(param.getAction());
         }
-        List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+        List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
         if(list.size()==0){
             return response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
         }
@@ -100,7 +101,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
             IMSmsTemplateExample example=new IMSmsTemplateExample();
             Criteria criteria=example.createCriteria();
             criteria.andActionEqualTo(record.getAction());
-            List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+            List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
             if(list.size()!=0){
                 if(list.get(0).getId()!=record.getId()){
                     response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
@@ -115,7 +116,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
             IMSmsTemplateExample example=new IMSmsTemplateExample();
             Criteria criteria=example.createCriteria();
             criteria.andActionNameEqualTo(record.getActionName());
-            List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+            List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
             if(list.size()!=0){
                 if(list.get(0).getId()!=record.getId()){
                     response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
@@ -130,7 +131,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
             IMSmsTemplateExample example=new IMSmsTemplateExample();
             Criteria criteria=example.createCriteria();
             criteria.andTemplateNameEqualTo(record.getTemplateName());
-            List<IMSmsTemplate> list=IMSmsTemplateDao.selectByExample(example);
+            List<IMSmsTemplate> list=smsTemplateDao.selectByExample(example);
             if(list.size()!=0){
                 if(list.get(0).getId()!=record.getId()){
                     response.failure(ErrorCode.ERROR_DB_RECORD_ALREADY_EXIST);
@@ -141,7 +142,7 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
         }
         
         record.setUpdated(DateUtil.getLinuxTimeStamp());
-        IMSmsTemplateDao.updateByPrimaryKeySelective(record);
+        smsTemplateDao.updateByPrimaryKeySelective(record);
         return response.success();
     }
 
@@ -150,8 +151,24 @@ public class SmsTemplateServiceImpl implements ISmsTemplateService{
         
         Response response=new Response();
         
-        IMSmsTemplateDao.deleteByPrimaryKey(record.getId());
+        smsTemplateDao.deleteByPrimaryKey(record.getId());
         return response.success();
     }
 
+    
+    @Override
+	public Response queryIMSmsTemplateByPage(Page<IMSmsTemplate> page) {
+		
+		Response response=new Response();
+		
+		IMSmsTemplateExample example=new IMSmsTemplateExample();
+		IMSmsTemplateExample.Criteria criteria=example.createCriteria();
+		IMSmsTemplate param = page.getParam();
+        if(StringUtil.isNotEmpty(param.getActionName())){
+        	criteria.andActionNameLike("%" + param.getActionName() + "%");
+        }
+
+        page.setResult(smsTemplateDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
 }

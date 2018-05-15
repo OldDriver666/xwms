@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.IMSmsTemplate;
 import com.fise.model.param.SmsTemplateParam;
 import com.fise.server.auth.IAuthService;
@@ -97,5 +99,14 @@ public class SmsTemplateController {
         
         response=smsTemplateService.delSmsTemplate(record);
         return response;
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value = "/queryIMSmsTemplateByPage", method = RequestMethod.POST)
+    public Response queryIMSmsTemplateByPage(@RequestBody @Valid Page<IMSmsTemplate> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = smsTemplateService.queryIMSmsTemplateByPage(page);
+        return resp;
     }
 }

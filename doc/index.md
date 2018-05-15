@@ -3890,3 +3890,56 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+
+####短信模板分页查询
+|   接口地址    |  boss/sms/queryIMSmsTemplateByPage |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+          "action_name":"注册验证码"        //场景名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "action": null,
+         "updated": null,
+         "created": null,
+         "platfrom_id": null,
+         "action_name": "注册验证码",
+         "template_name": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "action": 0,
+            "updated": 1499305813,
+            "created": 1494639893,
+            "platfrom_id": 1,
+            "action_name": "注册验证码",
+            "template_name": "SMS_24760402"
+         }
+      ]
+   }
+}
+```
+
+
+
