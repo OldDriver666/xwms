@@ -102,4 +102,14 @@ public class WikiController {
 		
 		return response;
 	}
+	
+	@IgnoreAuth
+	@RequestMapping(value = "/queryWikiByPage", method = RequestMethod.POST)
+    public Response queryWikiByPage(@RequestBody @Valid Page<Wiki> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = iWikiService.queryWikiByPage(page);
+        return resp;
+    }
+	
 }

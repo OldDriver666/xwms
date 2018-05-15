@@ -3785,3 +3785,60 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+
+####常见问题分页查询
+|   接口地址    |   boss/wiki/queryWikiByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+         "type":3,                       //问题类型
+          "title":"技巧"                  //问题标题
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 6,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "type": 3,
+         "title": "技巧",
+         "content": null,
+         "helpful": null,
+         "nohelp": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 3,
+            "type": 3,
+            "title": "使用技巧",
+            "content": "小位物联网平台",
+            "helpful": 23,
+            "nohelp": 2
+         },
+         {
+            "id": 9,
+            "type": 3,
+            "title": "使用技巧",
+            "content": "小位物联网平台",
+            "helpful": 22,
+            "nohelp": 2
+         }
+      ]
+   }
+}
+```

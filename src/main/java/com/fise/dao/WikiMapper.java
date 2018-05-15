@@ -1,9 +1,12 @@
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.fise.base.Page;
 import com.fise.model.entity.Wiki;
 import com.fise.model.entity.WikiExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface WikiMapper {
     long countByExample(WikiExample example);
@@ -27,4 +30,6 @@ public interface WikiMapper {
     int updateByPrimaryKeySelective(Wiki record);
 
     int updateByPrimaryKey(Wiki record);
+    
+    List<Wiki> selectByExampleByPage(@Param("example") WikiExample example,@Param("page") Page<Wiki> page);
 }

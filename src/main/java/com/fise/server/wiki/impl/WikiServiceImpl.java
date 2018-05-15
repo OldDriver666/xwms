@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WikiMapper;
 import com.fise.model.entity.Wiki;
@@ -13,6 +14,7 @@ import com.fise.model.entity.WikiExample;
 import com.fise.model.entity.WikiExample.Criteria;
 import com.fise.model.param.WikiParam;
 import com.fise.server.wiki.IWikiService;
+import com.fise.utils.StringUtil;
 
 @Service
 public class WikiServiceImpl implements IWikiService{
@@ -82,6 +84,26 @@ public class WikiServiceImpl implements IWikiService{
 		
 		wikiDao.updateByPrimaryKeySelective(record);
 		return response.success();
+	}
+	
+	
+	@Override
+	public Response queryWikiByPage(Page<Wiki> page) {
+		
+		Response response=new Response();
+		
+		WikiExample example=new WikiExample();
+		WikiExample.Criteria criteria=example.createCriteria();
+		Wiki param = page.getParam();
+        if(null != param.getType()){
+        	criteria.andTypeEqualTo(param.getType());
+        }
+        if(StringUtil.isNotEmpty(param.getTitle())){
+        	criteria.andTitleLike("%" + param.getTitle() + "%");
+        }
+
+        page.setResult(wikiDao.selectByExampleByPage(example, page));
+		return response.success(page);
 	}
 
 }

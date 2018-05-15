@@ -1,5 +1,6 @@
 package com.fise.server.wiki;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.Wiki;
 import com.fise.model.param.WikiParam;
@@ -16,4 +17,7 @@ public interface IWikiService {
 	
 	/*修改suggest信息*/
 	public Response updateWiki(Wiki record);
+	
+    /* 分页查询问题*/
+    public Response queryWikiByPage(Page<Wiki> page);
 }

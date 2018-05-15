@@ -129,6 +129,7 @@ public class AdminstratorController {
         resp = adminSvr.isLogin(map.get("accessToken"));
         return resp;
     }
+    
     @RequestMapping(value = "/queryAdminByPage", method = RequestMethod.POST)
     public Response queryAdminByPage(@RequestBody @Valid Page<WiAdmin> page) {
         Response resp = new Response();
