@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMSmsPlatfromMapper;
 import com.fise.model.entity.IMSmsPlatfrom;
 import com.fise.model.entity.IMSmsPlatfromExample;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.IMSmsPlatfromExample.Criteria;
 import com.fise.model.param.SmsPlatfromParam;
 
@@ -102,6 +105,19 @@ public class SmsPlatfromServiceImpl implements ISmsPlatfromService{
         return response.success();
     }
 
-    
+    @Override
+	public Response queryIMSmsPlatfromByPage(Page<IMSmsPlatfrom> page) {
+		
+		Response response=new Response();
+		
+		IMSmsPlatfromExample example=new IMSmsPlatfromExample();
+		IMSmsPlatfromExample.Criteria criteria=example.createCriteria();
+		IMSmsPlatfrom param = page.getParam();
+        if(StringUtil.isNotEmpty(param.getPlatfromName())){
+        	criteria.andPlatfromNameLike("%" + param.getPlatfromName() + "%");
+        }
+        page.setResult(smsPlatfromDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
    
 }

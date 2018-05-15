@@ -3842,3 +3842,51 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+
+####短信平台分页查询
+|   接口地址    |   boss/smsplatfrom/queryIMSmsPlatfromByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+         "platfrom_name":"alidayu"        //短信平台名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": {
+         "status": null,
+         "config": null,
+         "updated": null,
+         "created": null,
+         "smsplatfrom_id": null,
+         "platfrom_name": "alidayu"
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "status": false,
+            "config": "{\"appkey\":\"23512515\",\"appsecret\":\"8df545d15a413cef674ed45ffff0df9f\",\"sign_name\":\"沸石智能\",\"text_api\":\"alibaba.aliqin.fc.sms.num.send\",\"url\":\"http://gw.api.taobao.com/router/rest\"}",
+            "updated": 1506584461,
+            "created": 1480312406,
+            "smsplatfrom_id": 1,
+            "platfrom_name": "alidayu"
+         }
+      ]
+   }
+}
+```

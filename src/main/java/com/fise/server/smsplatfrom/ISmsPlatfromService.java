@@ -1,5 +1,6 @@
 package com.fise.server.smsplatfrom;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.IMSmsPlatfrom;
 import com.fise.model.param.SmsPlatfromParam;
@@ -17,4 +18,7 @@ public interface ISmsPlatfromService {
     
     /*删除短信平台*/
     Response delSmsPlatfrom(SmsPlatfromParam param);
+    
+    /* 分页查询短信平台*/
+    public Response queryIMSmsPlatfromByPage(Page<IMSmsPlatfrom> page);
 }

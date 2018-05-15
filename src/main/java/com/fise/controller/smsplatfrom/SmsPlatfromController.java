@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.IMSmsPlatfrom;
 import com.fise.model.param.SmsPlatfromParam;
 import com.fise.server.auth.IAuthService;
@@ -97,5 +99,14 @@ public class SmsPlatfromController {
         
         response=smsPlatfromService.delSmsPlatfrom(param);
         return response;
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value = "/queryIMSmsPlatfromByPage", method = RequestMethod.POST)
+    public Response queryAdminByPage(@RequestBody @Valid Page<IMSmsPlatfrom> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = smsPlatfromService.queryIMSmsPlatfromByPage(page);
+        return resp;
     }
 }
