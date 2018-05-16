@@ -9,6 +9,9 @@ $(function() {
             var url = ctx + "boss/suggest/query";
             var data = {
                 "param": {
+                    "userId": null,
+                    "uname": "",
+                    "title": "",
                     "type": 0
                 },
                 "page_no": 1,
@@ -26,16 +29,23 @@ $(function() {
         },
         //搜索数据
         loadPageData2 : function(key) {
-            var url = ctx + "boss/wiki/query";
+            var url = ctx + "boss/suggest/query";
             var data = {
-                "title": key
+                "param": {
+                    "userId": null,
+                    "uname": "",
+                    "title": key,
+                    "type": 0
+                },
+                "page_no": 1,
+                "page_size": 10
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS){
                     console.log(result);
                     $("#search_results").empty();
                     $("#search_results").show()
-                    $("#pageTmpl2").tmpl(result.data).appendTo('#search_results');
+                    $("#pageTmpl2").tmpl(result.data.result).appendTo('#search_results');
                 }else {
                     console.log("请求出错！");
                 }

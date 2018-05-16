@@ -13,7 +13,9 @@ $(function () {
                     "page_size": 10,
                     "param": {
                         "type": 1,
-                        "uname": uname
+                        "uname": uname,
+                        "userId": null,
+                        "title": ""
                     }
                 };
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {
