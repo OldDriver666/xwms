@@ -1297,7 +1297,10 @@ type和name都是选填，如果都不填，则查询所有信息
 {
     "param":
     {
-        "uname":"tom"               //选填-用户名
+         	    "userId":1024,                     //选填-用户id
+                 "uname":"jack",                    //选填-用户名
+                 "title":"提问6",                    //选填-标题
+                 "type": 1                          //选填-'0-公开 1-私有' 
     },
     "page_no":1,
     "page_size":10

@@ -47,7 +47,7 @@ public class WikiServiceImpl implements IWikiService{
 			criteria.andTypeEqualTo(param.getType());
 		}
 		if(param.getTitle()!=null){
-			criteria.andTitleLike(param.getTitle());
+			criteria.andTitleLike("%" + param.getTitle() + "%");
 		}
 		
 		example.setOrderByClause("type");

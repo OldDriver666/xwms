@@ -47,15 +47,21 @@ public class SuggestServiceImpl implements ISuggestService{
 	public Response querySuggest(Page<SuggestParam> param) {
 		
 		Response response=new Response();
-		
+		SuggestParam suggestParam = param.getParam();
 		IMSuggestExample example=new IMSuggestExample();
 		Criteria criteria=example.createCriteria();
 		
-		if(param.getParam().getUname()!=null){
-			criteria.andUnameEqualTo(param.getParam().getUname());
+		if(suggestParam.getUserId()!=null){
+			criteria.andUserIdEqualTo(suggestParam.getUserId());
 		}
-		if(param.getParam().getType()!=null){
-			criteria.andTypeEqualTo(param.getParam().getType());
+		if(StringUtil.isNotEmpty(suggestParam.getUname())){
+			criteria.andUnameLike("%" + suggestParam.getUname() + "%");
+		}
+		if(StringUtil.isNotEmpty(suggestParam.getTitle())){
+			criteria.andTitleLike("%" + suggestParam.getTitle() + "%");
+		}
+		if(suggestParam.getType()!=null){
+			criteria.andTypeEqualTo(suggestParam.getType());
 		}
 		example.setOrderByClause("created desc");
 		

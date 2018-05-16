@@ -7,6 +7,11 @@ public class SuggestParam {
 	 * 建议id
 	 */
     private String suggestId;
+    
+    /**
+     * 建议标题
+     */
+    private String title;
 	
     /**
      * 用户Id
@@ -56,7 +61,15 @@ public class SuggestParam {
 		this.uname = uname;
 	}
 
-    @Override
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	@Override
     public String toString() {
         return JsonUtil.toJson(this);
     }
