@@ -6,6 +6,7 @@
 <title></title>
 	<link rel="stylesheet" href="../../css/global.css"/>
 	<link rel="stylesheet" href="../../css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../css/pagination.css"/>
 	<link rel="stylesheet" href="../../resource/plugin/toastr/toastr.css"/>
 </head>
 
@@ -15,6 +16,15 @@
 		<div class="mod-body">
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
+
+					<div class="navbar-form navbar-left">
+						<div class="form-group">
+							<input id="input-search-name" type="text" class="form-control" placeholder="请输入角色名称">
+						</div>
+						<button id="btn-search" type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</div>
 
 					<div class="navbar-form navbar-right">
 						<button id="btn-add-userRoles" type="button" class="btn btn-default" data-toggle="modal" data-target="#addTempl2-modal">
@@ -158,6 +168,13 @@
 				</tr>
 				</thead>
 				<tbody id="pageContent"></tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7">
+							<div id="pagination" class="pagination"></div>
+						</td>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>
