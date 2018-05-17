@@ -155,7 +155,7 @@ $(function () {
                             html2 = '<div class="reply-item user">' +
                                 '<div class="info clearfix">' +
                                 '<div class="avatar">' +
-                                '<img src="img/none.png" />' +
+                                '<img src="../img/none.png" />' +
                                 '</div>' +
                                 '<span class="author">' + myData[i].uname + '</span>' +
                                 '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
