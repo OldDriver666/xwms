@@ -714,6 +714,7 @@ ctx = Util.localStorage.get("ctx");
 
 // 点击安卓系统原生返回按钮调用backEvent函数，判断返回上一页
 window.backEvent = function () {
+    alert('ok')
     var urlVal = window.location.href
     // 如果当前页面不是首页
     if (urlVal.indexOf('feedback.html') >= 0 || urlVal.indexOf('workOrder.html') >= 0) {
@@ -721,7 +722,7 @@ window.backEvent = function () {
     } else {
         window.location.href = 'feedback.html'
     }
-
+}
 
     /*if (hashVal !== '#/elecMoto' && hashVal !== '#/watch') {
         // 如果url里面的哈希值参数有“ #/elecMoto ”说明当前页面打开的是电动车页面
@@ -780,4 +781,3 @@ window.backEvent = function () {
     } else {
         window.android.jsCall_go_back()
     }*/
-}
