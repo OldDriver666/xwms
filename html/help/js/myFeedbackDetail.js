@@ -16,8 +16,7 @@ $(function () {
     var suggestId = Request["sid"];
     var id = parseInt(Request["id"])
     var uname = Request["uname"];
-alert(userId)
-    alert(userName)
+
     var action = {
         //新增数据
         add : function(suggestId) {
@@ -72,7 +71,6 @@ alert(userId)
         },
         //获取所有数据
         loadPageData : function(uname, id) {
-            alert(uname)
             alert(id)
             var url = ctx + "boss/suggest/query";
             var data = {
@@ -82,12 +80,11 @@ alert(userId)
                     "uname": '',
                     "userId": parseInt(userId),
                     "title": "",
-                    "type": 0
+                    "type": 1
                 }
             };
             if (uname === undefined || uname === null || uname === '' || isNaN(id)) {
                 console.log('无记录')
-                alert('no data')
             } else {
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {
                     if(result.code == ReturnCode.SUCCESS){
