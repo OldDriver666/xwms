@@ -14,7 +14,7 @@ $(function () {
                     "page_size": 10,
                     "param": {
                         "type": 1,
-                        "uname": uname,
+                        "uname": "",
                         "userId": parseInt(uId),
                         "title": ""
                     }

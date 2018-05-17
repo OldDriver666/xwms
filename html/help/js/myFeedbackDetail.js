@@ -76,8 +76,8 @@ $(function () {
                 "page_no": 1,
                 "page_size": 10,
                 "param": {
-                    "uname": uname,
-                    "userId": null,
+                    "uname": '',
+                    "userId": parseInt(userId),
                     "title": "",
                     "type": 0
                 }
