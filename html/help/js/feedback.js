@@ -11,9 +11,8 @@ $(function() {
     var uid = parseInt(Request["uid"])
     var uname = Request["uname"];
     if (uid === NaN || uname === undefined) {
-        alert('ok')
+
     } else {
-        alert('ok1')
         Util.cookieStorage.setCookie("userId",uid);
         Util.cookieStorage.setCookie("userName",uname);
     }
