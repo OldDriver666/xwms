@@ -71,7 +71,6 @@ $(function () {
         },
         //获取所有数据
         loadPageData : function(uname, id) {
-            alert(id)
             var url = ctx + "boss/suggest/query";
             var data = {
                 "page_no": 1,
