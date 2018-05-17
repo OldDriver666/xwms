@@ -710,3 +710,74 @@ ctx = Util.localStorage.get("ctx");
         return serializeObj;
     };
 })(jQuery);
+
+
+// 点击安卓系统原生返回按钮调用backEvent函数，判断返回上一页
+window.backEvent = function () {
+    var urlVal = window.location.href
+    // 如果当前页面不是首页
+    if (urlVal.indexOf('feedback.html') >= 0 || urlVal.indexOf('workOrder.html') >= 0) {
+        window.android.jsCall_go_back()
+    } else {
+        window.location.href = 'feedback.html'
+    }
+
+
+    /*if (hashVal !== '#/elecMoto' && hashVal !== '#/watch') {
+        // 如果url里面的哈希值参数有“ #/elecMoto ”说明当前页面打开的是电动车页面
+        if (hashVal.indexOf('#/elecMoto') >= 0) {
+            // 判断当前url的哈希值参数有几个“ / ”斜杠，1个代表是首页，2个代表是二级目录，3个代表是三级目录。。
+            if ((hashVal.split('/')).length - 1 === 2) {
+                // 当点击安卓原生返回按钮时，如果当前页面是二级目录，则返回到首页
+                router.push({ path: '/elecMoto' })
+            } else if ((hashVal.split('/')).length - 1 === 3) {
+                if (hashVal.indexOf('/set/') >= 0) {
+                    router.push({ path: '/elecMoto/setting' })
+                } else if (hashVal.indexOf('/devInfo/') >= 0) {
+                    router.push({ path: '/elecMoto/devInfo' })
+                } else if (hashVal.indexOf('/location/') >= 0) {
+                    router.push({ path: '/elecMoto/mapLocation' })
+                } else {
+                    router.push({ path: '/elecMoto' })
+                }
+            } else if ((hashVal.split('/')).length - 1 === 4) {
+                if (hashVal.indexOf('/devAccredit/') >= 0) {
+                    router.push({ path: '/elecMoto/set/devAccredit' })
+                } else {
+                    router.push({ path: '/elecMoto' })
+                }
+            }
+        } else if (hashVal.indexOf('#/watch') >= 0) {
+            if ((hashVal.split('/')).length - 1 === 2) {
+                router.push({ path: '/watch' })
+            } else if ((hashVal.split('/')).length - 1 === 3) {
+                if (hashVal.indexOf('/set/') >= 0) {
+                    router.push({ path: '/watch/setting' })
+                } else if (hashVal.indexOf('/devInfo/') >= 0) {
+                    router.push({ path: '/watch/devInfo' })
+                } else if (hashVal.indexOf('/fence/') >= 0) {
+                    router.push({ path: '/watch/securityFence' })
+                } else {
+                    router.push({ path: '/watch' })
+                }
+            } else if ((hashVal.split('/')).length - 1 === 4) {
+                if (hashVal.indexOf('/devAccredit/') >= 0) {
+                    router.push({ path: '/watch/set/devAccredit' })
+                } else if (hashVal.indexOf('/careRemind/') >= 0) {
+                    router.push({ path: '/watch/set/careRemind' })
+                } else if (hashVal.indexOf('/classBan/') >= 0) {
+                    router.push({ path: '/watch/set/classBan' })
+                } else if (hashVal.indexOf('/sosTel/') >= 0) {
+                    router.push({ path: '/watch/set/sosTel' })
+                } else if (hashVal.indexOf('/whiteList/') >= 0) {
+                    router.push({ path: '/watch/set/whiteList' })
+                } else {
+                    router.push({ path: '/watch' })
+                }
+            }
+        }
+        // 如果当前页面是首页调用安卓原生方法关闭webview跳出H5页面
+    } else {
+        window.android.jsCall_go_back()
+    }*/
+}
