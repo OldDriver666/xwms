@@ -714,16 +714,16 @@ ctx = Util.localStorage.get("ctx");
 
 // 点击安卓系统原生返回按钮调用backEvent函数，判断返回上一页
 function backEvent() {
-    var urlVal = window.location.href
+    var urlVal = window.location.href;
     // 如果当前页面不是首页
     if (urlVal.indexOf('feedback.html') >= 0 || urlVal.indexOf('workOrder.html') >= 0) {
-        alert('退出')
-        window.android.jsCall_go_back()
+        //alert('退出')
+        window.android.jsCall_go_back1();
     } else {
         if (urlVal.indexOf('workOrderDetail.html') >= 0) {
-            window.location.href = 'workOrder.html'
+            window.location.href = 'workOrder.html';
         } else {
-            window.location.href = 'feedback.html'
+            window.location.href = 'feedback.html';
         }
     }
 }
