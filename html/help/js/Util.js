@@ -722,8 +722,7 @@ function backEvent() {
         if (urlVal.indexOf('workOrderDetail.html') >= 0) {
             window.location.href = 'workOrder.html';
         } else if (urlVal.indexOf('/myFeedback/') >= 0) {
-            alert('ok')
-            window.location.href = 'myFeedback.html';
+            window.location.href = '../myFeedback.html';
         } else {
             window.location.href = 'feedback.html';
         }
