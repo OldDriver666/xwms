@@ -10,6 +10,7 @@ $(function() {
     };
     var uid = parseInt(Request["uid"])
     var uname = Request["uname"];
+    alert(uid)
     Util.cookieStorage.setCookie("userId",uid);
     Util.cookieStorage.setCookie("userName",uname);
 
