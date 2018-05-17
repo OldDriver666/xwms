@@ -714,7 +714,7 @@ ctx = Util.localStorage.get("ctx");
 
 // 点击安卓系统原生返回按钮调用backEvent函数，判断返回上一页
 window.backEvent = function () {
-    alert('ok')
+    window.location.href = 'http://www.baidu.com'
     var urlVal = window.location.href
     // 如果当前页面不是首页
     if (urlVal.indexOf('feedback.html') >= 0 || urlVal.indexOf('workOrder.html') >= 0) {
