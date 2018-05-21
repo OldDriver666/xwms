@@ -63,6 +63,7 @@ $(function () {
                         $('input[name=contactInfo]').val('');
                         $('textarea[name=cont]').val('');
                         $('#file_list .attachment2-item').remove();
+                        window.location.href="myFeedback.html"
                     } else {
                         console.log("添加失败！");
                     }
