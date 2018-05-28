@@ -686,7 +686,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
-fileUrl = Util.localStorage.get("fileUrl")
+fileUrl = Util.localStorage.get("fileUrl");
 
 // 提供一些IQuery增强
 (function($){
