@@ -659,10 +659,21 @@ Util.regionArgumentsDetail = function(regionlist){
 //获取当前域名
 Util.pathName = function(){
     // ctx = Util.cookieStorage.getCookie("siteUrl");
-    // 开发环境
+    // 开发环境接口地址
     ctx = "http://10.252.252.250:8787/managesvr/";
-	//ctx = "http://192.168.2.41:8080/managesvr/";
+    // 测试环境接口地址
+    //ctx = "http://file.fise-wi.com:8787/managesvr/";
+    // 正式环境接口地址
+    //ctx = "http://file.fise-wi.com:8589/managesvr/";
+
     Util.localStorage.add("ctx",ctx);
+
+    // 开发环境文件服务器
+    fileUrl = "http://10.252.252.250:4869/"
+    // 正式环境文件服务器
+    //fileUrl = "http://file.fise-wi.com:4869/"
+
+    Util.localStorage.add("fileUrl",fileUrl);
 };
 
 $(function(){
@@ -675,7 +686,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
-
+fileUrl = Util.localStorage.get("fileUrl")
 
 // 提供一些IQuery增强
 (function($){
