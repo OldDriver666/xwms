@@ -10,13 +10,16 @@ $(function() {
     };
     var uid = parseInt(Request["uid"])
     var uname = Request["uname"];
-    $("#aaa").html(uid + ',' + uname)
-    if (!isNaN(uid) || typeof(uname) == "undefined") {
+    var aa = 1;
 
+    if (!isNaN(uid) || typeof(uname) == "undefined") {
+        aa = 0;
     } else {
         Util.cookieStorage.setCookie("userId",uid);
         Util.cookieStorage.setCookie("userName",uname);
     }
+
+    $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
 
 
     var action = {
