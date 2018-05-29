@@ -38,13 +38,13 @@ $(function () {
                 imgUrl = imgUrlArr.join(',')
             }
 
-            if($('input[name=title]').val() === ''){
+            if($('input[name=title]').val().replace(/^\s+|\s+$/gm,'') === ''){
                 toastr.error("请填写标题!");
             } else if($('input[name=title]').val().length > 20){
                 toastr.error("标题长度不能大于20个字符!");
-            } else if($('textarea[name=cont]').val() === ''){
+            } else if($('textarea[name=cont]').val().replace(/^\s+|\s+$/gm,'') === ''){
                 toastr.error("请填写反馈内容!");
-            } else if($('input[name=contactInfo]').val() === '') {
+            } else if($('input[name=contactInfo]').val().replace(/^\s+|\s+$/gm,'') === '') {
                 toastr.error("请填写联系方式!");
             } else if ($('textarea[name=cont]').val().length < 10) {
                 toastr.error("描述内容不能少于10个字");
