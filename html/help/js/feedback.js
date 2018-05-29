@@ -10,7 +10,8 @@ $(function() {
     };
     var uid = parseInt(Request["uid"])
     var uname = Request["uname"];
-    if (uid === NaN || uname === undefined) {
+    $("#aaa").html(uid + ',' + uname)
+    if (!isNaN(uid) || typeof(uname) == "undefined") {
 
     } else {
         Util.cookieStorage.setCookie("userId",uid);

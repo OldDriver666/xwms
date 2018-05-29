@@ -40,7 +40,7 @@
   {{/if}}
   ${title}
   </div>
-  <div class="author">${uname}<span class="time">${timestampToTime(created)}</span></div>
+  <div class="author">${formatname(uname)}<span class="time">${timestampToTime(created)}</span></div>
   <div class="reply"><em class="octicon octicon-comment"></em>${count}</div>
 </a>
 </script>
@@ -55,6 +55,14 @@
         s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
         return Y+M+D+h+m+s;
     }
+    function formatname(uname) {
+        if((/^1[34578]\d{9}$/.test(uname))) {
+            return uname.substr(0,3) + '****' + uname.substr(7)
+        } else {
+            return uname
+        }
+    }
+
     toastr.options={
         positionClass : 'toast-center-center',
         showDuration: "300",
