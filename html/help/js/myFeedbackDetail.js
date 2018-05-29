@@ -76,8 +76,7 @@ $(function () {
                 "param": {
                     "uname": '',
                     "userId": parseInt(userId),
-                    "title": "",
-                    "type": 1
+                    "title": ""
                 }
             };
             if (uname === undefined || uname === null || uname === '' || isNaN(id)) {
@@ -96,7 +95,7 @@ $(function () {
                                 if (imgStr != '') {
                                     var imgArr = imgStr.split(',');
                                     for (var j = 0; j<imgArr.length; j++) {
-                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '?w=88&h=88" /></a></div>'
+                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '" /></a></div>'
                                         htmlImgList.push(htmlImg)
                                     }
                                 }

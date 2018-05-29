@@ -13,7 +13,6 @@ $(function () {
                     "page_no": 1,
                     "page_size": 10,
                     "param": {
-                        "type": 1,
                         "uname": "",
                         "userId": parseInt(uId),
                         "title": ""
