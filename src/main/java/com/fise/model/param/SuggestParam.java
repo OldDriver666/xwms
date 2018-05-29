@@ -27,6 +27,11 @@ public class SuggestParam {
      * 0-公有 1-私有
      */
     private Integer type;
+    
+    /**
+     * 0-开启 1-处理中 2-关闭
+     */
+    private Integer status;
 
 
 	public Integer getType() {
@@ -67,6 +72,14 @@ public class SuggestParam {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	@Override

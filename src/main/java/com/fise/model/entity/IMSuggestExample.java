@@ -388,6 +388,11 @@ public class IMSuggestExample {
             addCriterion("type =", value, "type");
             return (Criteria) this;
         }
+        
+        public Criteria andStatusEqualTo(Integer value) {
+        	addCriterion("status =", value, "status");
+        	return (Criteria) this;
+        }
 
         public Criteria andTypeNotEqualTo(Integer value) {
             addCriterion("type <>", value, "type");
