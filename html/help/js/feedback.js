@@ -8,18 +8,38 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var uid = parseInt(Request["uid"])
-    var uname = Request["uname"];
-    var aa = 1;
 
-    if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
-        aa = 0;
-        Util.cookieStorage.setCookie("userId","1");
-        Util.cookieStorage.setCookie("userName","anonymous")
-    } else {
-        Util.cookieStorage.setCookie("userId",uid);
-        Util.cookieStorage.setCookie("userName",uname);
+    function runOnce(fn, context) { //控制让函数只触发一次
+        return function () {
+            try {
+                fn.apply(context || this, arguments);
+            }
+            catch (e) {
+            }
+            finally {
+                fn = null;
+            }
+        }
     }
+
+    var aa = 1;
+    var canOnlyFireOnce = runOnce(function () {
+        var uid = parseInt(Request["uid"])
+        var uname = Request["uname"];
+
+        if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
+            aa = 0;
+            Util.cookieStorage.setCookie("userId","1");
+            Util.cookieStorage.setCookie("userName","anonymous")
+        } else {
+            Util.cookieStorage.setCookie("userId",uid);
+            Util.cookieStorage.setCookie("userName",uname);
+        }
+    }, obj);
+    canOnlyFireOnce();
+
+
+
 
     $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
 
