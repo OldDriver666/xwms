@@ -28,7 +28,7 @@ public class SuggestServiceImpl implements ISuggestService{
 	@Override
 	public Response insertSuggest(IMSuggest record) {
 		
-		Response response=new Response();	
+		Response response=new Response();
 		
 		//更新数据
 		long nowtime=System.currentTimeMillis()/1000;
