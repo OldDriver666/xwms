@@ -93,7 +93,7 @@ $(function () {
                                 if (imgStr != '') {
                                     var imgArr = imgStr.split(',');
                                     for (var j = 0; j<imgArr.length; j++) {
-                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '" /></a></div>'
+                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '?w=88&h=88" /></a></div>'
                                         htmlImgList.push(htmlImg)
                                     }
                                 }
@@ -136,7 +136,7 @@ $(function () {
                             } else {
                                 for (var m = 0; m < picArr.length; m++) {
                                     html = '<div class="attachment-item">' +
-                                        '<a href="' + picArr[m] + '" target="_blank"><img src="' + picArr[m] + '" /></a>' +
+                                        '<a href="' + picArr[m] + '" target="_blank"><img src="' + picArr[m] + '?w=88&h=88" /></a>' +
                                         '</div>';
                                     imgListArr.push(html);
                                 }
