@@ -12,8 +12,10 @@ $(function() {
     var uname = Request["uname"];
     var aa = 1;
 
-    if (!isNaN(uid) || typeof(uname) == "undefined") {
+    if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
         aa = 0;
+        Util.cookieStorage.setCookie("userId","1");
+        Util.cookieStorage.setCookie("userName","anonymous")
     } else {
         Util.cookieStorage.setCookie("userId",uid);
         Util.cookieStorage.setCookie("userName",uname);
