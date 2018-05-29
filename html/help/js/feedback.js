@@ -12,24 +12,21 @@ $(function() {
     var req_uname = Request["uname"];
 
 
-    $("#aaa").html(req_uid + ',' + req_uname)
-    /*var aa = 1;
 
-    if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
+    var aa = 1;
+
+    if (typeof(req_uid) == "undefined" || typeof(req_uname) == "undefined") {
         aa = 0;
         Util.cookieStorage.setCookie("userId","1");
         Util.cookieStorage.setCookie("userName","anonymous")
     } else {
-        Util.cookieStorage.setCookie("userId",uid);
-        Util.cookieStorage.setCookie("userName",uname);
+        Util.cookieStorage.setCookie("userId",req_uid);
+        Util.cookieStorage.setCookie("userName",req_uname);
     }
 
+    $("#aaa").html(req_uid + ',' + req_uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
 
-    $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
-*/
-    //var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
-    var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + req_uid + '&uname=' + req_uname + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + req_uid + '&uname=' + req_uname + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
-
+    var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
     document.getElementById('tab-navs').innerHTML = tab_html;
 
     var action = {
