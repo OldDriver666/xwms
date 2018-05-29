@@ -79,12 +79,27 @@
     created, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.IMSuggestExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from IMSuggest
+	SELECT
+		*
+	FROM
+		(
+			SELECT
+				s.id,
+				s.user_id,
+				s. STATUS,
+				s.type,
+				s.title,
+				s.suggest_id,
+				s.content,
+				s.pictures,
+				s.contact,
+				s.created,
+				s.updated,
+				IFNULL(IFNULL(u.nick, u.name),'anonymous') uname
+			FROM
+				IMSuggest s
+			LEFT JOIN IMUser u ON u.id = s.user_id
+		) a
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
