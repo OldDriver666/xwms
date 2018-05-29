@@ -95,7 +95,7 @@
 				s.contact,
 				s.created,
 				s.updated,
-				IFNULL(u.name, 'anonymous') uname
+				IFNULL(IFNULL(u.nick, u.name),'anonymous') uname
 			FROM
 				IMSuggest s
 			LEFT JOIN IMUser u ON u.id = s.user_id
