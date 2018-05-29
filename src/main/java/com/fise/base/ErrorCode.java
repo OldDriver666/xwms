@@ -61,6 +61,8 @@ public enum ErrorCode {
 	ERROR_QUERY_RESULT_NOT_EXISTED("查询没有记录",10049),
 	ERROR_SEARCH_APP_UNEXIST("App资源不足",10050),
 	ERROR_ACCOUNT_LOCK("账号被锁定", 10100),
+	ERROR_TITLE_NULL("标题为空", 10201),
+	ERROR_CONTENT_NULL("内容为空", 10202),
 	
 	ERROR_CACHE("缓存错误！", 997),
 	ERROR_DATABASE("数据库错误！", 998),
