@@ -100,7 +100,7 @@ $(function () {
         done: function(t, e) {
             if(e.result.ret === true){
                 $("#file_list").show();
-                var html = '<div class="attachment2-item">\n  <div class="imgWrap">\n <img src="'+ fileUrl + e.result.info.md5 + '"/>\n </div>\n <em class="close">&times;</em>\n</div>';
+                var html = '<div class="attachment2-item">\n  <div class="imgWrap">\n <img src="' + fileUrl + e.result.info.md5 + '"/>\n </div>\n <em class="close">&times;</em>\n</div>';
                 $("#file_list").append(html)
             }
 

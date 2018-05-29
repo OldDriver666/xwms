@@ -65,7 +65,7 @@ body{
                 <div data-filetoolarge="您选择文件太大，请更换文件" data-fileuploadfailed="文件上传失败，请稍后再试" class="attachFile">
                     <em class="octicon octicon-cloud-upload"></em>
                     <span data-uploading="上传中.." data-attachment="上传图片">上传图片</span>
-                    <input id="fileupload" type="file" name="attachments[]" data-url="http://10.252.252.250:4869/upload" multiple="" />
+                    <input id="fileupload" type="file" name="attachments[]" data-url="" multiple="" />
                 </div>
             </div>
             <div id="file_list" class="attachment2 hide"></div>
@@ -85,6 +85,7 @@ body{
         hideDuration: "300",
         timeOut: "1500"
     };
+    $("#fileupload").attr("data-url", fileUrl + "upload")
 </script>
 <script>
 
