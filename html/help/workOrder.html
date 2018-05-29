@@ -72,7 +72,7 @@
 </script>
 <script type="text/x-jquery-tmpl" id="pageTmpl2">
 	    <div class="search-item">
-	        <a href="feedback-detail.html?id=${id}&type=${type}"><em class="octicon octicon-book"></em>${title}</a>
+	        <a href="workOrderDetail.html?id=${id}&sid=${suggestId}&uname=${uname}"><em class="octicon octicon-book"></em>${title}</a>
 	    </div>
 </script>
 <script type="text/javascript">
@@ -100,6 +100,14 @@
         timeOut: "1500"
     };
 </script>
-
+<script>
+    window.onload = function() {
+        document.querySelector('body').addEventListener('touchend', function(e) {
+            if(e.target.className != 'input') {
+                document.getElementById('search').blur();
+            }
+        });
+    }
+</script>
 </body>
 </html>

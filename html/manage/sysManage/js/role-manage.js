@@ -23,13 +23,13 @@ $(function() {
 
 	var action = {
 		init: function(){
-			if(0 == insertAuth){
+			if(insertAuth == 0){
                 $("#btn-add").hide();
 			 }
-			if(0 == queryAuth){
+			if(queryAuth == 0){
 
 			}
-			if(0 == updateAuth){
+			if(updateAuth == 0){
 
 			}
 		},

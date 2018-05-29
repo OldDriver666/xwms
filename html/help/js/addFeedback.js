@@ -63,6 +63,7 @@ $(function () {
                         $('input[name=contactInfo]').val('');
                         $('textarea[name=cont]').val('');
                         $('#file_list .attachment2-item').remove();
+                        window.location.href="myFeedback.html";
                     } else {
                         console.log("添加失败！");
                     }
@@ -77,6 +78,32 @@ $(function () {
     $('#addFeedbackBtn').find('button[type=submit]').click(function (t) {
         t.preventDefault();
         action.add()
+    })
+
+    $("#fileupload").length > 0 && $("#fileupload").fileupload({
+        dataType: "json",
+        fail: function(t, e) {
+            return "Request Entity Too Large" === e.errorThrown ? alert($(".attachFile").data("filetoolarge")) : alert($(".attachFile").data("fileuploadfailed")),
+                $(".attachFile em").addClass("octicon-cloud-upload").removeClass("uploading"),
+                $(".attachFile span").text($(".attachFile span").data("attachment"))
+        },
+        done: function(t, e) {
+            if(e.result.ret === true){
+                $("#file_list").show();
+                var html = '<div class="attachment2-item">\n  <div class="imgWrap">\n <img src="'+ fileUrl + e.result.info.md5 + '"/>\n </div>\n <em class="close">&times;</em>\n</div>';
+                $("#file_list").append(html)
+            }
+
+            $(".close").click(function() {
+                return $(this).parent().remove()
+            });
+            $(".attachFile em").addClass("octicon-cloud-upload").removeClass("uploading");
+            $(".attachFile span").text($(".attachFile span").data("attachment"));
+        },
+        progressall: function() {
+            return $(".attachFile em").addClass("uploading").removeClass("octicon-cloud-upload"),
+                $(".attachFile span").text($(".attachFile span").data("uploading"))
+        }
     })
 
 })

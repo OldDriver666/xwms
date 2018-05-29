@@ -73,7 +73,10 @@ $(function () {
                 "page_no": 1,
                 "page_size": 10,
                 "param": {
-                    "uname": uname
+                    "uname": uname,
+                    "userId": null,
+                    "title": "",
+                    "type": 0
                 }
             };
             if (uname === undefined || uname === null || uname === '' || isNaN(id)) {

@@ -10,23 +10,11 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="js/toastr/toastr.css"/>
-	<link rel="stylesheet" href="css/feedback.css">
-	<link rel="stylesheet" href="css/vendor.css">
+	<link rel="stylesheet" href="../js/toastr/toastr.css"/>
+	<link rel="stylesheet" href="../css/feedback.css">
+	<link rel="stylesheet" href="../css/vendor.css">
 </head>
 <body>
-<div class="tabs">
-	<span class="active">
-		<a href="myFeedback.html">
-			<em class="octicon octicon-list-unordered"></em>我的工单
-		</a>
-	</span>
-	<span class="active">
-		<a href="addFeedback.html">
-			<em class="octicon octicon-plus"></em>新建工单
-		</a>
-	</span>
-</div>
 <div class="application">
 	<div class="main container clearfix">
 		<div class="ticket">
@@ -60,11 +48,11 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.tmpl.js"></script>
-<script type="text/javascript" src="js/Util.js"></script>
-<script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
-<script type ="text/javascript" src="js/myFeedbackDetail.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="../js/Util.js"></script>
+<script type ="text/javascript" src="../js/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="../js/myFeedbackDetail.js"></script>
 <script type="text/javascript">
     toastr.options={
         positionClass : 'toast-center-center',
@@ -73,7 +61,7 @@
         timeOut: "1500"
     };
 </script>
-<script type="text/javascript" src="js/vendor.js"></script>
+<script type="text/javascript" src="../js/vendor.js"></script>
 <script type="text/javascript">
     $("#fileupload").length > 0 && $("#fileupload").fileupload({
         dataType: "json",

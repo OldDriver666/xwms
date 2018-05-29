@@ -10,8 +10,13 @@ $(function() {
     };
     var uid = parseInt(Request["uid"])
     var uname = Request["uname"];
-    Util.cookieStorage.setCookie("userId",uid);
-    Util.cookieStorage.setCookie("userName",uname);
+    if (uid === NaN || uname === undefined) {
+
+    } else {
+        Util.cookieStorage.setCookie("userId",uid);
+        Util.cookieStorage.setCookie("userName",uname);
+    }
+
 
     var action = {
         //新增数据

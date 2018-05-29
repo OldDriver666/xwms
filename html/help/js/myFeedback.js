@@ -1,4 +1,5 @@
 $(function () {
+    var uId = Util.cookieStorage.getCookie("userId");
     var uname = Util.cookieStorage.getCookie("userName");
     var action = {
         //获取所有数据
@@ -13,7 +14,9 @@ $(function () {
                     "page_size": 10,
                     "param": {
                         "type": 1,
-                        "uname": uname
+                        "uname": "",
+                        "userId": parseInt(uId),
+                        "title": ""
                     }
                 };
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {

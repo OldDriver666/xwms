@@ -659,10 +659,21 @@ Util.regionArgumentsDetail = function(regionlist){
 //获取当前域名
 Util.pathName = function(){
     // ctx = Util.cookieStorage.getCookie("siteUrl");
-    // 开发环境
+    // 开发环境接口地址
     ctx = "http://10.252.252.250:8787/managesvr/";
-	//ctx = "http://192.168.2.41:8080/managesvr/";
+    // 测试环境接口地址
+    //ctx = "http://file.fise-wi.com:8787/managesvr/";
+    // 正式环境接口地址
+    //ctx = "http://file.fise-wi.com:8589/managesvr/";
+
     Util.localStorage.add("ctx",ctx);
+
+    // 开发环境文件服务器
+    fileUrl = "http://10.252.252.250:4869/"
+    // 正式环境文件服务器
+    //fileUrl = "http://file.fise-wi.com:4869/"
+
+    Util.localStorage.add("fileUrl",fileUrl);
 };
 
 $(function(){
@@ -675,7 +686,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
-
+fileUrl = Util.localStorage.get("fileUrl");
 
 // 提供一些IQuery增强
 (function($){
@@ -710,3 +721,25 @@ ctx = Util.localStorage.get("ctx");
         return serializeObj;
     };
 })(jQuery);
+
+
+// 点击安卓系统原生返回按钮调用backEvent函数，判断返回上一页
+/*function backEvent() {
+    window.android.jsCall_get_back_state('1');
+    var urlVal = window.location.href;
+    // 如果当前页面是首页退出webview
+    if (urlVal.indexOf('feedback.html') >= 0 || urlVal.indexOf('workOrder.html') >= 0) {
+        window.android.jsCall_go_back1();
+    } else {
+        if (urlVal.indexOf('workOrderDetail.html') >= 0) {
+            window.location.href = 'workOrder.html';
+        } else if (urlVal.indexOf('/myFeedback/') >= 0) {
+            window.location.href = '../myFeedback.html';
+        } else {
+            window.location.href = 'feedback.html';
+        }
+    }
+}*/
+
+
+
