@@ -39,8 +39,6 @@ $(function () {
                 toastr.error("提交失败，请稍后再试!");
             } else if ($('textarea[name=content]').val() === '') {
                 toastr.error("回复内容不能为空!");
-            } else if ($('textarea[name=content]').val().length < 10) {
-                toastr.error("回复内容不能少于10个字");
             } else if ($('textarea[name=content]').val().length > 200) {
                 toastr.error("回复内容已超过了字数限制");
             } else {
