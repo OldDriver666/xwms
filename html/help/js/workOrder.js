@@ -1,4 +1,26 @@
 $(function() {
+    var url=location.search;
+    var Request = new Object();
+    if(url.indexOf("?")!=-1) {
+        var str = url.substr(1)　//去掉?号
+        strs = str.split("&");
+        for(var i=0;i<strs.length;i++){
+            Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+        }
+    };
+    var uid = parseInt(Request["uid"])
+    var uname = Request["uname"];
+
+
+    if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
+        Util.cookieStorage.setCookie("userId","1");
+        Util.cookieStorage.setCookie("userName","anonymous")
+    } else {
+        Util.cookieStorage.setCookie("userId",uid);
+        Util.cookieStorage.setCookie("userName",uname);
+    }
+    var tab_html = '<li class="tab-nav"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav active" ><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
+    document.getElementById('tab-navs').innerHTML = tab_html;
 
     var action = {
         //新增数据
