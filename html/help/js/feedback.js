@@ -26,12 +26,8 @@ $(function() {
 
     $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
 
-    //var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Request["uid"] + '&uname=' + Request["uname"] + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
-
     var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
     document.getElementById('tab-navs').innerHTML = tab_html;
-
-    //$("#aaa").html(Request["uid"] + ',' + Request["uname"])
 
     var action = {
         //新增数据
