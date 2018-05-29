@@ -35,13 +35,14 @@ $(function() {
             Util.cookieStorage.setCookie("userId",uid);
             Util.cookieStorage.setCookie("userName",uname);
         }
-    }, obj);
+        $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
+    });
     canOnlyFireOnce();
 
 
 
 
-    $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
+
 
 
     var action = {
