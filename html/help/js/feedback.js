@@ -24,6 +24,7 @@ $(function() {
         Util.cookieStorage.setCookie("userName",uname);
     }
 
+
     $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
 */
     //var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
