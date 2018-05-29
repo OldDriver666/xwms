@@ -8,7 +8,7 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var uid = parseInt(Request["uid"])
+    var uid = Request["uid"];
     var uname = Request["uname"];
 
 
