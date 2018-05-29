@@ -8,14 +8,28 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var uid = parseInt(Request["uid"])
-    var uname = Request["uname"];
-    if (uid === NaN || uname === undefined) {
 
-    } else {
-        Util.cookieStorage.setCookie("userId",uid);
-        Util.cookieStorage.setCookie("userName",uname);
-    }
+    var aa = 1;
+    var isFirst = true;
+    function ss() {
+        var uid = parseInt(Request["uid"])
+        var uname = Request["uname"];
+        if(isFirst){
+            if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
+                aa = 0;
+                Util.cookieStorage.setCookie("userId","1");
+                Util.cookieStorage.setCookie("userName","anonymous")
+            } else {
+                Util.cookieStorage.setCookie("userId",uid);
+                Util.cookieStorage.setCookie("userName",uname);
+            }
+            $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
+            isFirst = false;
+        }
+    };
+    ss();
+
+    
 
 
     var action = {

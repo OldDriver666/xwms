@@ -1,6 +1,6 @@
 $(function () {
-    var userId = Util.cookieStorage.getCookie("userId") === "" || isNaN(Util.cookieStorage.getCookie("userId")) || Util.cookieStorage.getCookie("userId") === "undefined" ? 1 : Util.cookieStorage.getCookie("userId");
-    var userName = Util.cookieStorage.getCookie("userName") === "" || Util.cookieStorage.getCookie("userName") === "undefined" ? "anonymous" : Util.cookieStorage.getCookie("userName")
+    var userId = Util.cookieStorage.getCookie("userId") === "" || isNaN(Util.cookieStorage.getCookie("userId")) || typeof(Util.cookieStorage.getCookie("userId")) == "undefined" ? 1 : Util.cookieStorage.getCookie("userId");
+    var userName = Util.cookieStorage.getCookie("userName") === "" || typeof(Util.cookieStorage.getCookie("userName")) == "undefined" ? "anonymous" : Util.cookieStorage.getCookie("userName")
 
     var url=location.search;
     var Request = new Object();
@@ -38,10 +38,16 @@ $(function () {
                 imgUrl = imgUrlArr.join(',')
             }
 
-            if($('input[name=contactInfo]').val() === '' || $('textarea[name=cont]').val() === '') {
-                toastr.error("请填写联系方式和反馈内容!");
+            if($('input[name=title]').val() === ''){
+                toastr.error("请填写标题!");
+            } else if($('input[name=title]').val().length > 20){
+                toastr.error("标题长度不能大于20个字符!");
+            } else if($('textarea[name=cont]').val() === ''){
+                toastr.error("请填写反馈内容!");
+            } else if($('input[name=contactInfo]').val() === '') {
+                toastr.error("请填写联系方式!");
             } else if ($('textarea[name=cont]').val().length < 10) {
-                toastr.error("描述内容少于10个字");
+                toastr.error("描述内容不能少于10个字");
             } else if ($('textarea[name=cont]').val().length > 200) {
                 toastr.error("描述内容已超过了字数限制");
             } else {
@@ -63,7 +69,11 @@ $(function () {
                         $('input[name=contactInfo]').val('');
                         $('textarea[name=cont]').val('');
                         $('#file_list .attachment2-item').remove();
-                        window.location.href="myFeedback.html";
+                        if (document.querySelector('.js-switch').checked === true) {
+                            window.location.href="workOrder.html";
+                        } else {
+                            window.location.href="myFeedback.html";
+                        }
                     } else {
                         console.log("添加失败！");
                     }
