@@ -37,7 +37,7 @@ $(function () {
 
             if (suggestId === '' || suggestId === undefined || suggestId === null) {
                 toastr.error("提交失败，请稍后再试!");
-            } else if ($('textarea[name=content]').val() === '') {
+            } else if ($('textarea[name=content]').val().replace(/^\s+|\s+$/gm,'') === '') {
                 toastr.error("回复内容不能为空!");
             } else if ($('textarea[name=content]').val().length > 200) {
                 toastr.error("回复内容已超过了字数限制");
