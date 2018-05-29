@@ -70,7 +70,7 @@ $(function () {
                         $('textarea[name=cont]').val('');
                         $('#file_list .attachment2-item').remove();
                         if (document.querySelector('.js-switch').checked === true) {
-                            window.location.href="workOrder.html?uid=" + Util.cookieStorage.getCookie("userId") + '"&uname="' + Util.cookieStorage.getCookie("userName");
+                            window.location.href='workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName");
                         } else {
                             window.location.href="myFeedback.html";
                         }
