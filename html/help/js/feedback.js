@@ -8,12 +8,12 @@ $(function() {
             Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
         }
     };
-    var uid = Request["uid"];
-    var uname = Request["uname"];
+    var req_uid = Request["uid"];
+    var req_uname = Request["uname"];
 
 
-
-    var aa = 1;
+    $("#aaa").html(req_uid + ',' + req_uname)
+    /*var aa = 1;
 
     if (typeof(uid) == "undefined" || typeof(uname) == "undefined") {
         aa = 0;
@@ -25,8 +25,10 @@ $(function() {
     }
 
     $("#aaa").html(uid + ',' + uname + ',' + Util.cookieStorage.getCookie("userId") + ',' + Util.cookieStorage.getCookie("userName") + ',' + aa)
+*/
+    //var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
+    var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + req_uid + '&uname=' + req_uname + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + req_uid + '&uname=' + req_uname + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
 
-    var tab_html = '<li class="tab-nav active"><a href="feedback.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-book"></em>知识库</a></li><li class="tab-nav"><a href="workOrder.html?uid=' + Util.cookieStorage.getCookie("userId") + '&uname=' + Util.cookieStorage.getCookie("userName") + '"><em class="octicon octicon-comment-discussion"></em>公开工单</a></li>'
     document.getElementById('tab-navs').innerHTML = tab_html;
 
     var action = {
