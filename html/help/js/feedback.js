@@ -11,6 +11,7 @@ $(function() {
 
     var req_uid = Request["uid"];
     var req_uname = Request["uname"];
+    $('#aaa').html(req_uid + ',' + req_uname)
     if (typeof(req_uid) == "undefined" || typeof(req_uname) == "undefined") {
         aa = 0;
         Util.cookieStorage.setCookie("userId","1");
