@@ -12,7 +12,7 @@ $(function() {
     var req_uid = Request["uid"];
     var req_uname = Request["uname"];
     if (typeof(req_uid) == "undefined" || typeof(req_uname) == "undefined") {
-        Util.cookieStorage.setCookie("userId","4000040000");
+        Util.cookieStorage.setCookie("userId","2000020000");
         Util.cookieStorage.setCookie("userName","anonymous")
     } else {
         Util.cookieStorage.setCookie("userId",req_uid);
