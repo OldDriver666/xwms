@@ -54,8 +54,9 @@
 <a href="workOrderDetail.html?id=${id}&sid=${suggestId}&uname=${uname}" class="ticket">
   <div class="avatar"><img src="img/none.png"></div>
   <div class="title">
-  {{if status == 1}}<span class="status-in_progress mini-status">处理中</span>
-  {{else status == 0}}<span class="status-open mini-status">开启</span>
+  {{if status == 0}}<span class="status-open mini-status">开启</span>
+  {{else status == 1}}<span class="status-in_progress mini-status">处理中</span>
+  {{else status == 2}}<span class="status-close mini-status">关闭</span>
   {{/if}}
   ${title}
   </div>

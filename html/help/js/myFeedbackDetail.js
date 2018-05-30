@@ -1,5 +1,5 @@
 $(function () {
-    var userId = Util.cookieStorage.getCookie("userId") === "" || isNaN(Util.cookieStorage.getCookie("userId")) || typeof(Util.cookieStorage.getCookie("userId")) == "undefined" ? 1 : Util.cookieStorage.getCookie("userId");
+    var userId = Util.cookieStorage.getCookie("userId") === "" || isNaN(Util.cookieStorage.getCookie("userId")) || typeof(Util.cookieStorage.getCookie("userId")) == "undefined" ? 4000040000 : Util.cookieStorage.getCookie("userId");
     var userName = Util.cookieStorage.getCookie("userName") === "" || typeof(Util.cookieStorage.getCookie("userName")) == "undefined" ? "anonymous" : Util.cookieStorage.getCookie("userName")
     var fqType = 1;
 
@@ -58,7 +58,7 @@ $(function () {
                         toastr.success("添加成功!");
                         $('textarea[name=content]').val('');
                         $('#file_list .attachment2').remove();
-                        action.loadPageData2(suggestId);
+                        action.loadPageData(suggestId);
                     } else {
                         console.log("添加失败！");
                     }
@@ -67,52 +67,7 @@ $(function () {
                 });
             }
         },
-        //获取所有数据
-        loadPageData : function(uname, id) {
-            var url = ctx + "boss/suggest/query";
-            var data = {
-                "page_no": 1,
-                "page_size": 10,
-                "param": {
-                    "uname": '',
-                    "userId": parseInt(userId),
-                    "title": ""
-                }
-            };
-            if (uname === undefined || uname === null || uname === '' || isNaN(id)) {
-                console.log('无记录')
-            } else {
-                Util.ajaxLoadData(url,data,"POST",true,function(result) {
-                    if(result.code == ReturnCode.SUCCESS){
-                        for (var i = 0; i<result.data.result.length; i++) {
-                            if(result.data.result[i].id === id) {
-                                var imgStr = result.data.result[i].pictures;
-                                var htmlImg = ''
-                                var htmlImgList = [];
-                                $(".ticket .title").find('h2').html(result.data.result[i].title);
-                                $(".ticket .title").find('.time').html(timestampToTime(result.data.result[i].created));
-                                $(".ticket .markdown-body").find('p').html(result.data.result[i].content);
-                                if (imgStr != '') {
-                                    var imgArr = imgStr.split(',');
-                                    for (var j = 0; j<imgArr.length; j++) {
-                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '" /></a></div>'
-                                        htmlImgList.push(htmlImg)
-                                    }
-                                }
-                                $(".ticket .attachment").html(htmlImgList.join(''));
-                                action.loadPageData2(suggestId);
-                            }
-                        }
-                    } else {
-                        console.log("请求出错！");
-                    }
-                },function() {
-                    console.log("服务器异常！")
-                });
-            }
-        },
-        //根据建议id查询用户回复建议
-        loadPageData2 : function(suggestId) {
+        loadPageData : function(suggestId) {
             var url = ctx + "boss/suggest/queryBySuggestId";
             var data = {
                 "page_no": 1,
@@ -127,6 +82,23 @@ $(function () {
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {
                     if(result.code == ReturnCode.SUCCESS){
                         var myData = result.data.result
+
+                        var imgStr = myData[0].pictures;
+                        var htmlImg = ''
+                        var htmlImgList = [];
+                        $(".ticket .title").find('h2').html(myData[0].title);
+                        $(".ticket .title").find('.time').html(timestampToTime(myData[0].created));
+                        $(".ticket .markdown-body").find('p').html(myData[0].content);
+                        if (imgStr != '') {
+                            var imgArr = imgStr.split(',');
+                            for (var j = 0; j<imgArr.length; j++) {
+                                htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '" /></a></div>'
+                                htmlImgList.push(htmlImg)
+                            }
+                        }
+                        $(".ticket .attachment").html(htmlImgList.join(''));
+
+
                         fqType = result.data.result[0].type
                         $(".ticket .replyNum").html(result.data.result.length - 1)
                         $('#pageContent').empty();
@@ -174,7 +146,7 @@ $(function () {
         }
     };
     window.action = action;
-    action.loadPageData(uname, id);
+    action.loadPageData(suggestId);
 
     function timestampToTime(timestamp) {
         var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
