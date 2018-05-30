@@ -134,6 +134,10 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 .ticket .reply-item .content {
 	padding: .5em;
 }
+.ticket .reply-item .content a{
+	color:blue;
+	text-decoration: underline;
+}
 .application .ticket .reply-item.admin .info {
 	background:#FBFBD6!important
 }
@@ -514,6 +518,10 @@ ul.article-list li.article-item {
 }
 .markdown-body {
     padding-top: .5em;
+}
+.markdown-body a{
+	color: blue;
+	text-decoration: underline;
 }
 .markdown-body {
     -webkit-text-size-adjust: 100%;
