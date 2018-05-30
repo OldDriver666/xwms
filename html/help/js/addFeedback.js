@@ -33,7 +33,12 @@ $(function () {
             var imgUrl = '';
             if (imgEle.length > 0) {
                 for (var i = 0; i<imgEle.length; i++) {
-                    imgUrlArr.push(imgEle[i].src)
+                    var fliterSrc = imgEle[i].src
+                    if(fliterSrc.indexOf("?") != -1){
+                        imgUrlArr.push(fliterSrc.split("?")[0])
+                    } else {
+                        imgUrlArr.push(fliterSrc)
+                    }
                 }
                 imgUrl = imgUrlArr.join(',')
             }
