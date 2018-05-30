@@ -39,12 +39,6 @@ public class SuggestController {
 		Response response=new Response();
 		
 		logger.info(record.toString());
-		if(StringUtil.isEmpty(record.getTitle()) ){
-            return response.failure(ErrorCode.ERROR_TITLE_NULL);
-        }
-		if(StringUtil.isEmpty(record.getContent()) ){
-			return response.failure(ErrorCode.ERROR_CONTENT_NULL);
-		}
 		
 		response=iSuggestService.insertSuggest(record);
 		
