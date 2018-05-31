@@ -265,6 +265,8 @@ $(function () {
     })
     $('#pageContent').on('click', '.delReply', function () {
         var replayId = $(this).data('id')
-        action.delReply(replayId);
+        if(window.confirm('确认要删除吗？')){
+            action.delReply(replayId);
+        }
     })
 })

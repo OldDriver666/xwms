@@ -297,7 +297,9 @@ $(function () {
         var replayId = $(this).data('id')
         var uid = $(this).data('uid')
         if (userId == uid) {
-            action.delReply(replayId);
+            if(window.confirm('确认要删除吗？')){
+                action.delReply(replayId);
+            }
         } else {
             toastr.error("权限错误!");
         }
