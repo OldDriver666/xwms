@@ -1,5 +1,5 @@
 $(function () {
-    var userId = Util.cookieStorage.getCookie("userId") === "" || isNaN(Util.cookieStorage.getCookie("userId")) || typeof(Util.cookieStorage.getCookie("userId")) == "undefined" ? 4000040000 : Util.cookieStorage.getCookie("userId");
+    var userId = Util.cookieStorage.getCookie("userId") === "" || isNaN(Util.cookieStorage.getCookie("userId")) || typeof(Util.cookieStorage.getCookie("userId")) == "undefined" ? 2000020000 : Util.cookieStorage.getCookie("userId");
     var userName = Util.cookieStorage.getCookie("userName") === "" || typeof(Util.cookieStorage.getCookie("userName")) == "undefined" ? "anonymous" : Util.cookieStorage.getCookie("userName")
     var fqType = 1;
 
@@ -30,7 +30,12 @@ $(function () {
             var imgUrl = '';
             if (imgEle.length > 0) {
                 for (var i = 0; i<imgEle.length; i++) {
-                    imgUrlArr.push(imgEle[i].src)
+                    var fliterSrc = imgEle[i].src
+                    if(fliterSrc.indexOf("?") != -1){
+                        imgUrlArr.push(fliterSrc.split("?")[0])
+                    } else {
+                        imgUrlArr.push(fliterSrc)
+                    }
                 }
                 imgUrl = imgUrlArr.join(',')
             }
@@ -57,7 +62,7 @@ $(function () {
                     if (result.code == ReturnCode.SUCCESS) {
                         toastr.success("添加成功!");
                         $('textarea[name=content]').val('');
-                        $('#file_list .attachment2').remove();
+                        $('#file_list .attachment2-item').remove();
                         action.loadPageData(suggestId);
                     } else {
                         console.log("添加失败！");

@@ -11,9 +11,10 @@ $(function() {
 
     var req_uid = Request["uid"];
     var req_uname = Request["uname"];
+    //$('#aaa').html(req_uid + ',' + req_uname)
     if (typeof(req_uid) == "undefined" || typeof(req_uname) == "undefined") {
         aa = 0;
-        Util.cookieStorage.setCookie("userId","1");
+        Util.cookieStorage.setCookie("userId","2000020000");
         Util.cookieStorage.setCookie("userName","anonymous")
     } else {
         Util.cookieStorage.setCookie("userId",req_uid);
