@@ -82,17 +82,12 @@ public class SuggestController {
 	public Response delSuggest(@RequestBody @Valid SuggestParam param){
 		
 		Response response=new Response();
-		
-		
+		if (param.getId()==null && StringUtil.isEmpty(param.getSuggestId())) {
+			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+			
 		logger.info(param.toString());
-		
-		if(param.getSuggestId()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-		
 		response=iSuggestService.delSuggest(param);
-		
-		
 		return response;
 	}
 	

@@ -4,8 +4,12 @@ import com.fise.utils.JsonUtil;
 
 public class SuggestParam {
 	/**
-	 * 建议id
+	 * 回答id
 	 */
+    private Integer id;
+    /**
+     * 建议id
+     */
     private String suggestId;
     
     /**
@@ -80,6 +84,14 @@ public class SuggestParam {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

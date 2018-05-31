@@ -117,7 +117,14 @@ public class SuggestServiceImpl implements ISuggestService{
 		Response response=new Response();
 		IMSuggestExample example=new IMSuggestExample();
 		Criteria criteria=example.createCriteria();
-		criteria.andSuggestIdEqualTo(param.getSuggestId());
+		
+		if(StringUtil.isNotEmpty(param.getSuggestId())){
+			criteria.andSuggestIdEqualTo(param.getSuggestId());
+		}
+		if(param.getId()!=null){
+			criteria.andIdEqualTo(param.getId());
+		}
+		
 		IMSuggestDao.deleteByExample(example);
 		
 		return response.success();
