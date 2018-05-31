@@ -34,15 +34,19 @@
 					<div id="pageContent"></div>
 				</div>
 				<div class="add_reply gap_line">
-					<div id="addReply" class="form-aligned body">
+					<div id="addReply" class="form-aligned body hide">
 						<textarea placeholder="回复内容" name="content" rows="5" required=""></textarea>
 						<button type="submit" data-submitting="提交中.." data-submit="提交" class="fbtn green_btn">提交 </button>
+						<button id="closeMyFeedback" class="fbtn red_btn hide">关闭工单</button>
+						<button id="publicToMyFeedback" class="fbtn gray_btn hide">转为私有工单</button>
+						<br>
 						<div data-filetoolarge="您选择文件太大，请更换文件" data-fileuploadfailed="文件上传失败，请稍后再试" class="attachFile">
 							<em class="octicon octicon-cloud-upload"></em>
 							<span data-uploading="上传中.." data-attachment="上传图片">上传图片</span>
 							<input id="fileupload" type="file" name="attachments[]" data-url="" multiple="" />
 						</div>
 					</div>
+					<div class="closeFeedbackInfo hide"><span>工单已关闭<br><em></em></span><button id="openMyFeedback" class="fbtn gray_btn">重新开启</button></div>
 					<div id="file_list" class="attachment2 hide"></div>
 				</div>
 			</div>

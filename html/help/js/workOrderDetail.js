@@ -14,9 +14,11 @@ $(function () {
     var suggestId = Request["sid"];
     var id = parseInt(Request["id"])
     var uname = Request["uname"];
+    var user_id = null;
+
     var action = {
         //新增数据
-        add : function(suggestId) {
+        add : function() {
             if($('#addReply').find('textarea').val().trim() === "") {
                 toastr.error("内容不能为空!");
                 return false
@@ -60,7 +62,7 @@ $(function () {
                         toastr.success("添加成功!");
                         $('textarea[name=content]').val('');
                         $('#file_list .attachment2-item').remove();
-                        action.loadPageData(suggestId);
+                        action.loadPageData();
                     } else {
                         console.log("添加失败！");
                     }
@@ -69,7 +71,7 @@ $(function () {
                 });
             }
         },
-        loadPageData : function(suggestId) {
+        loadPageData : function() {
             var url = ctx + "boss/suggest/queryBySuggestId";
             var data = {
                 "page_no": 1,
@@ -84,6 +86,33 @@ $(function () {
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {
                     if(result.code == ReturnCode.SUCCESS){
                         var myData = result.data.result
+
+                        user_id = myData[0].userId
+
+                        if (userId == user_id) {
+                            //判断工单状态显示隐藏内容status == 2 当前为关闭状态
+                            if (myData[0].status == 2) {
+                                $('#addReply').hide();
+                                $('.closeFeedbackInfo').show();
+                                $('.closeFeedbackInfo').find('em').html(timestampToTime(myData[0].updated))
+                            } else {
+                                $('#addReply').show();
+                                $('.closeFeedbackInfo').hide();
+                            }
+
+                            //判断是公开工单还是私有工单0:公开、1：私有
+                            if (myData[0].type == 0) {
+                                $('#publicToMyFeedback').show();
+                            } else {
+                                $('#publicToMyFeedback').hide();
+                            }
+
+                        } else {
+                            $('#addReply').show();
+                            $('#closeMyFeedback').hide();
+                            $('#publicToMyFeedback').hide();
+                        }
+
                         //内容区域
                         var imgStr = myData[0].pictures;
                         var htmlImg = ''
@@ -103,6 +132,8 @@ $(function () {
                         //回复区域
                         $(".ticket .replyNum").html(result.data.result.length - 1)
                         $('#pageContent').empty();
+
+                        // 遍历组织图片数据
                         var html = '';
                         var imgListArr = []
                         for (var n = 1; n < result.data.result.length; n++) {
@@ -120,22 +151,32 @@ $(function () {
                                 imgListArr.length = 0;
                             }
                         }
+
+                        //遍历组织回复文本节点数据
                         var html2 = '';
                         for (var i = 1; i < myData.length; i++) {
                             html2 = '<div class="reply-item user">' +
-                         '<div class="info clearfix">' +
-                         '<div class="avatar">' +
-                         '<img src="img/none.png" />' +
-                         '</div>' +
-                         '<span class="author">' + formatname((myData[i].uname)) + '</span>' +
-                         '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
-                         '</div>' +
-                         '<div class="content">' +
-                         '<p>' + myData[i].content + '</p>' +
-                         '<div class="attachment">' + myData[i].pictures + '</div>' +
-                         '</div>' +
-                         '</div>';
-                         $('#pageContent').append(html2)
+                             '<div class="info clearfix">' +
+                             '<div class="avatar">' +
+                             '<img src="img/none.png" />' +
+                             '</div>' +
+                             '<span class="author">' + formatname((myData[i].uname)) + '</span>' +
+                             '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
+                             '<div class="delReply hide" data-uid="' + myData[i].userId + '" data-id="' + myData[i].id + '">删除</div>'+
+                             '</div>' +
+                             '<div class="content">' +
+                             '<p>' + myData[i].content + '</p>' +
+                             '<div class="attachment">' + myData[i].pictures + '</div>' +
+                             '</div>' +
+                             '</div>';
+                            $('#pageContent').append(html2)
+
+                            // 判断当前用户id，显示回复区的删除按钮
+                            if (userId == result.data.result[i].userId) {
+                                $('#pageContent .delReply').eq(i - 1).show();
+                            } else {
+                                $('#pageContent .delReply').eq(i - 1).hide();
+                            }
                         }
                     } else {
                         console.log("请求出错！");
@@ -144,10 +185,69 @@ $(function () {
                     console.log("服务器异常！")
                 });
             }
+        },
+        closeFeedback : function() {
+            var url = ctx + "boss/suggest/update";
+            var data = {
+                "suggestId": suggestId,
+                "user_id": parseInt(userId),
+                "uname": "",
+                "status": 2, //0:待处理  1:处理中  2:关闭
+                "suggestion": "",
+                "contact": ""
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $('#closeMyFeedback').html('已关闭')
+                    console.log(result)
+                }
+            });
+        },
+        openFeedback : function() {
+            var url = ctx + "boss/suggest/update";
+            var data = {
+                "suggestId": suggestId,
+                "user_id": parseInt(userId),
+                "uname": "",
+                "status": 1, //0:待处理  1:处理中  2:关闭
+                "suggestion": "",
+                "contact": ""
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $('#openMyFeedback').html('已开启')
+                    console.log(result)
+                }
+            });
+        },
+        publicToPrivate : function () {
+            var url = ctx + "boss/suggest/update";
+            var data = {
+                "suggestId": suggestId,
+                "user_id": parseInt(userId),
+                "type": 1 //0:公开  1:私有
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $('#publicToMyFeedback').html('完成')
+                    console.log(result)
+                }
+            });
+        },
+        delReply : function (replayId) {
+            var url = ctx + "boss/suggest/del";
+            var data = {
+                "id": parseInt(replayId)
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    location.reload();
+                }
+            });
         }
     };
     window.action = action;
-    action.loadPageData(suggestId);
+    action.loadPageData();
 
     function timestampToTime(timestamp) {
         var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -169,7 +269,38 @@ $(function () {
 
     $('#addReply').find('button[type=submit]').click(function (t) {
         t.preventDefault();
-        action.add(suggestId)
+        action.add()
+    })
+
+    //关闭工单
+    $('#closeMyFeedback').click(function () {
+        if(userId == user_id) {
+            action.closeFeedback();
+        } else {
+            toastr.error("权限错误!");
+        }
+    })
+    //开启工单
+    $('#openMyFeedback').click(function () {
+        if(userId == user_id) {
+            action.openFeedback();
+        } else {
+            toastr.error("权限错误!");
+        }
+    })
+    //公开工单转私有工单
+    $('#publicToMyFeedback').click(function () {
+        action.publicToPrivate();
+    })
+    //删除自己的回复
+    $('#pageContent').on('click', '.delReply', function () {
+        var replayId = $(this).data('id')
+        var uid = $(this).data('uid')
+        if (userId == uid) {
+            action.delReply(replayId);
+        } else {
+            toastr.error("权限错误!");
+        }
     })
 
 })

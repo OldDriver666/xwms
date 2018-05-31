@@ -141,6 +141,14 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 .ticket .reply-item .content img{
 	width:100%;
 }
+.application .ticket .reply-item .delReply{
+	position: absolute;
+	right:10px;
+	top:10px;
+	font-size:1em;
+	color: #999;
+	cursor: pointer;
+}
 .application .ticket .reply-item.admin .info {
 	background:#FBFBD6!important
 }
@@ -304,7 +312,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
     background: #52C27D;
 }
 .mini-status.status-close {
-	background: #c21604;
+	background: #ccc;
 }
 .search .search_results {
 	position:absolute;
@@ -565,8 +573,9 @@ ul.article-list li.article-item {
 	border-radius: 3px;
 	cursor: pointer;
 	border: 1px solid #bbb;
-	font-size: 1.6rem;
-	padding: 0.6em 1.5em 0.7em;
+	font-size: 1.5rem;
+	padding: 0.4em 1em 0.5em;
+	text-align: center;
 }
 /*.btn, .button {
     position: relative;
@@ -582,6 +591,18 @@ ul.article-list li.article-item {
     font-size: 1rem;
     padding: .5em 1em .4em;
 }*/
+.closeFeedbackInfo{
+	position: relative;
+}
+.closeFeedbackInfo em{
+	font-size: 0.8em;
+	color: #666;
+}
+#openMyFeedback {
+	position: absolute;
+	right:0;
+	top:5px;
+}
 .blue_btn, .gray_btn, .green_btn, .red_btn, .white_btn {
     box-shadow: none;
     text-shadow: none;
@@ -596,6 +617,14 @@ ul.article-list li.article-item {
     background-color: #85be7a;
     color: #fff;
 }
+.red_btn{
+	background-color: #f07c70;
+	color: #fff;
+}
+.gray_btn{
+	background-color: #c9c9c9;
+	color: #fff;
+}
 .article .vote number {
     padding-left: .5em;
 }
@@ -609,27 +638,26 @@ ul.article-list li.article-item {
 	width: 100%;
 	color: #777;
 	font: inherit;
-	margin: 0;
 	border: 1px solid #ccc;
 	padding: 6px 4px;
 	outline: 0;
 	border-radius: 2px;
 	max-width: 100%;
 	background: #fff;
+	margin-bottom: 5px;
 }
 .ticket .add_reply .fbtn{
-	width:10em;
 }
 .attachFile {
 	position: relative;
 	top: 0px;
-	margin-left: 15px;
+	margin: 10px 10px 0 0;
 	color: #888;
 	font-size: 13px;
 	display: inline-block;
 	border: 1px solid #CCC;
 	background: #FFF;
-	padding: 8px 24px;
+	padding: 5px 10px;
 	-moz-border-radius: 25px;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;

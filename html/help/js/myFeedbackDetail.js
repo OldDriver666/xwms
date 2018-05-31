@@ -16,10 +16,11 @@ $(function () {
     var suggestId = Request["sid"];
     var id = parseInt(Request["id"])
     var uname = Request["uname"];
+    var user_id = null;
 
     var action = {
         //新增数据
-        add : function(suggestId) {
+        add : function() {
             if($('#addReply').find('textarea').val().trim() === "") {
                 toastr.error("内容不能为空!");
                 return false
@@ -63,7 +64,7 @@ $(function () {
                         toastr.success("添加成功!");
                         $('textarea[name=content]').val('');
                         $('#file_list .attachment2-item').remove();
-                        action.loadPageData(suggestId);
+                        action.loadPageData();
                     } else {
                         console.log("添加失败！");
                     }
@@ -72,7 +73,7 @@ $(function () {
                 });
             }
         },
-        loadPageData : function(suggestId) {
+        loadPageData : function() {
             var url = ctx + "boss/suggest/queryBySuggestId";
             var data = {
                 "page_no": 1,
@@ -87,7 +88,26 @@ $(function () {
                 Util.ajaxLoadData(url,data,"POST",true,function(result) {
                     if(result.code == ReturnCode.SUCCESS){
                         var myData = result.data.result
+                        user_id = myData[0].userId
 
+                        //判断工单状态显示隐藏内容status == 2 当前为关闭状态
+                        if (myData[0].status == 2) {
+                            $('#addReply').hide();
+                            $('.closeFeedbackInfo').show();
+                            $('.closeFeedbackInfo').find('em').html(timestampToTime(myData[0].updated))
+                        } else {
+                            $('#addReply').show();
+                            $('.closeFeedbackInfo').hide();
+                        }
+
+                        //判断是公开工单还是私有工单0:公开、1：私有
+                        if (myData[0].type == 0) {
+                            $('#publicToMyFeedback').show();
+                        } else {
+                            $('#publicToMyFeedback').hide();
+                        }
+
+                        //内容区
                         var imgStr = myData[0].pictures;
                         var htmlImg = ''
                         var htmlImgList = [];
@@ -103,7 +123,7 @@ $(function () {
                         }
                         $(".ticket .attachment").html(htmlImgList.join(''));
 
-
+                        //回复区
                         fqType = result.data.result[0].type
                         $(".ticket .replyNum").html(result.data.result.length - 1)
                         $('#pageContent').empty();
@@ -133,6 +153,7 @@ $(function () {
                                 '</div>' +
                                 '<span class="author">' + formatname(myData[i].uname) + '</span>' +
                                 '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
+                                '<div class="delReply" data-id="' + myData[i].id + '">删除</div>'+
                                 '</div>' +
                                 '<div class="content">' +
                                 '<p>' + myData[i].content + '</p>' +
@@ -148,10 +169,60 @@ $(function () {
                     console.log("服务器异常！")
                 });
             }
+        },
+        closeFeedback : function() {
+            var url = ctx + "boss/suggest/update";
+            var data = {
+                "suggestId": suggestId,
+                "user_id": parseInt(userId),
+                "status": 2 //0:待处理  1:处理中  2:关闭
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $('#closeMyFeedback').html('已关闭')
+                }
+            });
+        },
+        openFeedback : function() {
+            var url = ctx + "boss/suggest/update";
+            var data = {
+                "suggestId": suggestId,
+                "user_id": parseInt(userId),
+                "status": 1 //0:待处理  1:处理中  2:关闭
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $('#openMyFeedback').html('已开启')
+                }
+            });
+        },
+        publicToPrivate : function () {
+            var url = ctx + "boss/suggest/update";
+            var data = {
+                "suggestId": suggestId,
+                "user_id": parseInt(userId),
+                "type": 1 //0:公开  1:私有
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    $('#publicToMyFeedback').html('完成')
+                }
+            });
+        },
+        delReply : function (replayId) {
+            var url = ctx + "boss/suggest/del";
+            var data = {
+                "id": parseInt(replayId)
+            };
+            Util.ajaxLoadData(url,data,"POST",true,function(result) {
+                if (result.code == ReturnCode.SUCCESS) {
+                    location.reload();
+                }
+            });
         }
     };
     window.action = action;
-    action.loadPageData(suggestId);
+    action.loadPageData();
 
     function timestampToTime(timestamp) {
         var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -173,6 +244,27 @@ $(function () {
 
     $('#addReply').find('button[type=submit]').click(function (t) {
         t.preventDefault();
-        action.add(suggestId)
+        action.add()
+    })
+    $('#closeMyFeedback').click(function () {
+        if(userId == user_id) {
+            action.closeFeedback();
+        } else {
+            toastr.error("权限错误!");
+        }
+    })
+    $('#openMyFeedback').click(function () {
+        if(userId == user_id) {
+            action.openFeedback();
+        } else {
+            toastr.error("权限错误!");
+        }
+    })
+    $('#publicToMyFeedback').click(function () {
+        action.publicToPrivate();
+    })
+    $('#pageContent').on('click', '.delReply', function () {
+        var replayId = $(this).data('id')
+        action.delReply(replayId);
     })
 })
