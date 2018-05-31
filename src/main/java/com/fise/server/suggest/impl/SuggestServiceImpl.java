@@ -127,33 +127,15 @@ public class SuggestServiceImpl implements ISuggestService{
 	public Response updateSuggest(IMSuggest record) {
 		
 		Response response=new Response();
-		
-		if(record.getUserId()==null){
-		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		if(StringUtil.isEmpty(record.getUname())){
-		    return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-		}
-		
-		if(record.getUserId()!=null){
-			IMSuggestExample example=new IMSuggestExample();
-			Criteria criteria=example.createCriteria();
-			criteria.andUserIdEqualTo(record.getUserId());
-			List<IMSuggest> list=IMSuggestDao.selectByExample(example);
-			
-			if(list.size()!=0){
-				if(record.getId().equals(list.get(0).getId())){
-					
-				}else{
-					return response.failure(ErrorCode.ERROR_SUGGEST_USER_ID_EXISTED);
-				}
-			}	
-		}
-		
-		//更新数据
+		IMSuggest suggest = new IMSuggest();
+		IMSuggestExample example=new IMSuggestExample();
+		Criteria criteria=example.createCriteria();
+		criteria.andSuggestIdEqualTo(record.getSuggestId());
 		long updatetime=System.currentTimeMillis()/1000;
-		record.setUpdated((int)updatetime);
-		IMSuggestDao.updateByPrimaryKeySelective(record);
+		suggest.setType(record.getType());
+		suggest.setStatus(record.getStatus());
+		suggest.setUpdated((int)updatetime);
+		IMSuggestDao.updateByExampleSelective(suggest, example);
 		return response.success();
 	}
 

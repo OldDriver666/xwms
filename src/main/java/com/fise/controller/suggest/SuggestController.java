@@ -102,16 +102,8 @@ public class SuggestController {
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
-		
 		logger.info(record.toString());
-		
-		if(record.getId()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-		
 		response=iSuggestService.updateSuggest(record);
-		
-		
 		return response;
 	}
 }
