@@ -199,7 +199,6 @@ $(function () {
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $('#closeMyFeedback').html('已关闭')
-                    console.log(result)
                 }
             });
         },
@@ -209,14 +208,13 @@ $(function () {
                 "suggestId": suggestId,
                 "user_id": parseInt(userId),
                 "uname": "",
-                "status": 1, //0:待处理  1:处理中  2:关闭
+                "status": 0, //0:开启  1:处理中  2:关闭
                 "suggestion": "",
                 "contact": ""
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $('#openMyFeedback').html('已开启')
-                    console.log(result)
                 }
             });
         },
@@ -230,7 +228,6 @@ $(function () {
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
                     $('#publicToMyFeedback').html('完成')
-                    console.log(result)
                 }
             });
         },

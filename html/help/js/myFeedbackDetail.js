@@ -161,6 +161,13 @@ $(function () {
                                 '</div>' +
                                 '</div>';
                             $('#pageContent').append(html2)
+
+                            // 判断当前用户id，显示回复区的删除按钮
+                            if (userId == result.data.result[i].userId) {
+                                $('#pageContent .delReply').eq(i - 1).show();
+                            } else {
+                                $('#pageContent .delReply').eq(i - 1).hide();
+                            }
                         }
                     } else {
                         console.log("请求出错！");
@@ -188,7 +195,7 @@ $(function () {
             var data = {
                 "suggestId": suggestId,
                 "user_id": parseInt(userId),
-                "status": 1 //0:待处理  1:处理中  2:关闭
+                "status": 0 //0:开启  1:处理中  2:关闭
             };
             Util.ajaxLoadData(url,data,"POST",true,function(result) {
                 if (result.code == ReturnCode.SUCCESS) {
