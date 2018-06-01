@@ -50,7 +50,8 @@ public class SuggestServiceImpl implements ISuggestService{
 		SuggestParam suggestParam = param.getParam();
 		IMSuggestExample example=new IMSuggestExample();
 		Criteria criteria=example.createCriteria();
-		
+		criteria.andTitleIsNotNull();
+		criteria.andTitleNotEqualTo("");
 		if(suggestParam.getUserId()!=null){
 			criteria.andUserIdEqualTo(suggestParam.getUserId());
 		}

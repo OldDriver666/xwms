@@ -1420,7 +1420,8 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 //请求
 {
-    "suggestId":x                  //必填-ID
+    "id":x ,                 //选填 回答id
+    "suggestId":"x"          //选填 建议id
 }
 
 //回复
@@ -1430,7 +1431,7 @@ type和name都是选填，如果都不填，则查询所有信息
 ```
 
 ####修改用户建议
-|   接口地址    |   boss/suggest/update        |
+|   接口地址    |   boss/suggest/update       |
 |   ---         |   ---                   |
 
 ```
