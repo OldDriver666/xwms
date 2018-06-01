@@ -50,6 +50,59 @@ Util.ajaxLoginData = function(url,data,type,async,callback,errorCallback){
     });
 };
 
+Util.ajaxworkOrderData = function(url,data,type,async,callback,errorCallback){
+    async = typeof(async)!="undefined" ? async : true;
+    type = typeof(type)!="undefined" ? type : "get";
+    $.ajax({
+        //ContentType: 'application/json;charset=UTF-8',
+        headers: {
+            "Content-Type":"application/json;charset=UTF-8"
+        },
+        url:url,
+        data:JSON.stringify(data),
+        type:type,
+        dataType:"json",
+        async:async,
+        cache:false,
+        success:function(result,textStatus){
+            result = result || "";
+            if(callback){
+                if(result != "") {
+                    // 未登录直接跳转至登录
+                    if(result.code == ReturnCode.EXPIRED_ACCESS_TOKEN) {
+                        alert("登录已失效或无此访问权限，请重新登录后尝试！");
+                        location.href = ctx + "/login.html";
+                    }
+                    if(result.code == ReturnCode.REQUEST_HEADER_PARAM_ERROR) {
+                        alert("您还未登录，请登录后访问！");
+                        location.href = ctx + "/login.html";
+                    }
+                }
+                callback(result);
+            }
+        },
+        error:function(errorMsg){
+            var msg = "链接服务器失败";
+            if(errorMsg.responseText){
+                if(typeof(errorMsg.responseText)=="string"){
+                    try{
+                        msg = eval('('+errorMsg.responseText+')');
+                        msg = msg.errormsg;
+                    }catch(e){
+
+                    }
+
+                }else{
+                    msg = errorMsg.responseText.errormsg;
+                }
+            }
+            if(errorCallback){
+                errorCallback(msg);
+            }
+        }
+    });
+};
+
 Util.ajaxLoadData = function(url,data,moduleId,type,async,callback,errorCallback){
     async = typeof(async)!="undefined" ? async : true;
     type = typeof(type)!="undefined" ? type : "get";
@@ -739,13 +792,18 @@ Util.regionArgumentsDetail = function(regionlist){
 Util.pathName = function(){
 	//生产
     /*ctx = "http://file.fise-wi.com:8589/managesvr/";
+     fileUrl = "http://file.fise-wi.com:4869/"
     Util.localStorage.add("ctx",ctx);
+    Util.localStorage.add("fileUrl",fileUrl);
     Util.localStorage.add("fileServUrl", "http://file.fise-wi.com:8700/")*/
     
 //开发
    ctx = "http://10.252.252.250:8787/managesvr/";
+   fileUrl = "http://10.252.252.250:4869/"
    Util.localStorage.add("ctx",ctx);
-   Util.localStorage.add("fileServUrl", "http://10.252.252.250:8700/")
+   Util.localStorage.add("fileUrl",fileUrl);
+   Util.localStorage.add("fileServUrl", "http://10.252.252.250:8700/");
+
 };
 
 //获取资源文件
@@ -791,6 +849,7 @@ $(function(){
 
 //后台服务器访问路径
 ctx = Util.localStorage.get("ctx");
+fileUrl = Util.localStorage.get("fileUrl");
 
 // cdn url
 /*cdnImg = Util.localStorage.get("cdnImg");
