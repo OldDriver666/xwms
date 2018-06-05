@@ -66,12 +66,18 @@ $(function() {
 			}else{
 				var uname = search_uname;
 			}
+            var search_title = $("#input-search-title").val();
+            var search_status = parseInt($('#input-search-status option:selected').val());
+            var search_type = parseInt($('#input-search-type option:selected').val());
 
 			var data = new Object();
 			data.page_no = 1;
 			data.page_size = 10;
 			data.param = {
 				"uname":uname,
+                "title":search_title,
+                "type":search_type,
+                "status":search_status,
 				"depart_id":parseInt(depart_id),
 				"company_id":parseInt(company_id)
 			};
@@ -106,18 +112,15 @@ $(function() {
 		edit : function() {
 			var url = ctx + "boss/suggest/update";
 			var data = new Object();
-			data.suggest_id = parseInt($("#input-suggest_id").val());
-			data.user_id = parseInt($("#input-user_id").val());
-			data.uname = $("#input-uname").val();
+			data.suggestId = $("#input-suggest_id").val();
 			data.status = parseInt($("input[name=status]:checked").val());
-			data.suggestion = $("#input-suggestion-txt").val();
-			data.contact = $("#input-contact").val();
+            data.type = parseInt($("input[name=type]:checked").val());
 			data.depart_id = parseInt(depart_id);
 			data.company_id = parseInt(company_id);
 
 			Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
 				if (result.code == ReturnCode.SUCCESS) {
-			 		$("#addTempl-modal").modal('hide');
+			 		$("#addTempl-modal2").modal('hide');
                     toastr.success("编辑成功!");
                     action.loadPageData();
 				}else{
@@ -132,7 +135,7 @@ $(function() {
 			if (confirm("删除后不可恢复，确定删除" + name + "？")) {
 				var url = ctx + "boss/suggest/del";
 				var data = new Object();
-                data.suggest_id = id;
+                data.suggestId = id;
 				data.depart_id = parseInt(depart_id);
 				data.company_id = parseInt(company_id);
 				Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
@@ -147,49 +150,236 @@ $(function() {
                     toastr.error(errorMsg);
                 });
 			}
-		}
+		},
+        //新增数据
+        add1 : function(suggestId, type) {
+            if($('#addReply').find('textarea').val().trim() === "") {
+                toastr.error("内容不能为空!");
+                return false
+            }
+            //获取图片url
+            var imgEle = $('#file_list').find('img');
+            var imgUrlArr = [];
+            var imgUrl = '';
+            if (imgEle.length > 0) {
+                for (var i = 0; i<imgEle.length; i++) {
+                    imgUrlArr.push(imgEle[i].src)
+                }
+                imgUrl = imgUrlArr.join(',')
+            }
+
+            if (suggestId === '' || suggestId === undefined || suggestId === null) {
+                toastr.error("提交失败，请稍后再试!");
+            } else if ($('textarea[name=content]').val() === '') {
+                toastr.error("回复内容不能为空!");
+            } else if ($('textarea[name=content]').val().length > 200) {
+                toastr.error("回复内容已超过了字数限制");
+            } else {
+                var url = ctx + "boss/suggest/add";
+                var data = {
+                    "userId": 2000020000,
+                    "uname": "anonymous",
+                    "title": "",
+                    "type": type, //0-公开 1-私有
+                    "content": $('textarea[name=content]').val(),
+                    "contact": "",
+                    "pictures": imgUrl,
+                    "suggestId": suggestId
+                };
+                Util.ajaxworkOrderData(url,data,"POST",true,function(result) {
+                    if (result.code == ReturnCode.SUCCESS) {
+                        toastr.success("添加成功!");
+                        $('textarea[name=content]').val('');
+                        $('#file_list .attachment2-item').remove();
+                        action.loadPageData2(suggestId);
+                    } else {
+                        console.log("添加失败！");
+                    }
+                },function() {
+                    console.log("服务器异常！")
+                });
+            }
+        },
+        //获取所有数据
+        loadPageData1 : function(uname, id, suggestId) {
+            var url = ctx + "boss/suggest/query";
+            var data = {
+                "page_no": 1,
+                "page_size": 10,
+                "param": {
+                    "uname": uname,
+                    "userId": null,
+                    "title": "",
+                    "type": null
+                }
+            };
+            if (uname === undefined || uname === null || uname === '' || isNaN(id)) {
+                console.log('无记录')
+            } else {
+                Util.ajaxworkOrderData(url,data,"POST",true,function(result) {
+                    if(result.code == ReturnCode.SUCCESS){
+                        for (var i = 0; i<result.data.result.length; i++) {
+                            if(result.data.result[i].id === id) {
+                                var imgStr = result.data.result[i].pictures;
+                                var htmlImg = ''
+                                var htmlImgList = [];
+                                $(".ticket .title").find('h2').html(result.data.result[i].title);
+                                $(".ticket .title").find('.time').html(timestampToTime(result.data.result[i].updated));
+                                $(".ticket .markdown-body").find('p').html(result.data.result[i].content);
+                                if (imgStr != '') {
+                                    var imgArr = imgStr.split(',');
+                                    for (var j = 0; j<imgArr.length; j++) {
+                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '?w=88&h=88" /></a></div>'
+                                        htmlImgList.push(htmlImg)
+                                    }
+                                }
+                                $(".ticket .attachment").html(htmlImgList.join(''));
+                                action.loadPageData2(suggestId);
+                            }
+                        }
+                    } else {
+                        console.log("请求出错！");
+                    }
+                },function() {
+                    console.log("服务器异常！")
+                });
+            }
+        },
+        //根据建议id查询用户回复建议
+        loadPageData2 : function(suggestId) {
+            var url = ctx + "boss/suggest/queryBySuggestId";
+            var data = {
+                "page_no": 1,
+                "page_size": 10,
+                "param": {
+                    "suggestId": suggestId
+                }
+            };
+            if (suggestId === undefined || suggestId === null || suggestId === '') {
+                console.log('无记录')
+            } else {
+                Util.ajaxworkOrderData(url,data,"POST",true,function(result) {
+                    if(result.code == ReturnCode.SUCCESS){
+                        var myData = result.data.result
+                        $(".ticket .replyNum").html(result.data.result.length - 1)
+                        $('#pageContent1').empty();
+                        var html = '';
+                        var imgListArr = []
+                        for (var n = 1; n < result.data.result.length; n++) {
+                            var picArr = result.data.result[n].pictures.split(',');
+                            if (result.data.result[n].pictures === '' && typeof result.data.result[n].pictures === 'string') {
+
+                            } else {
+                                for (var m = 0; m < picArr.length; m++) {
+                                    html = '<div class="attachment-item">' +
+                                        '<a href="' + picArr[m] + '" target="_blank"><img src="' + picArr[m] + '?w=88&h=88" /></a>' +
+                                        '</div>';
+                                    imgListArr.push(html);
+                                }
+                                myData[n].pictures = imgListArr.join('');
+                                imgListArr.length = 0;
+                            }
+                        }
+                        var html2 = '';
+                        for (var i = 1; i < myData.length; i++) {
+                            html2 = '<div class="reply-item user">' +
+                                '<div class="info clearfix">' +
+                                '<div class="avatar">' +
+                                '<img src="../../images/none.png" />' +
+                                '</div>' +
+                                '<span class="author">' + formatname((myData[i].uname)) + '</span>' +
+                                '<span class="time">' + timestampToTime(myData[i].created) + '</span>' +
+                                '</div>' +
+                                '<div class="content">' +
+                                '<p>' + myData[i].content + '</p>' +
+                                '<div class="attachment">' + myData[i].pictures + '</div>' +
+                                '</div>' +
+                                '</div>';
+                            $('#pageContent1').append(html2)
+                        }
+                    } else {
+                        console.log("请求出错！");
+                    }
+                },function() {
+                    console.log("服务器异常！")
+                });
+            }
+        }
 	};
 	window.action = action;
 	action.loadPageData();
 
 	$("#addTempl-modal").on('show.bs.modal', function(e) {
 		// 处理modal label显示及表单重置
-		var $form = $("form#form-addTempl");
 		if (!e.relatedTarget) {
-			$("h4#addTempl-modal-label").text("编辑用户意见");
-			$("#input-status-txt-wrap").show();
-			$("#input-suggestion-wrap").hide();
-			$("#input-suggestion-txt-wrap").show();
-			$form.data("action", "edit");
+			$("h4#addTempl-modal-label").text("回复用户意见");
 		} else if (e.relatedTarget.id = "btn-add") {
-			$("h4#addTempl-modal-label").text("添加用户意见");
+			/*$("h4#addTempl-modal-label").text("添加用户意见");
 			$("#input-status-txt-wrap").hide();
 			$("#input-suggestion-wrap").show();
 			$("#input-suggestion-txt-wrap").hide();
 			$form.data("action", "add");
-			$form[0].reset();
+			$form[0].reset();*/
 		}
 	});
+    $("#addTempl-modal2").on('show.bs.modal', function(e) {
+        // 处理modal label显示及表单重置
+        var $form = $("form#form-addTempl");
+        if (!e.relatedTarget) {
+             $("h4#addTempl-modal-label2").text("编辑用户意见");
+             $("#input-status-txt-wrap").show();
+             $("#input-suggestion-wrap").hide();
+             $("#input-suggestion-txt-wrap").show();
+             $form.data("action", "edit");
+        } else if (e.relatedTarget.id = "btn-add") {
+           /* $("h4#addTempl-modal-label").text("添加用户意见");
+            $("#input-status-txt-wrap").hide();
+            $("#input-suggestion-wrap").show();
+            $("#input-suggestion-txt-wrap").hide();
+            $form.data("action", "add");
+            $form[0].reset();*/
+        }
+    });
 
-    //编辑获取数据
+    //回复内容
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-		var check_status = $.trim(that.find("td").eq(3).text());
-		var status_val = null;
-		if(check_status === "已经回复"){
-			status_val = 1;
-		}else if(check_status === "初始正常"){
-			status_val = 0;
-		}
+        var id = parseInt(that.find("td").eq(7).text());
+        var suggestId = that.find("td").eq(0).text();
+        var uname = that.find("td").eq(2).text();
+        var type = parseInt(that.find("td").eq(8).text());
+        window.action.loadPageData1(uname, id, suggestId);
+        $("#addTempl-modal").modal("show");
+        $('#addReply').find('button[type=submit]').click(function (t) {
+            t.preventDefault();
+            window.action.add1(suggestId, type)
+        })
+    });
 
-		$("#input-suggest_id").val(that.find("td").eq(0).text());
+    //修改状态
+    $("#pageContent").on("click",".table-modify-btn",function(){
+        var that = $(this).parent().parent();
+        var status_val = $.trim(that.find("td").eq(8).text());
+        var type_val = $.trim(that.find("td").eq(9).text());
+
+
+        $("#input-suggest_id").val(that.find("td").eq(0).text());
         $("#input-user_id").val(that.find("td").eq(1).text());
         $("#input-uname").val(that.find("td").eq(2).text());
-		$("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
-		$("#input-suggestion-txt").val(that.find("td").eq(4).text());
-		$("#input-contact").val(that.find("td").eq(5).text());
+        $("#input-title-txt").val(that.find("td").eq(4).text());
+        $("#input-suggestion-txt").val(that.find("td").eq(5).text());
+        $("#input-contact").val(that.find("td").eq(6).text());
+        $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
+        $("input[name=type]").filter("[value=" + type_val + "]").prop('checked', true);
 
-        $("#addTempl-modal").modal("show");
+
+        $("#addTempl-modal2").modal("show");
+    });
+    //删除数据
+    $("#pageContent").on("click",".table-delete-btn",function(){
+        var that = $(this).parent().parent();
+        var suggestId = that.find("td").eq(0).text();
+        window.action.deleteConfig(suggestId)
     });
 
 	//验证表单
@@ -203,19 +393,18 @@ $(function() {
 			}
         }
     });
-
-	$("#btn-add-submit").on('click', function() {
-		var action = $("form#form-addTempl").data("action");
-		if(action == "add"){
-			if (!$("#form-addTempl").valid()) {
-				return;
-			}else {
-				window.action.add();
-			}
-		}else if(action == "edit"){
-			window.action.edit();
-		}
-	});
+    $("#btn-add-submit2").on('click', function() {
+        var action = $("form#form-addTempl").data("action");
+        if(action == "add"){
+            if (!$("#form-addTempl").valid()) {
+                return;
+            }else {
+                window.action.add();
+            }
+        }else if(action == "edit"){
+            window.action.edit();
+        }
+    });
 
 	$("#btn-search").on('click', function() {
         action.loadPageData();
@@ -232,6 +421,29 @@ $(function() {
 		}
 
 	});
+
+    function timestampToTime(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
+        h = date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() + ':';
+        m = date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' : date.getMinutes() + ':';
+        s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+        return Y+M+D+h+m+s;
+    }
+    function formatname(uname) {
+        if((/^1[34578]\d{9}$/.test(uname))) {
+            return uname.substr(0,3) + '****' + uname.substr(7)
+        } else {
+            return uname
+        }
+    }
+
+   /* $('#addReply').find('button[type=submit]').click(function (t) {
+        t.preventDefault();
+        action.add1(suggestId)
+    })*/
 
 });
 

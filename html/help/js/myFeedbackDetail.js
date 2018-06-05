@@ -100,7 +100,7 @@ $(function () {
                             $('.closeFeedbackInfo').hide();
                         }
 
-                        //判断是公开工单还是私有工单0:公开、1：私有
+                        //判断是公开问题还是私有问题0:公开、1：私有
                         if (myData[0].type == 0) {
                             $('#publicToMyFeedback').show();
                         } else {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="23px" viewBox="0 0 11 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Back</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Pomotodo-Icon-+-Back-+-Pomodoro" transform="translate(-3.000000, -1.000000)" fill="#C6C6C6">
+            <path d="M16.253828,8.08279091 L4.85448509,6.07277918 C4.29611831,5.97432405 3.91586755,5.43251101 4.0160199,4.86451879 C4.1168705,4.29256663 4.65394496,3.91658583 5.21716885,4.0158974 L18.0419817,6.27725792 L18.0558649,6.27480992 L18.0567559,6.27986302 L18.0661766,6.28152414 L18.0616127,6.30740719 L20.3214917,19.1238177 C20.4199468,19.6821844 20.0408625,20.2248143 19.4728703,20.3249666 C18.9009181,20.4258172 18.3639215,20.0497253 18.2646099,19.4865014 L16.253828,8.08279091 Z" id="Back" transform="translate(12.250656, 12.253154) scale(-1, 1) rotate(-315.000000) translate(-12.250656, -12.253154) "></path>
+        </g>
+    </g>
+</svg>
