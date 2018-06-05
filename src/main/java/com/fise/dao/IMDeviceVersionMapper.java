@@ -1,10 +1,13 @@
 
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.fise.base.Page;
 import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.entity.IMDeviceVersionExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface IMDeviceVersionMapper {
     long countByExample(IMDeviceVersionExample example);
@@ -28,5 +31,7 @@ public interface IMDeviceVersionMapper {
     int updateByPrimaryKeySelective(IMDeviceVersion record);
 
     int updateByPrimaryKey(IMDeviceVersion record);
+    
+    List<IMDeviceVersion> selectByExampleByPage(@Param("example") IMDeviceVersionExample example,@Param("page") Page<IMDeviceVersion> page);
 
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.WiAccountManage;
 import com.fise.server.accountmanage.IAccountManageService;
 import com.fise.server.auth.IAuthService;
@@ -93,5 +95,14 @@ public class AccountManageController {
         }
         response=accountManageService.updateAccount(param);
         return response;
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value="/queryAccountManagePage",method=RequestMethod.POST)
+    public Response queryAccountPage(@RequestBody @Valid Page<WiAccountManage> param){
+    	Response response=new Response();
+    	logger.info(param.toString());
+    	response=accountManageService.queryAccountPage(param);
+    	return response;
     }
 }

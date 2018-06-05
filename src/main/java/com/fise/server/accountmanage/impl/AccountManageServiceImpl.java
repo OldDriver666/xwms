@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAccountManageMapper;
 import com.fise.model.entity.WiAccountManage;
@@ -69,5 +70,21 @@ public class AccountManageServiceImpl implements IAccountManageService{
         
         return response.success();
     }
+    
+    @Override
+	public Response queryAccountPage(Page<WiAccountManage> param) {
+        Response response=new Response();
+        
+        WiAccountManageExample example=new WiAccountManageExample();
+        WiAccountManageExample.Criteria criteria=example.createCriteria();
+        if(param.getParam().getDepartId()!=null) {
+        	criteria.andDepartIdEqualTo(param.getParam().getDepartId());
+        }
+        List<WiAccountManage> list=accountDao.selectByPage(example, param);
+        param.setParam(null);
+        param.setResult(list); 
+		response.success(param);
+		return response;
+	}
 
 }

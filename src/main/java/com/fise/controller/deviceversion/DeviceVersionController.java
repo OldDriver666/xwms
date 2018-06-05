@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.IMDeviceVersion;
 import com.fise.model.param.DeviceVersionParam;
 import com.fise.server.auth.IAuthService;
@@ -109,4 +111,14 @@ public class DeviceVersionController {
 
         return response;
     }
+    
+	@IgnoreAuth
+	@RequestMapping(value = "/queryDeviceVersionByPage", method = RequestMethod.POST)
+    public Response queryDeviceVersionByPage(@RequestBody @Valid Page<IMDeviceVersion> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = iDeviceVersionService.queryDeviceVersionByPage(page);
+        return resp;
+    }
+    
 }

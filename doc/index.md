@@ -4001,5 +4001,135 @@ null 没有数据返回 看code是否成功
 }
 ```
 
+####设备版本-分页查询
+|   接口地址    |   boss/deviceversion/queryDeviceVersionByPage        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
 
+#####请求
+```
+{
+ "param":{
+       "company_id":1,                    //选填-公司ID
+       "dev_type":19                      //选填-设备类型
+         },
+ "page_no":1       
+}
+```
+#####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "status": 0,
+            "version_id": 1,
+            "depart_id": 1,
+            "dev_type": 19,
+            "dev_version": "v1.0.1",
+            "version_info": "升级了，升级了",
+            "update_url": "http://192.168.2.196/index.html"
+         },
+         {
+            "status": 0,
+            "version_id": 3,
+            "depart_id": 1,
+            "dev_type": 25,
+            "dev_version": "v1.0.1",
+            "version_info": "升级了，升级了",
+            "update_url": "http://192.168.2.196/index.html"
+         },
+         {
+            "status": 0,
+            "version_id": 5,
+            "depart_id": 1,
+            "dev_type": 21,
+            "dev_version": "1",
+            "version_info": "",
+            "update_url": "1"
+         },
+         {
+            "status": 0,
+            "version_id": 7,
+            "depart_id": 1,
+            "dev_type": 22,
+            "dev_version": "1",
+            "version_info": "",
+            "update_url": "1"
+         }
+      ]
+   }
+}
+```
 
+####小位号管理-分页查询
+|   接口地址    |   boss/accountmanage/queryAccountManagePage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                  | 
+
+#####请求
+```
+没有，则查询所有
+{
+"param":{
+     "depart_id":1                 //选填-公司id
+        },
+     "page_no":1    
+}
+```
+#####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "description": "试产100小位号",
+            "status": 1,
+            "created": 0,
+            "depart_id": 1,
+            "begin_account": "W0101000001",
+            "end_account": "W0101000099"
+         },
+         {
+            "id": 2,
+            "description": "正式产小位号段-卡片机",
+            "status": 0,
+            "created": 0,
+            "depart_id": 1,
+            "begin_account": "W0101003000",
+            "end_account": "W0101006100"
+         },
+         {
+            "id": 9,
+            "description": "儿童手表正式量产",
+            "status": 0,
+            "created": 1503314057,
+            "depart_id": 1,
+            "begin_account": "W0201000001",
+            "end_account": "W0201003100"
+         }
+      ]
+   }
+}
+```
