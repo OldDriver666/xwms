@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.IMClientType;
 import com.fise.model.param.ClientTypeParam;
 import com.fise.server.auth.IAuthService;
@@ -104,6 +106,16 @@ public class ClientTypeController {
 		response=imClientTypeService.updateClientType(record);
 		
 		
+		return response;
+	}
+	
+	/*分页查询clienttype设备   */
+	@IgnoreAuth
+	@RequestMapping(value="/queryClienTypePage",method=RequestMethod.POST)
+	public Response queryClienTypePage(@RequestBody @Valid Page<IMClientType> param) {
+		Response response=new Response();
+		logger.info(param.toString());
+		response=imClientTypeService.queryClienTypePage(param);
 		return response;
 	}
 }

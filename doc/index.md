@@ -4133,3 +4133,50 @@ null 没有数据返回 看code是否成功
    }
 }
 ```
+
+####设备类型-分页查询
+|   接口地址    |   boss/clienttype/queryClienTypePage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST              |
+|   参数格式    |   JSON                   | 
+
+#####请求
+```
+param都不填则全部查询
+{
+ "param":{
+    "client_type":x,                   //选填-设备类型
+    "client_name":""                   //选填-设备类型名称
+           },
+   "page_no":x     
+}
+```
+#####回复
+```
+[
+ "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+    {
+        "type_id":x,
+        "client_type":x,
+        "client_name":"",
+        "created":x
+    },
+    {
+        "type_id":x,
+        "client_type":x,
+        "client_name":"",
+        "created":x
+    }
+    ]
+]
+```
