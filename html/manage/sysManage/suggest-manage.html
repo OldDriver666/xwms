@@ -214,6 +214,7 @@
 				<tr>
 					<th>用户ID</th>
 					<th>用户名</th>
+					<th>类型</th>
 					<th>状态</th>
 					<th style="width: 200px">标题</th>
 					<th style="width: 200px">内容</th>
@@ -250,18 +251,20 @@
 <script type ="text/javascript" src="../../resource/plugin/jquery.validate-1.14.0/jquery.validate.extend.js"></script>
 <script type="text/x-jquery-tmpl" id="pageTmpl">
 <tr>
-	<td style="display:none;">${suggestId}</td>
-	<td>${userId}</td>
-	<td>${uname}</td>
-	<td>{{if status == 0}}开启{{else status == 1}}处理中{{else status == 2}}关闭{{/if}}</td>
-	<td class="content table-content-hidden">${title}</td>
-	<td class="content table-content-hidden">${content}</td>
-	<td>${contact}</td>
-	<td style="display:none;">${id}</td>
-	<td style="display:none;">${status}</td>
-	<td style="display:none;">${type}</td>
-	<td style="display:none;">${Util.formatDateTime(updated)}</td>
-	<td>${Util.formatDateTime(created)}</td>
+	<td class="td-suggestId" style="display:none;">${suggestId}</td>
+	<td class="td-userId">${userId}</td>
+	<td class="td-uname">${uname}</td>
+	<td >{{if type == 0}}公开{{else type == 1}}私有{{/if}}</td>
+	<td >{{if status == 0}}开启{{else status == 1}}处理中{{else status == 2}}关闭{{/if}}</td>
+	<td class="content table-content-hidden td-title">${title}</td>
+	<td class="content table-content-hidden td-content">${content}</td>
+	<td class="td-contact">${contact}</td>
+	<td class="td-id" style="display:none;">${id}</td>
+	<td class="td-status" style="display:none;">${status}</td>
+	<td class="td-type" style="display:none;">${type}</td>
+	<td class="td-pictures" style="display:none;">${pictures}</td>
+	<td class="td-updated" style="display:none;">${Util.formatDateTime(updated)}</td>
+	<td class="td-created">${Util.formatDateTime(created)}</td>
 	<td class="table-update">
 	    <a href="javascript:void(0);" class="table-edit-btn">回复</a>
 	    <a href="javascript:void(0);" class="table-modify-btn">编辑</a>

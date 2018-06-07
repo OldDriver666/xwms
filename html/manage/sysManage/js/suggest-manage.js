@@ -200,51 +200,6 @@ $(function() {
                 });
             }
         },
-        //获取所有数据
-        loadPageData1 : function(uname, id, suggestId) {
-            var url = ctx + "boss/suggest/query";
-            var data = {
-                "page_no": 1,
-                "page_size": 10,
-                "param": {
-                    "uname": uname,
-                    "userId": null,
-                    "title": "",
-                    "type": null
-                }
-            };
-            if (uname === undefined || uname === null || uname === '' || isNaN(id)) {
-                console.log('无记录')
-            } else {
-                Util.ajaxworkOrderData(url,data,"POST",true,function(result) {
-                    if(result.code == ReturnCode.SUCCESS){
-                        for (var i = 0; i<result.data.result.length; i++) {
-                            if(result.data.result[i].id === id) {
-                                var imgStr = result.data.result[i].pictures;
-                                var htmlImg = ''
-                                var htmlImgList = [];
-                                $(".ticket .title").find('h2').html(result.data.result[i].title);
-                                $(".ticket .title").find('.time').html(timestampToTime(result.data.result[i].updated));
-                                $(".ticket .markdown-body").find('p').html(result.data.result[i].content);
-                                if (imgStr != '') {
-                                    var imgArr = imgStr.split(',');
-                                    for (var j = 0; j<imgArr.length; j++) {
-                                        htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '?w=88&h=88" /></a></div>'
-                                        htmlImgList.push(htmlImg)
-                                    }
-                                }
-                                $(".ticket .attachment").html(htmlImgList.join(''));
-                                action.loadPageData2(suggestId);
-                            }
-                        }
-                    } else {
-                        console.log("请求出错！");
-                    }
-                },function() {
-                    console.log("服务器异常！")
-                });
-            }
-        },
         //根据建议id查询用户回复建议
         loadPageData2 : function(suggestId) {
             var url = ctx + "boss/suggest/queryBySuggestId";
@@ -344,11 +299,27 @@ $(function() {
     //回复内容
     $("#pageContent").on("click",".table-edit-btn",function(){
         var that = $(this).parent().parent();
-        var id = parseInt(that.find("td").eq(7).text());
-        var suggestId = that.find("td").eq(0).text();
-        var uname = that.find("td").eq(2).text();
-        var type = parseInt(that.find("td").eq(8).text());
-        window.action.loadPageData1(uname, id, suggestId);
+        var id = parseInt(that.find(".td-id").text());
+        var suggestId = that.find(".td-suggestId").text();
+        var uname = that.find(".td-uname").text();
+        var type = parseInt(that.find(".td-type").text());
+
+        var imgStr = that.find(".td-pictures").text();
+        var htmlImg = ''
+        var htmlImgList = [];
+        $(".ticket .title").find('h2').html(that.find(".td-title").text());
+        $(".ticket .title").find('.time').html(timestampToTime(that.find(".td-updated").text()));
+        $(".ticket .markdown-body").find('p').html(that.find(".td-content").text());
+        if (imgStr != '') {
+            var imgArr = imgStr.split(',');
+            for (var j = 0; j<imgArr.length; j++) {
+                htmlImg = '<div class="attachment-item"><a href="' + imgArr[j] + '" target="_blank"><img src="' + imgArr[j] + '?w=88&h=88" /></a></div>'
+                htmlImgList.push(htmlImg)
+            }
+        }
+        $(".ticket .attachment").html(htmlImgList.join(''));
+
+        window.action.loadPageData2(suggestId);
         $("#addTempl-modal").modal("show");
         $('#addReply').find('button[type=submit]').click(function (t) {
             t.preventDefault();
@@ -359,16 +330,16 @@ $(function() {
     //修改状态
     $("#pageContent").on("click",".table-modify-btn",function(){
         var that = $(this).parent().parent();
-        var status_val = $.trim(that.find("td").eq(8).text());
-        var type_val = $.trim(that.find("td").eq(9).text());
+        var status_val = $.trim(that.find(".td-status").text());
+        var type_val = $.trim(that.find(".td-type").text());
 
 
-        $("#input-suggest_id").val(that.find("td").eq(0).text());
-        $("#input-user_id").val(that.find("td").eq(1).text());
-        $("#input-uname").val(that.find("td").eq(2).text());
-        $("#input-title-txt").val(that.find("td").eq(4).text());
-        $("#input-suggestion-txt").val(that.find("td").eq(5).text());
-        $("#input-contact").val(that.find("td").eq(6).text());
+        $("#input-suggest_id").val(that.find(".td-suggestId").text());
+        $("#input-user_id").val(that.find(".td-userId").text());
+        $("#input-uname").val(that.find(".td-uname").text());
+        $("#input-title-txt").val(that.find(".td-title").text());
+        $("#input-suggestion-txt").val(that.find(".td-content").text());
+        $("#input-contact").val(that.find(".td-contact").text());
         $("input[name=status]").filter("[value=" + status_val + "]").prop('checked', true);
         $("input[name=type]").filter("[value=" + type_val + "]").prop('checked', true);
 
