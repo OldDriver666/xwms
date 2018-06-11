@@ -10,27 +10,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <script>
-        function getCookie(name) {
-            var start = document.cookie.indexOf(name + "=");
-            var len = start + name.length + 1;
-            if ((!start) && (name != document.cookie.substring(0, name.length))) {
-                return "";
-            }
-            if (start == -1) {
-                return "";
-            }
-            var end = document.cookie.indexOf(';', len);
-            if (end == -1) {
-                end = document.cookie.length;
-            }
-            return unescape(document.cookie.substring(len, end));
-        }
-        var token_value = getCookie("accesstoken");
-        if (token_value == "") {
-            window.location.href = "login.html";
-        }
-    </script>
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <link rel="stylesheet" href="css/global.css" media="all">
     <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -354,6 +333,28 @@
 
 
     </style>
+
+    <script>
+        function getCookie(name) {
+            var start = document.cookie.indexOf(name + "=");
+            var len = start + name.length + 1;
+            if ((!start) && (name != document.cookie.substring(0, name.length))) {
+                return "";
+            }
+            if (start == -1) {
+                return "";
+            }
+            var end = document.cookie.indexOf(';', len);
+            if (end == -1) {
+                end = document.cookie.length;
+            }
+            return unescape(document.cookie.substring(len, end));
+        }
+        var token_value = getCookie("accesstoken");
+        if (token_value == "") {
+            window.location.href = "login.html";
+        }
+    </script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
