@@ -24,6 +24,8 @@ public class QueryRoleParam implements Serializable {
 
     private Integer include_all;
     
+    private String name;
+    
     public Integer getCreator_id() {
 		return creator_id;
 	}
@@ -60,4 +62,13 @@ public class QueryRoleParam implements Serializable {
     public String toString() {
         return JsonUtil.toJson(this);
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+    
 }

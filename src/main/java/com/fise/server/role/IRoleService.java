@@ -63,4 +63,7 @@ public interface IRoleService {
     /* 分页查询角色 */
     public Response queryOrganizationRoleByPage(Page<WiOrganizationRole> page);
     
+    /* 根据模块名称模糊查询并返回对应权限-不包括不可见的 */
+    public List<ModulePermissResult> queryAuthByName(QueryRoleParam param);
+    
 }

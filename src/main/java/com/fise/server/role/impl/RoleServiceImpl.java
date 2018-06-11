@@ -370,5 +370,11 @@ public class RoleServiceImpl implements IRoleService {
         page.setResult(roleDao.selectByExampleByPage(example, page));
 		return response.success(page);
 	}
+    
+    @Override
+    public List<ModulePermissResult> queryAuthByName(QueryRoleParam param) {
+    	
+    	return permissionDao.selectAuthByName(param.getCompany_id(), param.getRole_id(),param.getName());
+    }
 
 }
