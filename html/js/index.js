@@ -132,8 +132,37 @@ $(function(){
                 }
                 return 0;
             }
+        },
+        searchMenu : function(keywords){
+            var url = ctx + "boss/role/queryAuthByName";
+            var moduleId= 0;
+            var data = {
+                "role_id":parseInt(role_level),
+                "company_id":parseInt(company_id),
+                "name": keywords
+            };
+            Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
+                if(result.code == ReturnCode.SUCCESS){
+                    var rdata = result.data;
+                    $('#searchMenuList').empty();
+                    $("#pageMenu1").tmpl(rdata).appendTo('#searchMenuList');
+                    if (rdata.length > 0) {
+                        $('#searchMenuList').css('display', 'block');
+                    }
+                } else {
+                }
+            });
         }
 	};
 	Index.init();
+
+    $("#btn-search-menu").on('click', function() {
+        var keywords = $('#search-menu-val').val();
+        $('#search-menu-val').focus();
+        if (keywords != "") {
+            Index.searchMenu(keywords);
+        }
+    });
+
 });
 

@@ -27,16 +27,19 @@
         }
         .layui-tab-title {
             height: 35px;
-            background-color: #35404d;
-            border-bottom: 0;
+            /*background-color: #35404d;*/
+            background-color: #fff;
+            border-bottom: 1px solid #F1F2F7;
         }
         .layui-tab-title li{
             line-height: 22px;
             min-width: auto;
             margin: 5px;
             border-radius: 2px;
-            color: #a2abb6;
-            background-color: #415164;
+            /*color: #a2abb6;*/
+            color:#fff;
+            /*background-color: #415164;*/
+            background-color: #B5B5B5;
             border-color: #415164;
         }
 
@@ -48,18 +51,23 @@
         }
         .layui-layout-admin .layui-side{
             top:70px!important;
+            border-right: 1px solid #ddd;
         }
         .layui-layout-admin .layui-body{
             top:70px!important;
         }
         .layui-bg-black, .layui-nav{
-            background-color: #2a3542!important;
+            /*background-color: #2a3542!important;*/
+            background-color: #fff!important;
         }
 
 
-        .admin-main{background: #2a3542}
+        .admin-main{
+            /*background-color: #2a3542;*/
+            background-color: #fff;
+        }
 
-        .admin-sidebar{width: 180px;min-height: 100%;padding: 0 10px;font-size: 1.2rem;  left: 0; top: 50px;}
+        .admin-sidebar{width: 180px;/*min-height: 100%;*/padding: 0 10px;font-size: 1.2rem;  left: 0; top: 50px;}
         .admin-sidebar-list{margin-bottom: 0}
         .admin-sidebar-list li a{color: #fff;padding-left: 24px}
         .admin-sidebar-list li:first-child{border-top: none}
@@ -69,15 +77,41 @@
 
 
         .sideMenu{padding: 0px;margin: 0px }
-        .sideMenu h3{height: 32px;line-height: 32px;color: #aeb2b7;cursor: pointer;padding: 0 0 0 10px;margin: 20px 0 0 0;border-top-left-radius: 3px;border-top-right-radius: 3px;font-weight: 400; }
-        .sideMenu h3 em{float: right;display: block;width: 40px;height: 32px;background: url(images/icoAdd.png) 16px 12px no-repeat;cursor: pointer}
-        .sideMenu h3.on em{background-position: 16px -57px}
-        .sideMenu h3.on{color: #ff6c60;background: #35404d}
-        .sideMenu h3 a{color: #aeb2b7;font-size: 12px;}
-        .sideMenu ul{line-height: 24px;color: #999;display: none;/* 默认都隐藏 */ ;background: #35404d;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;padding: 0px 0 10px 0;margin: 0px }
+        .sideMenu h3{height: 36px;line-height: 36px;color: #aeb2b7;cursor: pointer;padding: 0 0 0 10px;margin: 20px 0 0 0;border-top-left-radius: 3px;border-top-right-radius: 3px;font-weight: 400; }
+        .sideMenu h3 em{float: right;display: block;width: 40px;height: 36px;background: url(images/icoAdd.png) 16px 15px no-repeat;cursor: pointer}
+        .sideMenu h3.on em{background-position: 16px -54px}
+        .sideMenu h3.on{
+            /*color: #ff6c60;
+            background: #35404d*/
+            color: #000;
+            background-color: #fff;
+        }
+        .sideMenu h3 a:hover{
+            color:#000!important;
+        }
+        .sideMenu h3 a{
+            /*color: #aeb2b7;*/
+            color:#000;
+            font-size: 18px;
+        }
+        .sideMenu ul{
+            line-height: 30px;
+            color: #999;
+            display: none;/* 默认都隐藏 */ ;
+            /*background: #35404d;*/
+            background-color: #fff;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            padding: 0px 0 10px 0;
+            margin: 0px
+        }
         .sideMenu li{text-indent: 25px;width: 100%}
         .sideMenu li{text-indent: 25px;width: 100%}
-        .sideMenu li a{color: #aeb2b7;font-size: 12px;}
+        .sideMenu li a{
+            /*color: #aeb2b7;*/
+            color:#000;
+            font-size: 16px;
+        }
         .sideMenu li a:hover{color: #f8675e}
 
         .daohang{position:fixed;right:0;bottom:0;top:50px;left:210px; overflow:auto;width: 100%; height: 35px; background-color: #35404d;}
@@ -139,7 +173,7 @@
             -webkit-transition: opacity .1s;
             transition: opacity .1s;
         }
-        .am-topbar-nav>li>a:hover:after{opacity:1;border-bottom-color:#666}
+        .am-topbar-nav>li>a:hover:after{opacity:0;border-bottom-color:#666}
         .am-nav-pills>li{
             float: left;
         }
@@ -331,6 +365,37 @@
             }
         }
 
+        .layui-tab-close {
+            top: -1px!important;
+            color: #fff!important;
+            border-radius: 50%;
+            font-size: 10px;
+            border: 1px solid #fff;
+        }
+
+        .admin-nav-card .layui-tab-title cite {
+            font-size: 16px!important;
+        }
+
+        #searchMenuList{
+            position: absolute;
+            left: 0;
+            top: 25px;
+            background-color: #fff;
+            width: 132px;
+            border: 1px solid rgba(0, 0, 0, .25);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+            display: none;
+        }
+        #searchMenuList .search-menu-a{
+            color: #000!important;
+            font-size: 14px;
+            display: block;
+            padding: 5px;
+        }
+
 
     </style>
 
@@ -358,7 +423,7 @@
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header header header-demo">
+    <div class="layui-header header header-demo" style="border-bottom: 1px solid #ddd;">
         <div class="layui-main">
             <div id="sysWebTitle" class="clearfix">
                 <a class="logo" style="left: 0;" href="index.html">
@@ -384,7 +449,10 @@
             </ul>-->
 
             <ul class="am-nav am-nav-pills am-topbar-nav admin-header-list">
-                <li class="am-dropdown tognzhi" data-am-dropdown style="display: none;">
+                <li>
+                    <div style="color: #333;font-size: 14px;line-height: 70px;padding: 0 10px;;"> 欢迎系统管理员：<span id="admin-header-nick"></span></div>
+                </li>
+                <!--<li class="am-dropdown tognzhi" data-am-dropdown style="display: none;">
                     <button class="am-btn am-dropdown-toggle am-btn-xs am-icon-bell-o">
                         <img src="images/icon-msg-bell.png">消息管理
                         <span>6</span>
@@ -399,7 +467,7 @@
                         <li><a href="#">低库存产品</a></li>
                         <li><a href="#">信息反馈</a></li>
                     </ul>
-                </li>
+                </li>-->
                 <li class="kuanjie"><a href="javascript:;" data-url="manage/myInfo/myInfo.html">个人中心</a></li>
                 <li><a href="javascript:;" id="header-safeExit"><i class="fa fa-sign-out" aria-hidden="true"></i> 安全退出</a></li>
                 <li class="am-hide-sm-only" style="float: right;">
@@ -413,7 +481,12 @@
     </div>
     <div class="layui-side layui-bg-black">
         <div class="nav-navicon admin-main admin-sidebar">
-            <div style="color:#aeb2b7; padding: 20px 0 0 0;font-size: 12px;"> 欢迎系统管理员：<span id="admin-header-nick"></span></div>
+            <div style="position:relative;display: flex;margin-top:5px;">
+                <input id="search-menu-val" type="text" placeholder="请输入菜单名称" style="width: 120px;height: 20px;line-height: 20px;font-size: 12px;padding: 0 5px;margin-right: 5px;">
+                <button id="btn-search-menu" class="layui-icon" style="height: 24px;line-height: 24px;font-size:18px;color: #494949;padding: 0 5px;background-color: #fff;border: 1px solid #A4A4A4;border-radius: 3px;cursor: pointer;">&#xe615;</button>
+                <div id="searchMenuList"></div>
+            </div>
+            <!--<div style="color:#aeb2b7; padding: 20px 0 0 0;font-size: 12px;"> 欢迎系统管理员：<span id="admin-header-nick"></span></div>-->
             <div class="sideMenu" id="menuContent"></div>
         </div>
     </div>
@@ -467,6 +540,9 @@
     </ul>
 </script>
 
+<script type="text/x-jquery-tmpl" id="pageMenu1">
+    <a class="search-menu-a" href="javascript:;" data-menuid=${module_id} data-url=${url} data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth}><cite>${module_name}</cite></a>
+</script>
 <script type="text/javascript" src="layui/layui.js"></script>
 <script>
     layui.use(['element', 'layer'], function () {
@@ -590,6 +666,63 @@
                     element.tabChange('admin-tab', tabIndex);
                 }
             }
+        });
+
+
+
+        //点击搜索出来的菜单列表项
+        $('#searchMenuList').on('click', '.search-menu-a', function () {
+            var $this = $(this);
+            var url = $this.data('url');
+            var menuid = $this.data('menuid');
+            var insertRight = $this.data('insert');
+            var queryRight = $this.data('query');
+            var updateRight = $this.data('update');
+
+            url += "?insertAuth=" +(insertRight) +"&queryAuth=" +(queryRight) +"&updateAuth=" +(updateRight)+"&moduleId=" +(menuid);
+            if (url !== undefined) {
+                var iframe = '<iframe src="' + url + '"></iframe>'
+                var aHtml = $this.html();
+                var count = 0;
+                var tabIndex;
+                $tabs.find('li').each(function (i, e) {
+                    var $cite = $(this).children('cite');
+                    if ($cite.text() === $this.find('cite').text()) {
+                        count++;
+                        tabIndex = i;
+                    }
+                    ;
+                });
+                //tab不存在
+                if (count === 0) {
+                    //添加删除样式
+                    aHtml += '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>';
+                    //添加tab
+                    element.tabAdd('admin-tab', {
+                        title: aHtml,
+                        content: iframe
+                    });
+                    //iframe 自适应
+                    var $content = $('.admin-nav-card .layui-tab-content');
+                    $content.find('iframe').each(function () {
+                        $(this).height($content.height());
+                    });
+                    //绑定关闭事件
+                    $tabs = $('#admin-tab');
+                    var $li = $tabs.find('li');
+                    $li.eq($li.length - 1).children('i.layui-tab-close').on('click', function () {
+                        element.tabDelete('admin-tab', $(this).parent('li').index()).init();
+                    });
+                    //获取焦点
+                    element.tabChange('admin-tab', $li.length - 1);
+
+                } else {
+                    //切换tab
+                    element.tabChange('admin-tab', tabIndex);
+                }
+            }
+            $('#search-menu-val').val("");
+            $('#searchMenuList').empty().css('display', 'none');
         });
 
 
