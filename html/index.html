@@ -427,6 +427,7 @@
         <div class="layui-main">
             <div id="sysWebTitle" class="clearfix">
                 <a class="logo" style="left: 0;" href="index.html">
+                    <img src="images/wi-logo.jpg">
                     <span style="font-size: 34px;font-weight: bold;">沸石智能设备管理平台</span>
                 </a>
             </div>
@@ -530,6 +531,7 @@
 <script src="js/myDevType.js"></script>
 <script src="js/allCompanyInfo.js"></script>
 <script src="js/myUserRoles.js"></script>
+<script src="js/app.js"></script>
 
 <script type="text/x-jquery-tmpl" id="pageMenu">
     <h3 class="am-icon-flag"><em></em> <a href="#">${module_name}</a></h3>
@@ -541,7 +543,7 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="pageMenu1">
-    <a class="search-menu-a" href="javascript:;" data-menuid=${module_id} data-url=${url} data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth}><cite>${module_name}</cite></a>
+    <a class="search-menu-a" href="javascript:;" data-menuid=${module_id} data-pid=${parent_id} data-url=${url} data-insert=${insert_auth} data-query=${query_auth} data-update=${update_auth}><cite>${module_name}</cite></a>
 </script>
 <script type="text/javascript" src="layui/layui.js"></script>
 <script>
@@ -674,6 +676,7 @@
         $('#searchMenuList').on('click', '.search-menu-a', function () {
             var $this = $(this);
             var url = $this.data('url');
+            var parentId = $this.data('pid')
             var menuid = $this.data('menuid');
             var insertRight = $this.data('insert');
             var queryRight = $this.data('query');
@@ -723,6 +726,18 @@
             }
             $('#search-menu-val').val("");
             $('#searchMenuList').empty().css('display', 'none');
+            // 点击搜索列表项时，展开目录对应父级菜单
+            $('#menuContent h3').removeClass('on').eq(parentId - 1).addClass('on')
+            $('#menuContent ul').css('display', '').eq(parentId - 1).css('display', 'block')
+
+            //展开目录动画特效
+            jQuery(".sideMenu").slide({
+                trigger:"click", //触发方式
+                titCell:"h3", //鼠标触发对象
+                targetCell:"ul", //与titCell一一对应，第n个titCell控制第n个targetCell的显示隐藏
+                effect:"fade", //targetCell下拉效果
+                delayTime:500 //效果时间
+            });
         });
 
 
@@ -783,6 +798,5 @@
     }
 </script>
 
-<script src="js/app.js"></script>
 </body>
 </html>
