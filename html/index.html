@@ -58,7 +58,7 @@
         }
         .layui-bg-black, .layui-nav{
             /*background-color: #2a3542!important;*/
-            background-color: #fff!important;
+            background-color: #fff;
         }
 
 
@@ -796,6 +796,12 @@
         //禁止后退键  作用于IE、Chrome
         document.onkeydown=banBackSpace;
     }
+
+    //修改首页皮肤颜色
+    $('.layui-bg-black').css('background', '#F5F5F5');
+    $('.admin-main').css('background', '#F5F5F5');
+    $('.layui-tab-title').css('background', '#F5F5F5');
+
 </script>
 
 </body>
