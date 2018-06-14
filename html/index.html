@@ -17,7 +17,7 @@
     <!--<link rel="stylesheet" href="css/amazeui.min.css"/>-->
     <style>
         .layui-tab-content{
-            padding:0;
+            padding:15px;
         }
         .row {
             margin-right: -5px;
@@ -84,7 +84,7 @@
             /*color: #ff6c60;
             background: #35404d*/
             color: #000;
-            background-color: #fff;
+            background-color: #F5F5F5;
         }
         .sideMenu h3 a:hover{
             color:#000!important;
@@ -99,7 +99,7 @@
             color: #999;
             display: none;/* 默认都隐藏 */ ;
             /*background: #35404d;*/
-            background-color: #fff;
+            background-color: #F5F5F5;
             border-bottom-right-radius: 3px;
             border-bottom-left-radius: 3px;
             padding: 0px 0 10px 0;
@@ -555,7 +555,7 @@
         //iframe自适应
         $(window).on('resize', function () {
             var $content = $('.admin-nav-card .layui-tab-content');
-            $content.height($(this).height() - 106);
+            $content.height($(this).height() - 136);
             $content.find('iframe').each(function () {
                 $(this).height($content.height());
             });
