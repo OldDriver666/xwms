@@ -365,12 +365,24 @@
             }
         }
 
-        .layui-tab-close {
+        /*.layui-tab-close {
             top: -1px!important;
             color: #fff!important;
             border-radius: 50%;
             font-size: 10px;
             border: 1px solid #fff;
+        }*/
+        .layui-tab-close {
+            top: 2px!important;
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            background: url(images/icon-close01.png) 0 0 no-repeat;
+            background-size: 14px auto;
+        }
+        .layui-tab-title li .layui-tab-close:hover {
+            background: url(images/icon-close02.png) 0 0 no-repeat;
+            background-size: 14px auto;
         }
 
         .admin-nav-card .layui-tab-title cite {
@@ -643,7 +655,9 @@
                 //tab不存在
                 if (count === 0) {
                     //添加删除样式
-                    aHtml += '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>';
+                    //<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>
+                    //<img src="images/icon-close01.png" style="width: 14px;vertical-align: 2px;">
+                    aHtml += '<i class="layui-icon layui-unselect layui-tab-close"></i>';
                     //添加tab
                     element.tabAdd('admin-tab', {
                         title: aHtml,
@@ -699,7 +713,7 @@
                 //tab不存在
                 if (count === 0) {
                     //添加删除样式
-                    aHtml += '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>';
+                    aHtml += '<i class="layui-icon layui-unselect layui-tab-close"></i>';
                     //添加tab
                     element.tabAdd('admin-tab', {
                         title: aHtml,
