@@ -1,9 +1,12 @@
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.fise.base.Page;
 import com.fise.model.entity.IMSystemConf;
 import com.fise.model.entity.IMSystemConfExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface IMSystemConfMapper {
     long countByExample(IMSystemConfExample example);
@@ -27,4 +30,6 @@ public interface IMSystemConfMapper {
     int updateByPrimaryKeySelective(IMSystemConf record);
 
     int updateByPrimaryKey(IMSystemConf record);
+    
+    List<IMSystemConf> selectByExampleByPage(@Param("example") IMSystemConfExample example,@Param("page") Page<IMSystemConf> page);
 }

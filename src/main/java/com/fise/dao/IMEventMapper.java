@@ -8,6 +8,7 @@ import com.fise.base.Page;
 import com.fise.model.entity.IMEvent;
 import com.fise.model.entity.IMEventExample;
 import com.fise.model.param.EventQueryParam;
+import com.fise.model.result.MessageTypeResult;
 
 public interface IMEventMapper {
     long countByExample(IMEventExample example);
@@ -31,4 +32,6 @@ public interface IMEventMapper {
     int updateByPrimaryKeySelective(IMEvent record);
 
     int updateByPrimaryKey(IMEvent record);
+    
+    List<IMEvent> queryTypeDayEvents(@Param("tablename") String tablename,@Param("daytime") String daytime);
 }

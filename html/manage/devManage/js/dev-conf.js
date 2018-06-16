@@ -58,8 +58,6 @@ $(function() {
                 data.device_id = parseInt(search_device_id);
                 data.depart_id = parseInt(depart_id);
                 data.company_id = parseInt(company_id);
-
-
             Util.ajaxLoadData(url,data,moduleId,"POST",true,function(result) {
                 if(result.code == ReturnCode.SUCCESS && result.data != ""){
                     $('#pageContent').find("tr").remove();
@@ -71,7 +69,6 @@ $(function() {
                     var pageTmplTbodys = "#" + "pageTmplTbody" + search_devType;
                     $(pageTmplTheads).tmpl().appendTo('#pageThead');
                     $(pageTmplTbodys).tmpl(result.data.base_info).appendTo('#pageContent');
-
                     if((search_devType == 19) || (search_devType == 23) || (search_devType == 25)){
                         $(FenceTmplThead).tmpl().appendTo('#pageThead1');
                         $(FenceTmplTbody).tmpl(result.data.electri_fence).appendTo('#pageContent1');
@@ -80,28 +77,21 @@ $(function() {
                             $('#pageContent1').append("<tr><td  colspan='" + td_len1 + "' class='t_a_c'>暂无数据</td></tr>");
                         }
                     }
-
                     $(ControlTmplThead).tmpl().appendTo('#pageThead2');
                     $(ControlTmplTbody).tmpl(result.data.control).appendTo('#pageContent2');
-
                     if(search_devType == 25) {
                         $(CrontabTmplThead).tmpl().appendTo('#pageThead3');
                         $(CrontabTmplTbody).tmpl(result.data.crontab).appendTo('#pageContent3');
-
                         if($('#pageContent3 tr').length == 0){
                             $('#pageContent3').append("<tr><td  colspan='" + td_len3 + "' class='t_a_c'>暂无数据</td></tr>");
                         }
                     }
-
-
                     if($('#pageContent tr').length == 0){
                         $('#pageContent').append("<tr><td  colspan='" + td_len + "' class='t_a_c'>暂无数据</td></tr>");
                     }
-
                     if($('#pageContent2 tr').length == 0){
                         $('#pageContent2').append("<tr><td  colspan='" + td_len2 + "' class='t_a_c'>暂无数据</td></tr>");
                     }
-
                 } else if(result.code == ReturnCode.SUCCESS && result.data.length == 0){
                     $('#pageContent').find("tr").remove();
                     $('#pageContent1').find("tr").remove();
@@ -137,7 +127,9 @@ $(function() {
 	$("#btn-search").on('click', function() {
         if($("#search-input-devType").val() == "") {
             toastr.error("请选择设备类型");
-        }else{
+        /*} else if (!(/^[0-9]*$/.test($("#input-search-device_id").val()))) {
+            toastr.error("设备ID不能为非数字");*/
+        } else {
             /*$("#pageThead").empty();
             $("#pageThead1").empty();
             $("#pageThead2").empty();

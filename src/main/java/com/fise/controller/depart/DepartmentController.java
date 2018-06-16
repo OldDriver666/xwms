@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiDepartment;
 import com.fise.model.param.DepartmentParam;
 import com.fise.server.auth.IAuthService;
 import com.fise.server.depart.IDepartmentService;
@@ -50,7 +54,6 @@ public class DepartmentController {
 	public Response queryImdepartConfig(@RequestBody @Valid DepartmentParam param){
 		
 		Response response=new Response();
-		param.setCreatorId(HttpContext.getMemberId());
 		logger.info(param.toString());
 		response=iDepartmentSvr.queryList(param);
 		return response;
@@ -83,5 +86,13 @@ public class DepartmentController {
 		response=iDepartmentSvr.delete(param);
 		return response;
 	}
+    @RequestMapping(value = "/queryDepartmentByPage", method = RequestMethod.POST)
+    public Response queryDepartmentByPage(@RequestBody @Valid Page<WiDepartment> page) {
+        Response resp = new Response();
+//        page.getParam().setCreatorId(HttpContext.getMemberId());
+        logger.info(page.toString());
+        resp = iDepartmentSvr.queryDepartmentByPage(page);
+        return resp;
+    }
 
 }

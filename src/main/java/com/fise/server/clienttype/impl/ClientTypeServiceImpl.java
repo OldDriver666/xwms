@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMClientTypeMapper;
 import com.fise.model.entity.IMClientType;
@@ -145,4 +146,25 @@ public class ClientTypeServiceImpl implements IClientTypeService{
 		response.success();
 		return response;	
 	}
+	
+	@Override
+	public Response queryClienTypePage(Page<IMClientType> page) {
+		
+		Response response=new Response();
+		
+		IMClientTypeExample example=new IMClientTypeExample();
+		IMClientTypeExample.Criteria criteria=example.createCriteria();
+		IMClientType param = page.getParam();
+		if(!StringUtil.isEmpty(param.getClientname())){
+			criteria.andClientnameEqualTo(param.getClientname());
+		}
+		
+		if(param.getClienttype()!=null){
+			criteria.andClienttypeEqualTo(param.getClienttype());	
+		} 
+
+        page.setResult(imClientTypeDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
+	
 }

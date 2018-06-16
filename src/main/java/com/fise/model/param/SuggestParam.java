@@ -1,26 +1,57 @@
 package com.fise.model.param;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fise.utils.JsonUtil;
 
 public class SuggestParam {
-	@JsonProperty("suggest_id")
+	/**
+	 * 回答id
+	 */
     private Integer id;
+    /**
+     * 建议id
+     */
+    private String suggestId;
+    
+    /**
+     * 建议标题
+     */
+    private String title;
 	
-	@JsonProperty("user_id")
+    /**
+     * 用户Id
+     */
     private Integer userId;
 
     /**
      * 用户名
      */
     private String uname;
+    
+    /**
+     * 0-公有 1-私有
+     */
+    private Integer type;
+    
+    /**
+     * 0-开启 1-处理中 2-关闭
+     */
+    private Integer status;
 
-	public Integer getId() {
-		return id;
+
+	public Integer getType() {
+		return type;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getSuggestId() {
+		return suggestId;
+	}
+
+	public void setSuggestId(String suggestId) {
+		this.suggestId = suggestId;
 	}
 
 	public Integer getUserId() {
@@ -39,7 +70,31 @@ public class SuggestParam {
 		this.uname = uname;
 	}
 
-    @Override
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Override
     public String toString() {
         return JsonUtil.toJson(this);
     }

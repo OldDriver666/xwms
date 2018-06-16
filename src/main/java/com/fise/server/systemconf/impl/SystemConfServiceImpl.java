@@ -2,12 +2,12 @@ package com.fise.server.systemconf.impl;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMSystemConfMapper;
 import com.fise.model.entity.IMSystemConf;
@@ -88,4 +88,23 @@ public class SystemConfServiceImpl implements ISystemConfService{
 		return response;		
 	}
 
+	
+	@Override
+	public Response queryIMSystemConfByPage(Page<IMSystemConf> page) {
+		
+		Response response=new Response();
+		
+		IMSystemConfExample example=new IMSystemConfExample();
+		IMSystemConfExample.Criteria criteria=example.createCriteria();
+		IMSystemConf param = page.getParam();
+        if(StringUtil.isNotEmpty(param.getType())){
+        	criteria.andTypeLike("%" + param.getType() + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getName())){
+        	criteria.andNameLike("%" + param.getName() + "%");
+        }
+
+        page.setResult(iMSystemConfDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
 }

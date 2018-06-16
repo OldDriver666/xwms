@@ -295,6 +295,11 @@ public class WiDepartmentExample {
             addCriterion("depart_name like", value, "departName");
             return (Criteria) this;
         }
+        
+        public Criteria andParentNameLike(String value) {
+        	addCriterion("parent_name like", value, "parentName");
+        	return (Criteria) this;
+        }
 
         public Criteria andDepartNameNotLike(String value) {
             addCriterion("depart_name not like", value, "departName");

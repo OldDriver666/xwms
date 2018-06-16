@@ -16,6 +16,7 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="last_login" jdbcType="INTEGER" property="lastLogin" />
     <result column="created" jdbcType="INTEGER" property="created" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -78,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, account, salt, password, nick_name, role_id, company_id, depart_id, phone, email, 
-    access_token, status, last_login, created, updated
+    access_token, status, last_login, created,creator_id, updated
   </sql>
   <select id="selectByExample" parameterType="com.fise.model.entity.WiAdminExample" resultMap="BaseResultMap">
     select
@@ -439,5 +440,17 @@
     where id = #{id,jdbcType=INTEGER} 
        and creator_id = #{creatorId,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByExampleByPage" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wi_admin
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
   
 </mapper>

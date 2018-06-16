@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationMapper;
@@ -20,6 +21,7 @@ import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.framework.redis.RedisManager;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
+import com.fise.model.entity.WiModuleExample;
 import com.fise.model.entity.WiAdminExample.Criteria;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.entity.WiOrganizationExample;
@@ -293,13 +295,14 @@ public class AdministratorServiceImpl implements IAdministratorService {
         record.setRoleId(param.getRoleId());
         record.setCreatorId(param.getCreatorId());
         Integer nNow = DateUtil.getLinuxTimeStamp();
+        WiOrganizationRole role = roleDao.selectByPrimaryKey(param.getRoleId());
 
         record.setCreated(nNow);
         record.setUpdated(nNow);
         record.setNickName(StringUtil.isEmpty(param.getNickName()) ? "" : param.getNickName());
         record.setEmail(StringUtil.isEmpty(param.getEmail()) ? "" : param.getEmail());
         record.setPhone(StringUtil.isEmpty(param.getPhone()) ? "" : param.getPhone());
-        record.setDepartId(param.getDepartId() == null ? 0 : param.getDepartId());
+        record.setDepartId(role.getDepartId() == null ? 0 : role.getDepartId());
         record.setSalt(nNow.toString().substring(5, 9));
         record.setStatus(1);
         record.setAccessToken("");
@@ -348,22 +351,22 @@ public class AdministratorServiceImpl implements IAdministratorService {
         	sqlAdmin.setCreatorId(param.getCreatorId());
 		}
         sqlAdmin.setUpdated(DateUtil.getLinuxTimeStamp());
-        if (!StringUtil.isEmpty(param.getAccount())) {
+        if (null!=param.getAccount()) {
             sqlAdmin.setAccount(param.getAccount());
         }
 
-        if (!StringUtil.isEmpty(param.getEmail())) {
+        if (null!=param.getEmail()) {
             sqlAdmin.setEmail(param.getEmail());
         }
-        if (!StringUtil.isEmpty(param.getPassword())) {
+        if (null!=param.getPassword()) {
             sqlAdmin.setPassword(param.getPassword());
         }
 
-        if (!StringUtil.isEmpty(param.getNickName())) {
+        if (null!=param.getNickName()) {
             sqlAdmin.setNickName(param.getNickName());
         }
 
-        if (!StringUtil.isEmpty(param.getEmail())) {
+        if (null!=param.getEmail()) {
             sqlAdmin.setEmail(param.getEmail());
         }
 
@@ -377,7 +380,7 @@ public class AdministratorServiceImpl implements IAdministratorService {
             }
         }
 
-        if (!StringUtil.isEmpty(param.getPhone())) {
+        if (null!=param.getPhone()) {
             sqlAdmin.setPhone(param.getPhone());
         }
 
@@ -504,6 +507,35 @@ public class AdministratorServiceImpl implements IAdministratorService {
         WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
         resp.success(admin);
 		return resp;
+	}
+
+	@Override
+	public Response queryAdminByPage(Page<WiAdmin> page) {
+		
+		Response response=new Response();
+		
+		WiAdminExample example=new WiAdminExample();
+		WiAdminExample.Criteria criteria=example.createCriteria();
+		WiAdmin param = page.getParam();
+        if(null != param.getCreatorId()){
+        	criteria.andCreatorIdEqualTo(param.getCreatorId());
+        }
+        if(null != param.getRoleId()){
+        	criteria.andRoleIdEqualTo(param.getRoleId());
+        }
+        if(null != param.getCompanyId()){
+        	criteria.andCompanyIdEqualTo(param.getCompanyId());
+        }
+        if(StringUtil.isNotEmpty(param.getAccount())){
+        	criteria.andAccountLike("%" + param.getAccount() + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getNickName())){
+        	criteria.andNickNameLike("%" + param.getNickName() + "%");
+        }
+        criteria.andStatusNotEqualTo((byte) 2);
+
+        page.setResult(adminDao.selectByExampleByPage(example, page));
+		return response.success(page);
 	}
 
 }

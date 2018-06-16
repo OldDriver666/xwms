@@ -1,6 +1,8 @@
 package com.fise.server.organization;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiOrganization;
 
 
@@ -16,4 +18,7 @@ public interface IOrganizationService {
     
     /*修改用户可见模块*/
     Response UpdateOrganization(WiOrganization param);
+    
+    /* 分页查询公司 */
+    public Response queryOrganizationByPage(Page<WiOrganization> page);
 }

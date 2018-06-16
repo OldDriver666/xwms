@@ -34,4 +34,9 @@ public interface WiPermissionMapper {
     int updateByRoleIdAndModleId(WiPermission record);
     
     List<ModulePermissResult> selectAuthByRole(@Param("company") Integer company, @Param("role") Integer role, @Param("parent")Integer parent, @Param("needall")Integer needall);
+    
+    List<ModulePermissResult> queryPatientAuth( @Param("role") Integer role);
+    
+    List<ModulePermissResult> selectAuthByName(@Param("company") Integer company, @Param("role") Integer role, @Param("name")String name);
+
 }

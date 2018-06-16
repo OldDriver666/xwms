@@ -37,6 +37,11 @@
 		<result column="search_allow" jdbcType="INTEGER" property="searchAllow" />
 		<result column="online_status" jdbcType="INTEGER" property="onlineStatus" />
 		<result column="last_online_time" jdbcType="INTEGER" property="lastOnlineTime" />
+		<result column="body_status" jdbcType="VARCHAR" property="bodyStatus" />
+	    <result column="police_info" jdbcType="VARCHAR" property="policeInfo" />
+	    <result column="cognate" jdbcType="VARCHAR" property="cognate" />
+	    <result column="guardian" jdbcType="VARCHAR" property="guardian" />
+	    <result column="reward" jdbcType="VARCHAR" property="reward" />
 	</resultMap>
 	<sql id="Example_Where_Clause">
 		<where>
@@ -704,6 +709,74 @@
 		</if>
 		<if test="example.orderByClause != null">
 			order by ${example.orderByClause}
+		</if>
+	</select>
+	
+	
+	<select id="selectUserByExample" parameterType="com.fise.model.entity.IMUserExample"
+		resultMap="BaseResultMap">
+		select
+			*
+		from 
+		(
+		SELECT
+				i.id,
+				i.sex,
+				i.NAME,
+				i.domain,
+				i.nick,
+				i.PASSWORD,
+				i.salt,
+				i.province,
+				i.city,
+				i.address,
+				i.country,
+				i.phone,
+				i.email,
+				i.avatar,
+				i.height,
+				i.weight,
+				i.birthday,
+				i.type,
+				i.companyId,
+				i.departId,
+				i.STATUS,
+				i.created,
+				i.updated,
+				i.push_shield_status,
+				i.sign_info,
+				i.lng,
+				i.lat,
+				i.battery,
+				i.sq,
+				i.friend_need_auth,
+				i.login_safe_switch,
+				i.search_allow,
+				i.online_status,
+				i.last_online_time,
+				w.body_status,
+				w.police_info,
+				w.cognate,
+				w.guardian,
+				w.reward
+			
+			FROM
+				IMUser i LEFT JOIN wi_patient w on i.domain=w.domain
+					)IMUser
+					
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="limit != null">
+			<if test="offset != null">
+				limit ${offset}, ${limit}
+			</if>
+			<if test="offset == null">
+				limit ${limit}
+			</if>
 		</if>
 	</select>
 

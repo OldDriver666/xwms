@@ -1266,17 +1266,19 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ```
 
-###用户意见 
-####新增用户意见
+###用户建议
+####新增用户建议
 |   接口地址    |   boss/suggest/add        |
 |   ---         |   ---                   |
 
 ```
 //请求
 {
- "user_id":x,                     //必填-用户id
+ "userId":x,                     //必填-用户id
  "uname":"",                      //必填-用户名
- "suggestion":"",                 //选填-意见内容 
+ "title":"",                      //标题
+ "type":0,                        //0-公开 1-私有
+ "content":"",                    //选填-建议内容 
  "contact":""                     //选填-联系方式
 }
 
@@ -1284,7 +1286,8 @@ type和name都是选填，如果都不填，则查询所有信息
 无内容，直接查看返回码
 ``` 
 
-####查询用户意见
+```
+####查询用户建议
 |   接口地址    |   boss/suggest/query        |
 |   ---         |   ---                   |
 
@@ -1294,73 +1297,166 @@ type和name都是选填，如果都不填，则查询所有信息
 {
     "param":
     {
-        "uname":""               //选填-用户名
+         	    "userId":1024,                     //选填-用户id
+                 "uname":"jack",                    //选填-用户名
+                 "title":"提问6",                    //选填-标题
+                 "type": 1  ,                        //选填-'0-公开 1-私有' 
+                 "status": 0                          //选填-'0-开启 1-处理中 2-关闭' 
+    },
+    "page_no":1,
+    "page_size":10
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 2,
+      "total_page_count": 1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 8,                                    //问题id
+            "userId": 1024,                             //用户id
+            "count": 6,                                 //回复数量
+            "uname": "jack",                            //用户名                          
+            "status": 0,                                //记录状态 0 :初始正常 1:已经回复          
+            "type": true,                               //0-公开 1-私有                    
+            "title": "提问2",                           //标题                           
+            "suggestId": "123",                         //id                           
+            "content": "this is a test suggest",        //内容                           
+            "picture":""                                //图片                           
+            "contact": "13423720455",                   //联系方式                         
+            "created": 1489411761,                      //创建时间                         
+            "updated": 1499839643                       //更新时间                         
+         },
+         {
+            "id": 1,
+            "userId": 1024,
+            "count": 6,
+            "uname": "jack",
+            "status": 0,
+            "type": true,
+            "title": "提问1",
+            "suggestId": "abc",
+            "content": "this is a test suggest",
+            "contact": "13423720455",
+            "created": 1489411761,
+            "updated": 1499839643
+         }
+      ]
+   }
+}
+```
+
+####根据建议id查询用户建议
+|   接口地址    |   boss/suggest/queryBySuggestId        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":1,
+    "page_size":10,
+    "param":
+    {
+           "suggestId":"abc"
     }
 }
 
 //回复
-[
-    {
-    "suggest_id":x,
-    "user_id":x,
-    "uname":"",
-    "status":0,
-    "suggestion":"",
-    "contact":"",
-    "created":x,
-    "updated":x
-    },
-    {
-    "suggest_id":x,
-    "user_id":x,
-    "uname":"",
-    "status":0,
-    "suggestion":"",
-    "contact":"",
-    "created":x,
-    "updated":x
-    }
-]
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": -1,
+      "total_page_count": -1,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 8,                                    //问题id
+            "userId": 1024,                             //用户id
+            "uname": "jack",                            //用户名                          
+            "status": 0,                                //记录状态 0 :初始正常 1:已经回复          
+            "type": true,                               //0-公开 1-私有                    
+            "title": "提问2",                           //标题                           
+            "suggestId": "123",                         //id                           
+            "content": "this is a test suggest",        //内容                           
+            "picture":""                                //图片                           
+            "contact": "13423720455",                   //联系方式                         
+            "created": 1489411761,                      //创建时间                         
+            "updated": 1499839643                       //更新时间     
+         },
+         {
+            "id": 8,                                    //问题id
+            "userId": 1024,                             //用户id
+            "uname": "jack",                            //用户名                          
+            "status": 0,                                //记录状态 0 :初始正常 1:已经回复          
+            "type": true,                               //0-公开 1-私有                    
+            "title": "提问2",                           //标题                           
+            "suggestId": "123",                         //id                           
+            "content": "this is a test suggest",        //内容                           
+            "picture":""                                //图片                           
+            "contact": "13423720455",                   //联系方式                         
+            "created": 1489411761,                      //创建时间                         
+            "updated": 1499839643                       //更新时间     
+         }
+      ]
+   }
+}
 ```
 
-####删除用户意见
+####删除用户建议
 |   接口地址    |   boss/suggest/del        |
 |   ---         |   ---                   |
 
 ```
 //请求
 {
-    "suggest_id":x                  //必填-ID
+    "id":x ,                 //选填 回答id
+    "suggestId":"x"          //选填 建议id
 }
 
 //回复
 无内容，直接查看返回码
-``` 
 
-####修改用户意见
-|   接口地址    |   boss/suggest/update        |
+``` 
+```
+
+####修改用户建议
+|   接口地址    |   boss/suggest/update       |
 |   ---         |   ---                   |
 
 ```
+
 //请求
 {
- "suggest_id":x,                  //必填-ID
+ "suggestId":x,                  //必填-ID
  "user_id":x,                     //选填-用户id
  "uname":"",                      //选填-用户名
- "status":0,                      //选填-记录状态 0 :初始正常 1:已经回复
- "suggestion":"",                 //选填-意见内容   
+ "status":0,                      //选填-记录状态  0:待处理  1:处理中  2:关闭
+ "suggestion":"",                 //选填-建议内容   
  "contact":""                     //选填-联系方式 
  }
 
 //回复
 无内容，直接查看返回码
-```
 
+``` 
+```
 ###用户查询
 |   接口地址    |   boss/user/query        |
 |   ---         |   ---                   |
 
 ```
+
 //请求
 不填，则查询所有
 {
@@ -1456,6 +1552,8 @@ type和name都是选填，如果都不填，则查询所有信息
 }
 
 ``` 
+
+
 ###组织/公司管理
 ####公司新增
 |   接口地址    |   boss/organization/insert        |
@@ -3135,4 +3233,994 @@ null 没有数据返回 看code是否成功
 ```
 
 
+###知识库
+####查询知识
+|   接口地址    |   boss/wiki/query   |
+|   ---         |   ---                   |
 
+```
+//请求
+{
+    "id":1,                         //知识id
+    "type":1,                       //类型1-入门指南 2-常见问题 3-使用技巧 4-高级版相关 5-账号相关 6-关于我们
+    "title":"入门指导"               //标题
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "id": 1,
+         "type": 1,
+         "title": "入门指导",
+         "content": "小位物联网平台",
+         "helpful": 22,
+         "nohelp": 2
+      }
+   ]
+}
+```
+
+
+####新增知识
+|   接口地址    |   boss/wiki/add   |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "type":1,                       //类型1-入门指南 2-常见问题 3-使用技巧 4-高级版相关 5-账号相关 6-关于我们
+    "title":"入门指导"               //标题
+    "content": "小位物联网平台",      //内容
+}
+
+//回复
+无回复 看结果
+```
+
+####修改知识
+|   接口地址    |   boss/wiki/update   |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "id":1,                         //知识id
+    "type":1,                       //类型1-入门指南 2-常见问题 3-使用技巧 4-高级版相关 5-账号相关 6-关于我们
+    "title":"入门指导"               //标题
+    "content": "小位物联网平台",      //内容
+    "helpful": 22,                  //有帮助
+    "nohelp": 2                     //没帮助
+}
+
+//回复
+无回复 看结果
+```
+
+####删除知识
+|   接口地址    |   boss/wiki/del  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "id":1,                         //知识id
+
+}
+
+//回复
+无回复 看结果
+```
+
+
+####查询病人位置
+|   接口地址    |   boss/user/patient   |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+   
+	 "company_id":5,  //公司
+	 "depart_id":6    //部门
+
+
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "total_cnt": 1,
+      "online_cnt": 0,
+      "user_list": [
+         {
+            "uid": 105328,
+            "sex": 1,
+            "account": "111222",
+            "avatar": "g0/000/000/1509458661071993_139835503093.jpg",
+            "nick": "非本人禁止登陆",
+            "province": "15",
+            "city": "1",
+            "address": "",
+            "phone": "xxxxxxxxxxxxx",
+            "sos_phone": "15985648002",
+            "height": 0,
+            "weight": 0,
+            "online_status": 0,
+            "online_time": 1522647776,
+            "location_x": "22.681579",
+            "location_y": "113.99096",
+            "battery": 57,
+            "sq": 4,
+            "step_cnt": 41,
+            "bodyStatus": "人民医院治疗:康复中", //病情
+            "policeInfo": "民警:王五",        //民警
+            "cognate": "李四",               //直系亲属
+            "guardian": "张三",              //监护人
+            "reward": "1万元"                有奖监护
+         }
+   ]}
+}
+```
+
+
+####查询病人管理系统权限
+|   接口地址    |   boss/role/queryPatientAuth  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+	"role_id":78               //角色id
+}
+
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": [
+      {
+         "module_id": 7,
+         "module_name": "设备信息",
+         "url": "manage/devManage/dev-info.html",
+         "module_type": 0,
+         "priority": 890,
+         "parent_id": 2,
+         "status": 1,
+         "permiss_id": 434,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      },
+      {
+         "module_id": 50,
+         "module_name": "用户位置",
+         "url": "map/locationMain.html",
+         "module_type": 0,
+         "priority": 20,
+         "parent_id": 3,
+         "status": 1,
+         "permiss_id": 432,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      }
+   ]
+}
+```
+
+####查询一级菜单
+|   接口地址    |   boss/module/queryParentModule    |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+   
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "code": 0,
+      "msg": "ok",
+      "data": [
+         {
+            "id": 1,
+            "name": "Broadcast",
+            "pname": null,
+            "moduleType": 0,
+            "belongCompany": 1,
+            "description": "",
+            "priority": 2300,
+            "status": 0,
+            "sn": "zhengtigaisu",
+            "url": "manage/main/main.html",
+            "parentId": 0
+         },
+         {
+            "id": 2,
+            "name": "设备管理",
+            "pname": null,
+            "moduleType": 0,
+            "belongCompany": 1,
+            "description": "",
+            "priority": 1900,
+            "status": 1,
+            "sn": "shebeiguanli",
+            "url": "",
+            "parentId": 0
+         }
+      ]
+   }
+}
+```
+
+####查询菜单
+|   接口地址    |   boss/module/queryByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":x,                            //选填-当前页, 默认为第1页
+    "page_size":x,                          //选填-每页记录数，默认10
+    "param":
+    {
+        "name":""                   //菜单名称
+    }
+}
+
+//回复
+{
+    "page_no": 1,
+    "page_size": 20,
+    "total_count": 89,
+    "total_page_count": 5,
+    "param": null,
+    "extra_param": null,
+    "result": [
+        {
+            "id": 1,
+            "devId": 205601,
+            "fileName": "007",
+            "duration": 120,
+            "imageUrl": "http://10.252.252.250:8700/g0/00/00/0.png",
+            "account": "testcamera2",
+            "vedioUrl": "",
+            "status": 1,
+            "type": 0,
+            "created": 1495882204
+        },
+        {
+             "id": 2,
+            "devId": 205601,
+            "fileName": "009",
+            "duration": 122,
+            "imageUrl": "http://10.252.252.250:8700/g0/00/00/0.png",
+            "account": "testcamera2",
+            "vedioUrl": "",
+            "status": 0,
+            "type": 0,
+            "created": 1495882775
+        }
+    ]
+}
+```
+
+####管理员分页查询
+|   接口地址    |   boss/admin/queryAdminByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+    "page_no":x,                            //选填-当前页, 默认为第1页
+    "page_size":x,                          //选填-每页记录数，默认10
+    "param":
+    {
+        "roleId":x,                   //角色id
+        "nickName":"x",               //昵称
+        "account":"x",                //账号
+        "companyId":x                 //公司id
+    }
+}
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 5,
+      "total_count": 29,
+      "total_page_count": 6,
+      "param": {
+         "id": null,
+         "account": "",
+         "salt": null,
+         "password": null,
+         "nickName": null,
+         "roleId": null,
+         "companyId": null,
+         "departId": null,
+         "phone": null,
+         "email": null,
+         "accessToken": null,
+         "status": null,
+         "lastLogin": null,
+         "created": null,
+         "updated": null,
+         "creatorId": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "account": "18601735176",
+            "salt": "3678",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "nickName": "廖国顺",
+            "roleId": 3,
+            "companyId": 1,
+            "departId": 0,
+            "phone": "",
+            "email": "",
+            "accessToken": "fb2300f2f96a49e9b345174327e0e3bc",
+            "status": 1,
+            "lastLogin": 1514449812,
+            "created": 1225404661,
+            "updated": 1508998414,
+            "creatorId": 2
+         },
+         {
+            "id": 6,
+            "account": "pe",
+            "salt": "3678",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "nickName": "pee",
+            "roleId": 1,
+            "companyId": 1,
+            "departId": 0,
+            "phone": "13578945612",
+            "email": "13578945612@139.com",
+            "accessToken": "5c62430458b946ecaac2f51da2536ec2",
+            "status": 1,
+            "lastLogin": 1514974939,
+            "created": 1497924926,
+            "updated": 1505460923,
+            "creatorId": 2
+         }
+      ]
+   }
+}
+```
+
+####部门分页查询
+|   接口地址    |   boss/depart/queryDepartmentByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "departName":"派出所",             //部门名称
+        "parentName":"龙华"                //上级部门名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 10,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "companyId": null,
+         "departName": "派出所",
+         "parentName": null,
+         "status": null,
+         "parentId": null,
+         "creatorId": null,
+         "updated": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 6,
+            "companyId": 1,
+            "departName": "南头派出所",
+            "parentName": "南山公安分局",
+            "status": 1,
+            "parentId": 5,
+            "creatorId": 22,
+            "updated": 1504699496
+         },
+         {
+            "id": 45,
+            "companyId": 10,
+            "departName": "上塘派出所",
+            "parentName": "龙华公安分局",
+            "status": 1,
+            "parentId": 35,
+            "creatorId": 66,
+            "updated": 1522736850
+         }
+      ]
+   }
+}
+```
+
+####角色分页查询
+|   接口地址    |   boss/role/queryRoleByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "role_name":"派出所"            //角色名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 6,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "authLevel": null,
+         "departId": null,
+         "creatorId": 2,
+         "role_name": "管理员",
+         "desc": null,
+         "companyId": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 2,
+            "authLevel": 800,
+            "departId": 2,
+            "creatorId": 2,
+            "role_name": "超级管理员",
+            "desc": "合作公司管理员账号",
+            "companyId": 1
+         },
+         {
+            "id": 3,
+            "authLevel": 700,
+            "departId": 0,
+            "creatorId": 2,
+            "role_name": "管理员",
+            "desc": "管理员账号",
+            "companyId": 1
+         }
+      ]
+   }
+}
+```
+
+####公司管理分页查询
+|   接口地址    |   boss/organization/queryOrganizationByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+        "name":"深圳"            //公司名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 3,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "name": "深圳",
+         "address": null,
+         "contact": null,
+         "email": null,
+         "home": null,
+         "describtion": null,
+         "status": null,
+         "created": null,
+         "updated": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 5,
+            "name": "深圳市南山公安局",
+            "address": "深圳市南山公安局",
+            "contact": "110",
+            "email": "110@email.com",
+            "home": "index1.html",
+            "describtion": "为人名服务",
+            "status": 1,
+            "created": 1504681677,
+            "updated": 1504681677
+         },
+         {
+            "id": 9,
+            "name": "深圳市汇晔光电科技有限公司",
+            "address": "",
+            "contact": "",
+            "email": "",
+            "home": "index.html",
+            "describtion": "",
+            "status": 1,
+            "created": 1516094687,
+            "updated": 1522229498
+         }
+      ]
+   }
+}
+```
+
+
+####常见问题分页查询
+|   接口地址    |   boss/wiki/queryWikiByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+         "type":3,                       //问题类型
+          "title":"技巧"                  //问题标题
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 6,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "type": 3,
+         "title": "技巧",
+         "content": null,
+         "helpful": null,
+         "nohelp": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 3,
+            "type": 3,
+            "title": "使用技巧",
+            "content": "小位物联网平台",
+            "helpful": 23,
+            "nohelp": 2
+         },
+         {
+            "id": 9,
+            "type": 3,
+            "title": "使用技巧",
+            "content": "小位物联网平台",
+            "helpful": 22,
+            "nohelp": 2
+         }
+      ]
+   }
+}
+```
+
+
+####短信平台分页查询
+|   接口地址    |   boss/smsplatfrom/queryIMSmsPlatfromByPage  |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+         "platfrom_name":"alidayu"        //短信平台名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": {
+         "status": null,
+         "config": null,
+         "updated": null,
+         "created": null,
+         "smsplatfrom_id": null,
+         "platfrom_name": "alidayu"
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "status": false,
+            "config": "{\"appkey\":\"23512515\",\"appsecret\":\"8df545d15a413cef674ed45ffff0df9f\",\"sign_name\":\"沸石智能\",\"text_api\":\"alibaba.aliqin.fc.sms.num.send\",\"url\":\"http://gw.api.taobao.com/router/rest\"}",
+            "updated": 1506584461,
+            "created": 1480312406,
+            "smsplatfrom_id": 1,
+            "platfrom_name": "alidayu"
+         }
+      ]
+   }
+}
+```
+
+
+####短信模板分页查询
+|   接口地址    |  boss/sms/queryIMSmsTemplateByPage |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+          "action_name":"注册验证码"        //场景名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": {
+         "id": null,
+         "action": null,
+         "updated": null,
+         "created": null,
+         "platfrom_id": null,
+         "action_name": "注册验证码",
+         "template_name": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "action": 0,
+            "updated": 1499305813,
+            "created": 1494639893,
+            "platfrom_id": 1,
+            "action_name": "注册验证码",
+            "template_name": "SMS_24760402"
+         }
+      ]
+   }
+}
+```
+
+
+####系统配置分页查询
+|   接口地址    |  /boss/systemconf/queryIMSystemConfByPage |
+|   ---         |   ---                   |
+
+```
+//请求
+{                            
+    "page_no":1,                         //选填-当前页, 默认为第1页
+    "page_size":10,                      //选填-每页记录数，默认10
+    "param":                 
+    {                        
+           "type":"user_base"  ,         //配置类型
+           "name":"default_avatar"       //配置名称
+    }                              
+}                          
+
+//回复
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "page_no": 1,
+      "page_size": 10,
+      "total_count": 1,
+      "total_page_count": 1,
+      "param": {
+         "type": "user_base",
+         "name": "default_avatar",
+         "value": null,
+         "action": null,
+         "status": null,
+         "updated": null,
+         "created": null,
+         "config_id": null,
+         "parent_id": null
+      },
+      "extra_param": null,
+      "result": [
+         {
+            "type": "user_base",
+            "name": "default_avatar",
+            "value": "g0/default/default.png",
+            "action": "",
+            "status": true,
+            "updated": 1500555615,
+            "created": 1480312406,
+            "config_id": 1,
+            "parent_id": 0
+         }
+      ]
+   }
+}
+```
+
+####设备版本-分页查询
+|   接口地址    |   boss/deviceversion/queryDeviceVersionByPage        |
+|   ---         |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                        | 
+
+#####请求
+```
+{
+ "param":{
+       "company_id":1,                    //选填-公司ID
+       "dev_type":19                      //选填-设备类型
+         },
+ "page_no":1       
+}
+```
+#####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "status": 0,
+            "version_id": 1,
+            "depart_id": 1,
+            "dev_type": 19,
+            "dev_version": "v1.0.1",
+            "version_info": "升级了，升级了",
+            "update_url": "http://192.168.2.196/index.html"
+         },
+         {
+            "status": 0,
+            "version_id": 3,
+            "depart_id": 1,
+            "dev_type": 25,
+            "dev_version": "v1.0.1",
+            "version_info": "升级了，升级了",
+            "update_url": "http://192.168.2.196/index.html"
+         },
+         {
+            "status": 0,
+            "version_id": 5,
+            "depart_id": 1,
+            "dev_type": 21,
+            "dev_version": "1",
+            "version_info": "",
+            "update_url": "1"
+         },
+         {
+            "status": 0,
+            "version_id": 7,
+            "depart_id": 1,
+            "dev_type": 22,
+            "dev_version": "1",
+            "version_info": "",
+            "update_url": "1"
+         }
+      ]
+   }
+}
+```
+
+####小位号管理-分页查询
+|   接口地址    |   boss/accountmanage/queryAccountManagePage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST             |
+|   参数格式    |   JSON                  | 
+
+#####请求
+```
+没有，则查询所有
+{
+"param":{
+     "depart_id":1                 //选填-公司id
+        },
+     "page_no":1    
+}
+```
+#####回复
+```
+{
+   "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+         {
+            "id": 1,
+            "description": "试产100小位号",
+            "status": 1,
+            "created": 0,
+            "depart_id": 1,
+            "begin_account": "W0101000001",
+            "end_account": "W0101000099"
+         },
+         {
+            "id": 2,
+            "description": "正式产小位号段-卡片机",
+            "status": 0,
+            "created": 0,
+            "depart_id": 1,
+            "begin_account": "W0101003000",
+            "end_account": "W0101006100"
+         },
+         {
+            "id": 9,
+            "description": "儿童手表正式量产",
+            "status": 0,
+            "created": 1503314057,
+            "depart_id": 1,
+            "begin_account": "W0201000001",
+            "end_account": "W0201003100"
+         }
+      ]
+   }
+}
+```
+
+####设备类型-分页查询
+|   接口地址    |   boss/clienttype/queryClienTypePage        |
+|   ---     |   ---                   |
+|   请求方式    |   HTTP POST              |
+|   参数格式    |   JSON                   | 
+
+#####请求
+```
+param都不填则全部查询
+{
+ "param":{
+    "client_type":x,                   //选填-设备类型
+    "client_name":""                   //选填-设备类型名称
+           },
+   "page_no":x     
+}
+```
+#####回复
+```
+[
+ "code": 0,
+   "msg": "ok",
+   "data": {
+      "orderby": null,
+      "page_no": x,
+      "page_size": x,
+      "total_count": x,
+      "total_page_count": x,
+      "param": null,
+      "extra_param": null,
+      "result": [
+    {
+        "type_id":x,
+        "client_type":x,
+        "client_name":"",
+        "created":x
+    },
+    {
+        "type_id":x,
+        "client_type":x,
+        "client_name":"",
+        "created":x
+    }
+    ]
+]
+```
+
+####根据菜单的名称模糊查询角色权限
+|   接口地址    |   boss/role/queryAuthByName
+        |
+|   ---         |   ---                   |
+
+```
+//请求
+{
+ "role_id":x,       //必填-自己角色
+ "company_id":x,     //必填-自己公司
+ "name":"x"         //菜单名称
+}
+
+//回复
+[
+      {
+         "module_id": 2,
+         "module_name": "Broadcast",
+         "url": "manage/main/main.html",
+         "module_type": 0,
+         "priority": 2300,
+         "parent_id": 0,
+         "status": 0,
+         "permiss_id": 16,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      },
+      {
+         "module_id": 3,
+         "module_name": "设备管理",
+         "url": "",
+         "module_type": 0,
+         "priority": 1900,
+         "parent_id": 0,
+         "status": 1,
+         "permiss_id": 88,
+         "insert_auth": 1,
+         "update_auth": 1,
+         "query_auth": 1
+      }
+]
+``` 

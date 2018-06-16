@@ -56,6 +56,8 @@ public class IMEvent implements Serializable {
     private Integer updated;
 
     private Integer created;
+    
+    private Integer count;
 
     private static final long serialVersionUID = 1L;
 
@@ -154,4 +156,13 @@ public class IMEvent implements Serializable {
     public void setCreated(Integer created) {
         this.created = created;
     }
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+    
 }

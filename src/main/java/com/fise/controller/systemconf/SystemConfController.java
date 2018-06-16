@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.IMSystemConf;
 import com.fise.model.param.SystemConfParam;
 import com.fise.server.auth.IAuthService;
@@ -105,4 +107,13 @@ public class SystemConfController {
 		
 		return response;
 	}
+	
+	@IgnoreAuth
+    @RequestMapping(value = "/queryIMSystemConfByPage", method = RequestMethod.POST)
+    public Response queryIMSystemConfByPage(@RequestBody @Valid Page<IMSystemConf> page) {
+        Response resp = new Response();
+        logger.info(page.toString());
+        resp = iSystemConfService.queryIMSystemConfByPage(page);
+        return resp;
+    }
 }

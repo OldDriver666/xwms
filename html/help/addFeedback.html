@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title></title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="js/toastr/toastr.css"/>
+<link rel="stylesheet" href="css/vendor.css">
+<link rel="stylesheet" href="css/feedback.css">
+<style type="text/css">
+body{
+    background-color: #f3f3f3!important;
+}
+</style>
+</head>
+<body>
+<div class="application" style="width:100%;">
+    <div class="main">
+        <div class="complain-wrap add_reply">
+            <div class="public-private-switch">
+                <span class="private active">私有工单</span>
+                <input type="checkbox" name="public" class="js-switch" data-switchery="true" style="display: none;" />
+                <span class="public tooltip tooltipstered">公开问题</span>
+            </div>
+            <div class="complain-userTel">
+                <span>标题</span>
+                <div class="ipt-wrap"><input placeholder="请填写标题" name='title' type="text"></div>
+            </div>
+            <dl>
+                <dt>快速选择反馈意见</dt>
+                <dd>
+                    <div class="list">
+                        <span>设备定位问题</span>
+                        <span>软件定位问题</span>
+                        <span>硬件故障</span>
+                        <span>位信聊天相关</span>
+                        <span>功能咨询</span>
+                        <span>其他</span>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>其它问题</dt>
+                <dd>
+                    <div style="padding: 10px;">
+                        <div style="border: 1px solid #999;border-radius: 10px;">
+                            <div style="padding:4px 10px;"><textarea name="cont" placeholder="请描述10字以上遇到的问题，以便我们提供更好的帮助" id="context"></textarea></div>
+                         </div>
+                    </div>
+                    <div class="font-length-tips"><span id="currFontLength">0</span>/200</div>
+                </dd>
+            </dl>
+            <div class="complain-userTel">
+                <span>电话</span>
+                <div class="ipt-wrap"><input placeholder="方便我们与你联系" name='contactInfo' type="text"></div>
+            </div>
+            <div id="addFeedbackBtn">
+                <button type="submit" data-submitting="提交中.." data-submit="提交" class="fbtn green_btn">提交 </button>
+                <div data-filetoolarge="您选择文件太大，请更换文件" data-fileuploadfailed="文件上传失败，请稍后再试" class="attachFile">
+                    <em class="octicon octicon-cloud-upload"></em>
+                    <span data-uploading="上传中.." data-attachment="上传图片">上传图片</span>
+                    <input id="fileupload" type="file" name="attachments[]" data-url="" multiple="" />
+                </div>
+            </div>
+            <div id="file_list" class="attachment2 hide"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tmpl.js"></script>
+<script type="text/javascript" src="js/vendor.js"></script>
+<script type="text/javascript" src="js/Util.js"></script>
+<script type ="text/javascript" src="js/toastr/toastr.min.js"></script>
+<script type ="text/javascript" src="js/addFeedback.js"></script>
+<script type="text/javascript">
+    toastr.options={
+        positionClass : 'toast-center-center',
+        showDuration: "300",
+        hideDuration: "300",
+        timeOut: "1500"
+    };
+    $("#fileupload").attr("data-url", fileUrl + "upload")
+</script>
+<script>
+
+    $(function() {
+        var init, switchery;
+        if (localStorage.last_ticket) {
+            $('#ticket_content').val(localStorage.last_ticket);
+        }
+        if (localStorage.last_title) {
+            $('#ticket_title').val(localStorage.last_title);
+        }
+        switchery = document.querySelector('.js-switch');
+        init = new Switchery(switchery, {
+            color: '#52C27D',
+            secondaryColor: '#497EB2',
+            jackColor: '#fff',
+            jackSecondaryColor: '#fff'
+        });
+        return switchery.onchange = function () {
+            if (switchery.checked) {
+                $('.public-private-switch span.public').addClass('active');
+                return $('.public-private-switch span.private').removeClass('active');
+            } else {
+                $('.public-private-switch span.public').removeClass('active');
+                return $('.public-private-switch span.private').addClass('active');
+            }
+        };
+    });
+
+</script>
+<script type="text/javascript">
+/*var u = navigator.userAgent;
+var clientType = null;
+var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端 
+var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+if (isAndroid) {
+	clientType = 18
+} else if (isiOS) {
+	clientType = 17
+} else {
+	clientType = 1
+}*/
+/*
+$(".btn").on("click", function () {
+    var ele_list = $('.complain-wrap .list span')
+    var selected_txt_arr = []
+    for (var i=0; i<ele_list.length; i++) {
+        if(ele_list.eq(i).hasClass('selected')){
+            selected_txt_arr.push(ele_list.eq(i).html())
+        }
+    }
+    var selected_txt_str = ''
+    if(selected_txt_arr.length > 0) {
+        selected_txt_str = selected_txt_arr.join('#') + '#'
+    }
+
+	if($('input[name=contactInfo]').val() === '' || $('textarea[name=cont]').val() === '') {
+		toastr.error("请填写联系方式和反馈内容!");
+	} else if ($('textarea[name=cont]').val().length < 10) {
+        toastr.error("描述内容少于10个字");
+    } else if ($('textarea[name=cont]').val().length > 200) {
+        toastr.error("描述内容已超过了字数限制");
+    } else {
+	    var data = {
+	    	'contact': $('input[name=contactInfo]').val(),
+	        'content': '#' + selected_txt_str + $('textarea[name=cont]').val() + '#',
+	        'devicetype': clientType
+	    };
+	    Util.ajaxLoadData("http://boss.fise-wi.com:8400/Suggest/SuggestRequest",data,"POST",true,function(result) {
+	        if(result.Status === 0){
+	           toastr.success("提交成功!");
+	           $('input[name=contactInfo]').val('')
+	           $('textarea[name=cont]').val('')
+               $('input[name=phoneVersion]').val('')
+               $('input[name=appVersion]').val('')
+	        }
+	    },function() {
+	    });
+	}
+	
+})*/
+/*
+
+var Util = Util ? Util : {};
+Util.ajaxLoadData = function(url,data,type,async,callback,errorCallback){
+    async = typeof(async)!="undefined" ? async : true;
+    type = typeof(type)!="undefined" ? type : "get";
+    $.ajax({
+        ContentType: 'text/html;charset=utf-8',
+        url:url,
+        data:JSON.stringify(data),
+        type:type,
+        dataType:"json",
+        async:async,
+        cache:false,
+        success:function(result,textStatus){
+            result = result || "";
+            if(callback){
+                if(result != "") {
+                    if(result.Status === 0) {
+                    }
+                }
+                callback(result);
+            }
+        },
+        error:function(errorMsg){
+            var msg = "链接服务器失败";
+            if(errorMsg.responseText){
+                if(typeof(errorMsg.responseText)=="string"){
+                    try{
+                        msg = eval('('+errorMsg.responseText+')');
+                        msg = msg.errormsg;
+                    }catch(e){
+
+                    }
+
+                }else{
+                    msg = errorMsg.responseText.errormsg;
+                }
+            }
+            if(errorCallback){
+                errorCallback(msg);
+            }
+        }
+    });
+};
+*/
+
+$('.complain-wrap .list span').click(function(){
+    if($(this).hasClass('selected')) {
+        $(this).removeClass('selected')
+    } else {
+        $(this).addClass('selected')
+    }
+})
+
+var _this = document.getElementById('context')
+_this.oninput = function(){
+    document.getElementById('currFontLength').innerHTML= _this.value.length
+}
+</script>
+</body>
+</html>

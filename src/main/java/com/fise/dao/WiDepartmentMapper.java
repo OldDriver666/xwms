@@ -1,5 +1,8 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiDepartment;
 import com.fise.model.entity.WiDepartmentExample;
 import com.fise.model.param.DepartmentParam;
@@ -31,4 +34,6 @@ public interface WiDepartmentMapper {
     int updateByPrimaryKeySelective(WiDepartment record);
 
     int updateByPrimaryKey(WiDepartment record);
+    
+    List<WiDepartment> selectByExampleByPage(@Param("example") WiDepartmentExample example,@Param("page") Page<WiDepartment> page);
 }

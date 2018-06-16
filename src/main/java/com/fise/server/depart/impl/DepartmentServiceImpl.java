@@ -7,12 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.DBFunctionMapper;
+import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiDepartmentMapper;
+import com.fise.dao.WiOrganizationRoleMapper;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiDepartment;
 import com.fise.model.entity.WiDepartmentExample;
 import com.fise.model.entity.WiDepartmentExample.Criteria;
+import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.DepartmentParam;
 import com.fise.server.depart.IDepartmentService;
 import com.fise.utils.DateUtil;
@@ -27,6 +34,12 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Autowired
     DBFunctionMapper dbDao;
+	
+    @Autowired
+    private WiAdminMapper adminDao;
+    
+    @Autowired
+    WiOrganizationRoleMapper roleDao;
 	
     @Override
     public Response insertOne(DepartmentParam record) {
@@ -56,9 +69,15 @@ public class DepartmentServiceImpl implements IDepartmentService{
     @Override
     public Response queryList(DepartmentParam param) {
         Response resp = new Response();
+        
+        WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
+//        WiOrganizationRole role = roleDao.selectByPrimaryKey(admin.getRoleId());
         WiDepartmentExample example = new WiDepartmentExample();
         Criteria con =  example.createCriteria();
-        con.andCreatorIdEqualTo(param.getCreatorId());
+        con.andCompanyIdEqualTo(admin.getCompanyId());
+        if(admin.getDepartId() != null && admin.getDepartId() != 0){
+            con.andIdIn(getChildDepatId(admin.getDepartId()));
+        }
         if(StringUtil.isNotEmpty(param.getDepartName())){
         	con.andDepartNameLike(param.getDepartName());
         }
@@ -109,5 +128,34 @@ public class DepartmentServiceImpl implements IDepartmentService{
         }
         return idList;
     }
+    
+    
+	@Override
+	public Response queryDepartmentByPage(Page<WiDepartment> page) {
+		
+		Response response=new Response();
+		WiDepartment param = page.getParam();
+		WiDepartmentExample example=new WiDepartmentExample();
+		WiDepartmentExample.Criteria criteria=example.createCriteria();
+		WiAdmin admin = adminDao.selectByPrimaryKey(HttpContext.getMemberId());
+        if(admin.getCompanyId() != null && admin.getCompanyId() != 0){
+        	criteria.andCompanyIdEqualTo(admin.getCompanyId());
+        }
+        if(admin.getDepartId() != null && admin.getDepartId() != 0){
+        	criteria.andIdIn(getChildDepatId(admin.getDepartId()));
+        }
+        if(null != param.getCreatorId()){
+        	criteria.andCreatorIdEqualTo(param.getCreatorId());
+        }
+        if(StringUtil.isNotEmpty(param.getDepartName())){
+        	criteria.andDepartNameLike("%" + param.getDepartName() + "%");
+        }
+        if(StringUtil.isNotEmpty(param.getParentName())){
+        	criteria.andParentNameLike("%" + param.getParentName() + "%");
+        }
+
+        page.setResult(departDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
 
 }

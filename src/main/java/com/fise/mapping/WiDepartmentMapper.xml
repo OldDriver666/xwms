@@ -5,7 +5,9 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="company_id" jdbcType="INTEGER" property="companyId" />
     <result column="depart_name" jdbcType="VARCHAR" property="departName" />
+    <result column="parent_name" jdbcType="VARCHAR" property="parentName" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="updated" jdbcType="INTEGER" property="updated" />
   </resultMap>
@@ -246,4 +248,25 @@
       updated = #{updated,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByExampleByPage" parameterType="map" resultMap="BaseResultMap">
+	SELECT
+		*
+	FROM
+		(
+			SELECT
+				a.*, b.depart_name parent_name
+			FROM
+				wi_department a
+			LEFT JOIN wi_department b ON b.id = a.parent_id
+		) d
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  
+  
 </mapper>

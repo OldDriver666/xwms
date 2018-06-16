@@ -12,6 +12,9 @@ public interface ISuggestService {
 	/*查询suggest信息*/
 	public Response querySuggest(Page<SuggestParam> param);
 	
+	/*根据SuggestId查询suggest信息*/
+	public Response queryBySuggestId(Page<SuggestParam> param);
+	
 	/*删除suggest信息*/
 	public Response delSuggest(SuggestParam param);
 	

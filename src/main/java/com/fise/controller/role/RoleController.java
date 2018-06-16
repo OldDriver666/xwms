@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleAndAuthsParam;
@@ -167,4 +170,37 @@ public class RoleController {
         resp = roleSvr.deleteRoleAndAuths(role);
         return resp;
     }
+    
+    /**
+     * 查询病人管理系统权限
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/queryPatientAuth", method = RequestMethod.POST)
+    public Response queryPatientAuth(@RequestBody @Valid QueryRoleParam param) {
+        Response resp = new Response();
+        resp = roleSvr.queryPatientAuth(param);
+        return resp;
+    }
+    
+    @RequestMapping(value = "/queryRoleByPage", method = RequestMethod.POST)
+    public Response queryWiOrganizationRoleByPage(@RequestBody @Valid Page<WiOrganizationRole> page) {
+        Response resp = new Response();
+        page.getParam().setCreatorId(HttpContext.getMemberId());
+        logger.info(page.toString());
+        resp = roleSvr.queryOrganizationRoleByPage(page);
+        return resp;
+    }
+    
+    @IgnoreAuth
+    @RequestMapping(value = "/queryAuthByName", method = RequestMethod.POST)
+    public Response queryAuthByName(@RequestBody @Valid QueryRoleParam param) {
+        Response resp = new Response();
+
+        List<ModulePermissResult> data = roleSvr.queryAuthByName(param);
+        resp.success(data);
+
+        return resp;
+    }
+    
 }

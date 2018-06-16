@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fise.base.ErrorCode;
 import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.IMSuggest;
 import com.fise.model.param.SuggestParam;
 import com.fise.server.auth.IAuthService;
@@ -31,20 +32,13 @@ public class SuggestController {
 	IAuthService authService;
 	
 	//添加suggest信息
+	@IgnoreAuth
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Response addSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
 		
-		if(!authService.inserAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(record.toString());
-		
-		if(record.getUserId()==null || StringUtil.isEmpty(record.getUname())){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
 		
 		response=iSuggestService.insertSuggest(record);
 		
@@ -52,7 +46,12 @@ public class SuggestController {
 		return response;
 	}
 	
-	//查询suggest信息
+	/**
+	 * 查询suggest信息
+	 * @param param
+	 * @return
+	 */
+	@IgnoreAuth
 	@RequestMapping(value="/query",method=RequestMethod.POST)
 	public Response querySuggest(@RequestBody @Valid Page<SuggestParam> param){
 		
@@ -64,47 +63,42 @@ public class SuggestController {
 		return response;
 	}
 	
-	//删除suggest信息
-	@RequestMapping(value="/del",method=RequestMethod.POST)
-	public Response delSuggest(@RequestBody @Valid SuggestParam param){
+	//查询suggest信息
+	@IgnoreAuth
+	@RequestMapping(value="/queryBySuggestId",method=RequestMethod.POST)
+	public Response queryBySuggestId(@RequestBody @Valid Page<SuggestParam> param){
 		
 		Response response=new Response();
-		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(param.toString());
-		
-		if(param.getId()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-		
-		response=iSuggestService.delSuggest(param);
+		response=iSuggestService.queryBySuggestId(param);
 		
 		
 		return response;
 	}
 	
+	//删除suggest信息
+	@IgnoreAuth
+	@RequestMapping(value="/del",method=RequestMethod.POST)
+	public Response delSuggest(@RequestBody @Valid SuggestParam param){
+		
+		Response response=new Response();
+		if (param.getId()==null && StringUtil.isEmpty(param.getSuggestId())) {
+			return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
+		}
+			
+		logger.info(param.toString());
+		response=iSuggestService.delSuggest(param);
+		return response;
+	}
+	
 	//修改suggest信息
+	@IgnoreAuth
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public Response updateSuggest(@RequestBody @Valid IMSuggest record){
 		
 		Response response=new Response();
-		
-		if(!authService.updateAuth()){
-            return response.failure(ErrorCode.ERROR_REQUEST_AUTH_FAILED);
-        }
-		
 		logger.info(record.toString());
-		
-		if(record.getId()==null){
-            return response.failure(ErrorCode.ERROR_FISE_DEVICE_PARAM_NULL);
-        }
-		
 		response=iSuggestService.updateSuggest(record);
-		
-		
 		return response;
 	}
 }

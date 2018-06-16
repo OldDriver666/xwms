@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fise.base.ErrorCode;
 import com.fise.base.HttpContext;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.WiAdminMapper;
 import com.fise.dao.WiOrganizationRoleMapper;
 import com.fise.dao.WiPermissionMapper;
+import com.fise.framework.annotation.IgnoreAuth;
 import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganizationRole;
@@ -320,6 +322,59 @@ public class RoleServiceImpl implements IRoleService {
     		}
 		}
     	return true;
+    }
+    
+    
+    @Override
+    public Response queryPatientAuth(QueryRoleParam param) {
+
+    	Response response = new Response();
+        // 判断用户权限
+    	Integer roleId1 = param.getRole_id();
+    	Integer roleId2 = AdminUtil.getRoleId(HttpContext.getMemberId());
+    	if (roleId1 != roleId2) {
+    		WiOrganizationRoleExample example = new WiOrganizationRoleExample();
+        	WiOrganizationRoleExample.Criteria criteria = example.createCriteria();
+            criteria.andIdEqualTo(roleId1);
+            criteria.andCreatorIdEqualTo(HttpContext.getMemberId());
+            List<WiOrganizationRole> list = roleDao.selectByExample(example);
+            if (list.isEmpty()) {
+            	response.failure(ErrorCode.ERROR_PARAM_VIOLATION_EXCEPTION);
+                response.setMsg("角色权限值错误");
+                return response;
+            }
+		}
+
+    	List<ModulePermissResult> data = permissionDao.queryPatientAuth(param.getRole_id());
+    	response.success(data);
+    	return response;
+    }
+    
+    
+    @Override
+	public Response queryOrganizationRoleByPage(Page<WiOrganizationRole> page) {
+		
+		Response response=new Response();
+		
+		WiOrganizationRoleExample example=new WiOrganizationRoleExample();
+		WiOrganizationRoleExample.Criteria criteria=example.createCriteria();
+		WiOrganizationRole param = page.getParam();
+        if(null != param.getCreatorId()){
+        	criteria.andCreatorIdEqualTo(param.getCreatorId());
+        }
+        
+        if(StringUtil.isNotEmpty(param.getName())){
+        	criteria.andNameLike("%" + param.getName() + "%");
+        }
+
+        page.setResult(roleDao.selectByExampleByPage(example, page));
+		return response.success(page);
+	}
+    
+    @Override
+    public List<ModulePermissResult> queryAuthByName(QueryRoleParam param) {
+    	
+    	return permissionDao.selectAuthByName(param.getCompany_id(), param.getRole_id(),param.getName());
     }
 
 }

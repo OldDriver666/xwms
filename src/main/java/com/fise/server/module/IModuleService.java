@@ -2,6 +2,7 @@ package com.fise.server.module;
 
 import java.util.List;
 
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.model.entity.WiModule;
 import com.fise.model.param.ModuleInsertParam;
@@ -13,6 +14,12 @@ public interface IModuleService {
     
     /*查询所有模块*/
     Response QueryModuleAll(ModuleQueryParam param);
+    
+    /*分页查询模块*/
+    Response queryModuleByPage(Page<WiModule> param);
+    
+    /*查询父类模块*/
+    Response queryParentModule();
 
     /*新增用户可见模块*/
     Response InsertModule(ModuleInsertParam param, Integer roleId);

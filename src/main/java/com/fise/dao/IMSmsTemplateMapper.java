@@ -1,9 +1,12 @@
 package com.fise.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.fise.base.Page;
 import com.fise.model.entity.IMSmsTemplate;
 import com.fise.model.entity.IMSmsTemplateExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface IMSmsTemplateMapper {
     long countByExample(IMSmsTemplateExample example);
@@ -27,4 +30,6 @@ public interface IMSmsTemplateMapper {
     int updateByPrimaryKeySelective(IMSmsTemplate record);
 
     int updateByPrimaryKey(IMSmsTemplate record);
+    
+    List<IMSmsTemplate> selectByExampleByPage(@Param("example") IMSmsTemplateExample example,@Param("page") Page<IMSmsTemplate> page);
 }

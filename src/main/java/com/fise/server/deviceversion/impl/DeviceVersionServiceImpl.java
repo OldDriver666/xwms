@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fise.base.ErrorCode;
+import com.fise.base.Page;
 import com.fise.base.Response;
 import com.fise.dao.IMDeviceVersionMapper;
 import com.fise.model.entity.IMDeviceVersion;
@@ -94,6 +95,24 @@ public class DeviceVersionServiceImpl implements IDeviceVersionService{
         deviceVersionDao.updateByPrimaryKeySelective(record);
         return response.success();
 
+	}
+	
+	@Override
+	public Response queryDeviceVersionByPage(Page<IMDeviceVersion> page) {
+		
+		Response response=new Response();
+		IMDeviceVersionExample example=new IMDeviceVersionExample();
+		IMDeviceVersionExample.Criteria criteria=example.createCriteria();
+		IMDeviceVersion param = page.getParam();
+		if(param.getDepartid()!=null){
+			criteria.andDepartidEqualTo(param.getDepartid());
+		}
+		if(param.getDevType()!=null){
+			criteria.andDevTypeEqualTo(param.getDevType());
+		}
+
+        page.setResult(deviceVersionDao.selectByExampleByPage(example, page));
+		return response.success(page);
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.fise.dao;
 
+import com.fise.base.Page;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganization;
 import com.fise.model.entity.WiOrganizationExample;
 import java.util.List;
@@ -27,4 +30,6 @@ public interface WiOrganizationMapper {
     int updateByPrimaryKeySelective(WiOrganization record);
 
     int updateByPrimaryKey(WiOrganization record);
+    
+    List<WiOrganization> selectByExampleByPage(@Param("example") WiOrganizationExample example,@Param("page") Page<WiOrganization> page);
 }

@@ -2,9 +2,9 @@ package com.fise.server.role;
 
 import java.util.List;
 
-
-
+import com.fise.base.Page;
 import com.fise.base.Response;
+import com.fise.model.entity.WiAdmin;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.param.InsertAuthParam;
 import com.fise.model.param.InsertRoleParam;
@@ -53,7 +53,17 @@ public interface IRoleService {
 	public Response delAuth(InsertAuthParam auth);
 	
 
-	
+    /**
+     * 查询精神病角色并返回对应权限-不包括不可见的 
+     * @param param
+     * @return
+     */
+    public Response queryPatientAuth(QueryRoleParam param);
     
+    /* 分页查询角色 */
+    public Response queryOrganizationRoleByPage(Page<WiOrganizationRole> page);
+    
+    /* 根据模块名称模糊查询并返回对应权限-不包括不可见的 */
+    public List<ModulePermissResult> queryAuthByName(QueryRoleParam param);
     
 }

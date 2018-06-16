@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.fise.base.Page;
+import com.fise.model.entity.WiAdmin;
+import com.fise.model.entity.WiAdminExample;
 import com.fise.model.entity.WiOrganizationRole;
 import com.fise.model.entity.WiOrganizationRoleExample;
 import com.fise.model.param.InsertAuthParam;
@@ -34,4 +37,6 @@ public interface WiOrganizationRoleMapper {
     
     int delRoleByRoleId(InsertAuthParam role);
     int delAuthByRoleId(InsertAuthParam role);
+    
+    List<WiOrganizationRole> selectByExampleByPage(@Param("example") WiOrganizationRoleExample example,@Param("page") Page<WiOrganizationRole> page);
 }
